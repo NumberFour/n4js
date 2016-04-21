@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+  <!-- ************* Meta ************* -->
+  <title>IDE Setup Guide · Documentation · N4JS Language and IDE</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  
+  <!-- ************* OpenGraph ************-->
+  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
+  
+  <meta property="og:site_name" content="N4JS"/>
+  <meta property="og:title" content="N4JS Language and IDE"/>
+  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
+  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+  <meta property="og:image" content="../imgs/n4js.png">
+  
+  <!-- ************* Favicon ************-->
+  <link rel="icon" href="../imgs/favicon.ico" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />  
+  <!-- ************* Styles ************* -->
+  <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
+  <link rel="stylesheet" type="text/css" href="../styles/styles.min.css">
+
+
+  <!-- ****************** Scripts ****************** -->
+  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
+</head>
+
+<body>
+  <header class="Grid">
+    <div class="Cell Cell--4-12">
+      <a href="../"><img src="../imgs/n4js-logo.png" alt="N4JS Language and IDE"></a>
+    </div>
+
+    <div class="Cell Cell--8-12">
+      <nav>
+         <a href="../#getting-started">Download</a> ·
+         <a href="../features">Features</a> ·
+         <a href="../documentation" class="is-active">Documentation</a> ·
+         <a href="../faq" >FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+
+  <div class="Main">
+    <nav class="Nav--top">
+      <h2>Sections</h2>
+      <ul>
+        <li><a href="#Installation">Installation</a></li>
+        <li><a href="#Launch">Launching the IDE</a></li>
+        <li><a href="#Overview">N4JS IDE Overview</a></li>
+        <li><a href="#NewProject">Creating a new project</a></li>
+        <li><a href="#NewClass">Creating a new class</a></li>
+        <li><a href="#Outline">Outline View</a></li>
+        <li><a href="#RunAsNode">Running as node.js</a></li>
+        </ul>
+    </nav>
+
+    <article class="Article--noGrid">
+
+
+      <h1>Get the most from type safe development with the custom-built N4JS IDE</h1>
+
+      <p>In order to fully utilize the strengths of the language, N4JS has its own Eclipse-based IDE 
+      with custom features designed to support safe and intuitive development of large-scale
+      server-side applications.
+      Code is validated as you type and workflow tools such as content assist
+      and quick-fixes ensure applications are written safely and consistently. The N4JS IDE is a powerful tool for developing
+      collaborative projects that are to be maintained over a long period of time.</p>
+      
+      <h2 id="Installation">Installation</h2>
+      <p>Download the N4JS IDE as a single bundle from the following nightly builds:</p>
+      <ul>
+        <li><a href="http://goo.gl/2QDLfc">Windows</a></li>
+        <li><a href="http://goo.gl/qGKcm9">Linux</a></li>   
+        <li><a href="http://goo.gl/DszAu3">Mac </a></li>
+      </ul>
+
+      <h2>Requirements</h2>
+      <h3>Java 8</h3>      
+      <p>In order to run the N4JS IDE, Java 8 is required. Installer packages can be downloaded from 
+      <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">Oracle's Java pages</a>.
+      For Mac OS X users: Always install the <strong>JDK</strong> - the JRE is installed 
+      and only used in web browsers, not applications.</p>
+      <h3>Existing Eclipse installation</h3>
+      <p>When installing the N4JS features into an existing Eclipse installation, Xtext 2.9.1 must be available.
+      In general, N4JS is based on the Eclipse Mars release.</p>
+      <h3>node.js</h3>
+      <p>In order to run or test code from the IDE, <a href="https://nodejs.org/en/">node.js version 5</a> (or later) is required.</p> 
+       
+          
+      <!-- ======================================================================= -->
+      <h2 id="Launch">Launching the IDE</h2>
+      <!-- ======================================================================= -->
+      <div class="Image">
+        <a href="fig/startupprefs.png"><img src= "fig/startupprefs.png" ></a>
+      </div>
+
+      <p>When launching the N4JS IDE, a dialog box allows to specify a workspace which is used to organize related projects in a single folder.
+      A new name and location for the workspace can be selected but for this example we shall use the default settings.</p>
+      <h3>Workspaces Tip:</h3>
+      <p>To manage the workspaces that are displayed in the above dialog box on launch, navigate to <strong> Preferences | Startup and Shutdown | Workspaces.</strong>
+      </p>
+      
+      <!-- ======================================================================= -->
+      <h2 id="Overview">N4JS IDE Overview</h2>
+      <!-- ======================================================================= -->    
+      <div class="Image Image--fullWidth">
+        <a href="fig/IDE.png"><img src= "fig/IDE.png"  ></a>
+      </div>
+      
+      <p>Developers who have previous experience using Eclipse will be familiar with many common UI 
+      features such as the Editor, Project Outline, Project Explorer and Console views. 
+      The arrangement of views can be easily selected using the perspectives icons as highlighted
+      in the upper-right of the window as shown above.</p>
+
+      <!-- ======================================================================= -->
+      <h2 id="NewProject">Creating a new project</h2>
+      <!-- ======================================================================= -->
+      <p>After having set up a default workspace, a new project can be created using the "New N4JS Project" wizard 
+      which is accessed at <strong>File | New | N4JS Project</strong> (Or using the keyboard shortcuts <kbd>Command-Option-N</kbd> for Mac,
+      <kbd>Alt-Shift-N</kbd> on Windows)</p>
+
+      <div class="Image">
+        <a href="fig/newproject.png"><img src= "fig/newproject.png" ></a>
+      </div>
+      
+      <p>In this case, we name the project "hello.world" and select Finish to create a project in the default location (our current workspace).</p>
+      <p>The "New N4JS Project" wizard will also ask to specify a working set to include the project in.
+      Working sets are for grouping together elements to be displayed and will allow the user to focus on specific projects and files without
+      switching between workspaces. At this point, it is not necessary to add working sets, but when dealing with
+      multiple projects, working sets can be a highly efficient way of switching between related projects and resources.</p>
+
+      <!-- ======================================================================= -->
+      <h2 id="ProjectExplorer">Project Explorer</h2>
+      <!-- ======================================================================= --> 
+      <p>The Project Explorer view will display the structure of our new project:</p>
+      
+      <div class="Image">
+        <a href="fig/projectexplorer.png"><img src= "fig/projectexplorer.png" ></a>
+      </div>
+      <p>In the Project Explorer view, our project "hello.world" contains three folders with our resources:</p>
+        <ul>
+          <li><strong>src</strong> will contain our .n4js source files.</li>
+          <li><strong>src-gen</strong> will contain the transpiled JavaScript that is generated after compiling n4js files. 
+              The IDE automatically transpiles n4js files on save.</li>   
+          <li><strong>manifest.n4mf</strong> is the project description file which contains descriptions of dependencies.</li>
+        </ul>
+
+      <!-- ======================================================================= -->
+      <h2 id="NewClass">Creating a new class</h2>
+      <!-- ======================================================================= -->    
+      <p>In our new N4JS project, we can use the "New N4JS Class" wizard (accessed at <strong>File | New | N4JS Class</strong> or <kbd>Command-Option-N</kbd>)    
+      to create a new class called "HelloWorld":</p>
+      <div class="Image">
+        <a href="fig/helloworldclass.png"><img src= "fig/helloworldclass.png" ></a>
+      </div>
+      
+      <p>Let's have a look at what a simple HelloWorld! example looks like in N4JS:</p>    
+      
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">      export public class HelloWorld {
+        public say_hi() {
+          var message: string = "Hello World!";
+          console.log(message);
+        }
+      }
+      var announce = new HelloWorld();
+      announce.say_hi();
+</pre><div class="Example-caption">HelloWorld.n4js</div></div>
+
+
+
+      <p>We can see some similarities with Java and JavaScript in this example, but with some notable features:</p>
+      
+      <ul>
+        <li><strong>export</strong> makes the HelloWorld class available for import in another file or project. 
+          We modify this using the <strong>public</strong> keyword to specify where it is available. This demonstrates the use of <strong>modules</strong>
+          inside N4JS which are fully explained in the <a href="../Features/modules.html">Modules</a> feature</li>
+
+          <li><strong>string</strong> we use the type annotation <code>string</code> to define that the <code>message</code> variable is of type <em>string</em>. 
+          More can be read about type annotations in the <a href="../features/nominal-and-structural-typing.html">Nominal vs. Structural Typing</a> feature.
+        </li>   
+      </ul>
+
+      <p>As we have used the export keyword and made the class public using the "public" <strong>access modifier</strong>, 
+      it is possible to call the methods of this class in another project. If we wanted to restrict access to this element, we would use "protected"
+      so it may only be accessed from subclasses and "private" for within the same module only. The default visibility of an element is "project".</p>
+
+      <p>If we create a new class and define it as follows:</p>
+      
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">      import { HelloWorld } from "HelloWorld";
+
+      export public class Caller{
+          public call ()  {
+              var c = new HelloWorld;
+              return c;
+            }
+      }
+</pre><div class="Example-caption">HelloCaller.n4js</div></div>
+
+
+      <p>We can run this module named "HelloCaller" and invoke the methods from our HelloWorld class.</p>
+
+      <!-- ======================================================================= -->
+      <h2 id="Outline">Outline View</h2>
+      <!-- ======================================================================= -->
+         
+      <p>The Outline View is a useful tool that provides a quick overview of the structure of our applications. If we look at 
+      the Outline View while we are editing our HelloWorld examples, we can see the following:</p>
+
+      <div class="Image">
+        <a href="fig/outlineview.png"><img src= "fig/outlineview.png" ></a>
+      </div>
+      
+      <p>The Outline View displays the structure of our very basic class with only one method. As projects become more populated and increase in complexity, the 
+      Outline View becomes helpful by assisting with navigating through the structure of a file.</p>
+      <h3>Outline View Tip:</h3>
+      <p>Instead of having the Outline View always open in the IDE, the shortcut <kbd>Command+O</kbd>  
+      will open a Quick Outline window on demand. With this Quick Outline window open, begin typing to easily search for fields, methods and classes.</p>
+
+      <!-- ======================================================================= -->
+      <h2 id="RunAsNode">Running as node.js</h2>
+      <!-- ======================================================================= -->
+      <p>
+      To run this file, right-click inside the editor view and select <strong>Run as | Launch in Node.js</strong>:
+      </p> 
+      <!--TODO: update .gif with final code:-->
+
+      <div class="Image">
+        <a href="fig/runhello.gif"><img src= "fig/runhello.gif" alt="HelloWorld Example"></a>
+      </div>
+
+      <p>The Console View will display the result of our <code>console.log</code> command, and our Hello World! example is running in the N4JS IDE without errors.</p>
+
+      <!-- ======================================================================= -->
+      <h2>What's Next?</h2>
+      <!-- ======================================================================= -->
+      <p>After creating a project and running some sample code, the next step we can have a look at is exporting our project as an npm 
+      package followed by running it from the command line and publishing to the npm registry. This is covered in the <a href="npm-export-guide.html">export to npm</a> guide.</p>
+      
+            
+    </article>
+  </div>
+
+  <footer class="Grid">
+    <div class="Cell Cell--12-12">
+      <a href="http://www.numberfour.eu" target="_blank">NumberFour AG</a> · <a href="https://twitter.com/n4jsdev" target="_blank">Twitter</a>
+
+      <a href="../#getting-started" class="Link--action">Get the N4JS IDE now!</a>
+    </div>
+  </footer>
+
+  
+  <script> dp.SyntaxHighlighter.HighlightAll('code'); </script>
+
+</body>
+</html>

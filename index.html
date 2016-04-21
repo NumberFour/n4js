@@ -40,10 +40,9 @@
 
     <div class="Cell Cell--8-12">
       <nav>
-         <a href="#getting-started" data-scroll>Getting Started</a> ·
+         <a href="#getting-started" data-scroll>Download</a> ·
          <a href="features">Features</a> ·
-         <a href="releases">Releases</a> ·
-         <a href="userguide">User-Guide</a> ·
+         <a href="documentation">Documentation</a> ·
          <a href="faq">FAQ</a>
       </nav>
     </div>
@@ -51,7 +50,7 @@
 
   <div class="Main">
 
-    <article class="Intro Grid Grid--fullWidth">
+    <article class="Intro Grid Grid--fullWidth" style="margin-bottom:-4rem">
       <div class="Intro-Slogan Cell Cell--9-12">The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.
       <a href="#introduction" data-scroll class="Link--action">Learn more ›</a>
       </div>
@@ -67,22 +66,29 @@
       <div class="Cell Cell--12-12">
         <h2 id="introduction">N4JS for Java and JavaScript Developers</h2>
 
-
-
         <ul>
           <li>You are a Java programmer who is missing the comfort of familiar tools while developing for JavaScript environments?</li>
           <li>You want to write large-scale server-side JavaScript in a way that it stays maintainable?</li>
-          <li>You are looking for a type system in JavaScript as reliable as that of Java 8, but with the flexibility of JavaScript?</li>
+          <li>You are using TypeScript and have run into problems the type checker didn't catch? </li>
         </ul>
 
-        <p>N4JS is a general-purpose programming language based on ECMAScript Version 5, and ECMAScript 2015 is supported to a great extent. It adds a static type system inspired by Java 8, extended by concepts such as structural typing and union types. The language provides built-in support for state-of-the-art programming paradigms such as  dependency injection and test support. The feature-rich, Eclipse-based IDE for N4JS is custom-built for precisely these concepts. Code is validated as you type in addition to tools such as content-assist and quick-fixes to ensure your code is written safely and intuitively.</p>
+        <p>N4JS is a general-purpose programming language based on ECMAScript Version 5, and ECMAScript 2015 is supported to a great extent. It adds a static type system as reliable as that of Java 8, but with the flexibility of JavaScript. The language provides built-in support for state-of-the-art programming paradigms such as  dependency injection and test support. The feature-rich, Eclipse-based IDE for N4JS is custom-built for precisely these concepts. Code is validated as you type with the addition of tools such as content-assist and quick-fixes which ensure your code is written safely and intuitively.</p>
       </div>
-
-        <!-- N4JS provides an Xtext based ECMAScript 2015 parser. It provides EMF-based AST and type models, allowing for   integration with other Eclipse modeling tools. Set-up is made easy due to provided Oomph set up script. -->
-
+      
       <div class="Cell Cell--12-12">
         <p>N4JS transpiles to V8-compatible ECMAScript code, using features available as of Node.js version 5. The transpiled modules can be used with System.js or Common.js module loader.</p>
       </div>
+      
+      <div class="Cell Cell--6-12 GettingStarted-u-paddingLeft" style="text-align:center;">
+      <span style="color:#244d82; padding: 3px 15px;"><a href="faq/comparison-java.html">Compare N4JS to Java ›</a></span>
+      </div>
+      <div class="Cell Cell--6-12 GettingStarted-u-paddingRight" style="text-align:center;">
+            <span style="color:#244d82; padding: 3px 15px;"><a href="faq/comparison-typescript.html">Compare N4JS to TypeScript ›</a></span> 
+        </div>      
+      
+      
+
+      
     </article>
 
     <article id="features" class="FeatureTabs Grid Grid--fullWidth">
@@ -204,7 +210,7 @@
 
     <article class="GettingStarted Grid Grid--fullWidth" id="getting-started">
       <div class="Cell Cell--12-12">
-        <h2>Getting started</h2>
+        <h2>Download</h2>
       </div>
 
       <div class="Cell Cell--6-12 GettingStarted-u-paddingLeft">
@@ -218,6 +224,9 @@
           <li><a href="http://goo.gl/qGKcm9">Linux 64 bit</a></li>
           <li><a href="http://goo.gl/DszAu3">Mac OS X 64 bit</a></li>
         </ul>
+        
+        <br />
+        <p><a href="releases/">Release Notes</a></p>
       </div>
 
       <div class="Cell Cell--6-12 GettingStarted-u-paddingRight">
@@ -233,7 +242,7 @@
         </ul>
       </div>
 
-      <div class="Cell Cell--12-12 GettingStarted-u-paddingLeft GettingStarted-u-paddingRight">
+      <div class="Cell Cell--12-12 Downloads-u-paddingLeft Downloads-u-paddingRight">
         <p class="SystemRequirements">System Requirements: In any case, <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java 8</a> is required to be installed on your system. Node.js is also required in version 5+. The N4JS plugins require the <a href="https://www.eclipse.org/downloads/">Eclipse Mars release (4.5.1)</a>.</p>
       </div>
     </article>
@@ -244,19 +253,18 @@
       </div>
 
       <div class="Cell Cell--4-12 m-Cell--withMargin">
-        <h3>Documentation</h3>
+        <h3>Further Information</h3>
         <ul>
-          <li><a href="userguide/">User Guide: </a>How to write type safe Node.js modules with N4JS</li>
-          <li><a href="https://goo.gl/2Lv2Te">N4JS Language Specification [pdf]</a></li>
+          <li><a href="faq/">FAQ</a></li>
           <li><a href="features/">Complete Feature Table</a></li>
           <li><a href="releases">Release Notes</a></li>
+          <li><a href="documentation/">Documentation:</a> Tutorials and quickstart guides for the N4JS IDE</li>
         </ul>
       </div>
 
       <div class="Cell Cell--4-12 m-Cell--withMargin">
         <h3>Participate</h3>
         <ul>
-          <li><a href="faq/">FAQ</a></li>
           <li><a href="http://groups.google.com/group/n4js">Mailing List</a></li>
           <li><a href="https://github.com/numberfour/n4js/issues">Issues</a></li>
           <li><a href="https://github.com/numberfour/n4js">Source Code</a></li>
@@ -293,7 +301,7 @@
     featureCards.init();
   </script>
 
-  <!-- n4js-webpage build web.production (Wed Apr 06 2016 14:53:00 GMT+0200 (CEST)) -->
+  <!-- n4js-webpage build web.production (Thu Apr 21 2016 18:03:27 GMT+0200 (CEST)) -->
 
 </body>
 

@@ -1,0 +1,290 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+  <!-- ************* Meta ************* -->
+  <title>npm Export Guide · Documentation · N4JS Language and IDE</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  
+  <!-- ************* OpenGraph ************-->
+  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
+  
+  <meta property="og:site_name" content="N4JS"/>
+  <meta property="og:title" content="N4JS Language and IDE"/>
+  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
+  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+  <meta property="og:image" content="../imgs/n4js.png">
+  
+  <!-- ************* Favicon ************-->
+  <link rel="icon" href="../imgs/favicon.ico" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />  
+  <!-- ************* Styles ************* -->
+  <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
+  <link rel="stylesheet" type="text/css" href="../styles/styles.min.css">
+
+
+  <!-- ****************** Scripts ****************** -->
+  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
+</head>
+
+<body>
+  <header class="Grid">
+    <div class="Cell Cell--4-12">
+      <a href="../"><img src="../imgs/n4js-logo.png" alt="N4JS Language and IDE"></a>
+    </div>
+
+    <div class="Cell Cell--8-12">
+      <nav>
+         <a href="../#getting-started">Download</a> ·
+         <a href="../features">Features</a> ·
+         <a href="../documentation" class="is-active">Documentation</a> ·
+         <a href="../faq" >FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+
+  <div class="Main">
+    <nav class="Nav--top">
+      <h2>Sections</h2>
+      <ul>
+        <li><a href="#Example">Project Example</a></li>
+        <li><a href="#Export">Exporting as npm</a></li>
+        <li><a href="#Runfromcli">Running from CLI</a></li>
+        <li><a href="#Packageinfo">Modifying Package Info</a></li>
+        <li><a href="#Publishing">Publishing to npm</a></li>
+      </ul>
+    </nav>
+
+    <article class="Article--noGrid">
+
+    <h1>Exporting to npm with N4JS</h1>
+
+    <p>N4JS was created with the intention of supporting safe and intuitive Node.js development. When a Node application 
+    is ready to be published, the default 
+    package manager is npm which is bundled with Node.js (a prerequisite of the N4JS IDE). npm is run on the command 
+    line and will organise and install
+    dependencies for an application. npm can also be used to install Node.js applications available on the npm registry.
+    This npm export guide demonstrates how N4JS can be used to develop and publish Node applications with a simple example
+    module.</p>
+     
+     
+    <!-- ======================================================================= -->
+    <h2 id="Example">Project Example</h2>
+    <!-- ======================================================================= -->
+    <p>In order to demonstrate exporting as npm, we can begin by creating a new N4JS 
+    Project using the keyboard shortcut <kbd>Command + N</kbd> and naming 
+    it "fibonacci". We then create a class "Fibonacci" and define it as follows:</p>
+
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">     export public class Fibonacci {
+     public seq()  {
+          var arr = [];
+              var a = 0;
+              var b = 1;
+              for (var n = 1; n &lt; 15; n++)  {
+                var current = a + b;  
+                arr.push(current);
+                a = b + a;
+                b = a - b;
+              }
+          console.log(arr);
+          }
+    }   
+    var run = new Fibonacci();
+    run.seq();
+</pre><div class="Example-caption">Fibonacci.n4js</div></div>
+
+
+    <p>In the above example, we are creating a function which will iterate through the Fibonacci sequence,
+    push each new value into an array and report the results in the console after the for loop is complete.
+    When right-clicking the module and seleting <strong>Run as | Launch in node.js</strong>, we have the 
+    following output in the console:</p>
+
+    <div class="Image">
+        <a href="fig/fibonacciconsole.png"><img src= "fig/fibonacciconsole.png" ></a>
+    </div>
+
+    
+    <!-- ======================================================================= -->
+    <h2 id="Export">Exporting as npm</h2>
+    <!-- ======================================================================= -->
+
+    <p>To export our Fibonacci example, navigate to the Project 
+    Explorer view, right-click our Fibonacci.n4js file or the project name and select <strong>Export</strong>.
+    An Export wizard will list the available types of exports.
+    Select <strong>N4JS npm export</strong> in the <strong>N4 Exports</strong> folder. </p>
+
+    
+    <div class="Image">
+        <a href="fig/exportwizard.png"><img src= "fig/exportwizard.png" ></a>
+    </div>
+    
+    <p>On the following screen, we can select a target folder and click "Finish" to complete the export. There is 
+    an option to compress the files on export which will create a tarball.</p>
+    
+    
+    <div class="Image">
+        <a href="fig/npmtargetfolder.png"><img src= "fig/npmtargetfolder.png" ></a>
+    </div>
+
+
+    <p>If we have a look in the target folder, we can see that a new folder has been created which is our exported package. 
+    The contents of the package are:</p>
+    <ul>
+      <li><strong>Fibonacci.js</strong> the Fibonacci.n4js file transpiled to JavaScript.</li>
+      <li><strong>package.json</strong> npm package description (name, author, version etc.) which is described in detail below.</li>
+      <li><strong>manifest.n4mf</strong> N4JS project dependencies.</li>
+      <li><strong>Fibonacci.map</strong> contains debugging information.</li>
+      <li><strong>src</strong> folder containing the original Fibonacci.n4js file.</li>
+    </ul>
+
+    <!-- ======================================================================= -->
+    <h2 id="Runfromcli">Running from CLI</h2>
+    <!-- ======================================================================= -->
+    <p>In the example so far, we exported our npm package to a folder on the desktop called "npm". We can create a new 
+    folder called "newinstall" located at 
+    <code>User/bsmith/Desktop/npm/newinstall</code>, but this can be anywhere outside of the exported project folder. With a Terminal window, cd
+    to our new folder:</p>
+    <pre>
+    $ cd /User/Desktop/npm/newinstall
+    </pre>
+    <p>and install the package</p>
+    <pre>
+    $ npm install ../fibonacci
+    </pre>
+
+    <p>All dependiencies required for running the package will then be downloaded and installed
+    to the "newinstall" folder</p>
+
+    <pre>
+    /User/Desktop/npm/newinstall
+    └─┬ fibonacci@ 0.0.1 
+      └─┬ n4js-node@ 0.3.1 
+        ├── n4js-es5@ 0.3.0 
+        ├─┬ node-fetch@ 1.4.1 
+        │ ├─┬ encoding@ 0.1.12 
+        │ │ └── iconv-lite@ 0.4.13 
+        │ └── is-stream@ 1.0.1 
+        └─┬ systemjs@ 0.19.25 
+          └── when@ 3.7.7 
+    </pre>
+
+
+    <p>We can now create a new JavaScript file saved as "index.js" that calls the method in our package. In our case, the index.js 
+    only needs to contain the following line</p>
+
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">    var fib = require("fibonacci/Fibonacci");
+</pre><div class="Example-caption">Fibonacci.n4js</div></div>
+
+
+    <p>Our example module can now be called if we run the index.js file from the command line with node:</p>
+
+    <pre>
+    $ node index.js
+    [ 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610 ]
+    $ 
+    </pre>
+
+    <p>If we wanted to run this node module by itself without the use of the index.js file, we can use the command</p>
+    
+    <pre>
+    $ node -r fibonacci/Fibonacci
+    </pre>
+    
+    <!-- ======================================================================= -->
+    <h2 id="Packageinfo">Modifying Package Info</h2>
+    <!-- ======================================================================= -->
+    <p>In our exported npm project, a package.json file is created from the project <strong>manifest</strong> which contains information about the package.
+    The minimum information required for a package.json file is:</p>
+    
+    <ul>
+      <li><strong>name</strong> of the package (all lowercase, one word, no spaces, dashes and underscores allowed).</li>
+      <li><strong>version</strong> following <a href="https://docs.npmjs.com/getting-started/semantic-versioning">semver conventions</a> i.e. 
+      <strong>1.0.0</strong>. </li>
+    </ul>
+    
+    <p>Let's say we wanted to change the version of our npm package, we can edit this in the manifest.n4mf file
+    in the root of our fibonacci project:</p>
+
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">    ArtifactId: fibonacci
+    VendorId: eu.numberfour
+    ProjectName: "fibonacci"
+    VendorName: "NumberFour AG"
+    ProjectType: library
+    ProjectVersion: 1.2.3
+    Output: "src-gen"
+    Sources {
+        source {
+            "src"
+        }
+    }
+</pre><div class="Example-caption">manifest.n4mf</div></div>
+
+    <p>Above, we have made the simple change of our project from version "0.0.1" (the default) to "1.2.3" and the package.json
+    file will contain our new version number the next time we export as npm.</p>
+    
+    <h3>Editing the package.json from CLI</h3>
+
+    <p>It's possible to edit the package.json from the command line by using <code>npm init</code> which is normally used to create
+    a new package:</p>
+    
+    <pre>
+    $ cd /User/brian.smith/Desktop/npm/fibonacci
+    $ npm init
+    </pre>
+    
+    <p>This will load a questionnaire that will cycle through the attributes of your existing package and 
+    update the <strong>package.json</strong> file if new information is provided. </p>
+
+    <p><strong>Note: </strong> it is recommended to edit the package information via the manifest.n4mf file within the N4JS IDE
+    as exporting the project again will overwrite changes made to the package.json via the command line.</p>
+
+    
+    <!-- ======================================================================= -->
+    <h2 id="Publishing">Publishing to npm</h2>
+    <!-- ======================================================================= -->
+    
+    <p>In order to publish to npm, you must have an account on the npm registry. To store your credentials on the 
+    client: </p>
+
+    <pre>
+    $ npm login
+    </pre>
+    
+    <p>If you do not already have an account, use <strong>npm adduser</strong> to 
+    create a new account. Test that your credentials are stored on the client with <strong>npm config ls</strong>.</p>
+
+    <p>To publish our exported npm package, cd to the package and use the command <strong>npm publish</strong></p>
+    
+    <pre>
+    $ cd /Users/brian.smith/Desktop/npm/fibonacci
+    </pre>
+    
+    <pre>
+    $ npm publish
+    </pre>
+    
+    <p>We can now check if our package has been published to the registry, in our case, it would be published at 
+    
+    <strong>https://npmjs.com/package/fibonacci</strong>.</p>
+
+      
+    </article>
+  </div>
+
+  <footer class="Grid">
+    <div class="Cell Cell--12-12">
+      <a href="http://www.numberfour.eu" target="_blank">NumberFour AG</a> · <a href="https://twitter.com/n4jsdev" target="_blank">Twitter</a>
+
+      <a href="../#getting-started" class="Link--action">Get the N4JS IDE now!</a>
+    </div>
+  </footer>
+
+  
+  <script> dp.SyntaxHighlighter.HighlightAll('code'); </script>
+
+</body>
+</html>

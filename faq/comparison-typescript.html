@@ -38,10 +38,9 @@
 
     <div class="Cell Cell--8-12">
       <nav>
-         <a href="../#getting-started">Getting Started</a> ·
+         <a href="../#getting-started">Download</a> ·
          <a href="../features">Features</a> ·
-         <a href="../releases">Releases</a> ·
-         <a href="../userguide">User-Guide</a> ·
+         <a href="../documentation">Documentation</a> ·
          <a href="../faq" class="is-active">FAQ</a>
       </nav>
     </div>
@@ -63,7 +62,7 @@
 N4JS and TypeScript are both supersets of ECMAScript. They both introduce type annotations and a static type checker. In their relation to JavaScript, however, they follow different approaches.
 </p>
 
-<div class="Image Image--fullWidth"><img src="fig/ts_n4js.svg" /></div>
+<div class="Image Image"><img src="fig/ts_n4js.svg" /></div>
 
 <p>
 TypeScript's goal is to make ECMAScript type safe without breaking existing ECMAScript code. Its type system is optional and the TypeScript transpiler aims to accept plain ECMAScript where possible.
@@ -72,95 +71,9 @@ TypeScript's goal is to make ECMAScript type safe without breaking existing ECMA
 N4JS is a superset of ECMAScript in terms of features and syntax but it does not try to be compatible with ECMAScript at all cost. A useful way to explain N4JS is to consider ECMAScript a starting point followed by the addition of Java's strict and rigorous type system, then making this amalgamation as flexible as possible. The resulting state of N4JS is that it fulfils the expectations of a JavaScript developer without compromising the sound type system. 
 </p>
 
-
+<p>This comparison will talk about the <a href="#differences">differences</a> and <a href="#similarities">similarities</a> between N4JS and TypeScript.</p>
 <!-- ======================================================================= -->
-<h2>Similarities</h2>
-<!-- ======================================================================= -->
-
-<h3>Explicit and Implicit typing</h3>
-<p>
-In both languages, types can be defined either implicitly or explicitly via a type annotation. In the former case, the type is to be inferred by the type system. A simple example is the assignment of a value to a newly declared variable:
-</p>
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">let foo = "Hello";
-</pre></div>
-
-<p>
-Both languages would infer the type of <code>foo</code> to <code>string</code>. In both languages, the following assignment would lead to an error:
-
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">foo = 42; // error
-</pre></div>
-<p>
-N4JS would issue "int is not a subtype of string.", TypeScript "Type 'number' is not assignable to type 'string'".
-</p>
-
-
-<h3>Structural Types</h3>
-<p>
-N4JS and TypeScript both support <a href="../features/nominal-and-structural-typing.html">structural types</a>. This allows for managing relations between types without the need for excessive declarations. Instead of explicitly defining type relations via "extends" or "implements", the type system compares the properties of two types. If one type has all the properties of another type, it is considered to be a subtype.
-</p>
-<p>
-As a significant difference between the two languages, N4JS also supports <em>nominal types</em> and nominal typing <em>is the default</em>. Thus, structural types have to be explicitly annotated as being structural using the <code>~</code> or <code>~~</code> type constructors.
-</p>
-
-<div class="Comparison">
-  <div class="Comparison-left">
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">  export public interface ~Point {
-      x : number;
-      y : number;
-  }
-  export public interface ~Point3D {
-      x : number;
-      y : number;
-      z : number;
-  }
-  var p: Point = { x: 0, y: 10, };
-  var p3d: Point3D = { x: 0, y: 10, z: 20 }
-
-  p = p3d;
-  p3d = p; // error
-</pre><div class="Example-caption">N4JS</div></div>
-  </div>
-  <div class="Comparison-right">
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">  interface Point {
-      x : number;
-      y : number;
-  }
-  interface Point3D {
-      x : number;
-      y : number;
-      z : number;
-  }
-  var p: Point = { x: 0, y: 10, };
-  var p3d: Point3D = { x: 0, y: 10, z: 20 }
-
-  p = p3d;
-  p3d = p; // error
-</pre><div class="Example-caption">TypeScript</div></div>
-  </div>
-</div>
-
-<p>
-Note that N4JS is using different default for access modifiers, e.g. <code>public</code> is not the default. For that reason, the interfaces have to be marked as public (and exported).
-</p>
-<p>
-In both languages, an error will be issued on the last line:
-"Point is not a structural subtype of Point3D: missing field z." (N4JS) and "Type 'Point' is not assignable to Type 'Point3D'. Property 'z' is missing in type 'Point'." (TypeScript), respectively.
-</p>
-<p>
-The difference between structural and nominal typeing is described in further detail <a href="../features/nominal-and-structural-typing.html">here</a>.
-</p>
-
-<h3>Using Existing JavaScript Libraries</h3>
-<p>
-An important benefit of being an ECMAScript superset is enabling developers to use existing JavaScript libraries. N4JS and TypeScript support type definitions for existing code. For TypeScript there is a great project called <a href="http://definitelytyped.org/">DefinitelyTyped</a> where these type definitions are collected. For N4JS, a similar <a href="https://github.com/NumberFour/n4jsd">GitHub project exists</a>, but it contains very few definitions at the moment. Contributions are welcome for both projects.
-</p>
-<p>It is also possible in both languages to use existing code, in particular Common.js modules, without type definitions. The N4JS IDE <a href="../features/nodejs-support.html">integrates support for NPM</a> so that these modules, even without a type definition, can seamlessly be used in N4JS.
-</p>
-
-<!-- ======================================================================= -->
-<h2>Differences</h2>
+<h2 id="differences">Differences</h2>
 <!-- ======================================================================= -->
 <p>
 In many cases, TypeScript's design prioritizes the transition from ECMAScript to TypeScript
@@ -327,6 +240,94 @@ Reading (from a list) is much more often used then writing, practically speaking
 <p>
 For more information on generics, please refer to the <a href="../features/generics.html">generics feature page</a>.
 </p>
+
+
+<!-- ======================================================================= -->
+<h2 id="similarities">Similarities</h2>
+<!-- ======================================================================= -->
+
+<h3>Explicit and Implicit typing</h3>
+<p>
+In both languages, types can be defined either implicitly or explicitly via a type annotation. In the former case, the type is to be inferred by the type system. A simple example is the assignment of a value to a newly declared variable:
+</p>
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">let foo = "Hello";
+</pre></div>
+
+<p>
+Both languages would infer the type of <code>foo</code> to <code>string</code>. In both languages, the following assignment would lead to an error:
+
+</p>
+
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">foo = 42; // error
+</pre></div>
+<p>
+N4JS would issue "int is not a subtype of string.", TypeScript "Type 'number' is not assignable to type 'string'".
+</p>
+
+
+<h3>Structural Types</h3>
+<p>
+N4JS and TypeScript both support <a href="../features/nominal-and-structural-typing.html">structural types</a>. This allows for managing relations between types without the need for excessive declarations. Instead of explicitly defining type relations via "extends" or "implements", the type system compares the properties of two types. If one type has all the properties of another type, it is considered to be a subtype.
+</p>
+<p>
+As a significant difference between the two languages, N4JS also supports <em>nominal types</em> and nominal typing <em>is the default</em>. Thus, structural types have to be explicitly annotated as being structural using the <code>~</code> or <code>~~</code> type constructors.
+</p>
+
+<div class="Comparison">
+  <div class="Comparison-left">
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">  export public interface ~Point {
+      x : number;
+      y : number;
+  }
+  export public interface ~Point3D {
+      x : number;
+      y : number;
+      z : number;
+  }
+  var p: Point = { x: 0, y: 10, };
+  var p3d: Point3D = { x: 0, y: 10, z: 20 }
+
+  p = p3d;
+  p3d = p; // error
+</pre><div class="Example-caption">N4JS</div></div>
+  </div>
+  <div class="Comparison-right">
+<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">  interface Point {
+      x : number;
+      y : number;
+  }
+  interface Point3D {
+      x : number;
+      y : number;
+      z : number;
+  }
+  var p: Point = { x: 0, y: 10, };
+  var p3d: Point3D = { x: 0, y: 10, z: 20 }
+
+  p = p3d;
+  p3d = p; // error
+</pre><div class="Example-caption">TypeScript</div></div>
+  </div>
+</div>
+
+<p>
+Note that N4JS is using different default for access modifiers, e.g. <code>public</code> is not the default. For that reason, the interfaces have to be marked as public (and exported).
+</p>
+<p>
+In both languages, an error will be issued on the last line:
+"Point is not a structural subtype of Point3D: missing field z." (N4JS) and "Type 'Point' is not assignable to Type 'Point3D'. Property 'z' is missing in type 'Point'." (TypeScript), respectively.
+</p>
+<p>
+The difference between structural and nominal typeing is described in further detail <a href="../features/nominal-and-structural-typing.html">here</a>.
+</p>
+
+<h3>Using Existing JavaScript Libraries</h3>
+<p>
+An important benefit of being an ECMAScript superset is enabling developers to use existing JavaScript libraries. N4JS and TypeScript support type definitions for existing code. For TypeScript there is a great project called <a href="http://definitelytyped.org/">DefinitelyTyped</a> where these type definitions are collected. For N4JS, a similar <a href="https://github.com/NumberFour/n4jsd">GitHub project exists</a>, but it contains very few definitions at the moment. Contributions are welcome for both projects.
+</p>
+<p>It is also possible in both languages to use existing code, in particular Common.js modules, without type definitions. The N4JS IDE <a href="../features/nodejs-support.html">integrates support for NPM</a> so that these modules, even without a type definition, can seamlessly be used in N4JS.
+</p>
+
 
 
     </article>

@@ -38,10 +38,9 @@
 
     <div class="Cell Cell--8-12">
       <nav>
-         <a href="../#getting-started">Getting Started</a> ·
+         <a href="../#getting-started">Download</a> ·
          <a href="../features">Features</a> ·
-         <a href="../releases">Releases</a> ·
-         <a href="../userguide">User-Guide</a> ·
+         <a href="../documentation">Documentation</a> ·
          <a href="../faq" class="is-active">FAQ</a>
       </nav>
     </div>
@@ -60,11 +59,50 @@
 <h1>FAQ</h1>
 
 <!-- ======================================================================= -->
+<h2 id="TypeScript">How does N4JS compare to TypeScript?</h2>
+<p>
+We created N4JS with the goal to enable the development of large ECMAScript projects that are as maintainable as Java. To do this, we took 
+the Java type system and adjusted it to ECMAScript's characteristics. The N4JS type checker is rigorous: type errors are not 
+accepted. Where TypeScript also adds a static type system on top of ECMAScript, their approach is quite the opposite in that 
+their goal is to enable a smooth transition from untyped to typed ECMAScript. The type checker in TypeScript makes some compromises 
+in order to accept more ECMAScript code.
+</p>
+<p>
+Eventually both approaches will lead to similar solutions: The smarter and better the type checker of N4JS becomes, the more programs 
+it will accept without losing its soundness. The smarter and better TypeScript's type checker becomes, the less gaps there will be for incorrect ECMAScript code.
+</p>
+<p>
+For a thorough explanation of the <a href="comparison-typescript.html">differences and similarities between N4JS and TypeScript, see our comparison page</a>.
+</p>
+
+<!-- ======================================================================= -->
+<h2 id="Java">How does N4JS compare to Java?</h2>
+
+<p>
+N4JS is an extension of ECMAScript making it is as different from Java as ECMAScript itself. N4JS does add features which are quite similar to 
+Java and the general idea is to make ECMAScript as type safe as Java. For that reason, N4JS adds a static type system to ECMAScript, 
+many concepts of which are similar to Java's type system.
+</p>
+<p>
+We explain the <a href="comparison-java.html">differences and similarities between N4JS and Java on an extra page</a>.
+</p>
+
+<!-- ======================================================================= -->
+<h2 id="ECMAScript">How does N4JS compare to JavaScript/ECMAScript?</h2>
+
+<p>
+N4JS is based on JavaScript/ECMAScript. Feature-wise it is a super set of ECMAScript: It supports all constructs known from JavaScript and most 
+features from ECMAScript 2015 (missing features are to be added soon). Since it provides a static type checker, the transpiler may find errors 
+in given n4js files containing plain JavaScript code. It would then reject the compilation to JavaScript and issue errors instead. In the N4JS 
+IDE, you can also edit plain JavaScript. In that case, the type checker won't issue any errors but will probably lead to runtime errors.
+</p>
+<!-- ======================================================================= -->
 <h2 id="NumberFour">Why Did You Create N4JS?</h2>
 
 <p>
 N4JS is created by <a href="http://www.numberfour.eu">NumberFour AG</a>. Our goal is to create a single business platform on which apps can be installed and run. These apps are written in N4JS which is based on JavaScript/ECMAScript.
-JavaScript is the best language for external developers to contribute to our platform but we needed important features to build large, reliable systems that are maintainable over time. What we needed was a sound type system and that's why we developed N4JS to provide these missing features.
+JavaScript is the best language for external developers to contribute to our platform but we needed important features to build 
+large, reliable systems that are maintainable over time. What we needed was a sound type system and that's why we developed N4JS to provide these missing features.
 </p>
 
 <!-- ======================================================================= -->
@@ -73,34 +111,11 @@ JavaScript is the best language for external developers to contribute to our pla
 We stand on the shoulders of open technology and it's our turn to give back. We see the strength of N4JS not only for our own platform but as a foundation for others to build upon. This is why we release N4JS as open-source. We are excited for feedback and always open for contributions!
 </p>
 
-<!-- ======================================================================= -->
-<h2 id="ECMAScript">How does N4JS compare to JavaScript/ECMAScript?</h2>
 
-<p>
-N4JS is based on JavaScript/ECMAScript. Feature-wise it is a super set of ECMAScript: It supports all constructs known from JavaScript and most features from ECMAScript 2015 (missing features are to be added soon). Since it provides a static type checker, the transpiler may find errors in given n4js files containing plain JavaScript code. It would then reject the compilation to JavaScript and issue errors instead. In the N4JS IDE, you can also edit plain JavaScript. In that case, the type checker won't issue any errors but will probably lead to runtime errors.
-</p>
 
-<!-- ======================================================================= -->
-<h2 id="Java">How does N4JS compare to Java?</h2>
 
-<p>
-N4JS is an extension of ECMAScript making it is as different from Java as ECMAScript itself. N4JS does add features which are quite similar to Java and the general idea is to make ECMAScript as type safe as Java. For that reason, N4JS adds a static type system to ECMAScript, many concepts of which are similar to Java's type system.
-</p>
-<p>
-We explain the <a href="comparison-java.html">differences and similarities between N4JS and Java on an extra page</a>.
-</p>
 
-<!-- ======================================================================= -->
-<h2 id="TypeScript">How does N4JS compare to TypeScript?</h2>
-<p>
-We created N4JS with the goal to enable writing large ECMAScript projects that are as maintainable as Java. To do this, we took the Java type system and adjusted it to ECMAScript's characteristics. The N4JS type checker is rigorous: type errors are not accepted. Where TypeScript also adds a static type system on top of ECMAScript, their approach is quite the opposite in that their goal is to enable a smooth transition from untyped to typed ECMAScript. The type checker in TypeScript makes some compromises in order to accept more ECMAScript code.
-</p>
-<p>
-Eventually both approaches will lead to similar solutions: The smarter and better the type checker of N4JS becomes, the more programs it will accept without losing its soundness. The smarter and better TypeScript's type checker becomes, the less gaps there will be for incorrect ECMAScript code.
-</p>
-<p>
-For a thorough explanation of the <a href="comparison-typescript.html">differences and similarities between N4JS and TypeScript, see our comparison page</a>.
-</p>
+
 
 
     </article>
