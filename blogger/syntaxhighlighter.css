@@ -1,3 +1,11 @@
+.codeblock::after {
+        background-color: #fafaff;
+        display: block;
+        text-align: center;
+        content: attr(title);
+        font-family: sans-serif;
+        font-size: 10px;
+}
 .dp-highlighter
 {
   font-family: "Monaco", "Consolas", "Courier New", Courier, mono, serif;
