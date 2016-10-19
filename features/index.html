@@ -1,233 +1,1098 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>N4JS Language and IDE Features</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<!-- ************* Meta ************* -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-  <!-- ************* Meta ************* -->
-  <title>Features · Features · N4JS Language and IDE</title>
+<!-- ************* OpenGraph ************-->
+<meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  
-  <!-- ************* OpenGraph ************-->
-  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
-  
-  <meta property="og:site_name" content="N4JS"/>
-  <meta property="og:title" content="N4JS Language and IDE"/>
-  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
-  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
-  <meta property="og:image" content="../imgs/n4js.png">
-  
-  <!-- ************* Favicon ************-->
-  <link rel="icon" href="../imgs/favicon.ico" />
-  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />  
-  <!-- ************* Styles ************* -->
-  <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
-  <link rel="stylesheet" type="text/css" href="../styles/styles.min.css">
+<meta property="og:site_name" content="N4JS"/>
+<meta property="og:title" content="N4JS Language and IDE"/>
+<meta property="og:url" content="https://numberfour.github.io/n4js"/>
+<meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+<meta property="og:image" content="../images/n4js.png">
 
+<!-- ************* Favicon ************-->
+<link rel="icon" href="../images/favicon.ico" />
+<link rel="icon" type="image/png" href="../images/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="../images/favicon-16x16.png" sizes="16x16" />
 
-  <!-- ****************** Scripts ****************** -->
-  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
-</head>
+<!-- ************* Back-to-top JQuery ************* -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="../scripts/nav-mobile.js"></script>
 
-<body>
-  <header class="Grid">
-    <div class="Cell Cell--4-12">
-      <a href="../"><img src="../imgs/n4js-logo.png" alt="N4JS Language and IDE"></a>
+<!-- ****************** Scripts ****************** -->
+<script type="text/javascript" src="../scripts/analytics.js"></script>
+
+<!-- ************* Styles ************* -->
+<link type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
+<link rel="stylesheet" type="text/css" href="../styles/n4js-adoc.css">
+
+<!-- ****************** NavBar ****************** -->
+<div id="menubar">
+    <div class="banner">
+        <a href="../index.html"><img id="logo" src="../images/n4js-logo.png" alt="N4JS Language and IDE"></a>
     </div>
-
-    <div class="Cell Cell--8-12">
-      <nav>
-         <a href="../#getting-started">Download</a> ·
-         <a href="../features" class="is-active">Features</a> ·
-         <a href="../documentation">Documentation</a> ·
-         <a href="../faq" >FAQ</a>
-      </nav>
-    </div>
-  </header>
-
-  <div class="Main">
-    <nav class="Nav--top">
-      <h2>Features</h2>
-      <ul>
-          <li><a href="../features" class="is-active">All Features</a></li>
-          <li><a href="modules.html" >Modules</a></li>
-          <li><a href="nominal-and-structural-typing.html" >Nominal And Structural Typing</a></li>
-          <li><a href="dependency-injection.html" >Dependency Injection</a></li>
-          <li><a href="generics.html" >Generics</a></li>
-          <li><a href="async-await.html" >Async/Await</a></li>
-          <li><a href="testing.html" >Test Driven</a></li>
-          <li><a href="nodejs-support.html" >Node.js Support</a></li>
-      </ul>
-    </nav>
-    <article class="Article--noGrid">
-
-<h1>N4ML Language and IDE Features</h1>
-
-<p class="Introduction">
-The following table gives an overview of features implemented by N4JS.
-</p>
-
-<h2>Remarks:</h2>
 <ul>
-<li>The parser fully supports ECMAScript 2015 syntax including unicode escape sequences, regular expressions and automatic semicolon insertion. Not all constructs, however, are fully supported by the type checker as of yet.</li>
-<li>The transpiler translates N4JS to V8-compatible JavaScript. ES2015 constructs that are not supported by latest V8 are rejected by N4JS.</li>
-<li>N4JS does not introduce any new keywords to ECMAScript 2015/ES.next except "project" (as an access modifier, this will be removed in future versions as it is the default). If additional functionality is required for explicit declarations, this is done via annotations similar to Java (using "@"). There are no user-defined annotations supported at the moment, this is why we do not list annotations as feature.</li>
+  <li><a href="../index.html#getting-started"></i>Download</a></li>
+  <li><a href="index.html">Features</a>
+      <ul>
+        <li><a href="index.html">All N4JS Features</a></li>
+        <li><a href="async-await.html">Async/Await</a></li>
+        <li><a href="dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="generics.html">Generics</a></li>
+        <li><a href="modules.html">Modules</a></li>
+        <li><a href="nodejs-support.html">Node.js Support</a></li>
+        <li><a href="nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a href="../userguides/index.html">Documentation</a>
+    <ul>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
+      <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a href="../faq/index.html">FAQ</a>
+    <ul>
+      <li><a href="../faq/index.html">FAQ</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
 </ul>
-
-
-<table class="FeatureTable">
-<tr><th>Feature</th><th>similar to</th><th>Description</th></tr>
-
-<tr><th colspan="3" class="section">Statements and expressions</th></tr>
-<tr class="done"><th>ECMAScript 5</th><td>ES5</td><td>ES5 expressions, statements and declarations are fully supported (except scoping in with-statement) including type constraints and inference.</td></tr>
-<tr class="most"><th>import, export</th><td>ES2015</td><td>Import statement fully supported, exporting declarations is supported, re-export not fully supported yet, no relative imports, no anonymous default export.</td></tr>
-<tr class="done"><th>for..of loops</th><td>ES2015</td><td>Fully supported including destructuring.</td></tr>
-<tr><th colspan="3" class="section">Scoping and access restrictions</th></tr>
-<tr class="done"><th>function scoping</th><td>ES5</td><td>ES5-like function scoping with "var".</td></tr>
-<tr class="done"><th>block scoping</th><td>ES2015</td><td>ES2015-like block scoping with "let" and "const".</td></tr>
-<tr class="done"><th>constants</th><td>ES2015</td><td>Const variables (requiring initializers at declaration) with block scoping using keyword "const".</td></tr>
-<tr class="done"><th>final fields</th><td>Java</td><td>Final fields (requiring initialization in constructor) with annotation "@Final".</td><tr>
-<tr class="done"><th>access modifiers</th><td>Java</td><td>Access modifiers quite similar to Java: public, protected, private. Instead of package, project is introduced limiting access to the current project or component. For larger projects with components from multiple vendors, an additional modifier "@Internal" is introduced to restrict access to vendor-types only.</td><tr>
-<tr class="done"><th>string templates</th><td>ES2015</td><td>ES2015-like string templates with validation (of expressions inside the template).</td></tr>
-
-<tr><th colspan="3" class="section">Functions</th></tr>
-<tr class="done"><th>function objects</th><td>ES5</td><td>Function (and method) expressions and declarations are modeled as function objects (with function type).</td></tr>
-<tr class="done"><th>function subtyping</th><td>Java+ES</td><td>Override compatibility (similar to Java) with notion of ECMAScript semantics (superfluous or variadic parameters).</td></tr>
-<tr class="done"><th>arrow expression</th><td>ES2015</td><td>Arrow functions with this binding according to ES2015.</td></tr>
-<tr class="done"><th>rest parameters</th><td>ES2015</td><td>Fully supported, parameters are treated as arrays inside function.</td></tr>
-<tr class="tbc"><th>optional parameters</th><td></td><td>Parameters can be marked optional. This is going to be replaced with ES2015 default parameters.</td></tr>
-<tr class="done"><th>super calls</th><td>ES2015</td><td>Inside methods (of classes), super can be used to call overridden method (or constructor).</td></tr>
-<tr class="tbd"><th>generators</th><td>ES2015</td><td>Syntax supported but not supported by language (type checker) yet.</td></tr>
-
-<tr><th colspan="3" class="section">Declared types</th></tr>
-<tr class="done"><th>classes</th><td>ES2015/Java</td><td>Class declarations as in ES2015 (or Java) with single inheritance but implementation of multiple interfaces as in Java).</td></tr>
-<tr class="done"><th>interfaces</th><td>Java</td><td>Interface declarations with default methods (as in Java 8) and data fields (treated as default implementation, can be implemented with field accessors). "instanceof" operator can be used with interfaces as well.</td></tr>
-<tr class="done"><th>enumeration</th><td>~TS</td><td>Simple enumerations with literals and basic reflection.</td></tr>
-<tr class="done"><th>string based enums</th><td></td><td>String-based enumerations, literals are of type string.</td></tr>
-<tr class="done"><th>methods</th><td>ES2015</td><td>Methods as in ES2015, including constructor and static methods; overridden or implemented members are to be annotated with @Override as in Java.</td></tr>
-<tr class="tbc"><th>field accessors</th><td>ES2015</td><td>Getters and setters (in object literals and classes, instance and static); at the moment, pairs are automatically recognized. This will be changed to ES2015 semantics.</td></tr>
-<tr class="done"><th>data fields</th><td>Java</td><td>Instance and static fields including initializers as in Java.</td></tr>
-<tr class="done"><th>class modifiers</th><td>Java</td><td>As in Java, classes can be declared abstract or final (using @Final annotation).</td></tr>
-
-<tr><th colspan="3" class="section">Types</th></tr>
-<tr class="tbc"><th>type annotation</th><td>ES4</td><td>Type annotations using colon syntax similar to ECMAScript 4 proposal or TS, some special types use different syntax (will probably be adjusted to be compatible with TS).</td></tr>
-<tr class="done"><th>any</th><td>TS!</td><td>Top type (super type of every other type), used as default type in N4JS files if no more specific type is declared or can be inferred. No property access is possible, since any has no properties. This is probably the most important difference to TypeScript: In TypeScript anything can be called on any, in N4JS nothing can be called on any! This can be changed with a dynamic modifier, explained below.</td></tr>
-<tr class="done"><th>primitives</th><td>ES5</td><td>Primitive types as in ES5 (number, string, boolean) with special types null and undefined (with special variant void to be used for return type).</td></tr>
-<tr class="tbc"><th>int</th><td></td><td>Primitive type int, at the moment is used synonymously to number. This will be both checked and handled more rigidly in future releases.</td></tr>
-<tr class="tbc"><th>symbols</th><td>ES2015</td><td>Minimal support for symbols. Basically only predefined symbols with more support a possibility.</td></tr>
-<tr class="done"><th>nominal types</th><td>Java</td><td>By default, all subtyping is done nominally as in Java, i.e. subtype relations are to be explicitly declared with "extends" and "implements".</td></tr>
-<tr class="done"><th>structural types</th><td>~TS</td><td>Modifiers at declarations or references enable structural subtyping. Access modifiers are taken in to account, i.e. only public members become part of a structural type.</td></tr>
-<tr class="done"><th>field structural type</th><td></td><td>Similar to structural typing, but only fields (data/accessors) are taken into account. Different variants (all fields, read-only fields/getter, write-only fields/setter, initializer variant for special constructor initializer) are supported.</td></tr>
-<tr class="done"><th>static types</th><td>Java</td><td>By default, only the declared properties of a type can be accessed. This is true independent from the syntax (property access with dot-syntax (a.x) or index access (a["x"]). To model the map-behavior of Object, arbitrary index access on variables of type Object is allowed.</td></tr>
-<tr class="done"><th>dynamic types</th><td></td><td>Type modifier "+" enables arbitrary property access. Actually "any+" is similar to TypeScript's any semantics. This is known to be unsafe so it is not the default behavior (and particularly not for any) but is only intended to be used as an 'escape hatch'.</td></tr>
-<tr class="done"><th>arrays</th><td>ES5</td><td>Arrays are modeled as a generic type (extending Object).</td></tr>
-<tr class="done"><th>object literals</th><td>ES5</td><td>Object literals are modeled as structural types (~Object with { properties }).</td></tr>
-<tr class="done"><th>type cast</th><td>~TS</td><td>Expressions can be explicitly casted to a type via "as".</td></tr>
-
-<tr><th colspan="3" class="section">Generics</th></tr>
-<tr class="done"><th>generic types</th><td>Java</td><td>Generic class and interface declarations, parameterized type references (raw type usage not allowed).</td></tr>
-<tr class="done"><th>generic functions and methods</th><td>Java</td><td>Generic functions (and methods).</td></tr>
-<tr class="done"><th>type variables, wildcards</th><td>Java</td><td>Type variables (in declarations) and wildcards (in references) with upper and lower bounds.</tr>
-<tr class="done"><th>type variable inference</th><td>Java</td><td>Type variables are inferred if not explicitly bound by type arguments in the reference. This is particularly important for generic function/method calls. The type inference algorithm matches the Java 8 specification.</td></tr>
-
-<tr><th colspan="3" class="section">Type Constructors and Special Types</th></tr>
-<tr class="done"><th>union type</th><td>~TS</td><td>A union type defines that a variable (of that type) is subtype of (at least) one type defined in the union. Without further type checks, only the members available in all types of the union are available. In case of methods, formal parameter types are merged by means of intersection types (and return types by means of union types).</td></tr>
-<tr class="most"><th>intersection type</th><td>TS</td><td>An intersection type defines that a variable (of that type) is a subtype of all types defined in the intersection. Members are therefore defined in any type of the union that are available. Property access to intersection types is not fully supported yet.</td></tr>
-<tr class="done"><th>constructor type</th><td>~TS</td><td>Type of a (non-abstract) class declaration or expression itself. Special subtyping rules are implemented, i.e. constructor signature is taken into account.</td></tr>
-<tr class="done"><th>type type</th><td></td><td>Type of a class or interface declaration, without any constructor. That is, variables of this type cannot be used in new-expressions. However, this type is useful in combination with static polymorphism.</tr>
-<tr class="done"><th>this type</th><td>~TS</td><td>Type of the this-literal, can be used in combination with structural typing. This type can be explicitly defined for functions via the @This annotation.</td></tr>
-<tr class="done"><th>dynamic polyfills</th><td></td><td>In order to model the commonly used pattern of polyfills and to add new properties to built-in types (as in ES2015), dynamic polyfills can be defined (in definition modules only). They look like partial classes. The modules defining these polyfills may define (plain JS) modules which are to be executed at initialization time in order to apply the polyfills at runtime.</td></tr>
-<tr class="done"><th>static polyfills</th><td></td><td>In larger projects, classes are often generated automatically. In order to enrich these classes without changing the generator, static polyfills can be defined. The transpiler merges these static polyfills into the original modules.</td></tr>
-
-<tr><th colspan="3" class="section">Asynchronous Programming</th></tr>
-<tr class="done"><th>Promise</th><td>ES2015</td><td>Object type Promise as defined in ECMAScript 2015 defined as ES2015 API type</td></tr>
-<tr class="done"><th>async/await</th><td>ES.next</td><td>Async and await keywords for implicit promises. The syntax and semantics closely follow <a href="https://tc39.github.io/ecmascript-asyncawait/">ES proposal</a>; transpiled to generator functions, validation checks the correct usage of async await, async functions will implicitly return Promises. Async can be used with function or method declarations, function and arrow expressions.</td></tr>
-<tr class="done"><th>promisifiable</th><td></td><td>Via @Promisifiable annotations, ES5-conforming functions following code conventions for asynchronous callback parameters (last parameter is a callback function etc.). Can be used as if they were defined with "async" keyword, i.e. they can be used with "await" keyword (or a promise can be retrieved via annotation @Promisify).</td></tr>
-
-<tr><th colspan="3" class="section">Components and Modules</th></tr>
-<tr class="done"><th>components</th><td></td><td>N4JS and the N4JS IDE use the notion of components (or projects). An N4JS component is described with a manifest in which the component and its dependencies are defined. N4JS introduces different component types: Runtime libraries and runtime environments define capabilities of specific JavaScript engines and execution environments (such as Node.js vs. browser). Test components have extended access to the tested components.</td></tr>
-<tr class="done"><th>modules</th><td>ES2015</td><td>N4JS defines modules similar to ES2015, these modules are transpiled to V8-compatible JavaScript.</td></tr>
-<tr class="done"><th>type definition modules</th><td>~TS</td><td>In order to provide type annotations for existing projects, definition files (n4jsd) are used.</td></tr>
-<tr class="done"><th>module loader</th><td>ES5/ES2015</td><td>Unified output with support for <a href="https://github.com/systemjs/systemjs">System.js</a> and Common.js (<a href="https://nodejs.org/docs/latest/api/modules.html">Node.js implementation</a>) module loaders. Since System.js enables better handling of dependency cycles, this is the default loader used by the IDE.</td></tr>
-<tr class="done"><th>dependency injection</th><td>Java</td><td>Dependency injection is supported using annotations similar to <a href="https://jcp.org/en/jsr/detail?id=330">JSR-330</a> (probably better known from <a href="https://github.com/google/guice">Guice</a>) and more to reduce client-side glue code. Fields (and parameters) can be injected via @Inject. Injectors can be easily set up via @GenerateInjector and configured with binders (and @Bind annotation). The built-in framework supports nesting of injectors, different injection points (field, constructor, method), providers and different scopes (default, singleton, injection-chain-singleton).</td></tr>
-
-<tr><th colspan="3" class="section">API</th></tr>
-<tr class="done"><th>ES5 object types</th><td>ES5</td><td>All ECMAScript 5 object types are available in N4JS, type annotations are built-in.</td></tr>
-<tr class="most"><th>ES2015 object types</th><td>ES2015</td><td>ECMAScript 2015 object types are defined by means of runtime libraries and a runtime environment. N4JS does not provide any implementation of these object types. Not all details are defined as of yet, with updates planned for future releases, depending also on V8 capabilities. The most important object types such as collections are already defined.</td></tr>
-<tr class="most"><th>Reflection</th><td></td><td>Besides ECMAScript reflection mechanisms, N4JS provides additional reflection at runtime via a built-in class N4Class. This class provides basic information at the moment and will be improved in future releases.</td></tr>
-
-<tr><th colspan="3" class="section">Testing</th></tr>
-<tr class="done"><th>JUnit-like annotations</th><td>Java</td><td>Tests can be annotated similar to <a href="http://junit.org/">JUnit</a>, i.e. tests methods with @Test, setup code with @Before/@BeforeAll etc.</td></tr>
-<tr class="done"><th>built-in test framework</th><td></td><td>An xUnit-like test framework "mangelhaft" using test annotations is provided with the IDE.</td></tr>
-<tr class="done"><th>extended access</th><td></td><td>Test classes (in special test components) have extended access to tested projects, e.g., can access non-public members.</td></tr>
-<tr class="done"><th>test execution</th><td></td><td>Tests can be started from the IDE using Node.js. It is possible to run single test modules, single methods or whole packages/projets.</td></tr>
-
-<tr><th colspan="3" class="section">Node.js Support</th></tr>
-<tr class="done"><th>dynamic import</th><td></td><td>In order to use projects without type annotations, the dynamic module import can be used to make the module dynamic so that arbitrary properties can be accessed.</td></tr>
-<tr class="most"><th>automatic download of type definitions</th><td></td><td>Type definitions (where available) are automatically downloaded when an npm module is installed via the IDE. New type definitions will be added in the future.</td></tr>
-<tr class="done"><th>execution</th><td></td><td>Modules can be run from the IDE using Node.js, either using module loader System.js (default) or Common.js.</td></tr>
-<tr class="done"><th>npm export</th><td></td><td>Components an be exported to the file system, package.json is automatically created and content is organized according to npm convention -- ready to be published with npm (which is not done automatically in order to avoid rash publications).</td></tr>
-
-
-<tr><th colspan="3" class="section">N4JS IDE Features</th></tr>
-<tr class="done"><th>syntax highlighting</th><td></td><td>Syntax highlighting with special highlighting of type annotations. This can be used for editing n4js, n4jsd or plain js files.</td></tr>
-<tr class="done"><th>immediate validation</th><td></td><td>Code is validated as you type.</td></tr>
-<tr class="done"><th>incremental builder</th><td></td><td>Code is transpiled as you save, only effected modules will be re-compiled.</td></tr>
-<tr class="most"><th>content assist</th><td></td><td>Basic content assist which proposes properties of the receiver and keywords etc., is working. This will be improved in future releases.</td></tr>
-<tr class="most"><th>quickfixes</th><td></td><td>Quick fixes to solve common issues such as adding missing annotations or modifiers. More quickfixes will be added in future releases.</td></tr>
-<tr class="most"><th>wizards</th><td></td><td>Wizards for creating new projects, classes or interfaces. More wizards will be added in future releases.</td></tr>
-<tr class="done"><th>organize imports</th><td></td><td>Automatically add missing imports and remove unused imports. Content assist and quickfixes will add imports -- you never have to type import statements.</td></tr>
-<tr class="done"><th>project and outline view</th><td></td><td>Project view showing all components in workspace, (quick) outline view to easily navigate to declared elements.</td></tr>
-<tr class="done"><th>jump to declaration</th><td></td><td>Navigate from reference to bound declaration.</td></tr>
-<tr class="done"><th>find all references</th><td></td><td>Find all references bound to a declaration.</td></tr>
-<tr class="tbc"><th>error reporting</th><td></td><td>We embrace bug reports! In order to enable easier writing of bug reports, language tests can be written from within the IDE. This feature will be improved in the future.</td></tr>
-<tr class="done"><th>Eclipse powered</th><td></td><td>Since the IDE is based on Eclipse, additional features such as git support are integrated or can easily be installed.</td></tr>
-
-<tr><th colspan="3" class="section">N4JS Headless Compiler</th></tr>
-<tr class="most"><th>n4jsc</th><td></td><td>The headless compiler is workspace aware, i.e. it can compile all projects with a single command, making it very easy to set up CI jobs. At the moment, the headless compiler is made available as a jar-file. Additional support simplifying installation and usage will be added in future releases.</td></tr>
+</div>
+<button id="tocbutton">TOC</button>
+<!-- ****************** Mobile NavBar ****************** -->
+<div class="mobile-banner">
+<ul id="menu">
+  <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
+  <li><a class="scroll" href="../features/index.html">Features</a>
+      <ul>
+        <li><a href="index.html">All N4JS Features</a></li>
+        <li><a href="async-await.html">Async/Await</a></li>
+        <li><a href="dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="generics.html">Generics</a></li>
+        <li><a href="modules.html">Modules</a></li>
+        <li><a href="nodejs-support.html">Node.js Support</a></li>
+        <li><a href="nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="../userguides/index.html">Documentation</a>
+    <ul>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
+      <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="../faq/index.html">FAQ</a>
+    <ul>
+      <li><a  href="../faq/index.html">FAQ</a></li>
+      <li><a  href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+</head>
+<body class="book">
+<div id="header">
+</div>
+<div id="content">
+<h1 id="_n4js-language-and-ide-features" class="sect0"><a class="link" href="#_n4js-language-and-ide-features">N4JS Language and IDE Features</a></h1>
+<div class="openblock partintro">
+<div class="content">
+<div id=features-nav>
+<nav>
+  <h2>N4JS Features</h2>
+  <ul>
+      <li><a href="#_statements-and-expressions">Statements and Expressions</a></li>
+      <li><a href="#_scoping-and-access-restrictions">Scoping and Access Restrictions</a></li>
+      <li><a href="#_functions">Functions</a></li>
+      <li><a href="#_declared-types">Declared Types</a></li>
+      <li><a href="#_types">Types</a></li>
+      <li><a href="#_generics">Generics</a></li>
+      <li><a href="#_type-constructors-and-special-types">Type Constructors and Special Types</a></li>
+      <li><a href="#_asynchronous-programming">Asynchronous Programming</a></li>
+      <li><a href="#_components-and-modules">Components and Modules</a></li>
+      <li><a href="#_api">API</a></li>
+      <li><a href="#_testing">Testing</a></li>
+      <li><a href="#_node-js-support">Node.js Support</a></li>
+      <li><a href="#_n4js-ide-features">N4JS IDE Support</a></li>
+      <li><a href="#_n4js-headless-compiler">N4JS Headless Compiler</a></li>
+  </ul>
+</nav>
+</div>
+<div class="paragraph">
+<p>The following table gives an overview of features implemented by N4JS.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_remarks"><a class="link" href="#_remarks">Remarks</a></h2>
+<div class="sectionbody">
+<div id="remarks" class="ulist">
+<ul>
+<li>
+<p>The parser fully supports ECMAScript 2015 syntax including unicode escape sequences, regular expressions and automatic semicolon insertion. Not all constructs are fully supported by the type-checker yet.</p>
+</li>
+<li>
+<p>The transpiler translates N4JS to V8-compatible JavaScript. ES2015 constructs not supported by latest V8 are rejected by N4JS.</p>
+</li>
+<li>
+<p>Except <code>project</code> (as an access modifier, will be removed in future versions as it is the default), N4JS does not introduce any new keywords to ECMAScript 2015/ES.next.
+If additional functionality requires explicit declarations, this is done via annotations similar to Java (using <code>@</code>).
+There are no user-defined annotations supported at the moment (this is why we do not list annotations as a feature).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_feature-table"><a class="link" href="#_feature-table">Feature Table</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="_statements-and-expressions"></a> Statements and expressions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="tableblock halign-center valign-top"><p class="tableblock">Feature</p></th>
+<th class="tableblock halign-center valign-top"><p class="tableblock">Similar to</p></th>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Description</p></th>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>ECMAScript 5</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ES5 expressions, statements and declarations are fully supported (except scoping in with-statement) including type constraints and inference.</p></td>
+</tr>
+</tbody>
 </table>
-<!--
-<tr class="done"><th></th><td></td><td></td></tr>
--->
-
-<h3>Legend</h3>
-
-<table class="FeatureTable">
-<tr><td class="done">green</td><td>Available although there may be bugs in the alpha-release.</td></tr>
-<tr><td class="most">yellow</td><td>Mostly available, some aspects or parts of the feature are not implemented yet or will be improved in the future.</td></tr>
-<tr><td class="tbc">orange</td><td>Feature is available but syntax or semantics will be changed in future releases.</td></tr>
-<tr><td class="tbd">red</td><td>Planned for future releases but not yet implemented.</td></tr>
+<table class="tableblock frame-all grid-all spread most">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Import, Export</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">import statement fully supported, exporting declarations is supported, re-export not fully supported yet, no relative imports, no anonymous default export.</p></td>
+</tr>
+</tbody>
 </table>
-
-
-<h3>References</h3>
-<table>
-<tr><td>ES5</td><td><a href="http://www.ecma-international.org/ecma-262/5.1/">ECMAScript Language Specification</a> / ISO/IEC. Geneva, Switzerland, Juni 2011 (ECMA-262, 5.1 Edition).</td></tr>
-<tr><td>ES2015</td><td><a href="http://www.ecma-international.org/ecma-262/6.0/">ECMAScript 2015 Language Specification</a> / ISO/IEC (ECMA-262, 6th Edition). – International Standard.</td></tr>
-<tr><td>ES4</td><td>Proposed ECMAScript 4th Edition – Language Overview / ECMA. – Proposal, <a href="http://www.ecmascript.org/es4/spec/overview.pdf">[PDF]</a>.</td></tr>
-<tr><td>ES.next</td><td>ECMAScript proposals (ECMAScript 2017 or later or never).</td></tr>
-<tr><td>TS</td><td>Hejlsberg, Anders ; Lucco, Steve: <a href="https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md">TypeScript Language Specification</a>. 1.8. Microsoft, Januar 2016.
-        <br/>~TS means almost similar functionality, !TS refers to similar concepts but with major differences.</td></tr>
-<tr><td>Java</td><td>Gosling, James et al: <a href="https://docs.oracle.com/javase/specs/jls/se8/html/index.html">The Java Language Specification</a>. Java SE 8 Edition. JSR-337 Java SE 8 Release Contents.</td></tr>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="_scoping-and-access-restrictions"></a> Scoping and access restrictions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>for..of loops</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fully supported including destructuring.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Function scoping</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ES5-like function scoping with <code>var</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Block scoping</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ES2015-like block scoping with <code>let</code> and <code>const</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Constants</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">const variables (requiring initializers at declaration) with block scoping using keyword <code>const</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Final fields</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">final fields (requiring initialization in constructor) with annotation <code>@Final</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Access modifiers</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Access modifiers almost similar to Java: public, protected, private. Instead of
+package, project is introduced limiting access to the current project or
+component. For larger projects with components from multiple vendors, an additional modifier <code>@Internal</code> is
+introduced to restrict access to vendor-types only.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>String templates</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ES2015-like string templates with validation (of expressions inside the template).</p></td>
+</tr>
+</tbody>
 </table>
-
-
-    </article>
-
-
-  </div>
-
-  <footer class="Grid">
-    <div class="Cell Cell--12-12">
-      <a href="http://www.numberfour.eu" target="_blank">NumberFour AG</a> · <a href="https://twitter.com/n4jsdev" target="_blank">Twitter</a>
-
-      <a href="../#getting-started" class="Link--action">Get the N4JS IDE now!</a>
-    </div>
-  </footer>
-  <script>
-    dp.SyntaxHighlighter.HighlightAll('code');
-  </script>
-
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="_functions"></a> Functions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Function objects</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Function (and method) expressions and declarations are modeled as function objects (with function type)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Function subtyping</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Java+ES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Override compatibility (similar to Java) with notion of ECMAScript semantics (superfluous or variadic parameters)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Arrow expression</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrow functions with this binding according to ES2015</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Rest parameters</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fully supported, parameters are treated as arrays inside function</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread tbc">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Optional parameters</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parameters can be marked optional. This is going to be replaced with ES2015 default parameters.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Super calls</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inside methods (of classes), super can be used to call overridden method (or constructor)</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread tbd">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Generators</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Syntax supported but not supported by language (type checker) yet.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="_declared-types"></a>  Declared types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Classes</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES2015/Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Class declarations as in ES2015 (or Java) with single inheritance but implementation of multiple interfaces as in Java)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Interfaces</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interface declarations with default methods (as in Java 8) and data fields (treated as default implementation, can be implemented with field accessors). <code>instanceof</code> operator can be used with interfaces as well.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Enumeration</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>&tilde; TS</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simple enumerations with literals and basic reflection</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>String-based enums</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string based enumerations, literals are of type string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Methods</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Methods as in ES2015, including constructor and static methods; overridden or implemented members are to be annotated with <code>@Override</code> as in Java</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread tbc">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Field accessors</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Getters and setters (in object literals and classes, instance and static); at the moment pairs are automatically recognized, will be changed to ES2015 semantics</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Data fields</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instance and static fields including initializers as in Java</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Class modifiers</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">As in Java, classes can be declared abstract or final (using <code>@Final</code> annotation).</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread tbc">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="_types"></a>  Types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Type annotation</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type annotations using colon syntax similar to ECMAScript 4 proposal or TS, some special types use different syntax (will probably be adjusted to be compatible with TS)</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>any</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">TS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Top type (super type of every other type), used as default type in N4JS files if no more specific type is declared or can be inferred. No property access is possible, since any has no properties. This is probably the most important difference to TypeScript: In TypeScript anything can be called on any, in N4JS nothing! However, this can be changed with a dynamic modifier, see below.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Primitives</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">primitive types as in ES5 (number, string, boolean), special types null and undefined (with special variant void to be used for return type)</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread tbc">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>int</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">primitive type int, at the moment used synonymously to number, will be stricter checked and handled in future releases</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Symbols</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">minimal support for symbols, basically only predefined symbols, more support may be added</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Nominal types</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, all subtyping is done nominally as in Java, i.e. subtype relations are to be explicitly declared with <code>extends</code> and <code>implements</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Structural types</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>&tilde; TS</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Modifiers at declarations or references enable structural subtyping. Access modifiers are taken in to account, i.e. only public members become part of a structural type.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Field structural type</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Similar to structural typing, but only fields (data/accessors) are taken into account. Different variants (all fields, read-only fields/getter, write-only fields/setter, initializer variant for special constructor initializer) supported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Static types</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, only declared properties of a type can be accessed. This is true independent from the syntax (property access with dot-syntax <code>(a.x)</code> or index access <code>(a["x"])</code>. To model the map-behavior of Object, arbitrary index access on variables of type Object is allowed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Dynamic types</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type modifier <code>+</code> enables arbitrary property access. Actually <code>any+</code> is similar to TypeScript&#8217;s any semantics. This is known to be unsafe, so it is not the default behavior (in particular not for any) but only to be used as an "escape hatch".</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Arrays</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrays are modeled as a generic type (extending Object)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Object literals</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Object literals are modeled as structural types (\~Object with { properties })</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Type cast</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>&tilde; TS</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Expressions can be explicitly casted to a type via <code>as</code></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="_generics"></a> Generics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Generic types</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Generic class and interface declarations, parameterized type references (raw type usage not allowed)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Generic functions and methods</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Generic functions (and methods)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Type variables, wildcards</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type variables (in declarations) and wildcards (in references) with upper and lower bounds&lt;/tr&gt;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Type variable inference</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type variables are inferred if not explicitly bound by type arguments in the reference, this is particularly important for generic function/method calls. The type inference algorithm matches the Java 8 specification.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="_type-constructors-and-special-types"></a>  Type Constructors and Special Types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Union type</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>&tilde; TS</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An union type defines that a variable (of that type) is subtype of (at least) one type defined in the union. Without further type checks, only members available in all types of the union are available. In case of methods, formal parameter types are merged by means of intersection types (and return types by means of union types)</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread most">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Intersection type</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">TS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An intersection type defines that a variable (of that type) is subtype of all types defined in the intersection. Thus, members defined in any type of the union are available. Property access to intersection types is not fully supported yet.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Constructor type</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>&tilde; TS</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type of a (non-abstract) class declaration or expression itself. Special subtyping rules are implemented, i.e. constructor signature is taking into account.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>type type</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type of a class or interface declaration, without any constructor. That is, variables of this type cannot be used in new-expressions. However, this type is useful in combination with static polymorphism.&lt;/tr&gt;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>this type</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>&tilde; TS</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type of the this-literal, can be used in combination with structural typing. Via annotation <code>@This</code> this type can be explicitly defined for functions.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Dynamic polyfills</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In order to model the commonly used pattern of polyfills and to add new properties to built-in types (as in ES2015), dynamic polyfills can be defined (in definition modules only). They look like partial classes. The modules defining these polyfills may define (plain JS) modules which are to be executed at initialization time in order to apply the polyfills at runtime.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Static polyfills</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In larger projects, often classes are automatically generated. In order to enrich these classes without changing the generator, static polyfills can be defined. The transpiler merges these static polyfills into the original modules.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="_asynchronous-programming"></a>  Asynchronous Programming</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Promise</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Object type Promise as defined in ECMAScript 2015 defined as ES2015 API type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Async/await</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES.next</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">async and await keywords for implicit promises, syntax and semantics closely follow <a href="https://tc39.github.io/ecmascript-asyncawait/">ES proposal</a>; transpiled to generator functions; validation checks correct usage of async await, async functions will implicitly return Promises. async can be used with function or method declarations, function and arrow expressions</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Promisifiable</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Via annotations <code>@Promisifiable</code> ES5-conform functions following code conventions for asynchronous callback parameters (last parameter is a callback function etc.) can be used as if they were defined with <code>async</code> keyword, i.e. they can be used with <code>await</code> keyword (or a promise can be retrieved via annotation <code>@Promisify</code>)</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="_components-and-modules"></a>  Components and Modules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Components</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N4JS and the N4JS IDE use the notion of components (or projects). An N4JS component is described with a manifest, in which the component and its dependencies are defined. N4JS introduces different component types: Runtime libraries and runtime environments define capabilities of specific JavaScript engines and execution environments (such as node.js vs. browser); test components have extended access to the tested components</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Modules</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N4JS defines modules similar to ES2015, these modules are transpiled to V8-compatible JavaScript</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Type definition modules</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">TS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In order to provide type annotations for existing projects, definition files (n4jsd) are used.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Module Loader</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES5/ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unified output with support for <a href="https://github.com/systemjs/systemjs">System.js</a> and Common.js (<a href="https://nodejs.org/docs/latest/api/modules.html">Node.js implementation</a>) module loaders. Since System.js enables better handling of dependency cycles, this is the default loader used by the IDE</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Dependency Injection</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dependency injection is supported using annotations similar to <a href="https://jcp.org/en/jsr/detail?id=330">JSR-330</a> (probably better known from <a href="https://github.com/google/guice">Guice</a>) and more to reduce client side glue code. Fields (and parameters) can be injected via <code>@Inject</code>, injectors can be easily set up via <code>@GenerateInjector</code> and configured with binders (and <code>@Bind annotation</code>). The built-in framework supports nesting of injectors, different injection points (field, constructor, method), providers and different scopes (default, singleton, injection-chain-singleton).</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="_api"></a> API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>ES5 object types</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All ECMAScript 5 object types are available in N4JS, type annotations are built-in</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread most">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>ES2015 object types</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ECMAScript 2015 object types are defined by means of runtime libraries and a runtime environment. N4JS does not provide any implementation of these object types. Also, not all details are defined yet. This will be updated in future releases, depending also on V8 capabilities. However, the most important object types such as collections are defined already.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Reflection</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Besides ECMAScript reflection mechanisms, N4JS provides additional reflection at runtime via a built-in class N4Class. This class provides basic information at the moment, this will be improved in future releases</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="_testing"></a> Testing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>JUnit-like annotations</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tests can be annotated similar to <a href="http://junit.org/">JUnit</a>, i.e. tests methods with <code>@Test</code>, setup code with<code> @Before</code>/<code>@BeforeAll</code> etc.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Built-in Test Framework</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An xUnit-like test framework "mangelhaft" using test annotations is provided with the IDE</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Extended Access</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test classes (in special test components) have extended access to tested projects, e.g., can access non-public members</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Test Execution</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tests can be started from the IDE using node.js. It is possible to run single test modules, single methods, or whole packages/projets.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="_node-js-support"></a> node.js Support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Dynamic Import</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In order to use projects without type annotations, the dynamic module import can be used to make the module dynamic (so that arbitrary properties can be accessed)</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Automatic download of Type Definitions</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If available, type definitions are automatically downloaded when an NPM module is installed via the IDE.
+New type definitions will be added in the future.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Execution</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Modules can be run from the IDE using node.js, either using module loader System.js (default) or Common.js</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>npm Export</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Components an be exported to the file system, package.json is automatically created and content is organized according to NPM convention&#8201;&#8212;&#8201;ready to be published with NPM (which is not done automatically in order to avoid rash publications)</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="_n4js-ide-features"></a> N4JS IDE Features</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Syntax highlighting</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Syntax highlighting with special highlighting of type annotations, can be used for editing n4js, n4jsd or plain js files</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Immediate validation</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Code is validated as you type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Incremental builder</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Code is transpiled as you save, only effected modules will be re-compiled</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread most">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Content assist</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Basic content assist (propose properties of the receiver, keywords) is working; will be improved in future releases</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Quickfixes</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Quick fixes to solve common issues, e.g. adding missing annotations or modifiers; more quickfixes will be added in future releases</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Wizards</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wizards for creating new projects, classes or interfaces.
+More wizards will be added in future releases</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Organize imports</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Automatically add missing imports and remove unused imports. A
+lso content assist and quickfixes will add imports - you never have to type import statements.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Project and outline view</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Project view showing all components in workspace, (quick) outline view to easily navigate to declared elements.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Jump to declaration</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Navigate from reference to bound declaration</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Find all references</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Find all references bound to a declaration</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread tbc">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Error reporting</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We embrace bug reports! In order to enable easier writing of bug reports, language tests can be written inside the IDE.
+This feature will be improved in the future.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Eclipse-powered</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Since the IDE is based on Eclipse, additional features such as git support are integrated or can easily be installed</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread most">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="_n4js-headless-compiler"></a>  N4JS Headless Compiler</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>n4jsc</strong></p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The headless compiler is workspace aware, i.e. it can compile all projects with a single command.
+This makes it very easy to set up CI jobs. At the moment, the headless compiler is made available as a jar-file.
+Additional support simplifying installation and usage will be added in future releases</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_legend"><a class="link" href="#_legend">Legend</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="5">FeatureTable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>green</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">available, although there might be bugs in the alpha-release.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread most">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>yellow</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">mostly available, some aspects or parts of the feature are not implemented yet or will be improved in the future.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread tbc">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>orange</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">feature available but syntax or semantics will be changed in future releases</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread tbd">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>red</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">planned for future releases but not implemented yet.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_references"><a class="link" href="#_references">References</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="5">References</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>ES</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock"><a href="http://www.ecma-international.org/ecma-262/5.1/">ECMAScript Language Specification</a> / ISO/IEC. Geneva, Switzerland, Juni 2011 (ECMA-262, 5.1 Edition)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>ES2015</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock"><a href="http://www.ecma-international.org/ecma-262/6.0/">ECMAScript 2015 Language Specification</a> / ISO/IEC (ECMA-262, 6th Edition). – International Standard.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>ES4</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">Proposed ECMAScript 4th Edition – Language Overview / ECMA. – Proposal, <a href="http://www.ecmascript.org/es4/spec/overview.pdf">PDF</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>ES.next</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">ECMAScript proposals (ECMAScript 2017 or later or never)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>TS</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">Hejlsberg, Anders ; Lucco, Steve: <a href="https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md">TypeScript Language Specification</a>. 1.8. Microsoft, Januar 2016.
+<strong>&tilde; TS</strong> means almost similar functionality, <strong>!TS</strong> refers to similar concepts but with major differences.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Java</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">Gosling, James et al: <a href="https://docs.oracle.com/javase/specs/jls/se8/html/index.html">The Java Language Specification</a>. Java SE 8 Edition. JSR-337 Java SE 8 Release Contents.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+</div>
+</div>
+<div class="social">
+	<ul>
+    	<li><a href="http://www.numberfour.eu" target="_blank"></i>NumberFour AG</a> </li>· <li> <a href="https://twitter.com/n4jsdev" target="_blank"></i>N4JS Twitter</a> </li>
+		<li><a href="../index.html#getting-started" id="bottomright" class="Link--action"></i>Get the N4JS IDE now!</a></li>
+	</ul>
+</div>
+<script>
+// Toggle the table of contents
+$( "button#tocbutton" ).click(function() {
+  if ($("#tocbutton").css('right') == '25px') {
+    $( "#tocbutton" ).animate({right: '215px'},"slow");
+    $( "#toc.toc2" ).animate({right: '0'},"slow");
+}
+  else {
+    $( "#tocbutton" ).animate({right: '25px'},"slow");
+    $( "#toc.toc2" ).animate({right: '-13rem'},"slow");
+}
+});
+</script>
+<script>
+// Initialise mobile menu
+  $(function(){
+    $('#menu').slicknav();
+  });
+</script>
+<script type="text/javascript">
+// Create a back to top button
+$('body').prepend('<a href="#" class="back-to-top">Back to Top</a>');
+var amountScrolled = 300;
+$(window).scroll(function() {
+if ( $(window).scrollTop() > amountScrolled ) {
+	$('a.back-to-top').fadeIn('slow');
+} else {
+	$('a.back-to-top').fadeOut('slow');
+}
+});
+$('a.back-to-top, a.simple-back-to-top').click(function() {
+$('html, body').animate({
+	scrollTop: 0
+}, 700);
+return false;
+});
+</script>
+<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
+<script src="../scripts/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>

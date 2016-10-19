@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Releases</title>
+<title>N4JS Userguides</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
@@ -56,11 +56,11 @@
         <li><a href="../features/testing.html">Testing</a></li>
     </ul>
   </li>
-  <li><a href="../userguides/index.html">Documentation</a>
+  <li><a href="index.html">Documentation</a>
     <ul>
-      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
-      <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
-      <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+      <li><a href="n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a href="npm-export-guide.html">Export as npm</a></li>
+      <li><a href="tutorial.html">N4JS Tutorial</a></li>
     </ul>
   </li>
   <li><a href="../faq/index.html">FAQ</a>
@@ -73,8 +73,9 @@
 </ul>
 </div>
 <button id="tocbutton">TOC</button>
+
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="mobile-banner">
+<div class="mobile-navbar">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
   <li><a class="scroll" href="../features/index.html">Features</a>
@@ -89,18 +90,18 @@
         <li><a href="../features/testing.html">Testing</a></li>
     </ul>
   </li>
-  <li><a class="scroll" href="../userguides/index.html">Documentation</a>
+  <li><a class="scroll" href="index.html">Documentation</a>
     <ul>
-      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
-      <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
-      <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+      <li><a href="n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a href="npm-export-guide.html">Export as npm</a></li>
+      <li><a href="tutorial.html">N4JS Tutorial</a></li>
     </ul>
   </li>
   <li><a class="scroll" href="../faq/index.html">FAQ</a>
     <ul>
-      <li><a  href="../faq/index.html">FAQ</a></li>
-      <li><a  href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
-      <li><a  href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
+      <li><a href="../faq/index.html">FAQ</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -110,124 +111,74 @@
 <div id="header">
 </div>
 <div id="content">
-<h1 id="_releases" class="sect0"><a class="link" href="#_releases">Releases</a></h1>
-<div class="openblock partintro">
-<div class="content">
-<h2 id="_current-n4js-release" class="discrete">Current N4JS Release</h2>
+<h1 id="_n4js-userguides" class="sect0"><a class="link" href="#_n4js-userguides">N4JS Userguides</a></h1>
+<div class="sect1">
+<h2 id="_index"><a class="link" href="#_index">Index</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>The current release of N4JS, version 0.3, is a "public alpha".
-What that implies:</p>
+<div class="title">All the resources you need to begin type safe development with the N4JS IDE</div>
+<p><strong><a id="ide-setup"></a>IDE Setup &amp; HelloWorld!</strong></p>
+</div>
+<div id="ide-setup" class="paragraph">
+<p>This short introduction covers the basics of getting up and running with the
+N4JS IDE. From installation to running HelloWorld!, quickly learn about new features
+of the N4JS IDE, how to create a new project, manage workspaces and begin development!</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>There are some known issues.</p>
-</li>
-<li>
-<p>There are probably a greater number of unknown issues.</p>
-</li>
-<li>
-<p>There will be more features in future releases.</p>
-</li>
-<li>
-<p>There may be incompatible changes in future releases.</p>
+<p><a href="n4js-ide-setup.html#n4js-ide-setup">N4JS IDE Setup Guide</a>: Basic installation and setup instructions.</p>
 </li>
 </ul>
 </div>
+<hr>
 <div class="paragraph">
-<p>"Alpha" does not mean unstable. In fact, N4JS has been in development for three years.
-There is already an extensive test suite with more that 70.000 tests including the
-<a href="https://github.com/tc39/test262">ECMAScript test suites</a>. It has been in
-use internally in production mode for more than a year, handling a code base with more
-than 3.000 modules and many thousands of tests.</p>
+<p><strong><a id="npm-export-guide"></a>npm Export Guide</strong></p>
 </div>
 <div class="paragraph">
-<p>N4JS has successfully passed its
-internal beta phase: it&#8217;s working for us and, furthermore, we&#8217;re confident it will work
-for you. Since every programmer has their own style, you may find issues we didn&#8217;t. We
-may add new features or make changes in order to solve these particular issues. That&#8217;s
-why we call it a "public alpha".</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_known-issues"><a class="link" href="#_known-issues">Known Issues</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Since we are using N4JS and the N4JS IDE internally for quite a while, we have found some
-issues. There are still a lot of bugs open and we have plenty of ideas for new features.
-We used an non-public bug tracking system to manage bugs internally. We will review and migrate
-them to <a href="https://github.com/numberfour/n4js/issues">GitHub issues</a> as soon as possible.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_unknown-issues"><a class="link" href="#_unknown-issues">Unknown Issues</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>We embrace bug reports and feature requests.</strong></p>
-</div>
-<div class="paragraph">
-<p>For the moment we use <a href="https://github.com/numberfour/n4js/issues">GitHub issues</a>
-to manage issues found by public users. When we move to a different bug tracking system,
-these issues shall be migrated.</p>
-</div>
-<div class="paragraph">
-<p>The N4JS IDE comes with special tool support for <a href="reporting-bugs.html#reporting_bugs">writing
-bug reports</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_new-features"><a class="link" href="#_new-features">New Features</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In the future, the following topics are expected to be addressed:</p>
+<p>The npm Export Guide briefly covers the essentials of Node.js development. A simple
+code example is written and exported from the N4JS IDE as an npm package, run from
+the command line and published to the npm registry. Quickly learn how to streamline Node.js development
+using the N4JS IDE.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Improved UI experience with a focus on customized content assist and quick-fixes.</p>
-</li>
-<li>
-<p>Improved ECMAScript 2015 support.</p>
-</li>
-<li>
-<p>Improved type inference and add type guards.</p>
-</li>
-<li>
-<p>Improved refactoring capabilities.</p>
-</li>
-<li>
-<p>Improved Node.js developer experience.</p>
-</li>
-<li>
-<p>Support for browser-based projects.</p>
+<p><a href="npm-export-guide.html#npm-export-guide">npm Export Guide</a>: Basic npm export and publishing instructions.</p>
 </li>
 </ul>
 </div>
+<hr>
 <div class="paragraph">
-<p>There may be other topics raised by users. Separating these topics into individual
-features and prioritizing them will <strong>highly depend on your feedback</strong>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_incompatible-changes-in-future-releases"><a class="link" href="#_incompatible-changes-in-future-releases">Incompatible Changes in Future Releases</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Yes, this may happen. It&#8217;s quite possible that the language or APIs must be changed in
-future releases, which could break existing code. This is no cause for concern, however.
-As mentioned before, we have a substantial internal code base, so if incompatible changes
-are introduced, we will provide tools to migrate your code automatically unless the changes
-are easier to solve manually.</p>
+<p><strong><a id="tutorial"></a>In-Depth Tutorial</strong></p>
 </div>
 <div class="paragraph">
-<p>To give you an idea of how this can happen: In earlier versions we used a Java-like syntax
-for type annotations. Since this did not work well together with features such as async/await,
-we changed the syntax to ECMAScript 4 colon style. This required our entire code base to be
-reworked. Fortunately this was simple as we provided a quick-fix, enabling almost all problems
-stemming from that change to be corrected with a single key stroke!</p>
+<p>Using the built-in example projects as a reference, this in-depth tutorial covers the most important tools and features
+of the N4JS IDE. The example project is explained as a domain model and built step-by-step.
+New features of the N4JS IDE are introduced along the way such as <strong>modules</strong> , <strong>type annotations</strong> ,
+<strong>dependency injection</strong> , <strong>testing</strong>  with an example test project and more.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="tutorial.html#tutorial">In-Depth Tutorial</a>: Begin using the more powerful features N4JS has to offer!</p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong><a id="language-spec"></a>N4JS Specification</strong></p>
+</div>
+<div class="paragraph">
+<p>For a complete reference of the N4JS Language, the Specification
+is available to download as a pdf from the following link:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://goo.gl/2Lv2Te">N4JS Language Specification (pdf)</a></p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -238,7 +189,7 @@ stemming from that change to be corrected with a single key stroke!</p>
 </div>
 <div class="social">
 	<ul>
-    	<li><a href="http://www.numberfour.eu" target="_blank"></i>NumberFour AG</a> </li>· <li> <a href="https://twitter.com/n4jsdev" target="_blank"></i>N4JS Twitter</a> </li>
+    	<li><a href="http://www.numberfour.eu" target="_blank"></i>NumberFour AG</a> </li> · <li> <a href="https://twitter.com/n4jsdev" target="_blank"></i>N4JS Twitter</a> </li>
 		<li><a href="../index.html#getting-started" id="bottomright" class="Link--action"></i>Get the N4JS IDE now!</a></li>
 	</ul>
 </div>

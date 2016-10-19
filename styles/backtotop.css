@@ -1,0 +1,88 @@
+/* ========================================================================== Back-to-top button ======================================================================= */
+
+a.back-to-top {
+	display: none;
+	width: 25px;
+	height: 25px;
+	text-indent: -9999px;
+	position: fixed;
+	z-index: 999;
+	right: 15%;
+	bottom: 5%;
+	background: #032c52 url("up-arrow.png") no-repeat center 43%;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+}
+
+a:hover.back-to-top {
+	background-color: #F7D425 ;
+}
+#tocbutton {
+	visibility: hidden;
+}
+
+#tocbuttonbars.fa.fa-bars {
+	z-index: 1000;
+	right: 0;
+}
+
+#tocbutton:hover {
+	background: url("yellowbars.png") no-repeat center 50%;
+}
+
+
+body.toc2.toc-right a.back-to-top {
+	width: 25px;
+	height: 25px;
+	text-indent: -9999px;
+	position: fixed;
+	z-index: 1001;
+	right: 90px;
+	bottom: 20px;
+	background: #032c52 url("up-arrow.png") no-repeat center 43%;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+}
+
+body.toc2.toc-right #tocbutton {
+	visibility: visible;
+	width: 25px;
+	height: 25px;
+	text-indent: -9999px;
+	position: fixed;
+	z-index: 998;
+	border: none;
+	right: 25px;
+	top: 5px;
+	background: url("bars.png") no-repeat center 50%;
+}
+
+body.toc2.toc-right #tocbutton:hover {
+	background-color: #e3f2ff;
+	background: url("yellowbars.png") no-repeat center 50%;
+}
+
+body.toc2.toc-right a:hover.back-to-top {
+	background-color: #F7D425 ;
+}
+
+@media only screen and (max-width: 1535px) {
+	body.toc2.toc-right #tocbutton {
+	background: url("yellowbars.png") no-repeat center 50%;
+	left: 98%;
+	z-index: 100000;
+}
+@media only screen and (max-width: 1434px) {
+	body.toc2.toc-right #tocbutton {
+	visibility: hidden;
+}
+
+@media only screen and (min-width: ) 
+
+
+@media only screen and (max-width: 1462px) {
+	a.back-to-top {
+	left: 90%;
+}

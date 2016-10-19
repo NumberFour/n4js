@@ -16,37 +16,47 @@
   <meta property="og:title" content="N4JS Language and IDE"/>
   <meta property="og:url" content="https://numberfour.github.io/n4js"/>
   <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
-  <meta property="og:image" content="imgs/n4js.png">
+  <meta property="og:image" content="images/n4js.png">
+  <!-- ************* JQuery ************* -->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <script src="scripts/nav-mobile.js"></script>
   
   <!-- ************* Favicon ************-->
-  <link rel="icon" href="imgs/favicon.ico" />
-  <link rel="icon" type="image/png" href="imgs/favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="imgs/favicon-16x16.png" sizes="16x16" />
+  <link rel="icon" href="images/favicon.ico" />
+  <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
   <!-- ************* Styles ************* -->
-  <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
+  <link type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
   <link rel="stylesheet" type="text/css" href="styles/styles.min.css">
+  <!-- ************* Mobile Navigation Styles ************* -->
+  <link rel="stylesheet" type="text/css" href="scripts/nav-mobile.css"/>
 
   <!-- ****************** Scripts ****************** -->
   <script type="text/javascript" src="scripts/scripts-legacy.js"></script>
   <script type="text/javascript" src="scripts/scripts.js"></script>
+
+  <!-- ****************** Required for buttom to top scripts ****************** -->
+  <link rel="stylesheet" type="text/css" href="styles/backtotop.css">
 </head>
 
 <body>
 
   <header class="Grid">
     <div class="Cell Cell--4-12">
-      <a href="#"><img src="imgs/n4js-logo.png" alt="N4JS Language and IDE"></a>
+      <a href="#"><img src="images/n4js-logo.png" alt="N4JS Language and IDE"></a>
     </div>
 
     <div class="Cell Cell--8-12">
       <nav>
          <a href="#getting-started" data-scroll>Download</a> ·
-         <a href="features">Features</a> ·
-         <a href="documentation">Documentation</a> ·
-         <a href="faq">FAQ</a>
+         <a href="features/index.html">Features</a> ·
+         <a href="userguides/index.html">Documentation</a> ·
+         <a href="faq/index.html">FAQ</a>
       </nav>
     </div>
   </header>
+
 
   <div class="Main">
 
@@ -55,7 +65,7 @@
       <a href="#introduction" data-scroll class="Link--action">Learn more ›</a>
       </div>
 
-      <img src="imgs/screenshot.png">
+      <img src="images/screenshot.png">
     </article>
 
 
@@ -111,7 +121,7 @@
           <li>Manage npm dependencies in IDE</li>
           <li>Organize imports in IDE</li>
         </ul>
-        <img class="" src="fig/modules.png">
+        <img class="" src="images/modules.png">
         <p><a href="features/modules.html">Read More about Modularization with N4JS ›</a></p>
       </div>
 
@@ -122,7 +132,7 @@
           <li>Structural typing</li>
           <li>Combining both</li>
         </ul>
-        <img class="" src="fig/typing.png">
+        <img class="" src="images/typing.png">
         <p><a href="features/nominal-and-structural-typing.html">Nominal And Structural Typing in N4JS ›</a></p>
       </div>
 
@@ -134,7 +144,7 @@
           <li>Wildcards</li>
           <li>Familiar from Java</li>
         </ul>
-        <img class="" src="fig/generics.png">
+        <img class="" src="images/generics.png">
         <p><a href="features/generics.html">Read More about Generics in N4JS ›</a></p>
       </div>
 
@@ -145,7 +155,7 @@
           <li>Await on functions/methods returning a Promise</li>
           <li>@Promisifiable and @Promisify</li>
         </ul>
-        <img class="" src="fig/async.png">
+        <img class="" src="images/async.png">
         <p><a href="features/async-await.html">Read More about Async/Await with N4JS ›</a></p>
       </div>
 
@@ -156,7 +166,7 @@
           <li>Nesting injectors @WithParentInjector</li>
           <li>DI support in N4JS test framework</li>
         </ul>
-        <img class="" src="fig/di.png">
+        <img class="" src="images/di.png">
         <p><a href="features/dependency-injection.html">Read More about Dependency Injection with N4JS ›</a></p>
       </div>
 
@@ -167,7 +177,7 @@
           <li>Annotations <code>@Test</code>, <code>@Ignore</code>, etc.</li>
           <li>IDE support for running &amp; viewing results</li>
         </ul>
-        <img class="" src="fig/testing.png">
+        <img class="" src="images/testing.png">
         <p><a href="features/testing.html">Read More about Testing with N4JS ›</a></p>
       </div>
 
@@ -178,7 +188,7 @@
           <li>N4JS type definitions</li>
           <li>npm package export feature</li>
         </ul>
-        <img class="" src="fig/nodejs.png">
+        <img class="" src="images/nodejs.png">
         <p><a href="features/nodejs-support.html">Read More about Node.js Support in N4JS ›</a></p>
       </div>
 
@@ -192,7 +202,7 @@
       <div class="Cell Cell--8-12 m-Cell--withMargin">
 
         <h3>State of N4JS</h3>
-        <p>We have an extensive test suite (&gt;70.000 tests) to ensure a stable nightly build. The current version is 0.3 and we like to call it a "public alpha" release. This does not mean that N4JS and its IDE are unstable, but you should expect bugs and missing features. We encourage you to give us feedback! You can ask questions using our mailing list. Or you can create bug reports and feature requests using Github issues. Before writing issues, please read our <a href="releases">release notes</a>. Also note how the N4JS IDE provides support for <a href="releases/reporting-bugs.html">writing bug reports</a>.</p>
+        <p>We have an extensive test suite (&gt;90.000 tests) to ensure a stable nightly build. The current version is 0.3 and we like to call it a "public alpha" release. This does not mean that N4JS and its IDE are unstable, but you should expect bugs (becoming less every day) and missing features. We encourage you to give us feedback! You can ask questions using our mailing list. Or you can create bug reports and feature requests using Github issues. Before writing issues, please read our <a href="releases/index.html">release notes</a>. Also note how the N4JS IDE provides support for <a href="releases/reporting-bugs.html">writing bug reports</a>.</p>
       </div>
 
 
@@ -200,10 +210,7 @@
         <h3>Contribute</h3>
         <p>Setup your Eclipse environment to develop N4JS itself</p>
         <ul>
-          <li><a href="https://raw.githubusercontent.com/NumberFour/n4js/master/releng/eu.numberfour.n4js.targetplatform/N4JS.setup">Oomph Eclipse Installer Script</a>, set up Eclipse environment and downloads source code automatically.</li>
-        </ul>
-
-        <p class="SystemRequirements">System Requirements:  The Oomph script requires the <a href="https://www.eclipse.org/downloads/">Eclipse installer</a>.</p>
+          <li>Use the latest <a href="https://www.eclipse.org/downloads/">Eclipse installer</a> and select "Advanced/Github Projects/N4JS" (also see our <a href="https://github.com/numberfour/n4js">github page for details</a>).</p>
       </div>
 
     </article>
@@ -226,7 +233,7 @@
         </ul>
         
         <br />
-        <p><a href="releases/">Release Notes</a></p>
+        <p><a href="releases/index.html">Release Notes</a></p>
       </div>
 
       <div class="Cell Cell--6-12 GettingStarted-u-paddingRight">
@@ -255,10 +262,10 @@
       <div class="Cell Cell--4-12 m-Cell--withMargin">
         <h3>Further Information</h3>
         <ul>
-          <li><a href="faq/">FAQ</a></li>
-          <li><a href="features/">Complete Feature Table</a></li>
-          <li><a href="releases">Release Notes</a></li>
-          <li><a href="documentation/">Documentation:</a> Tutorials and quickstart guides for the N4JS IDE</li>
+          <li><a href="faq/index.html">FAQ</a></li>
+          <li><a href="features/index.html">Complete Feature Table</a></li>
+          <li><a href="releases/index.html">Release Notes</a></li>
+          <li><a href="userguides/index.html">Documentation</a></li>
         </ul>
       </div>
 
@@ -281,6 +288,7 @@
         <h3>From our <a href="http://n4js.blogspot.com/">Blog</a>:</h3>
         <ul>
           <li><a href="http://n4js.blogspot.de/2016/03/n4js-goes-open-source.html">N4JS Goes Open Source</a></li>
+          <li><a href="http://n4js.blogspot.de/2016/05/test-driven-development-with-n4js.html">Test-Driven Development with N4JS</a></li>
         </ul>
       </div>
     </article>
@@ -300,9 +308,24 @@
     smoothScroll.init();
     featureCards.init();
   </script>
+    <script type="text/javascript">
+// Create a back to top button
+$('body').append('<a href="#" class="back-to-top" style="right:5%">Back to Top</a>');
+var amountScrolled = 300;
+$(window).scroll(function() {
+if ( $(window).scrollTop() > amountScrolled ) {
+  $('a.back-to-top').fadeIn('slow');
+} else {
+  $('a.back-to-top').fadeOut('slow');
+}
+});
+$('a.back-to-top, a.simple-back-to-top').click(function() {
+$('html, body').animate({
+  scrollTop: 0
+}, 700);
+return false;
+});
+</script>
 
-  <!-- n4js-webpage build web.production (Thu Apr 21 2016 18:03:27 GMT+0200 (CEST)) -->
-
-</body>
-
+ </body>
 </html>

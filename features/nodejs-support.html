@@ -1,93 +1,165 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>Node.js Support</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<!-- ************* Meta ************* -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-  <!-- ************* Meta ************* -->
-  <title>Node.js Support · Features · N4JS Language and IDE</title>
+<!-- ************* OpenGraph ************-->
+<meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  
-  <!-- ************* OpenGraph ************-->
-  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
-  
-  <meta property="og:site_name" content="N4JS"/>
-  <meta property="og:title" content="N4JS Language and IDE"/>
-  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
-  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
-  <meta property="og:image" content="../imgs/n4js.png">
-  
-  <!-- ************* Favicon ************-->
-  <link rel="icon" href="../imgs/favicon.ico" />
-  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />  
-  <!-- ************* Styles ************* -->
-  <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
-  <link rel="stylesheet" type="text/css" href="../styles/styles.min.css">
+<meta property="og:site_name" content="N4JS"/>
+<meta property="og:title" content="N4JS Language and IDE"/>
+<meta property="og:url" content="https://numberfour.github.io/n4js"/>
+<meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+<meta property="og:image" content="../images/n4js.png">
 
+<!-- ************* Favicon ************-->
+<link rel="icon" href="../images/favicon.ico" />
+<link rel="icon" type="image/png" href="../images/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="../images/favicon-16x16.png" sizes="16x16" />
 
-  <!-- ****************** Scripts ****************** -->
-  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
-</head>
+<!-- ************* Back-to-top JQuery ************* -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="../scripts/nav-mobile.js"></script>
 
-<body>
-  <header class="Grid">
-    <div class="Cell Cell--4-12">
-      <a href="../"><img src="../imgs/n4js-logo.png" alt="N4JS Language and IDE"></a>
+<!-- ****************** Scripts ****************** -->
+<script type="text/javascript" src="../scripts/analytics.js"></script>
+
+<!-- ************* Styles ************* -->
+<link type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
+<link rel="stylesheet" type="text/css" href="../styles/n4js-adoc.css">
+
+<!-- ****************** NavBar ****************** -->
+<div id="menubar">
+    <div class="banner">
+        <a href="../index.html"><img id="logo" src="../images/n4js-logo.png" alt="N4JS Language and IDE"></a>
     </div>
-
-    <div class="Cell Cell--8-12">
-      <nav>
-         <a href="../#getting-started">Download</a> ·
-         <a href="../features" class="is-active">Features</a> ·
-         <a href="../documentation">Documentation</a> ·
-         <a href="../faq" >FAQ</a>
-      </nav>
-    </div>
-  </header>
-
-  <div class="Main">
-    <nav class="Nav--top">
-      <h2>Features</h2>
+<ul>
+  <li><a href="../index.html#getting-started"></i>Download</a></li>
+  <li><a href="index.html">Features</a>
       <ul>
-          <li><a href="../features" >All Features</a></li>
-          <li><a href="modules.html" >Modules</a></li>
-          <li><a href="nominal-and-structural-typing.html" >Nominal And Structural Typing</a></li>
-          <li><a href="dependency-injection.html" >Dependency Injection</a></li>
-          <li><a href="generics.html" >Generics</a></li>
-          <li><a href="async-await.html" >Async/Await</a></li>
-          <li><a href="testing.html" >Test Driven</a></li>
-          <li><a href="nodejs-support.html" class="is-active">Node.js Support</a></li>
-      </ul>
-    </nav>
-    <article class="Article--noGrid">
-
-
-<h1>Node.js Support</h1>
-
-<p class="Introduction">
-N4JS and its IDE are optimized to develop large-scale server applications with <a href="https://nodejs.org">Node.js</a>. Besides launching and testing code from the IDE using Node.js, additional support is provided for automatically downloading <a href="https://www.npmjs.com/">npm</a> packages and exporting N4JS projects to npm. This allows for seamless integration of N4JS projects with existing Node.js based environments.
-</p>
-
-<!-- ======================================================================= -->
-<h2>Installing and using npm packages</h2>
-<!-- ======================================================================= -->
-
-<p>
-N4JS helps Node.js developers to use third-party npm packages with support both on the language and tooling level. The required packages can be downloaded and installed on-demand into the IDE via the library manager and this feature is also supported in the headless tooling.
-</p>
-
-<div class="Image"><a href="fig/quickfixNpmInstall.png"><img src="fig/quickfixNpmInstall.png" alt="npm Install" /></a></div>
-
-
-<!-- ======================================================================= -->
-<h3>Dynamic Import</h3>
-<!-- ======================================================================= -->
-<p>
-Third-party packages are supported in two different ways: if an npm package does not have any corresponding type definition files defined yet, then the required module can be imported into an N4JS module dynamically. In order to support the import of modules without any N4JS (<code>.n4js</code>) or N4JS type definition (<code>.n4jsd</code>) files, N4JS extends the ES2015 module import. This is done by declaring the imported module with "<code>+</code>" appended to the end of the named import. This so called "dynamic module import" will be treated as a type of <code>any+</code>.
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols">import * as mongodb+ from 'mongodb';
+        <li><a href="index.html">All N4JS Features</a></li>
+        <li><a href="async-await.html">Async/Await</a></li>
+        <li><a href="dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="generics.html">Generics</a></li>
+        <li><a href="modules.html">Modules</a></li>
+        <li><a href="nodejs-support.html">Node.js Support</a></li>
+        <li><a href="nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a href="../userguides/index.html">Documentation</a>
+    <ul>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
+      <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a href="../faq/index.html">FAQ</a>
+    <ul>
+      <li><a href="../faq/index.html">FAQ</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+<button id="tocbutton">TOC</button>
+<!-- ****************** Mobile NavBar ****************** -->
+<div class="mobile-banner">
+<ul id="menu">
+  <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
+  <li><a class="scroll" href="../features/index.html">Features</a>
+      <ul>
+        <li><a href="index.html">All N4JS Features</a></li>
+        <li><a href="async-await.html">Async/Await</a></li>
+        <li><a href="dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="generics.html">Generics</a></li>
+        <li><a href="modules.html">Modules</a></li>
+        <li><a href="nodejs-support.html">Node.js Support</a></li>
+        <li><a href="nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="../userguides/index.html">Documentation</a>
+    <ul>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
+      <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="../faq/index.html">FAQ</a>
+    <ul>
+      <li><a  href="../faq/index.html">FAQ</a></li>
+      <li><a  href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+</head>
+<body class="book toc2 toc-right">
+<div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#_node-js-support">Node.js Support</a>
+<ul class="sectlevel1">
+<li><a href="#_installing-and-using-npm-packages">Installing and using npm packages</a>
+<ul class="sectlevel2">
+<li><a href="#_dynamic-import">Dynamic Import</a></li>
+<li><a href="#_automatic-download-of-type-definitions">Automatic Download of Type Definitions</a></li>
+</ul>
+</li>
+<li><a href="#_exporting-n4js-projects-as-npm-packages">Exporting N4JS projects as npm packages</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<h1 id="_node-js-support" class="sect0"><a class="link" href="#_node-js-support">Node.js Support</a></h1>
+<div class="openblock partintro">
+<div class="title">Node.js Support</div><div class="content">
+N4JS and its IDE are optimized to develop large scale server applications with <a href="https://nodejs.org">Node.js</a>
+Besides launching and testing code from the IDE using Node.js, additional support is provided for automatically downloading
+<a href="https://www.npmjs.com/">npm</a> packages and exporting N4JS projects to npm. This allows for seamless integration
+of N4JS projects with existing Node.js based environments.
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installing-and-using-npm-packages"><a class="link" href="#_installing-and-using-npm-packages">Installing and using npm packages</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>N4JS helps Node.js developers to use third-party npm packages with support both on the language and tooling level. The
+required packages can be downloaded and installed on-demand into the IDE via the library manager and this feature is also
+supported in the headless tooling.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/quickfixnpminstall.png" alt="quickfixnpminstall">
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dynamic-import"><a class="link" href="#_dynamic-import">Dynamic Import</a></h3>
+<div class="paragraph">
+<p>Third-party packages are supported in two different ways. If an npm package does not have any corresponding type definition
+files defined yet, then the required module can be imported into an N4JS module dynamically. In order to support the import
+of modules without any N4JS (<code>.n4js</code>) or N4JS type definition (<code>.n4jsd</code>) files, N4JS extends the ES2015
+module import. This is done by declaring the imported module with &#8220;+&#8221; appended to the end of the named import.
+This so called "dynamic module import" will be treated as a type of <code>any+</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import * as mongodb+ from 'mongodb';
 
 var client = mongodb.MongoClient;
 
@@ -99,60 +171,117 @@ client.connect("…", function (err, db: any+) {
         db.close();
         console.log('Connection closed at', url);
     }
-});
-</pre></div>
-
-<p>In the example above, <code>mongodb</code> is dynamically imported. It is therefor possible to access arbitrary properties, such as the "class" <code>MongoClient</code> in line 3. The type of these properties will become any+ as well, so that it is possible to access properties from the class as well, as shown in line 5 and 10.</p>
-
-<!-- ======================================================================= -->
-<h3>Automatic Download of Type Definitions</h3>
-<!-- ======================================================================= -->
-<p>
-If type definitions are available at <a href="https://github.com/NumberFour/n4jsd">our N4JS type definition project</a> for a particular npm package,
-these definitions will be included automatically when the npm package is being downloaded and installed. All npm packages with type definitions seamlessly integrate into the N4JS system. This means that all third-party npm packages with the correct type definitions behave just like any other N4JS module or project declared in the workspace. The language provides type safety while the tooling provides content assist, navigation, search functionality and so on.
-</p>
-
-<div class="Image"><a href="fig/nodejs.png"><img src="fig/nodejs.png" alt="Using npm Dependency" /></a></div>
-
-<p>
-The IDE also supports a way to check for any type definition updates in an on-demand fashion. This means that you can initially begin to use any third-party packages that don't yet have type definition files. In such cases (as described above) the modules from the npm packages have to be imported dynamically. It's then possible to perform a manual refresh from the IDE and the application will check for any type definition updates. If the type definitions have been declared and been made available, meanwhile, the application will download the definitions and warn the user at the location of the dynamic imports about the availability of the type definition file. It's then possible to switch to the type safe approach by removing the appended <code>+</code> from the named module import.
-</p>
-
-<p>At the moment, writing type definition files requires manually setting up a new project and configuring the manifest file etc. accordingly. We will improve support for this in order to make it as simple as possible for users to write new type definitions and to build on and enrich existing ones. Type definitions can be shared with others via <a href="https://github.com/NumberFour/n4jsd">our N4JS type definition project</a> for future releases.
-</p>
-
-
-<!-- ======================================================================= -->
-<h2>Exporting N4JS projects as npm packages</h2>
-<!-- ======================================================================= -->
-
-<p>
-Besides supporting npm package download and usage, the IDE comes with an npm package export feature.
-Any N4JS workspace project can then be transformed into a structure that complies to npm requirements and can be exported into the local file system.
-These exported structures can later be manually published to npm as packages. 
-The corresponding <code>package.json</code> file will be created based on the dependencies declared in the N4 manifest file of the exported N4JS project. 
-Although all direct and transitive dependencies will be included in the brand new <code>package.json</code> file, only the desired N4JS projects will be transformed and exported.
-The <code>package.json</code> content can be customized by creating a <code>package.json</code> template file in the root of the N4JS project
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the example above, <code>mongodb</code> is dynamically imported. It is therefor possible to access arbitrary properties,
+such as the "class" <code>MongoClient</code> in line 3. The type of these properties will become any+ as well, so that it is
+possible to access properties from the class as well, as shown in line 5 and 10.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_automatic-download-of-type-definitions"><a class="link" href="#_automatic-download-of-type-definitions">Automatic Download of Type Definitions</a></h3>
+<div class="paragraph">
+<p>If type definitions are available at <a href="https://github.com/NumberFour/n4jsd">our N4JS type definition project</a> for a
+particular npm package
+these definitions will be included automatically when the npm package is being downloaded and installed. All npm packages with
+type definitions seamlessly integrate into the N4JS system. This means that all third-party npm packages with the correct type
+definitions behave just like any other N4JS module or project declared in the workspace. The language provides type safety while
+the tooling provides content assist, navigation, search functionality and so on.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/nodejs.png" alt="nodejs">
+</div>
+</div>
+<div class="paragraph">
+<p>The IDE also supports a way to check for any type definition updates in an on-demand fashion. This means that you can initially
+begin to use any third-party packages that don&#8217;t yet have type definition files. In such cases (as described above) the modules
+from the npm packages have to be imported dynamically.
+It&#8217;s then possible to perform a manual refresh from the IDE and the
+application will check for any type definition updates. If the type definitions have been declared and been made available,
+meanwhile, the application will download the definitions and warn the user at the location of the dynamic imports about the
+availability of the type definition file. It&#8217;s then possible to switch to the type safe approach by removing the appended
+<code>+</code> from the named module import.</p>
+</div>
+<div class="paragraph">
+<p>At the moment, writing type definition files requires to manually set up a new project and configuring the manifest etc.
+accordingly. We will improve supporting that to simplify users to write new and enrich existing type definitions and share
+them with others via <a href="https://github.com/NumberFour/n4jsd">our N4JS type definition project</a> in future releases.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_exporting-n4js-projects-as-npm-packages"><a class="link" href="#_exporting-n4js-projects-as-npm-packages">Exporting N4JS projects as npm packages</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Besides supporting npm package download and usage, the IDE comes with an npm package export feature.
+Any N4JS workspace project can then be transformed into a structure that complies to npm requirements and can be exported
+into the local file system.
+These exported structures can later be used to manually publish them as packages to npm.
+The corresponding <code>package.json</code> file will be created based on the dependencies declared in the N4 manifest file of
+the exported N4JS project.
+Although all direct and transitive dependencies will be included in the brand new <code>package.json</code> file, only the
+desired N4JS projects will be transformed and exported.
+The <code>package.json</code> content can be customized by creating a <code>package.json</code> template file in the root of
+the N4JS project
 With this template, additional attributes can be defined.
-This feature is further explained in the <a href="../userguide/index.html">user guide</a>.
-</p>
-
-
-    </article>
-
-
-  </div>
-
-  <footer class="Grid">
-    <div class="Cell Cell--12-12">
-      <a href="http://www.numberfour.eu" target="_blank">NumberFour AG</a> · <a href="https://twitter.com/n4jsdev" target="_blank">Twitter</a>
-
-      <a href="../#getting-started" class="Link--action">Get the N4JS IDE now!</a>
-    </div>
-  </footer>
-  <script>
-    dp.SyntaxHighlighter.HighlightAll('code');
-  </script>
-
+This feature is further explained in the <a href="../userguides/npm-export-guide.html#npm_export_guide">npm export guide</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+</div>
+</div>
+<div class="social">
+	<ul>
+    	<li><a href="http://www.numberfour.eu" target="_blank"></i>NumberFour AG</a> </li>· <li> <a href="https://twitter.com/n4jsdev" target="_blank"></i>N4JS Twitter</a> </li>
+		<li><a href="../index.html#getting-started" id="bottomright" class="Link--action"></i>Get the N4JS IDE now!</a></li>
+	</ul>
+</div>
+<script>
+// Toggle the table of contents
+$( "button#tocbutton" ).click(function() {
+  if ($("#tocbutton").css('right') == '25px') {
+    $( "#tocbutton" ).animate({right: '215px'},"slow");
+    $( "#toc.toc2" ).animate({right: '0'},"slow");
+}
+  else {
+    $( "#tocbutton" ).animate({right: '25px'},"slow");
+    $( "#toc.toc2" ).animate({right: '-13rem'},"slow");
+}
+});
+</script>
+<script>
+// Initialise mobile menu
+  $(function(){
+    $('#menu').slicknav();
+  });
+</script>
+<script type="text/javascript">
+// Create a back to top button
+$('body').prepend('<a href="#" class="back-to-top">Back to Top</a>');
+var amountScrolled = 300;
+$(window).scroll(function() {
+if ( $(window).scrollTop() > amountScrolled ) {
+	$('a.back-to-top').fadeIn('slow');
+} else {
+	$('a.back-to-top').fadeOut('slow');
+}
+});
+$('a.back-to-top, a.simple-back-to-top').click(function() {
+$('html, body').animate({
+	scrollTop: 0
+}, 700);
+return false;
+});
+</script>
+<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
+<script src="../scripts/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>

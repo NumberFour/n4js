@@ -1,242 +1,426 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>N4JS and Java</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<!-- ************* Meta ************* -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-  <!-- ************* Meta ************* -->
-  <title>N4JS and Java · FAQ · N4JS Language and IDE</title>
+<!-- ************* OpenGraph ************-->
+<meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  
-  <!-- ************* OpenGraph ************-->
-  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
-  
-  <meta property="og:site_name" content="N4JS"/>
-  <meta property="og:title" content="N4JS Language and IDE"/>
-  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
-  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
-  <meta property="og:image" content="../imgs/n4js.png">
-  
-  <!-- ************* Favicon ************-->
-  <link rel="icon" href="../imgs/favicon.ico" />
-  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />
-  <!-- ************* Styles ************* -->
-  <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
-  <link rel="stylesheet" type="text/css" href="../styles/styles.min.css">
+<meta property="og:site_name" content="N4JS"/>
+<meta property="og:title" content="N4JS Language and IDE"/>
+<meta property="og:url" content="https://numberfour.github.io/n4js"/>
+<meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+<meta property="og:image" content="../images/n4js.png">
 
+<!-- ************* Favicon ************-->
+<link rel="icon" href="../images/favicon.ico" />
+<link rel="icon" type="image/png" href="../images/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="../images/favicon-16x16.png" sizes="16x16" />
 
-  <!-- ****************** Scripts ****************** -->
-  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
-</head>
+<!-- ************* Back-to-top JQuery ************* -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="../scripts/nav-mobile.js"></script>
 
-<body>
-  <header class="Grid">
-    <div class="Cell Cell--4-12">
-      <a href="../"><img src="../imgs/n4js-logo.png" alt="N4JS Language and IDE"></a>
+<!-- ****************** Scripts ****************** -->
+<script type="text/javascript" src="../scripts/analytics.js"></script>
+
+<!-- ************* Styles ************* -->
+<link type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
+<link rel="stylesheet" type="text/css" href="../styles/n4js-adoc.css">
+
+<!-- ****************** NavBar ****************** -->
+<div id="menubar">
+    <div class="banner">
+        <a href="../index.html"><img id="logo" src="../images/n4js-logo.png" alt="N4JS Language and IDE"></a>
     </div>
-
-    <div class="Cell Cell--8-12">
-      <nav>
-         <a href="../#getting-started">Download</a> ·
-         <a href="../features">Features</a> ·
-         <a href="../documentation">Documentation</a> ·
-         <a href="../faq" class="is-active">FAQ</a>
-      </nav>
-    </div>
-  </header>
-  <div class="Main">
-    <nav class="Nav--top">
-      <h2>FAQ</h2>
+<ul>
+  <li><a href="../index.html#getting-started"></i>Download</a></li>
+  <li><a href="../features/index.html">Features</a>
       <ul>
-          <li><a href="../faq" >FAQ</a></li>
-          <li><a href="comparison-java.html" class="is-active">N4JS and Java</a></li>
-          <li><a href="comparison-typescript.html" >N4JS and Typescript</a></li>
-      </ul>
-    </nav>
-    <article class="Article--noGrid">
-
-<h1>N4JS and Java</h1>
-
-<p class="Introduction">
-N4JS is an extension of ECMAScript. It is therefore as different from Java as ECMAScript is. There are additional features which are quite similar to Java, actually making ECMAScript feel more like <em>Java</em>Script. In the following, we describe the most important similarities and differences of Java and N4JS.
-</p>
-
-<!-- ======================================================================= -->
-<h2>Similarities</h2>
-<!-- ======================================================================= -->
-
-<p>
-The general idea of N4JS is to make ECMAScript as type safe as Java. For that reason, N4JS adds a static type system to ECMAScript. Many concepts of this type system are similar to Java's type system.
-</p>
-
-<h3>Nominal Typing</h3>
-
-<p>
-N4JS supports both, <a href="../features/nominal-and-structural-typing.html">nominal and structural typing</a>. Java has a nominal type system and this is also the default mode in N4JS. When you just use a simple type reference, nominal typing (as in Java) is applied.
-</p>
-<p>
-The following example should be easily understood by Java developers:
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">class A { public foo(): void {} }
+        <li><a href="../features/index.html">All N4JS Features</a></li>
+        <li><a href="../features/async-await.html">Async/Await</a></li>
+        <li><a href="../features/dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="../features/generics.html">Generics</a></li>
+        <li><a href="../features/modules.html">Modules</a></li>
+        <li><a href="../features/nodejs-support.html">Node.js Support</a></li>
+        <li><a href="../features/nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="../features/testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a href="../userguides/index.html">Documentation</a>
+    <ul>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
+      <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a href="../faq/index.html">FAQ</a>
+    <ul>
+      <li><a href="index.html">FAQ</a></li>
+      <li><a href="comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+<button id="tocbutton">TOC</button>
+<div id=faq>
+<nav>
+  <h2>FAQ</h2>
+  <ul>
+      <li><a href="index.html" >FAQ</a></li>
+      <li><a href="comparison-java.html" class="is-active">N4JS and Java</a></li>
+      <li><a href="comparison-typescript.html" >N4JS and Typescript</a></li>
+  </ul>
+</nav>
+</div>
+<!-- ****************** Mobile NavBar ****************** -->
+<div class="mobile-navbar">
+<ul id="menu">
+  <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
+  <li><a class="scroll" href="../features/index.html">Features</a>
+      <ul>
+        <li><a href="../features/index.html">All N4JS Features</a></li>
+        <li><a href="../features/async-await.html">Async/Await</a></li>
+        <li><a href="../features/dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="../features/generics.html">Generics</a></li>
+        <li><a href="../features/modules.html">Modules</a></li>
+        <li><a href="../features/nodejs-support.html">Node.js Support</a></li>
+        <li><a href="../features/nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="../features/testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="../userguides/index.html">Documentation</a>
+    <ul>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
+      <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="index.html">FAQ</a>
+    <ul>
+      <li><a  href="index.html">FAQ</a></li>
+      <li><a  href="comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+</head>
+<body class="book toc2 toc-right">
+<div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#_n4js-and-java">N4JS and Java</a>
+<ul class="sectlevel1">
+<li><a href="#_introduction">Introduction</a></li>
+<li><a href="#_similarities">Similarities</a>
+<ul class="sectlevel2">
+<li><a href="#_nominal-typing">Nominal Typing</a></li>
+<li><a href="#_generics">Generics</a></li>
+<li><a href="#_interfaces-and-abstract-declarations">Interfaces and Abstract Declarations</a></li>
+<li><a href="#_access-modifiers">Access Modifiers</a></li>
+</ul>
+</li>
+<li><a href="#_differences">Differences</a>
+<ul class="sectlevel2">
+<li><a href="#_auto-boxing">Auto-Boxing</a></li>
+<li><a href="#_function-subtyping">Function Subtyping</a></li>
+<li><a href="#_overloading">Overloading</a></li>
+<li><a href="#_static-members">Static Members</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<h1 id="_n4js-and-java" class="sect0"><a class="link" href="#_n4js-and-java">N4JS and Java</a></h1>
+<div class="sect1">
+<h2 id="_introduction"><a class="link" href="#_introduction">Introduction</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<div class="title">N4JS and Java</div>
+<p>N4JS is an extension of ECMAScript. It is therefore as different from Java as ECMAScript is. There are additional features which
+are quite similar to Java, actually making ECMAScript feel more like <strong>Java</strong>Script. In the following, we describe the most
+important similarities and differences of Java and N4JS.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_similarities"><a class="link" href="#_similarities">Similarities</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The general idea of N4JS is to make ECMAScript as type safe as Java. For that reason, N4JS adds a static type system to ECMAScript.
+Many concepts of this type system are similar to Java&#8217;s type system.</p>
+</div>
+<div class="sect2">
+<h3 id="_nominal-typing"><a class="link" href="#_nominal-typing">Nominal Typing</a></h3>
+<div class="paragraph">
+<p>N4JS supports both, <a href="../features/nominal-and-structural-typing.html#nominal_and_structural_typing">nominal and structural typing</a>. Java has a nominal
+type system and this is also the default mode in N4JS. When you just use a simple type reference, nominal typing (as in Java) is applied.</p>
+</div>
+<div class="paragraph">
+<p>The following example should be easily understood by Java developers:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">class A { public foo(): void {} }
 class B extends A {}
 class C { public foo(): void {} }
 
 function f(p: A) {}
 
 f(new B());
-f(new C()); // error: C is not a subtype of A.
-</pre></div>
-
-<p>
-This example will produce an error in the last line because <code>C</code> is not a nominal subtype of <code>A</code>.
-</p>
-
-<p>
-Overriding of members in N4JS is quite similar to Java although N4JS allows for slightly more flexibility due to the underlying ECMAScript semantics (see "Function Subtyping" below).
-</p>
-
-<h3>Generics</h3>
-
-<p>
-The most important concept (taken more or less 1:1 from Java) is generics. There are a lot of languages providing support for generics. Often there is limited support compared to Java, or different concepts are used. There are languages, for example, which support generic types but not generic functions, or do not support wildcards. Languages such as Scala, for instance, have different concepts for generics.
-</p>
-
-<p>
-N4JS provides all features related to generics as Java does. Supported are:
-</p>
+f(new C()); // error: C is not a subtype of A.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This example will produce an error in the last line because <code>C</code> is not a nominal subtype of <code>A</code>.</p>
+</div>
+<div class="paragraph">
+<p>Overriding of members in N4JS is quite similar to Java although N4JS allows for slightly more flexibility due to the underlying
+ECMAScript semantics (see <a href="#_function-subtyping">Function Subtyping</a>).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_generics"><a class="link" href="#_generics">Generics</a></h3>
+<div class="paragraph">
+<p>The most important concept (taken more or less 1:1 from Java) is generics. There are a lot of languages providing support for
+generics. Often there is limited support compared to Java, or different concepts are used. There are languages, for example,
+which support generic types but not generic functions, or do not support wildcards. Languages such as Scala, for instance, have
+different concepts for generics.</p>
+</div>
+<div class="paragraph">
+<p>N4JS provides all features related to generics as Java does. Supported are:</p>
+</div>
+<div class="ulist">
 <ul>
-<li>generic types and generic methods (and functions)</li>
-<li>type variables with lower bounds</li>
-<li>parameterization with wildcards (and upper and lower bounds)</li>
+<li>
+<p>generic types and generic methods (and functions)</p>
+</li>
+<li>
+<p>type variables with lower bounds</p>
+</li>
+<li>
+<p>parameterization with wildcards (and upper and lower bounds)</p>
+</li>
 </ul>
-<p>
-N4JS even uses the very same <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-18.html">algorithm to infer type variables as Java 8</a>. This algorithm is, of course, slightly adapted to support extra features of N4JS such as union types.
-</p>
-<p>
-As a consequence, generics and parameterization should immediately be understood by Java programmers (as far as 'immediately understood' can be applied to generics).
-</p>
-<p>
-At the moment, the N4JS type system has some known issues when substituting type variables and instantiating wildcard expressions. For the latter, Java uses a technique called "capture conversion" while N4JS implements a slightly simpler one called "existential types". Future releases of N4JS will fix these issues.
-</p>
-<h3>Interfaces and Abstract Declarations</h3>
-
-<p>
-ECMAScript 2015 introduces classes similar to Java. In both languages, single inheritance is used. Although this simplifies many scenarios, the limitations of single inheritance are often problematic. In Java, many of these problematic cases can be solved with interfaces. N4JS also provides the concept of interfaces, allowing for classes to implement multiple interfaces. Interfaces in N4JS allow for the definition of default methods as in Java 8, therefore overcoming most of the problems introduced by single inheritance. Related to interfaces are abstract methods and, consequently, abstract classes which are also supported in N4JS similarly to Java.
-</p>
-<p>
-N4JS adapts the <code>instanceof</code> operator so it can be used in combination with interfaces at runtime.
-</p>
-<h3>Access Modifiers</h3>
-
-<p>
-When designing larger systems and frameworks, limiting access to certain elements is important for maintainability. Similar to Java, N4JS introduces access modifiers to limit visibility of types and members. The following table shows the access modifiers of N4JS compared to Java:
-</p>
-
-<table class="Table Table--horizontalLines">
-<tr><th width="100px">Java</th><th width="100px">N4JS</th><th>Remark</th></tr>
-<tr><td colspan="2"><center>public</center></td><td>types and members, similar semantic</td></tr>
-<tr><td colspan="2"><center>protected</center></td><td>members only, similar semantic</td></tr>
-<tr><td><center>package</center></td><td><center>project</center></td><td>see below</td></tr>
-<tr><td colspan="2"><center>private</center></td><td>members only, similar semantic</td></tr>
+</div>
+<div class="paragraph">
+<p>N4JS even uses the very same <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-18.html">algorithm to infer type
+variables as Java 8</a>. This algorithm is, of course, slightly adapted to support extra features of N4JS such as union types.</p>
+</div>
+<div class="paragraph">
+<p>As a consequence, generics and parameterization should immediately be understood by Java programmers (as far as 'immediately
+understood' can be applied to generics).</p>
+</div>
+<div class="paragraph">
+<p>At the moment, the N4JS type system has some known issues when substituting type variables and instantiating wildcard
+expressions. For the latter, Java uses a technique called "capture conversion" while N4JS implements a slightly simpler
+one called "existential types". Future releases of N4JS will fix these issues.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_interfaces-and-abstract-declarations"><a class="link" href="#_interfaces-and-abstract-declarations">Interfaces and Abstract Declarations</a></h3>
+<div class="paragraph">
+<p>ECMAScript 2015 introduces classes similar to Java. In both languages, single inheritance is used. Although this simplifies
+ many scenarios, the limitations of single inheritance are often problematic. In Java, many of these problematic cases can
+be solved with interfaces. N4JS also provides the concept of interfaces, allowing for classes to implement multiple interfaces.
+ Interfaces in N4JS allow for the definition of default methods as in Java 8, therefore overcoming most of the problems
+introduced by single inheritance. Related to interfaces are abstract methods and, consequently, abstract classes which are
+also supported in N4JS similarly to Java.</p>
+</div>
+<div class="paragraph">
+<p>N4JS adapts the <code>instanceof</code> operator so it can be used in combination with interfaces at runtime.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_access-modifiers"><a class="link" href="#_access-modifiers">Access Modifiers</a></h3>
+<div class="paragraph">
+<p>When designing larger systems and frameworks, limiting access to certain elements is important for maintainability. Similar
+to Java, N4JS introduces access modifiers to limit visibility of types and members. The following table shows the access
+modifiers of N4JS compared to Java:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Java</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>N4JS</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><strong>Remark</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock">Public</p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">Types and members, similar semantic</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock">Protected</p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">Members only, similar semantic</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Package</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Project</p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">See below</p></td>
+</tr>
+</tbody>
 </table>
-
-<p>
-While it is possible to organize modules in folders which could be interpreted as packages, N4JS does not really support the notion of packages. Instead, it uses projects to encapsulate coherent functionality. Project is the default visibility in N4JS as package is in Java. The semantics are also similar in both cases: elements (types or members) can only be accessed from the same container (project in N4JS and package in Java).
-</p>
-
-<!-- ======================================================================= -->
-<h2>Differences</h2>
-<!-- ======================================================================= -->
-
-<h3>Auto-Boxing</h3>
-
-<p>
-In Java, primitive types can be auto-boxed to their corresponding object types (and vice versa). This is also true for ECMAScript but there are subtle differences which might lead to misconceptions as shown in the following example:
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">let bool: boolean = false;
+<div class="paragraph">
+<p>While it is possible to organize modules in folders which could be interpreted as packages, N4JS does not really support the
+notion of packages. Instead, it uses projects to encapsulate coherent functionality. Project is the default visibility in
+N4JS as package is in Java. The semantics are also similar in both cases: elements (types or members) can only be accessed
+from the same container (project in N4JS and package in Java).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_differences"><a class="link" href="#_differences">Differences</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auto-boxing"><a class="link" href="#_auto-boxing">Auto-Boxing</a></h3>
+<div class="paragraph">
+<p>In Java, primitive types can be auto-boxed to their corresponding object types (and vice versa). This is also true for
+ECMAScript but there are subtle differences which might lead to misconceptions as shown in the following example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">let bool: boolean = false;
 let Bool: Boolean = new Boolean( false );
 
 console.log( bool.valueOf(), bool ? "true" : "false");
-console.log( Bool.valueOf(), Bool ? "true" : "false");
-</pre></div>
-
-<p>
-Probably surprising for Java programmers, this would print out
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">false 'false'
-false 'true'
-</pre></div>
-
-<p>
-In order avoid these problems, N4JS does not support auto-boxing. Instead, primitives and object types have to be explicitly converted using either the <code>constructor</code>, <code>Object.valueof</code> or other related methods.
-</p>
-
-<h3>Function Subtyping</h3>
-<p>
-Function (or method) subtyping comes into play in two cases: method overriding and passing functions as arguments (callbacks, for example). In both cases, the type checker has to ensure that a function <i>f</i>&nbsp; is compatible with another function <i>f'</i> (in other words, that the type of <i>f</i>&nbsp; is a subtype of the type of <i>f'</i>). In Java this is called "override compatible".
-</p>
-<p>
-In Java, a method <i>f</i> is override compatible to a <i>f'</i> if and only if
-</p>
-<ol>
-<li>it has the same name</li>
-<li>it has the same number of parameters</li>
-<li>the type of each parameter of <i>f</i> must be a supertype of the corresponding parameter of <i>f'</i></li>
-<li>its return type is a subtype of the return type of <i>f'</i></li>
+console.log( Bool.valueOf(), Bool ? "true" : "false");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Probably surprising for Java programmers, this would print out</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">false 'false'
+false 'true'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order avoid these problems, N4JS does not support auto-boxing. Instead, primitives and object types have to be
+explicitly converted using either the <code>constructor</code>, <code>Object.valueof</code> or other related methods.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_function-subtyping"><a class="link" href="#_function-subtyping">Function Subtyping</a></h3>
+<div class="paragraph">
+<p>Function (or method) subtyping comes into play in two cases: method overriding and passing functions as arguments
+(callbacks, for example). In both cases, the type checker has to ensure that a function <code><strong>f</strong></code> is compatible with
+another function <code><strong>f'</strong></code> (in other words, that the type of <code><strong>f</strong></code> is a subtype of the type of <code><strong>f'</strong></code>). In Java this is called
+"override compatible".</p>
+</div>
+<div class="paragraph">
+<p>In Java, a method <code><strong>f</strong></code> is override compatible to a <code><strong>f'</strong></code> if and only if</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>it has the same name</p>
+</li>
+<li>
+<p>it has the same number of parameters</p>
+</li>
+<li>
+<p>the type of each parameter of <code><strong>f</strong></code> must be a supertype of the corresponding parameter of <code><strong>f'</strong></code></p>
+</li>
+<li>
+<p>its return type is a subtype of the return type of <code><strong>f'</strong></code></p>
+</li>
 </ol>
-
-<p>
-In ECMAScript, it is possible to call a function of a method with more or less arguments than declared formal parameters. Calling a function with less arguments is not allowed in N4JS (unless the parameters are declared as optional). The definition of "override compatible" is, therefore, a little bit different in N4JS.
-</p>
-<p>
-In N4JS, <i>f'</i> is override comptabible to <i>f</i> (or its type is a subtype of the type of <i>f</i>&nbsp;), if
-</p>
-<ol>
-<li>it has the same name (in case of method override)</li>
-<li>it has the same number or less of parameters, or superfluous parameters are optional</li>
-<li>the type of each parameter of <i>f'</i> must be a subtype of the corresponding parameter of <i>f</i></li>
-<li>its return type is a subtype of the return type of <i>f</i>&nbsp;, or <i>f</i>&nbsp; has no return type (it's <code>void</code>).</li>
+</div>
+<div class="paragraph">
+<p>In ECMAScript, it is possible to call a function of a method with more or less arguments than declared
+formal parameters. Calling a function with less arguments is not allowed in N4JS (unless the parameters
+are declared as optional). The definition of "override compatible" is, therefore, a little bit different
+in N4JS.</p>
+</div>
+<div class="paragraph">
+<p>In N4JS,<code><strong>f'</strong></code> is override comptabible to <code><strong>f</strong></code> (or its type is a subtype of the type of <code><strong>f</strong></code>), if</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>it has the same name (in case of method override)</p>
+</li>
+<li>
+<p>it has the same number or less of parameters, or superfluous parameters are optional</p>
+</li>
+<li>
+<p>the type of each parameter of <code><strong>f'</strong></code> must be a subtype of the corresponding parameter of <code><strong>f</strong></code></p>
+</li>
+<li>
+<p>its return type is a subtype of the return type of <code><strong>f</strong></code> , or <code><strong>f</strong></code>  has no return type (it&#8217;s void).</p>
+</li>
 </ol>
-
-<p>
-For example, the following code is correct in N4JS while it would cause compile errors in Java:
-</p>
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">class A {
+</div>
+<div class="paragraph">
+<p>For example, the following code is correct in N4JS while it would cause compile errors in Java:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">class A {
   foo(s: string): void {}
 }
 class B extends A {
   @Override
   foo(): number { return 0 }
-}
-</pre></div>
-
-<h3>Overloading</h3>
-
-<p>
-There is no method overloading in ECMAScript and therefore there cannot be overloading in N4JS. In order to 'emulate' overloading to a certain degree, union types and optional parameters can be used.
-</p>
-
-<h3>Static Members</h3>
-<p>
-In Java, a static member of a class can be accessed either
-</p>
-
-<ol>
-<li>via the declaring class (or a subclass)</li>
-<li>via an instance</li>
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_overloading"><a class="link" href="#_overloading">Overloading</a></h3>
+<div class="paragraph">
+<p>There is no method overloading in ECMAScript and therefore there cannot be overloading in N4JS. In order to 'emulate'
+overloading to a certain degree, union types and optional parameters can be used.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_static-members"><a class="link" href="#_static-members">Static Members</a></h3>
+<div class="paragraph">
+<p>In Java, a static member of a class can be accessed either</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>via the declaring class (or a subclass)</p>
+</li>
+<li>
+<p>via an instance</p>
+</li>
 </ol>
-<p>
-In N4JS, a static member can only be called via the declaring class.
-</p>
-<p>
-Note that the <code>this</code> literal is bound to the class (to the constructor function, in fact). This enables static polymorphism as shown in the next example:
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">class A {
+</div>
+<div class="paragraph">
+<p>In N4JS, a static member can only be called via the declaring class.</p>
+</div>
+<div class="paragraph">
+<p>Note that the <code>this</code> literal is bound to the class (to the constructor function, in fact). This enables
+static polymorphism as shown in the next example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">class A {
   public static s() { console.log("A.s"); this.t(); };
   public static t() { console.log("A.t"); };
 }
@@ -246,38 +430,76 @@ class B extends A {
 }
 
 A.s();
-B.s();
-</pre></div>
-
-<p>
-This will print out
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">A.s
+B.s();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will print out</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>A.s
 A.t
 A.s
-B.t
-</pre></div>
-<p>
-The last line in particular may be surprising for Java programmers.
-</p>
-
-
-    </article>
-
-  </div>
-
-
-  <footer class="Grid">
-    <div class="Cell Cell--12-12">
-      <a href="http://www.numberfour.eu" target="_blank">NumberFour AG</a> · <a href="https://twitter.com/n4jsdev" target="_blank">Twitter</a>
-
-      <a href="../#getting-started" class="Link--action">Get the N4JS IDE now!</a>
-    </div>
-  </footer>
-  <script>
-    dp.SyntaxHighlighter.HighlightAll('code');
-  </script>
-
+B.t</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The last line in particular may be surprising for Java programmers.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+</div>
+</div>
+<div class="social">
+	<ul>
+    	<li><a href="http://www.numberfour.eu" target="_blank"></i>NumberFour AG</a> </li>· <li> <a href="https://twitter.com/n4jsdev" target="_blank"></i>N4JS Twitter</a> </li>
+		<li><a href="../index.html#getting-started" id="bottomright"  class="Link--action"></i>Get the N4JS IDE now!</a></li>
+	</ul>
+</div>
+<script>
+// Toggle the table of contents
+$( "button#tocbutton" ).click(function() {
+  if ($("#tocbutton").css('right') == '25px') {
+    $( "#tocbutton" ).animate({right: '215px'},"slow");
+    $( "#toc.toc2" ).animate({right: '0'},"slow");
+}
+  else {
+    $( "#tocbutton" ).animate({right: '25px'},"slow");
+    $( "#toc.toc2" ).animate({right: '-13rem'},"slow");
+}
+});
+</script>
+<script>
+// Initialise mobile menu
+  $(function(){
+    $('#menu').slicknav();
+  });
+</script>
+<script type="text/javascript">
+// Create a back to top button
+$('body').prepend('<a href="#" class="back-to-top">Back to Top</a>');
+var amountScrolled = 300;
+$(window).scroll(function() {
+if ( $(window).scrollTop() > amountScrolled ) {
+	$('a.back-to-top').fadeIn('slow');
+} else {
+	$('a.back-to-top').fadeOut('slow');
+}
+});
+$('a.back-to-top, a.simple-back-to-top').click(function() {
+$('html, body').animate({
+	scrollTop: 0
+}, 700);
+return false;
+});
+</script>
+<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
+<script src="../scripts/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>

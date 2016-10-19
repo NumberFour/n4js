@@ -1,79 +1,155 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>Testing</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<!-- ************* Meta ************* -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-  <!-- ************* Meta ************* -->
-  <title>Testing · Features · N4JS Language and IDE</title>
+<!-- ************* OpenGraph ************-->
+<meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  
-  <!-- ************* OpenGraph ************-->
-  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
-  
-  <meta property="og:site_name" content="N4JS"/>
-  <meta property="og:title" content="N4JS Language and IDE"/>
-  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
-  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
-  <meta property="og:image" content="../imgs/n4js.png">
-  
-  <!-- ************* Favicon ************-->
-  <link rel="icon" href="../imgs/favicon.ico" />
-  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />  
-  <!-- ************* Styles ************* -->
-  <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
-  <link rel="stylesheet" type="text/css" href="../styles/styles.min.css">
+<meta property="og:site_name" content="N4JS"/>
+<meta property="og:title" content="N4JS Language and IDE"/>
+<meta property="og:url" content="https://numberfour.github.io/n4js"/>
+<meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+<meta property="og:image" content="../images/n4js.png">
 
+<!-- ************* Favicon ************-->
+<link rel="icon" href="../images/favicon.ico" />
+<link rel="icon" type="image/png" href="../images/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="../images/favicon-16x16.png" sizes="16x16" />
 
-  <!-- ****************** Scripts ****************** -->
-  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
-</head>
+<!-- ************* Back-to-top JQuery ************* -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="../scripts/nav-mobile.js"></script>
 
-<body>
-  <header class="Grid">
-    <div class="Cell Cell--4-12">
-      <a href="../"><img src="../imgs/n4js-logo.png" alt="N4JS Language and IDE"></a>
+<!-- ****************** Scripts ****************** -->
+<script type="text/javascript" src="../scripts/analytics.js"></script>
+
+<!-- ************* Styles ************* -->
+<link type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
+<link rel="stylesheet" type="text/css" href="../styles/n4js-adoc.css">
+
+<!-- ****************** NavBar ****************** -->
+<div id="menubar">
+    <div class="banner">
+        <a href="../index.html"><img id="logo" src="../images/n4js-logo.png" alt="N4JS Language and IDE"></a>
     </div>
-
-    <div class="Cell Cell--8-12">
-      <nav>
-         <a href="../#getting-started">Download</a> ·
-         <a href="../features" class="is-active">Features</a> ·
-         <a href="../documentation">Documentation</a> ·
-         <a href="../faq" >FAQ</a>
-      </nav>
-    </div>
-  </header>
-
-  <div class="Main">
-    <nav class="Nav--top">
-      <h2>Features</h2>
+<ul>
+  <li><a href="../index.html#getting-started"></i>Download</a></li>
+  <li><a href="index.html">Features</a>
       <ul>
-          <li><a href="../features" >All Features</a></li>
-          <li><a href="modules.html" >Modules</a></li>
-          <li><a href="nominal-and-structural-typing.html" >Nominal And Structural Typing</a></li>
-          <li><a href="dependency-injection.html" >Dependency Injection</a></li>
-          <li><a href="generics.html" >Generics</a></li>
-          <li><a href="async-await.html" >Async/Await</a></li>
-          <li><a href="testing.html" class="is-active">Test Driven</a></li>
-          <li><a href="nodejs-support.html" >Node.js Support</a></li>
-      </ul>
-    </nav>
-    <article class="Article--noGrid">
-
-<!-- ======================================================================= -->
-<h1>Testing</h1>
-<!-- ======================================================================= -->
-
-<p class="Introduction">Test Driven Development (TDD) is one of the key techniques to writing large systems with maintainable code. If your project is heavily tested, you can be more confident that your software works as expected, more comfortable when refactoring code and peace of mind that your project is more robust. The N4JS language, the N4 IDE and the built-in test execution runtime (Mangelhaft) were designed and developed to support TDD as well as possible.</p>
-
-<h2>Built-In Test Support</h2>
-<p>
-From the language perspective, there are annotations that can be used to declare and configure the test suites. Mangelhaft is an <a href="https://en.wikipedia.org/wiki/XUnit">xUnit-like</a> framework which provides an engine that executes tests and reports back to the IDE while running the test suites. The IDE is responsible for indicating the actual test results received from Mangelhaft to the user. For creating a simple test suite, one requires an N4JS project with a test type source container, a test class in the test type source container and at least one method declared in the test class with the <code>@Test</code> annotation. This is described in more detail in the <a href="../userguide/index.html">user guide</a>. Besides test execution and reporting engine support, Mangelhaft provides various utility classes that can come in handy when test assertions or preconditions must be used in test suites or when negative tests are required.
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">import { Assert } from 'n4/mangel/assert/Assert';
+        <li><a href="index.html">All N4JS Features</a></li>
+        <li><a href="async-await.html">Async/Await</a></li>
+        <li><a href="dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="generics.html">Generics</a></li>
+        <li><a href="modules.html">Modules</a></li>
+        <li><a href="nodejs-support.html">Node.js Support</a></li>
+        <li><a href="nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a href="../userguides/index.html">Documentation</a>
+    <ul>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
+      <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a href="../faq/index.html">FAQ</a>
+    <ul>
+      <li><a href="../faq/index.html">FAQ</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+<button id="tocbutton">TOC</button>
+<!-- ****************** Mobile NavBar ****************** -->
+<div class="mobile-banner">
+<ul id="menu">
+  <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
+  <li><a class="scroll" href="../features/index.html">Features</a>
+      <ul>
+        <li><a href="index.html">All N4JS Features</a></li>
+        <li><a href="async-await.html">Async/Await</a></li>
+        <li><a href="dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="generics.html">Generics</a></li>
+        <li><a href="modules.html">Modules</a></li>
+        <li><a href="nodejs-support.html">Node.js Support</a></li>
+        <li><a href="nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="../userguides/index.html">Documentation</a>
+    <ul>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
+      <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="../faq/index.html">FAQ</a>
+    <ul>
+      <li><a  href="../faq/index.html">FAQ</a></li>
+      <li><a  href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+</head>
+<body class="book toc2 toc-right">
+<div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#_testing">Testing</a>
+<ul class="sectlevel1">
+<li><a href="#_built-in-test-support">Built-In Test Support</a></li>
+<li><a href="#_n4js-language-support">N4JS Language Support</a></li>
+<li><a href="#_n4js-ide-support">N4JS IDE Support</a></li>
+<li><a href="#_additional-features">Additional Features</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<h1 id="_testing" class="sect0"><a class="link" href="#_testing">Testing</a></h1>
+<div class="openblock partintro">
+<div class="title">Testing</div><div class="content">
+Test Driven Development (TDD) is one of the key techniques to write large systems with maintainable code.
+The more tests you write, the more confident you can be that your software works as expected and the more
+comfortable you feel when your refactoring the code, because the tests will tell you if you break something.
+The N4JS language, the N4JS IDE and the built-in test execution runtime (Mangelhaft) were designed and developed
+to support TDD as well as possible.
+</div>
+</div>
+<div class="sect1">
+<h2 id="_built-in-test-support"><a class="link" href="#_built-in-test-support">Built-In Test Support</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>From the language perspective, there are annotations that can be used to declare and configure the test
+suites. Mangelhaft is an <a href="https://en.wikipedia.org/wiki/XUnit">xUnit-like</a> framework that
+provides an engine that executes the tests and reports back to the IDE while running the test suites.
+The IDE is responsible for indicating the actual test results received from Mangelhaft to the user. For
+creating a simple test suite, one requires an N4JS project with a test type source container, a test class
+in the test type source container and at least one method declared in the test class with the <code>@Test</code>
+annotation. This is described in more detail in the <a href="../documentation/tutorial.html#tutorial">tutorial</a>.
+Besides the test execution and reporting engine support, Mangelhaft provides various utility classes
+that could come handy when test assertions or preconditions have to be used in the test suites or when negative tests are required.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Assert } from 'n4/mangel/assert/Assert';
 import { Precondition } from 'n4/mangel/precondition/Precondition';
 
 export public class FooTest {
@@ -97,61 +173,129 @@ export public class FooTest {
     private is13thFriday(date: Date): boolean {
         …
     }
-}
-</pre></div>
-
-<h2>N4JS Language Support</h2>
-
-<p>
-    <a href="http://junit.org/">Junit-like</a> annotations are are available to configure the test suits, such as:
-    <ul>
-        <li><code>@Test</code> - The annotated method will be percepted as a test case when configuring and running the test suite.</li>
-        <li><code>@Ignore</code> - The annotated method will be percepted as a test case when configuring the test suite but the marked case will be be executed as a part of the suite execution.</li>
-        <li><code>@Fixme</code> - The annotated method will be percepted as a test case when configuring and running the test suite but the assertion logic will be negated.</li>
-    </ul>
-</p>
-
-<p>
-    Test classes can be created in the test container of any arbitrary project. With this approach, the production code can be separated from the test code and both production and test code will still be contained in the same N4JS project.
-    Another practice is that of a test project implementation whereby we can completely separate the business logic from the test code. This is done by literally using two separate projects; one for the production and one for the test code. Aside from the code separation, the major advantage of using a test project is that the default access visibility restrictions can be overruled. Project-visible classes and interfaces and their non-visible members and methods can then be called and tested from the test projects while still not visible in the production code. In a nutshell, one can easily test different aspects of the application without breaking the encapsulation.
-</p>
-
-<h2>N4 IDE Support</h2>
-
-<p>
-    In the N4 IDE, the Test Results view provides an informative overview of all executed and running test suites in a tree structure. Tests can be executed via the context menu's <strong>Run As</strong> &gt; <strong>Test in Node.js</strong> item directly from the editor or from the Project Explorer view. It is possible to execute all tests from a particular project as well as one single, fine-grained test case from a particular test class.
-</p>
-
-<div class="Image"><a href="fig/testResultsView.png"><img src="fig/testResultsView.png" alt="Test Results" /></a></div>
-
-<p>
-  Additional features:
-</p>
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_n4js-language-support"><a class="link" href="#_n4js-language-support">N4JS Language Support</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.junit.org">Junit-like</a> annotations are are available to configure the test suits, such as:</p>
+</div>
+<div class="paragraph">
+<p><code>@Test</code> - The annotated method will be percepted as a test case when configuring and running the test suite.
+<code>@Ignore</code> - The annotated method will be percepted as a test case when configuring the test suite but the marked case will be be executed as a part of the suite execution.
+<code>@Fixme</code> - The annotated method will be percepted as a test case when configuring and running the test suite but the assertion logic will be negated.</p>
+</div>
+<div class="paragraph">
+<p>Test classes can be created in the test container of any arbitrary project. With this approach,
+the production code can be separated from the test code but both production and test code will
+still be contained in the same N4JS project.</p>
+</div>
+<div class="paragraph">
+<p>Another implementation is that of a 'test project'-type implementation whereby one can completely
+separate the business logic form the test code. This is done literally using two separate projects;
+one for the production and one for the test code. Aside from the code separation, the major advantage
+of using a test project is that the default access visibility restrictions can be overruled.
+Project-visible classes and interfaces and their non-visible members and methods can then be called
+and tested from the test projects while still not visible in the production code. In a nutshell,
+one can easily test different aspects of the application without breaking the encapsulation.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_n4js-ide-support"><a class="link" href="#_n4js-ide-support">N4JS IDE Support</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the N4 IDE, the Test Results view provides an informative overview of all executed and running
+test suites in a tree structure. Tests can be executed via the context menu&#8217;s
+<strong><span class="menuseq"><span class="menu">Run As</span>&#160;&#9656; <span class="menuitem">Test in Node.js</span></span></strong> item directly from the editor or from
+the Project Explorer view. It is possible to execute all tests form a particular project as well as
+one single, fine-grained test case from a particular test class.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/testresultsview.png" alt="testresultsview">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_additional-features"><a class="link" href="#_additional-features">Additional Features</a></h2>
+<div class="sectionbody">
+<div class="ulist">
 <ul>
-    <li>Navigate to test method.</li>
-    <li>Showing stack trace for failed tests.</li>
-    <li>Quick-test method overview in a popup window.</li>
-    <li>Test suite history.</li>
-    <li>Re-run previous test suite.</li>
+<li>
+<p>Navigate to test method.</p>
+</li>
+<li>
+<p>Showing stack trace for failed tests.</p>
+</li>
+<li>
+<p>Quick-test method overview in a popup window.</p>
+</li>
+<li>
+<p>Test suite history.</p>
+</li>
+<li>
+<p>Re-run previous test suite.</p>
+</li>
 </ul>
-
-
-
-    </article>
-
-
-  </div>
-
-  <footer class="Grid">
-    <div class="Cell Cell--12-12">
-      <a href="http://www.numberfour.eu" target="_blank">NumberFour AG</a> · <a href="https://twitter.com/n4jsdev" target="_blank">Twitter</a>
-
-      <a href="../#getting-started" class="Link--action">Get the N4JS IDE now!</a>
-    </div>
-  </footer>
-  <script>
-    dp.SyntaxHighlighter.HighlightAll('code');
-  </script>
-
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+</div>
+</div>
+<div class="social">
+	<ul>
+    	<li><a href="http://www.numberfour.eu" target="_blank"></i>NumberFour AG</a> </li>· <li> <a href="https://twitter.com/n4jsdev" target="_blank"></i>N4JS Twitter</a> </li>
+		<li><a href="../index.html#getting-started" id="bottomright" class="Link--action"></i>Get the N4JS IDE now!</a></li>
+	</ul>
+</div>
+<script>
+// Toggle the table of contents
+$( "button#tocbutton" ).click(function() {
+  if ($("#tocbutton").css('right') == '25px') {
+    $( "#tocbutton" ).animate({right: '215px'},"slow");
+    $( "#toc.toc2" ).animate({right: '0'},"slow");
+}
+  else {
+    $( "#tocbutton" ).animate({right: '25px'},"slow");
+    $( "#toc.toc2" ).animate({right: '-13rem'},"slow");
+}
+});
+</script>
+<script>
+// Initialise mobile menu
+  $(function(){
+    $('#menu').slicknav();
+  });
+</script>
+<script type="text/javascript">
+// Create a back to top button
+$('body').prepend('<a href="#" class="back-to-top">Back to Top</a>');
+var amountScrolled = 300;
+$(window).scroll(function() {
+if ( $(window).scrollTop() > amountScrolled ) {
+	$('a.back-to-top').fadeIn('slow');
+} else {
+	$('a.back-to-top').fadeOut('slow');
+}
+});
+$('a.back-to-top, a.simple-back-to-top').click(function() {
+$('html, body').animate({
+	scrollTop: 0
+}, 700);
+return false;
+});
+</script>
+<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
+<script src="../scripts/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>

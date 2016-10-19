@@ -1,113 +1,197 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>Nominal And Structural Typing</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<!-- ************* Meta ************* -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-  <!-- ************* Meta ************* -->
-  <title>Nominal And Structural Typing · Features · N4JS Language and IDE</title>
+<!-- ************* OpenGraph ************-->
+<meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  
-  <!-- ************* OpenGraph ************-->
-  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
-  
-  <meta property="og:site_name" content="N4JS"/>
-  <meta property="og:title" content="N4JS Language and IDE"/>
-  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
-  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
-  <meta property="og:image" content="../imgs/n4js.png">
-  
-  <!-- ************* Favicon ************-->
-  <link rel="icon" href="../imgs/favicon.ico" />
-  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />  
-  <!-- ************* Styles ************* -->
-  <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
-  <link rel="stylesheet" type="text/css" href="../styles/styles.min.css">
+<meta property="og:site_name" content="N4JS"/>
+<meta property="og:title" content="N4JS Language and IDE"/>
+<meta property="og:url" content="https://numberfour.github.io/n4js"/>
+<meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+<meta property="og:image" content="../images/n4js.png">
 
+<!-- ************* Favicon ************-->
+<link rel="icon" href="../images/favicon.ico" />
+<link rel="icon" type="image/png" href="../images/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="../images/favicon-16x16.png" sizes="16x16" />
 
-  <!-- ****************** Scripts ****************** -->
-  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
-</head>
+<!-- ************* Back-to-top JQuery ************* -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="../scripts/nav-mobile.js"></script>
 
-<body>
-  <header class="Grid">
-    <div class="Cell Cell--4-12">
-      <a href="../"><img src="../imgs/n4js-logo.png" alt="N4JS Language and IDE"></a>
+<!-- ****************** Scripts ****************** -->
+<script type="text/javascript" src="../scripts/analytics.js"></script>
+
+<!-- ************* Styles ************* -->
+<link type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
+<link rel="stylesheet" type="text/css" href="../styles/n4js-adoc.css">
+
+<!-- ****************** NavBar ****************** -->
+<div id="menubar">
+    <div class="banner">
+        <a href="../index.html"><img id="logo" src="../images/n4js-logo.png" alt="N4JS Language and IDE"></a>
     </div>
-
-    <div class="Cell Cell--8-12">
-      <nav>
-         <a href="../#getting-started">Download</a> ·
-         <a href="../features" class="is-active">Features</a> ·
-         <a href="../documentation">Documentation</a> ·
-         <a href="../faq" >FAQ</a>
-      </nav>
-    </div>
-  </header>
-
-  <div class="Main">
-    <nav class="Nav--top">
-      <h2>Features</h2>
+<ul>
+  <li><a href="../index.html#getting-started"></i>Download</a></li>
+  <li><a href="index.html">Features</a>
       <ul>
-          <li><a href="../features" >All Features</a></li>
-          <li><a href="modules.html" >Modules</a></li>
-          <li><a href="nominal-and-structural-typing.html" class="is-active">Nominal And Structural Typing</a></li>
-          <li><a href="dependency-injection.html" >Dependency Injection</a></li>
-          <li><a href="generics.html" >Generics</a></li>
-          <li><a href="async-await.html" >Async/Await</a></li>
-          <li><a href="testing.html" >Test Driven</a></li>
-          <li><a href="nodejs-support.html" >Node.js Support</a></li>
-      </ul>
-    </nav>
-    <article class="Article--noGrid">
-
-<h1>Nominal And Structural Typing</h1>
-
-<p class="Introduction">
-One of the core responsibilities of a type system is to decide if two given types
-are <em>type compatible</em>, or if a type is a <em>subtype</em> of another type.
-N4JS provides support for different strategies of checking whether two types are compatible, namely nominal (as known from Java) and structural typing (as known from TypeScript). Additionally, it proivdes certain variations of structural typing to support typical usages in ECMAScript.
-</p>
-
-<p>
-A type T<sub>1</sub> is compatible with a type T<sub>2</sub> if,
+        <li><a href="index.html">All N4JS Features</a></li>
+        <li><a href="async-await.html">Async/Await</a></li>
+        <li><a href="dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="generics.html">Generics</a></li>
+        <li><a href="modules.html">Modules</a></li>
+        <li><a href="nodejs-support.html">Node.js Support</a></li>
+        <li><a href="nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a href="../userguides/index.html">Documentation</a>
+    <ul>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
+      <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a href="../faq/index.html">FAQ</a>
+    <ul>
+      <li><a href="../faq/index.html">FAQ</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+<button id="tocbutton">TOC</button>
+<!-- ****************** Mobile NavBar ****************** -->
+<div class="mobile-banner">
+<ul id="menu">
+  <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
+  <li><a class="scroll" href="../features/index.html">Features</a>
+      <ul>
+        <li><a href="index.html">All N4JS Features</a></li>
+        <li><a href="async-await.html">Async/Await</a></li>
+        <li><a href="dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="generics.html">Generics</a></li>
+        <li><a href="modules.html">Modules</a></li>
+        <li><a href="nodejs-support.html">Node.js Support</a></li>
+        <li><a href="nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="../userguides/index.html">Documentation</a>
+    <ul>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
+      <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="../faq/index.html">FAQ</a>
+    <ul>
+      <li><a  href="../faq/index.html">FAQ</a></li>
+      <li><a  href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+</head>
+<body class="book toc2 toc-right">
+<div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#_nominal-and-structural-typing">Nominal And Structural Typing</a>
+<ul class="sectlevel1">
+<li><a href="#_nominal-typing">Nominal Typing</a></li>
+<li><a href="#_structural-typing">Structural Typing</a></li>
+<li><a href="#_comparison">Comparison</a>
+<ul class="sectlevel2">
+<li><a href="#_maintainability">Maintainability</a></li>
+<li><a href="#_flexibility">Flexibility</a></li>
+</ul>
+</li>
+<li><a href="#_combination-of-nominal-and-structural-typing-in-n4js">Combination of Nominal and Structural Typing in N4JS</a>
+<ul class="sectlevel2">
+<li><a href="#_field-structural-typing">Field Structural Typing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<h1 id="_nominal-and-structural-typing" class="sect0"><a class="link" href="#_nominal-and-structural-typing">Nominal And Structural Typing</a></h1>
+<div class="openblock partintro">
+<div class="content">
+<div class="paragraph">
+<div class="title">Nominal And Structural Typing</div>
+<p>One of the core responsibilities of a type system is to decide if two given types
+are <strong>type compatible</strong>, or if a type is a <strong>subtype</strong> of another type.
+N4JS provides support for different strategies of checking whether two types are compatible,
+namely nominal (as known from Java) and structural typing (as known from TypeScript).
+Additionally it proivdes certain variations of structural typing to support typical
+usages in ECMAScript.</p>
+</div>
+<div class="paragraph">
+<p>A type T<sub>1</sub> is compatible with a type T<sub>2</sub> if,
 roughly speaking, a value of type T<sub>1</sub> may be used as if it were a value of
 type T<sub>2</sub>.
-Therefore, if type T<sub>1</sub> is compatible to type T<sub>2</sub>, a value that is known to be of type T<sub>1</sub>
-may, for example, be assigned to a variable of type T<sub>2</sub> or may be passed as an argument to a
+Therefore, if type T<sub>1</sub> is compatible to type T<sub>2</sub>, a value that is
+known to be of type T<sub>1</sub>
+may, for example, be assigned to a variable of type T<sub>2</sub> or may be passed as
+an argument to a
 function expecting a value of type T<sub>2</sub>.
 There are two major classes of type systems that differ in how they decide on
-type compatibility:
-</p>
-
+type compatibility:</p>
+</div>
+<div class="ulist">
 <ul>
-  <li>Nominal type systems.</li>
-  <li>Structural type systems.</li>
+<li>
+<p>Nominal type systems.</p>
+</li>
+<li>
+<p>Structural type systems.</p>
+</li>
 </ul>
-<p>
-Since N4JS provides both forms of typing, we briefly introduce each approach in
-the coming sections before we show how they are combined in N4JS.
-</p>
-
-
-<!-- ======================================================================= -->
-<h2>Nominal Typing</h2>
-<!-- ======================================================================= -->
-
-<p>
-In a <strong>nominal</strong>, or <strong>nominative</strong>, type system, two types are deemded to be the same if they have the
-<em>same name</em> and a type T<sub>1</sub> is deemed to be a (immediate) subtype of a type T<sub>2</sub> if T<sub>1</sub>
-is <em>explicitly declared</em> to be a subtype of T<sub>2</sub>.
-</p>
-
-<p>
-In the following example, <code>Employee</code> is a subtype of <code>Person</code> because it is declared as such using keyword "extends"
-within its class declaration. Conversely, <code>Product</code> is not a subtype of <code>Person</code> because it lacks such an "extends"
-declaration.
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">class Person {
+</div>
+<div class="paragraph">
+<p>Since N4JS provides both forms of typing, we briefly introduce each approach in
+the coming sections before we show how they are combined in N4JS.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_nominal-typing"><a class="link" href="#_nominal-typing">Nominal Typing</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In a <strong>nominal</strong>, or <strong>nominative</strong>, type system, two types
+are deemded to be the same if they have the
+<strong>same name</strong> and a type T<sub>1</sub> is deemed to be a (immediate) subtype of
+a type T<sub>2</sub> if T<sub>1</sub>
+is <strong>explicitly declared</strong> to be a subtype of T<sub>2</sub>.</p>
+</div>
+<div class="paragraph">
+<p>In the following example, <code>Employee</code> is a subtype of <code>Person</code>
+because it is declared as such using keyword "extends"
+within its class declaration. Conversely, <code>Product</code> is not a subtype of
+<code>Person</code> because it lacks such an "extends"
+declaration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">class Person {
     public name: string;
 }
 
@@ -120,145 +204,169 @@ class Manager extends Employee { }
 class Product {
     public name: string;
     public price: number;
-}
-</pre></div>
-
-<p>
-The subtype relation is transitive and thus <code>Manager</code> is not just a subtype of <code>Employee</code> but also of <code>Person</code>. <code>Product</code> is not a subtype of <code>Person</code>, although it provides the same members.
-</p>
-
-<p>
-Most mainstream object-oriented languages use nominal subtyping, for example C++, C#, Java, Objective-C.
-</p>
-
-
-<!-- ======================================================================= -->
-<h2>Structural Typing</h2>
-<!-- ======================================================================= -->
-
-<p>
-In a <strong>structural</strong> type system, two types are deemed the same if they are of the <em>same structure</em>.
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The subtype relation is transitive and thus <code>Manager</code> is not just a subtype of
+<code>Employee</code> but also of <code>Person</code>. <code>Product</code> is not a
+subtype of <code>Person</code>, although it provides the same members.</p>
+</div>
+<div class="paragraph">
+<p>Most mainstream object-oriented languages use nominal subtyping, for example C++, C#, Java, Objective-C.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_structural-typing"><a class="link" href="#_structural-typing">Structural Typing</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In a <strong>structural</strong> type system, two types are deemed the same if they are of the <strong>same structure</strong>.
 In other words, if they have the same public fields and methods of compatible type/signature. Similarly, a type
 T<sub>1</sub> is deemed a subtype of a type T<sub>2</sub> if and only if T<sub>1</sub> has
-all public members (of compatible type/signature) that T<sub>2</sub> has (but may have more).
-</p>
-
-<p>
-In the example from the previous section, we said <code>Product</code> is not a (nominal) subtype
+all public members (of compatible type/signature) that T<sub>2</sub> has (but may have more).</p>
+</div>
+<div class="paragraph">
+<p>In the example from the previous section, we said <code>Product</code> is not a (nominal) subtype
 of Person. In a structural type system, however, <code>Product</code> would indeed be deemed a (structual)
 subtype of <code>Person</code> because it has all of <code>Person</code>'s public members of compatible type (only field
 name" in this case). The opposite is, in fact, not true: <code>Person</code> is not a subtype of <code>Product</code>
-because it lacks <code>Product</code>'s field "price".
-</p>
-
-
-
-<!-- ======================================================================= -->
-<h2>Comparison</h2>
-<!-- ======================================================================= -->
-
-<p>
-Both classes of type systems have their <a href="http://lambda-the-ultimate.org/node/5286">own advantages and proponents</a>. Nominal type systems
-are usually said to provide more type safety and better maintainability whereas structual typing is mostly believed to be more flexible. As a matter of fact, nominal typing <em>is</em> structural typing extended with an extra relation explicitly declaring the subtype relation (like the <code>extends</code> clause). So the real question is: What are the advantages and disadvantages of such an explicit relation?
-</p>
-
-<p>
-Let's assume you want to provide a framework or library as follows:
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">export public interface Identifiable {
+because it lacks <code>Product</code>'s field <code>price</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_comparison"><a class="link" href="#_comparison">Comparison</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Both classes of type systems have their <a href="http://lambda-the-ultimate.org/node/5286">own advantages and proponents</a>.
+Nominal type systems
+are usually said to provide more type safety and better maintainability whereas structual typing is mostly believed
+to be more flexible. As a matter of fact, nominal typing <strong>is</strong> structural typing extended with an extra relation
+explicitly declaring the subtype relation (like the <code>extends</code> clause). So the real question is: What are the
+advantages and disadvantages of such an explicit relation?</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s assume you want to provide a framework or library as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public interface Identifiable {
     public get name(): string
 
     static check(identifiable: Identifiable): boolean {
         return identifiable.name != 'anonymous';
     }
-}
-</pre></div>
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">class A {
 
-<div class="Comparison">
-  <div class="Comparison-left">
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter"> 
-
-class A {
-    
     public get name(): string { return 'John'; }
-}
-</pre><div class="Example-caption">Structural</div></div>
-  </div>
-  <div class="Comparison-right">
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">import { Identifiable } from 'Identifiable';
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Identifiable } from 'Identifiable';
 
 class A implements Identifiable {
-    @Override 
+    @Override
     public get name(): string { return 'John'; }
-}
-</pre><div class="Example-caption">Nominal</div></div>
-  </div>
+}</code></pre>
 </div>
-
-<p>
-A client may use these classes as follows:
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">Identifiable.check(new A());
-</pre><div class="Example-caption">This first example is only to demonstrate the conceptual differences. The structural variant would cause an error in N4JS.</div></div>
-
-<h3>Maintainability</h3>
-
-<p>
-Everything works fine. But maybe you consider to rename <code>name</code> to <code>id</code>. Assume you have thousands of classes and interfaces.
-You start by renaming the function in the interface:
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">export public interface Identifiable {
+</div>
+<div class="paragraph">
+<p>A client may use these classes as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">Identifiable.check(new A());</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This first example is only to demonstrate the conceptual differences. The
+structural variant would cause an error in N4JS.</p>
+</div>
+<div class="sect2">
+<h3 id="_maintainability"><a class="link" href="#_maintainability">Maintainability</a></h3>
+<div class="paragraph">
+<p>Everything works fine. But maybe you consider to rename <code>name</code> to <code>id</code>. Assume you have
+thousands of classes and interfaces.
+You start by renaming the function in the interface:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public interface Identifiable {
     public get id(): string
   // …
-}
-</pre></div>
-
-<p>
-With structural typing, you won't get any errors in your framework. You are satisfied with your code and ship the new version. Alas! The client code will no longer work as you have forgotten to accordingly rename the function in class <code>A</code>.
-</p>
-<p>
-With nominal typing, you would have gotten errors in your framework code already ("Class A must implement getter id." and "The getter name must implement a getter from an interface."). Instead of breaking the code on the client-side only, you find the problem in the framework code.
-In large systems, this can be a complete lifesaver. Without this strict validation, you probably wouldn't dare to refactor your framework. Of course, you may still break the client code, but even then it is much easier to pinpoint the problem.
-</p>
-
-<h3>Flexibility</h3>
-
-<p>
-Given the same code as in the previous example, assume that the client code also uses another framework providing a class Person as in the very first example.
-</p>
-<p>
-With structural typing, it is no problem to use the Person class with the function check since the Person class provides a data field name. So the code inside the function would work perfectly when called with an instance of Person.
-</p>
-<p>This won't work with nominal typing though. Since Person does not explicitly "implement" Identifiable, there is no chance to call function check. This can be quite annoying, particularly if the client can change neither your framework nor the person framework.
-</p>
-
-<!-- ======================================================================= -->
-<h2>Combination of Nominal and Structural Typing in N4JS</h2>
-<!-- ======================================================================= -->
-
-<p>
-Because both classes of type systems have their advantages and because structural typing is particularly
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With structural typing, you won&#8217;t get any errors in your framework. You are satisfied with your code and ship
+the new version. Alas! The client code will no longer work as you have forgotten to accordingly rename the
+function in class <code>A</code>.</p>
+</div>
+<div class="paragraph">
+<p>With nominal typing, you would have gotten errors in your framework code already ("Class A must implement
+getter id." and "The getter name must implement a getter from an interface."). Instead of breaking the code
+on the client side only, you find the problem in the framework code.
+In large systems, this can be a complete lifesaver. Without this strict validation, you probably wouldn&#8217;t
+dare to refactor your framework. Of course, you may still break the client code, but even then it is much
+easier to pinpoint the problem.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_flexibility"><a class="link" href="#_flexibility">Flexibility</a></h3>
+<div class="paragraph">
+<p>Given the same code as in the previous example, assume that the client code also uses another framework
+providing a class Person as in the very first example.</p>
+</div>
+<div class="paragraph">
+<p>With structural typing, it is no problem to use the Person class with the function check since the Person
+class provides a data field name. So the code inside the function would work perfectly when called with an
+instance of Person.</p>
+</div>
+<div class="paragraph">
+<p>This won&#8217;t work with nominal typing though. Since Person does not explicitly "implement" Identifiable,
+there is no chance to call function check. This can be quite annoying, particularly if the client can change
+neither your framework nor the person framework.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_combination-of-nominal-and-structural-typing-in-n4js"><a class="link" href="#_combination-of-nominal-and-structural-typing-in-n4js">Combination of Nominal and Structural Typing in N4JS</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Because both classes of type systems have their advantages and because structural typing is particularly
 useful in the context of a dynamic language ecosystem as that of JavaScript, N4JS provides both
-kinds of typing and aims to combine them in a seamless way.
-</p>
-
-<p>
-N4JS uses nominal typing by default but allows to switch to structural typing by way of special type
-constructors using the tilde symbol. The switch can be done with either of the following:
+kinds of typing and aims to combine them in a seamless way.</p>
+</div>
+<div class="paragraph">
+<p>N4JS uses nominal typing by default, but allows to switch to structural typing by way of special type
+constructors using the tilde symbol. The switch can be done with either of the following:</p>
+</div>
+<div class="ulist">
 <ul>
-<li>Globally when defining a type. This then applies to all uses of the type throughout the code, referred to as <strong>definition-site structural typing</strong></li>
-<li>Locally when referring to an existing nominal type, referred to as <strong>use-site structural typing</strong>.</li>
+<li>
+<p>Globally when defining a type. This then applies to all uses of the type throughout the code, referred
+to as<strong>definition-site structural typing</strong></p>
+</li>
+<li>
+<p>Locally when referring to an existing nominal type, referred to as <strong>use-site structural typing</strong>.</p>
+</li>
 </ul>
-</p>
-
-<p>
-If we combine the above examples, we can use nominal and structural typing in N4JS as follows:
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">export public interface Identifiable {
+</div>
+<div class="paragraph">
+<p>If we combine the above examples, we can use nominal and structural typing in N4JS as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public interface Identifiable {
     public get name(): string
 
     static check(identifiable: ~Identifiable): boolean {
@@ -268,52 +376,96 @@ If we combine the above examples, we can use nominal and structural typing in N4
 
 class A implements Identifiable {
     @Override public get name(): string { return 'John'; }
-}
-</pre></div>
-
-<p>
-For the argument of method "check", we use a (use-site) structural
-type by prefixing the type reference with a <code>~</code> (tilde) which means
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the argument of method "check" we use a (use-site) structural
+type by prefixing the type reference with a ~ (tilde), which means
 we are allowed, in the last line, to pass in an instance of <code>Product</code>
-even though <code>Product</code> is not a nominal subtype of <code>Identifiable</code>.
-</p>
-
-<p>
-This way, N4JS provides the advantages of nominal typing (which is the default form of typing)
+even though <code>Product</code> is not a nominal subtype of <code>Identifiable</code>.</p>
+</div>
+<div class="paragraph">
+<p>This way, N4JS provides the advantages of nominal typing (which is the default form of typing)
 while granting many of the advantages of structural typing if the programmer so chooses.
-Additionally, if you would rename name to id, the tilde would tell you that there may be client code calling the method with a structural type.
-</p>
-<p>
-The full flexibility of a purely structurally typed language, however, cannot be achieved with
+Additionally, if you would rename name to id, the tilde would tell you that there may be client code calling
+the method with a structural type.</p>
+</div>
+<div class="paragraph">
+<p>The full flexibility of a purely structurally typed language, however, cannot be achieved with
 this combination. For example, the client of an existing function that is declared to expect
 an argument of a nominal type N is confined to nominal typing. They cannot choose to invoke
 this function with an argument that is only a structural subtype of N (it would be a compile time
-error). This would possibly be exactly the intention of the framework author in order to enable easier refactoring later. 
-This is comparable to access modifiers which serve the same purpose.
-</p>
-
-<h3>Field Structural Typing</h3>
-<p>N4JS provides some variants of structural types. Two structural types are usually compatible if they provide the same properties, or in case of classes, public members. In ECMAScript we often only need to access the fields. In N4JS, we can use <code>~~</code> to refer to the so called "field structural type". Two field structural types are compatible if they provide the same <code>public</code> fields -- methods are ignored in these cases. Actually, N4JS can do even more. There are several modifiers to further filter the properties or members to be considered: <code>~r~</code> only considers getters or data fields, <code>~w~</code> only setters and data fields. <code>~i~</code>  is used for initializer parameters: For every setter or (non-optional) data field in the type, the <code>~i~</code> -type needs to provide at least a getter (or readable data field).
-</p>
-
-
-
-
-    </article>
-
-
-  </div>
-
-  <footer class="Grid">
-    <div class="Cell Cell--12-12">
-      <a href="http://www.numberfour.eu" target="_blank">NumberFour AG</a> · <a href="https://twitter.com/n4jsdev" target="_blank">Twitter</a>
-
-      <a href="../#getting-started" class="Link--action">Get the N4JS IDE now!</a>
-    </div>
-  </footer>
-  <script>
-    dp.SyntaxHighlighter.HighlightAll('code');
-  </script>
-
+error). This would possibly be exactly the intention of the framework author in order to enable easier
+refactoring later.
+This is comparable to access modifiers which serve the same purpose.</p>
+</div>
+<div class="sect2">
+<h3 id="_field-structural-typing"><a class="link" href="#_field-structural-typing">Field Structural Typing</a></h3>
+<div class="paragraph">
+<p>N4JS provides some variants of structural types. Usually two structural types are compatible, if they
+provide the same properties, or in case of classes, public members. In ECMAScript we often only need to
+access the fields. In N4JS, we can use <code>~~</code> to refer to the so called "field structural type".
+Two field structural types are compatible, if they provide the same <code>public</code> fields - methods
+are ignored in these cases. Actually, N4JS can do even more. There are several modifiers to further filter
+the properties or members to be considered: <code>~r~</code> only considers getters or data fields,
+<code><sub>w</sub></code> only setters and data fields. <code>~i~</code>  is used for initializer parameters:
+For every setter or (non-optional) data field in the type, the <code><sub>i</sub></code> -type needs to provide
+at least a getter (or readable data field).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+</div>
+</div>
+<div class="social">
+	<ul>
+    	<li><a href="http://www.numberfour.eu" target="_blank"></i>NumberFour AG</a> </li>· <li> <a href="https://twitter.com/n4jsdev" target="_blank"></i>N4JS Twitter</a> </li>
+		<li><a href="../index.html#getting-started" id="bottomright" class="Link--action"></i>Get the N4JS IDE now!</a></li>
+	</ul>
+</div>
+<script>
+// Toggle the table of contents
+$( "button#tocbutton" ).click(function() {
+  if ($("#tocbutton").css('right') == '25px') {
+    $( "#tocbutton" ).animate({right: '215px'},"slow");
+    $( "#toc.toc2" ).animate({right: '0'},"slow");
+}
+  else {
+    $( "#tocbutton" ).animate({right: '25px'},"slow");
+    $( "#toc.toc2" ).animate({right: '-13rem'},"slow");
+}
+});
+</script>
+<script>
+// Initialise mobile menu
+  $(function(){
+    $('#menu').slicknav();
+  });
+</script>
+<script type="text/javascript">
+// Create a back to top button
+$('body').prepend('<a href="#" class="back-to-top">Back to Top</a>');
+var amountScrolled = 300;
+$(window).scroll(function() {
+if ( $(window).scrollTop() > amountScrolled ) {
+	$('a.back-to-top').fadeIn('slow');
+} else {
+	$('a.back-to-top').fadeOut('slow');
+}
+});
+$('a.back-to-top, a.simple-back-to-top').click(function() {
+$('html, body').animate({
+	scrollTop: 0
+}, 700);
+return false;
+});
+</script>
+<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
+<script src="../scripts/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>

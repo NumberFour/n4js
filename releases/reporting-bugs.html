@@ -1,197 +1,334 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>Reporting Bugs</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<!-- ************* Meta ************* -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-  <!-- ************* Meta ************* -->
-  <title>Reporting Bugs · Releases · N4JS Language and IDE</title>
+<!-- ************* OpenGraph ************-->
+<meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  
-  <!-- ************* OpenGraph ************-->
-  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
-  
-  <meta property="og:site_name" content="N4JS"/>
-  <meta property="og:title" content="N4JS Language and IDE"/>
-  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
-  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
-  <meta property="og:image" content="../imgs/n4js.png">
-  
-  <!-- ************* Favicon ************-->
-  <link rel="icon" href="../imgs/favicon.ico" />
-  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />  
-  <!-- ************* Styles ************* -->
-  <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
-  <link rel="stylesheet" type="text/css" href="../styles/styles.min.css">
+<meta property="og:site_name" content="N4JS"/>
+<meta property="og:title" content="N4JS Language and IDE"/>
+<meta property="og:url" content="https://numberfour.github.io/n4js"/>
+<meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+<meta property="og:image" content="../images/n4js.png">
 
+<!-- ************* Favicon ************-->
+<link rel="icon" href="../images/favicon.ico" />
+<link rel="icon" type="image/png" href="../images/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="../images/favicon-16x16.png" sizes="16x16" />
 
-  <!-- ****************** Scripts ****************** -->
-  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
-</head>
+<!-- ************* Back-to-top JQuery ************* -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="../scripts/nav-mobile.js"></script>
 
-<body>
-  <header class="Grid">
-    <div class="Cell Cell--4-12">
-      <a href="../"><img src="../imgs/n4js-logo.png" alt="N4JS Language and IDE"></a>
+<!-- ****************** Scripts ****************** -->
+<script type="text/javascript" src="../scripts/analytics.js"></script>
+
+<!-- ************* Styles ************* -->
+<link type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
+<link rel="stylesheet" type="text/css" href="../styles/n4js-adoc.css">
+
+<!-- ****************** NavBar ****************** -->
+<div id="menubar">
+    <div class="banner">
+        <a href="../index.html"><img id="logo" src="../images/n4js-logo.png" alt="N4JS Language and IDE"></a>
     </div>
-
-    <div class="Cell Cell--8-12">
-      <nav>
-         <a href="../#getting-started">Download</a> ·
-         <a href="../features">Features</a> ·
-         <a href="../documentation">Documentation</a> ·
-         <a href="../faq" >FAQ</a>
-      </nav>
-    </div>
-  </header>
-
-  <div class="Main">
-    <nav class="Nav--top">
-      <h2>Releases</h2>
+<ul>
+  <li><a href="../index.html#getting-started"></i>Download</a></li>
+  <li><a href="../features/index.html">Features</a>
       <ul>
-          <li><a href="../releases" >Release Notes</a></li>
-          <li><a href="reporting-bugs.html" class="is-active">Reporting Bugs</a></li>
-      </ul>
-    </nav>
-    <article class="Article--noGrid">
-
-<h1>Reporting Bugs</h1>
-
-<p><b>We embrace bug reports and feature requests!</b></p>
-
-
-<p>For the moment, we use <a href="https://github.com/numberfour/n4js/issues">GitHub issues</a> to manage issues found by users. We will soon migrate our current, internal list of bugs there. We greatly appreciate all bug reports and are thankful for our users taking the time to submit them!
-</p>
-<p>
-If you like, you can try out a novel test technology called <a href="http://www.xpect-tests.org/">Xpect</a> that was designed for writing tests for domain-specific languages. We have integrated this test technology directly into the N4JS IDE and is described in detail in the following section.
-</p>
-
-<h3>Write Bug Reports with Xpect</h3>
-<p>With Xpect you can write concise bug reports and feature requests using N4JS and comments. What is a bug? A bug usually is a programming error that leads to unexpected behavior. What is a feature? A feature is a functionality provided by a system with a well-defined, i.e. expected, behavior. In other words: Bug reports and feature requests both have to describe the <b>expected</b> behavior. Instead of long-winded explanations disconnected from the code, it's easier to just add your <b>expectations</b> side-by-side with your code.
-</p>
-<p>The following screenshot shows a typical feature request (on the left-hand side) written with Xpect:
-</p>
-
-<div class="Image">
-  <a href="fig/xpect_feature_request.png"><img src= "fig/xpect_feature_request.png"  ></a>
+        <li><a href="../features/index.html">All N4JS Features</a></li>
+        <li><a href="../features/async-await.html">Async/Await</a></li>
+        <li><a href="../features/dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="../features/generics.html">Generics</a></li>
+        <li><a href="../features/modules.html">Modules</a></li>
+        <li><a href="../features/nodejs-support.html">Node.js Support</a></li>
+        <li><a href="../features/nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="../features/testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a href="../userguides/index.html">Documentation</a>
+    <ul>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
+      <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a href="../faq/index.html">FAQ</a>
+    <ul>
+      <li><a href="../faq/index.html">FAQ</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
 </div>
-
-<p>The great thing about Xpect is that it actually defines a test. The feature request (or bug report) can actually be executed. This is possible within the N4JS IDE and the result is shown on the right-hand side of the screenshot. In order to use Xpect;</p>
-
-<ol>
-  <li>Create a new file with extension "n4js.xt" ("xt" will activate Xpect).</li>
-  <li>Write the bug report or feature request, using comments and the keyword "XPECT" together with a known expectation type (see below).</li>
-  <li>Run the Xpect test from the context menu ("Run As.../Xpect run").</li>
-</ol>
-
-<p><b>Instead of writing long explanations, simply file the n4js.xt-file as bug report including a brief description.</b></p>
-
-<p>In the screenshot above, the file does not contain any error markers; your expectation is already taken into account during validation which will improve the readability of the bug report. As we can see, the Xpect test failed! In order to make things easier for the developer fixing the bug, you can add an additional keyword "FIXME" to expectations you have but which are not fulfilled. This makes it very helpful to easily identify what is expected and what is correct behavior in longer reports with several expectations. When running the test again with the "FIXME" annotation, it will succeed as shown in the following screenshot:</p>
-
-<div class="Image">
-  <a href="fig/xpect_fixme.png"><img src= "fig/xpect_fixme.png"  ></a>
+<button id="tocbutton">TOC</button>
+<!-- ****************** Mobile NavBar ****************** -->
+<div class="mobile-banner">
+<ul id="menu">
+  <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
+  <li><a class="scroll" href="../features/index.html">Features</a>
+      <ul>
+        <li><a href="../features/index.html">All N4JS Features</a></li>
+        <li><a href="../features/async-await.html">Async/Await</a></li>
+        <li><a href="../features/dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="../features/generics.html">Generics</a></li>
+        <li><a href="../features/modules.html">Modules</a></li>
+        <li><a href="../features/nodejs-support.html">Node.js Support</a></li>
+        <li><a href="../features/nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="../features/testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="../userguides/index.html">Documentation</a>
+    <ul>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
+      <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="../faq/index.html">FAQ</a>
+    <ul>
+      <li><a  href="../faq/index.html">FAQ</a></li>
+      <li><a  href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
 </div>
-
-
-<p><b>Bug reporting will be improved in future releases!</b></p>
-
-<p>In future releases, we will improve the Xpect support and simplify writing bug reports. In particular, we will provide content assist and/or wizards for adding certain types of expectations. </p>
-
-<p>In general, expectations are written inside comments preceding the line in the code which demonstrates the (un-)expected behavior, according to the following pattern:</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">// «remark» XPECT «type» FIXME --&gt; «expectation» at «location»
-</pre></div>
-
-<ol>
-  <li>remark: This is optional and can be omitted.</li>
-  <li>type: The type of the expectation is one of the types described in the table below.</li>
-  <li>keyword "FIXME": This is optional and is used to indicate currently missing or unexpected behavior.</li>
-  <li>expectation: This is optional, usually used for the expected issue message, or value; concrete semantic depends on the expectation type.</li>
-  <li>location: Used to further indicate the location of the problem, usually just the next line is assumed. The location has to be prefixed with "at" in most cases.</li>
-</ol>
-
-<p>The expectations are usually written on a single line. In cases where a single code line contains several issues, multi-line comments are to be used:</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">/* «remark» XPECT «type» ---
+</head>
+<body class="book">
+<div id="header">
+</div>
+<div id="content">
+<h1 id="_reporting-bugs" class="sect0"><a class="link" href="#_reporting-bugs">Reporting Bugs</a></h1>
+<div class="openblock partintro">
+<div class="content">
+<div class="paragraph">
+<div class="title">Reporting Bugs</div>
+<p><strong>We embrace bug reports and feature requests!</strong></p>
+</div>
+<div class="paragraph">
+<p>For the moment, we use <a href="https://github.com/numberfour/n4js/issues">GitHub issues</a> to manage
+issues found by users. We will soon migrate our current, internal list of bugs there. We greatly appreciate
+all bug reports, thank you so much for your time!</p>
+</div>
+<div class="paragraph">
+<p>If you like, you can try out a novel test technology called <a href="http://www.xpect-tests.org/">Xpect</a>
+that was designed for writing tests for domain-specific languages and that we have integrated into the N4JS
+IDE. It is described in detail in the coming section.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_write-bug-reports-with-xpect"><a class="link" href="#_write-bug-reports-with-xpect">Write Bug Reports with Xpect</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With Xpect you can write concise bug reports and feature requests using N4JS and comments. What is a bug? A
+bug usually is a programming error that leads to unexpected behavior. What is a feature? A feature is a
+functionality provided by a system with a well-defined, i.e. expected, behavior. In other words: Bug
+reports and feature requests both have to describe the <strong>expected</strong> behavior. Instead of long explanations
+separated from the code, it is often easier to just add this <strong>expectations</strong> to the code.</p>
+</div>
+<div class="paragraph">
+<p>The following screenshot shows a typical feature request (on the left hand side), written with Xpect:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/xpect_feature_request.png" alt="xpect feature request">
+</div>
+</div>
+<div class="paragraph">
+<p>The great thing about Xpect is that it actually defines a test. That is the feature request (or bug report)
+can be executed. This is even possible within the N4JS IDE, and the result is shown on the right hand side
+of the screenshot above. In order to do that, all you have to do is</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a new file with extension <code>n4js.xt</code> (".xt" will activate Xpect)</p>
+</li>
+<li>
+<p>Write the bug report or feature request, using comments and the keyword <code>XPECT</code> together with a known
+xpectation type (see below)</p>
+</li>
+<li>
+<p>Run the Xpect test from the context menu <strong><span class="menuseq"><span class="menu">Run As</span>&#160;&#9656; <span class="menuitem">Xpect run</span></span></strong>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Instead of writing long explanations, just file the <code>n4js.xt</code> file as bug report (and a short explanation)!</strong></p>
+</div>
+<div class="paragraph">
+<p>Note that in the screenshot the file does not contain any error markers - your expectation is already taken
+into account during validations, improving the readability of the bug report. As shown in the screenshot above,
+the Xpect test failed! In order to make things easier for the developer fixing the bug, you can add an additional
+keyword <code>FIXME</code> to expectations you have but which are not fulfilled. In particular in longer reports with several
+expectations, it is very helpful to easily identify what is expected and what is correct behavior. When running the
+test again with the <code>FIXME</code> annotation, it will succeed as shown in the following screenshot:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/xpect_fixme.png" alt="xpect fixme">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Bug reporting will be improved in future releases!</strong></p>
+</div>
+<div class="paragraph">
+<p>In future releases, we will improve the Xpect support and simplify writing bug reports. In particular, we will
+provide content assist or wizards for adding certain types of expectations.</p>
+</div>
+<div class="paragraph">
+<p>In general, expectations are written inside comments preceding the line in the code which demonstrates the
+un-)expected behavior, according to the following pattern:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>«expectation» at «location»</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>remark</strong>: optional and can be omitted.</p>
+</li>
+<li>
+<p><strong>type:</strong> The type of the expectation is one of the types described in the table below.</p>
+</li>
+<li>
+<p><strong>keyword</strong> "FIXME": is optional and is used to indicate currently missing or unexpected behavior</p>
+</li>
+<li>
+<p><strong>expectation</strong>: optional, usually used for the expected issue message, or value; concrete semantic depends
+on the expectation type.</p>
+</li>
+<li>
+<p><strong>location</strong>: used to further indicate the location of the problem, usually just the next line is assumed. The location has to be prefixed with <code>at</code> in most cases</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If a single code line contains
+several issues, multi-line comments are to be used:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">/* «remark» XPECT «type» ---
 "expectation1" at "location1"
 "expectation2" at "location2"
 ...
---- */
-</pre></div>
-
-<p>Depending on the type of the expectation, the syntax may be a little bit different. The following table summarizes the known types along with an example snippet to illustrate the syntax.</p>
-
-<div class="ExampleExplanation">
-
-  <div class="ExampleExplanation-text">
-
-    <h3>errors</h3>
-
-    <p>Probably the most often used expectation type, indicates a validation error to be issued.</p>
-  </div>
-
-  <div class="ExampleExplanation-code">
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">    // XPECT errors FIXME --&gt; "float literal assigned to int"
-    var i: int = 5.5;
-</pre></div>
-  </div>
+--- */</code></pre>
 </div>
-
-<div class="ExampleExplanation">
-
-  <div class="ExampleExplanation-text">
-
-    <h3>warnings</h3>
-
-    <p>Similar to "errors", indicates a validation warning to be issued.</p>
-  </div>
-
-  <div class="ExampleExplanation-code">
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">    // XPECT warnings FIXME --&gt; "float literal assigned to int"
-    var i: int = 5.5;
-</pre></div>
-  </div>
 </div>
-
-<div class="ExampleExplanation">
-
-  <div class="ExampleExplanation-text">
-
-    <h3>noerrors</h3>
-
-    <p>See example above, used if no error is expected.</p>
-  </div>
-
-  <div class="ExampleExplanation-code">
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">    var a: A;
-    if (o instanceof A) {
-      // I want type guards XPECT noerrors FIXME --&gt;
-      a = o;
-    }
-</pre></div>
-  </div>
+<div class="paragraph">
+<p>Depending on the type of the expectation, the syntax may be a little bit different. The following table summarizes
+the known types along with an example snippet to illustrate the syntax.</p>
 </div>
-
-
-
-    <p>More expectation types will become available in future versions.</p>
-
-    
-        </article>
-    
-      </div>
-    
-      <footer class="Grid">
-        <div class="Cell Cell--12-12">
-          <a href="http://www.numberfour.eu" target="_blank">NumberFour AG</a> · <a href="https://twitter.com/n4jsdev" target="_blank">Twitter</a>
-    
-          <a href="../#getting-started" class="Link--action">Get the N4JS IDE now!</a>
-        </div>
-      </footer>
-      <script>
-        dp.SyntaxHighlighter.HighlightAll('code');
-      </script>
-    
-    </body>
-    </html>
+<div class="sect2">
+<h3 id="_errors"><a class="link" href="#_errors">errors</a></h3>
+<div class="paragraph">
+<p>Probably the most often used expectation type, indicates a validation error to be issued.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>var i: int = 5.5;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_warnings"><a class="link" href="#_warnings">warnings</a></h3>
+<div class="literalblock">
+<div class="content">
+<pre>Similar to "errors", indicates a validation warning to be issued.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>var i: int = 5.5;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_noerrors"><a class="link" href="#_noerrors">noerrors</a></h3>
+<div class="paragraph">
+<p>See example above, used if no error is expected.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>var a: A;
+if (o instanceof A) {
+  // I want type guards XPECT noerrors FIXME --&gt;
+  a = o;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>More expectation types will become available in future versions.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+</div>
+</div>
+<div class="social">
+	<ul>
+    	<li><a href="http://www.numberfour.eu" target="_blank"></i>NumberFour AG</a> </li>· <li> <a href="https://twitter.com/n4jsdev" target="_blank"></i>N4JS Twitter</a> </li>
+		<li><a href="../index.html#getting-started" id="bottomright" class="Link--action"></i>Get the N4JS IDE now!</a></li>
+	</ul>
+</div>
+<script>
+// Toggle the table of contents
+$( "button#tocbutton" ).click(function() {
+  if ($("#tocbutton").css('right') == '25px') {
+    $( "#tocbutton" ).animate({right: '215px'},"slow");
+    $( "#toc.toc2" ).animate({right: '0'},"slow");
+}
+  else {
+    $( "#tocbutton" ).animate({right: '25px'},"slow");
+    $( "#toc.toc2" ).animate({right: '-13rem'},"slow");
+}
+});
+</script>
+<script>
+// Initialise mobile menu
+  $(function(){
+    $('#menu').slicknav();
+  });
+</script>
+<script type="text/javascript">
+// Create a back to top button
+$('body').prepend('<a href="#" class="back-to-top">Back to Top</a>');
+var amountScrolled = 300;
+$(window).scroll(function() {
+if ( $(window).scrollTop() > amountScrolled ) {
+	$('a.back-to-top').fadeIn('slow');
+} else {
+	$('a.back-to-top').fadeOut('slow');
+}
+});
+$('a.back-to-top, a.simple-back-to-top').click(function() {
+$('html, body').animate({
+	scrollTop: 0
+}, 700);
+return false;
+});
+</script>
+<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
+<script src="../scripts/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
+</body>
+</html>

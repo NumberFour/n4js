@@ -1,200 +1,325 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>Modules</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<!-- ************* Meta ************* -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-  <!-- ************* Meta ************* -->
-  <title>Modules · Features · N4JS Language and IDE</title>
+<!-- ************* OpenGraph ************-->
+<meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  
-  <!-- ************* OpenGraph ************-->
-  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
-  
-  <meta property="og:site_name" content="N4JS"/>
-  <meta property="og:title" content="N4JS Language and IDE"/>
-  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
-  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
-  <meta property="og:image" content="../imgs/n4js.png">
-  
-  <!-- ************* Favicon ************-->
-  <link rel="icon" href="../imgs/favicon.ico" />
-  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />  
-  <!-- ************* Styles ************* -->
-  <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
-  <link rel="stylesheet" type="text/css" href="../styles/styles.min.css">
+<meta property="og:site_name" content="N4JS"/>
+<meta property="og:title" content="N4JS Language and IDE"/>
+<meta property="og:url" content="https://numberfour.github.io/n4js"/>
+<meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+<meta property="og:image" content="../images/n4js.png">
 
+<!-- ************* Favicon ************-->
+<link rel="icon" href="../images/favicon.ico" />
+<link rel="icon" type="image/png" href="../images/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="../images/favicon-16x16.png" sizes="16x16" />
 
-  <!-- ****************** Scripts ****************** -->
-  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
-</head>
+<!-- ************* Back-to-top JQuery ************* -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="../scripts/nav-mobile.js"></script>
 
-<body>
-  <header class="Grid">
-    <div class="Cell Cell--4-12">
-      <a href="../"><img src="../imgs/n4js-logo.png" alt="N4JS Language and IDE"></a>
+<!-- ****************** Scripts ****************** -->
+<script type="text/javascript" src="../scripts/analytics.js"></script>
+
+<!-- ************* Styles ************* -->
+<link type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
+<link rel="stylesheet" type="text/css" href="../styles/n4js-adoc.css">
+
+<!-- ****************** NavBar ****************** -->
+<div id="menubar">
+    <div class="banner">
+        <a href="../index.html"><img id="logo" src="../images/n4js-logo.png" alt="N4JS Language and IDE"></a>
     </div>
-
-    <div class="Cell Cell--8-12">
-      <nav>
-         <a href="../#getting-started">Download</a> ·
-         <a href="../features" class="is-active">Features</a> ·
-         <a href="../documentation">Documentation</a> ·
-         <a href="../faq" >FAQ</a>
-      </nav>
-    </div>
-  </header>
-
-  <div class="Main">
-    <nav class="Nav--top">
-      <h2>Features</h2>
+<ul>
+  <li><a href="../index.html#getting-started"></i>Download</a></li>
+  <li><a href="index.html">Features</a>
       <ul>
-          <li><a href="../features" >All Features</a></li>
-          <li><a href="modules.html" class="is-active">Modules</a></li>
-          <li><a href="nominal-and-structural-typing.html" >Nominal And Structural Typing</a></li>
-          <li><a href="dependency-injection.html" >Dependency Injection</a></li>
-          <li><a href="generics.html" >Generics</a></li>
-          <li><a href="async-await.html" >Async/Await</a></li>
-          <li><a href="testing.html" >Test Driven</a></li>
-          <li><a href="nodejs-support.html" >Node.js Support</a></li>
-      </ul>
-    </nav>
-    <article class="Article--noGrid">
-
-<h1>Modules</h1>
-<p class="Introduction">
+        <li><a href="index.html">All N4JS Features</a></li>
+        <li><a href="async-await.html">Async/Await</a></li>
+        <li><a href="dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="generics.html">Generics</a></li>
+        <li><a href="modules.html">Modules</a></li>
+        <li><a href="nodejs-support.html">Node.js Support</a></li>
+        <li><a href="nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a href="../userguides/index.html">Documentation</a>
+    <ul>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
+      <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a href="../faq/index.html">FAQ</a>
+    <ul>
+      <li><a href="../faq/index.html">FAQ</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+<button id="tocbutton">TOC</button>
+<!-- ****************** Mobile NavBar ****************** -->
+<div class="mobile-banner">
+<ul id="menu">
+  <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
+  <li><a class="scroll" href="../features/index.html">Features</a>
+      <ul>
+        <li><a href="index.html">All N4JS Features</a></li>
+        <li><a href="async-await.html">Async/Await</a></li>
+        <li><a href="dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="generics.html">Generics</a></li>
+        <li><a href="modules.html">Modules</a></li>
+        <li><a href="nodejs-support.html">Node.js Support</a></li>
+        <li><a href="nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="../userguides/index.html">Documentation</a>
+    <ul>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
+      <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="../faq/index.html">FAQ</a>
+    <ul>
+      <li><a  href="../faq/index.html">FAQ</a></li>
+      <li><a  href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+</head>
+<body class="book toc2 toc-right">
+<div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#_modules">Modules</a>
+<ul class="sectlevel1">
+<li><a href="#_multiple-exports">Multiple Exports</a></li>
+<li><a href="#_n4js-ide-organizes-imports">N4JS IDE Organizes Imports</a></li>
+<li><a href="#_import-removal">Import Removal</a></li>
+<li><a href="#_read-only-views">Read-only Views</a></li>
+<li><a href="#_loader-details">Loader Details</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<h1 id="_modules" class="sect0"><a class="link" href="#_modules">Modules</a></h1>
+<div class="openblock partintro">
+<div class="title">Modules</div><div class="content">
 Large-scale projects of almost any language require good modularization for maintenance reasons.
-It's vital for projects that modules don't become oversized and comprise a well-defined purpose
+It&#8217;s vital for projects that modules don&#8217;t become oversized and comprise a well-defined purpose
 that is easy to comprehend for developers. The N4JS IDE helps for keeping track of your code modules and validates their usage.
-</p>
-
-<h2>Multiple Exports</h2>
-<p>
-While it's a good habit to assign one module for a single type, it may
+</div>
+</div>
+<div class="sect1">
+<h2 id="_multiple-exports"><a class="link" href="#_multiple-exports">Multiple Exports</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>While it&#8217;s a good habit to assign one module for a single type, it may
 be suitable to define multiple types or variables in a single module in cases where they
 correspond or are related.
 ECMAScript 2015 allows for this with the module syntax it defines. The good news is
-that N4JS already supports most of it:
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">export public function inc(): void { ++count; }
+that N4JS already supports most of it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public function inc(): void { ++count; }
 export public var count = 5;
 export default public class Foo {
     public callOnIt(): void { }
-}
-</pre><div class="Example-caption">Counter.n4js</div></div>
-
-<p>
-Importing an ECMAScript 2015 module and consuming exports is as easy as the following:
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">import { inc, count } from 'Counter';// Named imports
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Importing an ECMAScript 2015 module and consuming exports is as easy as the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { inc, count } from 'Counter';// Named imports
 import Foo from 'Counter'; // Default import
 import { readFile } from 'fs' // Node.js core modules
 import express from 'express';  // npm modules
-import * as plainJsModule+ from 'plainJsModule'; // Dynamic import
-</pre></div>
-
-<p>
-The module could also be imported as a whole:
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">import * as foo from 'Counter'; // Namespace import
-</pre></div>
-
-<p>
-<strong>Note:</strong>
-Anonymous default exports and relative module paths are not yet supported.
-The module specifier is the relative path of the module in its source folder. Optionally the project name can be used as prefix, e.g., in case of ambiguities. 
-</p>
-
-<h2>N4JS IDE Organizes Imports</h2>
-
-<p>
-Manually writing import statements is not necessary: the N4JS IDE does this automatically.
+import * as plainJsModule+ from 'plainJsModule'; // Dynamic import</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The module could also be imported as a whole:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import * as foo from 'Counter'; // Namespace import</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Anonymous default exports and relative module paths are not yet supported. The module specifier is the relative path of the
+module in its source folder. Optionally the project name can be used as prefix, e.g., in case of ambiguities.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_n4js-ide-organizes-imports"><a class="link" href="#_n4js-ide-organizes-imports">N4JS IDE Organizes Imports</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Manually writing import statements is not necessary: the N4JS IDE does this automatically.
 The IDE will recognise all projects involved via various runtime and
 library dependencies that are defined in by the user in the manifest.n4mf file.
-Simply write the type or variable you require and press <strong>Ctrl+SPACE</strong>.
-Content assist within the IDE will add the missing import statement for you.
-</p>
-
-<div class="Image"><a href="fig/moduleImport.gif"><img src="fig/moduleImport.gif" alt="Module Import" /></a></div>
-
-<p>
-When pasting in a code snippet, you could use <strong>Ctrl+Shift+O</strong>
-(on Windows and Linux, <strong>Alt+Cmd+O</strong> on Mac) which organizes your imports and
-adds any missing imports. This is also used to clean up any unused imports.
-</p>
-
-
-<h2>Import Removal</h2>
-<p>
-When developing in N4JS, you may notice that you sometimes need to import types to cast
-a variable or use it for a constraint in a generic.
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">import Foo from 'Counter';
+Simply write the type or variable you require and press <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>SPACE</kbd></span>.
+Content assist within the IDE will add the missing import statement for you.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/moduleimport.gif" alt="moduleimport">
+</div>
+</div>
+<div class="paragraph">
+<p>When pasting in a code snippet, you could use <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd></span>
+(on Windows and Linux, <span class="keyseq"><kbd>Alt</kbd>+<kbd>Cmd</kbd>+<kbd>O</kbd></span> on Mac) which organizes your imports and
+adds any missing imports. This is also used to clean up any unused imports.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_import-removal"><a class="link" href="#_import-removal">Import Removal</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When developing in N4JS, you may notice that you sometimes need to import types to cast
+a variable or use it for a constraint in a generic.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import Foo from 'Counter';
 
 var someOtherVar: Object;
 (someOtherVar as Foo).callOnIt();
 
-export function &lt;T extends Foo&gt; bar(t: T): void { }
-</pre></div>
-
-<p>
-The compiler will notice that there's no runtime code dependency on the
-imported module and will omit loading the module.
-</p>
-
-<h2>Read-only Views</h2>
-<p>
-ES2015 modules have the concept of read-only views. Although you cannot modify anything imported from
+export function &lt;T extends Foo&gt; bar(t: T): void { }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The compiler will notice that there&#8217;s no runtime code dependency on the
+imported module and will omit loading the module.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_read-only-views"><a class="link" href="#_read-only-views">Read-only Views</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>ES2015 modules have the concept of read-only views. Although you cannot modify anything imported from
 a module, your binding is live. In the case that the exporting party has modified
-the export, you will read the current value. For example:
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">import {inc, count} from 'Counter';
+the export, you will read the current value. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import {inc, count} from 'Counter';
 
 console.log(count); // 5
 inc();
-console.log(count); // 6
-</pre></div>
-
-<p>
-Although highly discouraged, read-only views allow to support some cyclic
-dependencies across modules. N4JS might even reorder type definitions to achieve this.
-</p>
-
-<h2>Loader Details</h2>
-<p>
-So far, there's no engine/platform that has implemented the ES2015 specification natively. N4JS
-and most other transpilers, transpile modules into the SystemJS format.
-</p>
-<p>
-N4JS' output format goes a bit further and emits an unified format that works as well in a
+console.log(count); // 6</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Although highly discouraged, read-only views allow to support some cyclic
+dependencies across modules. N4JS might even reorder type definitions to achieve this.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_loader-details"><a class="link" href="#_loader-details">Loader Details</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>So far, there&#8217;s no engine/platform that has implemented the ES2015 specification natively. N4JS
+and most other transpilers, transpile modules into the SystemJS format.</p>
+</div>
+<div class="paragraph">
+<p>N4JS' output format goes a bit further and emits an unified format that works as well in a
 synchronous CommonJS/Node.js environment.
 Keep in mind, however, that when you load a module the CommonJS way, you are
 limited to this with regard to cyclic dependencies because it has to resolve all
-dependencies synchronously.
-</p>
-
-
-    </article>
-
-
-  </div>
-
-  <footer class="Grid">
-    <div class="Cell Cell--12-12">
-      <a href="http://www.numberfour.eu" target="_blank">NumberFour AG</a> · <a href="https://twitter.com/n4jsdev" target="_blank">Twitter</a>
-
-      <a href="../#getting-started" class="Link--action">Get the N4JS IDE now!</a>
-    </div>
-  </footer>
-  <script>
-    dp.SyntaxHighlighter.HighlightAll('code');
-  </script>
-
+dependencies synchronously.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+</div>
+</div>
+<div class="social">
+	<ul>
+    	<li><a href="http://www.numberfour.eu" target="_blank"></i>NumberFour AG</a> </li>· <li> <a href="https://twitter.com/n4jsdev" target="_blank"></i>N4JS Twitter</a> </li>
+		<li><a href="../index.html#getting-started" id="bottomright" class="Link--action"></i>Get the N4JS IDE now!</a></li>
+	</ul>
+</div>
+<script>
+// Toggle the table of contents
+$( "button#tocbutton" ).click(function() {
+  if ($("#tocbutton").css('right') == '25px') {
+    $( "#tocbutton" ).animate({right: '215px'},"slow");
+    $( "#toc.toc2" ).animate({right: '0'},"slow");
+}
+  else {
+    $( "#tocbutton" ).animate({right: '25px'},"slow");
+    $( "#toc.toc2" ).animate({right: '-13rem'},"slow");
+}
+});
+</script>
+<script>
+// Initialise mobile menu
+  $(function(){
+    $('#menu').slicknav();
+  });
+</script>
+<script type="text/javascript">
+// Create a back to top button
+$('body').prepend('<a href="#" class="back-to-top">Back to Top</a>');
+var amountScrolled = 300;
+$(window).scroll(function() {
+if ( $(window).scrollTop() > amountScrolled ) {
+	$('a.back-to-top').fadeIn('slow');
+} else {
+	$('a.back-to-top').fadeOut('slow');
+}
+});
+$('a.back-to-top, a.simple-back-to-top').click(function() {
+$('html, body').animate({
+	scrollTop: 0
+}, 700);
+return false;
+});
+</script>
+<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
+<script src="../scripts/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>

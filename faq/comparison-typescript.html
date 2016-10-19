@@ -1,112 +1,213 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>N4JS and TypeScript</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<!-- ************* Meta ************* -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-  <!-- ************* Meta ************* -->
-  <title>N4JS and TypeScript · FAQ · N4JS Language and IDE</title>
+<!-- ************* OpenGraph ************-->
+<meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  
-  <!-- ************* OpenGraph ************-->
-  <meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
-  
-  <meta property="og:site_name" content="N4JS"/>
-  <meta property="og:title" content="N4JS Language and IDE"/>
-  <meta property="og:url" content="https://numberfour.github.io/n4js"/>
-  <meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
-  <meta property="og:image" content="../imgs/n4js.png">
-  
-  <!-- ************* Favicon ************-->
-  <link rel="icon" href="../imgs/favicon.ico" />
-  <link rel="icon" type="image/png" href="../imgs/favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="../imgs/favicon-16x16.png" sizes="16x16" />
-  <!-- ************* Styles ************* -->
-  <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
-  <link rel="stylesheet" type="text/css" href="../styles/styles.min.css">
+<meta property="og:site_name" content="N4JS"/>
+<meta property="og:title" content="N4JS Language and IDE"/>
+<meta property="og:url" content="https://numberfour.github.io/n4js"/>
+<meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+<meta property="og:image" content="../images/n4js.png">
 
+<!-- ************* Favicon ************-->
+<link rel="icon" href="../images/favicon.ico" />
+<link rel="icon" type="image/png" href="../images/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="../images/favicon-16x16.png" sizes="16x16" />
 
-  <!-- ****************** Scripts ****************** -->
-  <script type="text/javascript" src="../scripts/scripts-legacy.js"></script>
-</head>
+<!-- ************* Back-to-top JQuery ************* -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="../scripts/nav-mobile.js"></script>
 
-<body>
-  <header class="Grid">
-    <div class="Cell Cell--4-12">
-      <a href="../"><img src="../imgs/n4js-logo.png" alt="N4JS Language and IDE"></a>
+<!-- ****************** Scripts ****************** -->
+<script type="text/javascript" src="../scripts/analytics.js"></script>
+
+<!-- ************* Styles ************* -->
+<link type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
+<link rel="stylesheet" type="text/css" href="../styles/n4js-adoc.css">
+
+<!-- ****************** NavBar ****************** -->
+<div id="menubar">
+    <div class="banner">
+        <a href="../index.html"><img id="logo" src="../images/n4js-logo.png" alt="N4JS Language and IDE"></a>
     </div>
-
-    <div class="Cell Cell--8-12">
-      <nav>
-         <a href="../#getting-started">Download</a> ·
-         <a href="../features">Features</a> ·
-         <a href="../documentation">Documentation</a> ·
-         <a href="../faq" class="is-active">FAQ</a>
-      </nav>
-    </div>
-  </header>
-  <div class="Main">
-    <nav class="Nav--top">
-      <h2>FAQ</h2>
+<ul>
+  <li><a href="../index.html#getting-started"></i>Download</a></li>
+  <li><a href="../features/index.html">Features</a>
       <ul>
-          <li><a href="../faq" >FAQ</a></li>
-          <li><a href="comparison-java.html" >N4JS and Java</a></li>
-          <li><a href="comparison-typescript.html" class="is-active">N4JS and Typescript</a></li>
-      </ul>
-    </nav>
-    <article class="Article--noGrid">
-
-<h1>N4JS and TypeScript</h1>
-
-<p class="Introduction">
-N4JS and TypeScript are both supersets of ECMAScript. They both introduce type annotations and a static type checker. In their relation to JavaScript, however, they follow different approaches.
-</p>
-
-<div class="Image Image"><img src="fig/ts_n4js.svg" /></div>
-
-<p>
-TypeScript's goal is to make ECMAScript type safe without breaking existing ECMAScript code. Its type system is optional and the TypeScript transpiler aims to accept plain ECMAScript where possible.
-</p>
-<p>
-N4JS is a superset of ECMAScript in terms of features and syntax but it does not try to be compatible with ECMAScript at all cost. A useful way to explain N4JS is to consider ECMAScript a starting point followed by the addition of Java's strict and rigorous type system, then making this amalgamation as flexible as possible. The resulting state of N4JS is that it fulfils the expectations of a JavaScript developer without compromising the sound type system. 
-</p>
-
-<p>This comparison will talk about the <a href="#differences">differences</a> and <a href="#similarities">similarities</a> between N4JS and TypeScript.</p>
-<!-- ======================================================================= -->
-<h2 id="differences">Differences</h2>
-<!-- ======================================================================= -->
-<p>
-In many cases, TypeScript's design prioritizes the transition from ECMAScript to TypeScript
-over type safety. N4JS was designed with this ease of transition in mind but type safety has a higher
-priority than ease of transition.
-</p>
-
-<h3>Any</h3>
-
-<p>
-Both languages introduce a type called <code>any</code>. Whenever an explicit type declaration is missing and no type can be inferred by the system, the type <code>any</code> is used. The precise meaning of <code>any</code> is probably the most important difference between N4JS and TypeScript. Simply put:
-</p>
-
-<p style="margin-left:2em;">
-<b>In N4JS you can do <i>nothing</i> with <code>any</code>, in TypeScript you can do anything.</b>
-</p>
-
-<p>
-The following example illustrates the difference:
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">function f(p: any) {
+        <li><a href="../features/index.html">All N4JS Features</a></li>
+        <li><a href="../features/async-await.html">Async/Await</a></li>
+        <li><a href="../features/dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="../features/generics.html">Generics</a></li>
+        <li><a href="../features/modules.html">Modules</a></li>
+        <li><a href="../features/nodejs-support.html">Node.js Support</a></li>
+        <li><a href="../features/nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="../features/testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a href="../userguides/index.html">Documentation</a>
+    <ul>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
+      <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a href="../faq/index.html">FAQ</a>
+    <ul>
+      <li><a href="index.html">FAQ</a></li>
+      <li><a href="comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+<button id="tocbutton">TOC</button>
+<div id=faq>
+<nav>
+  <h2>FAQ</h2>
+  <ul>
+      <li><a href="index.html" >FAQ</a></li>
+      <li><a href="comparison-java.html" class="is-active">N4JS and Java</a></li>
+      <li><a href="comparison-typescript.html" >N4JS and Typescript</a></li>
+  </ul>
+</nav>
+</div>
+<!-- ****************** Mobile NavBar ****************** -->
+<div class="mobile-navbar">
+<ul id="menu">
+  <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
+  <li><a class="scroll" href="../features/index.html">Features</a>
+      <ul>
+        <li><a href="../features/index.html">All N4JS Features</a></li>
+        <li><a href="../features/async-await.html">Async/Await</a></li>
+        <li><a href="../features/dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="../features/generics.html">Generics</a></li>
+        <li><a href="../features/modules.html">Modules</a></li>
+        <li><a href="../features/nodejs-support.html">Node.js Support</a></li>
+        <li><a href="../features/nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="../features/testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="../userguides/index.html">Documentation</a>
+    <ul>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
+      <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="index.html">FAQ</a>
+    <ul>
+      <li><a  href="index.html">FAQ</a></li>
+      <li><a  href="comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+</head>
+<body class="book toc2 toc-right">
+<div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#_n4js-and-typescript">N4JS and TypeScript</a>
+<ul class="sectlevel1">
+<li><a href="#_differences">Differences</a>
+<ul class="sectlevel2">
+<li><a href="#_any">Any</a></li>
+<li><a href="#_type-errors-are-show-stoppers-in-n4js">Type Errors Are Show-Stoppers in N4JS</a></li>
+<li><a href="#_parameter-contra-variance-vs-bivariance">Parameter Contra-variance vs. Bivariance</a></li>
+</ul>
+</li>
+<li><a href="#_similarities">Similarities</a>
+<ul class="sectlevel2">
+<li><a href="#_explicit-and-implicit-typing">Explicit and Implicit typing</a></li>
+<li><a href="#_structural-types">Structural Types</a></li>
+<li><a href="#_using-existing-javascript-libraries">Using Existing JavaScript Libraries</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<h1 id="_n4js-and-typescript" class="sect0"><a class="link" href="#_n4js-and-typescript">N4JS and TypeScript</a></h1>
+<div class="openblock partintro">
+<div class="content">
+<div class="paragraph faq-intro">
+<div class="title">N4JS and TypeScript</div>
+<p>N4JS and TypeScript are both supersets of ECMAScript. They both introduce type annotations and a
+static type checker. However, in their relation to JavaScript, they follow different approaches.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ts_n4js.svg" alt="ts n4js">
+</div>
+</div>
+<div class="paragraph">
+<p>TypeScript tries to make ECMAScript type-safe without invalidating existing ECMAScript code. Its
+type system is optional and the TypeScript transpiler aims to accept plain ECMAScript wherever as possible.</p>
+</div>
+<div class="paragraph">
+<p>Although N4JS is a superset of ECMAScript in terms of syntax and features, it does not
+try to be compatible with ECMAScript at all cost.
+One way of looking at the N4JS approach is to begin with ECMAScript, add Java&#8217;s strict
+and rigorous type system and then to make this amalgamation as flexible as possible.
+The idea is that this fulfills the expectations of JavaScript programmers while keeping the type system sound.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_differences"><a class="link" href="#_differences">Differences</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In many cases TypeScript&#8217;s design prioritizes the transition from ECMAScript to TypeScript
+over type safety. N4JS was designed with ease of transition in mind, but type safety has a higher
+priority than the ease of transition.</p>
+</div>
+<div class="sect2">
+<h3 id="_any"><a class="link" href="#_any">Any</a></h3>
+<div class="paragraph">
+<p>Both languages introduce a type called <code>any</code>.
+However, the precise meaning of <code>any</code> is probably the most important difference between N4JS and TypeScript.
+Simply put:</p>
+</div>
+<div class="paragraph">
+<p><strong>In N4JS you can do <strong>nothing</strong> with <code>any</code>, in TypeScript you can do anything.</strong></p>
+</div>
+<div class="paragraph">
+<p>The following example illustrates the difference:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">function f(p: any) {
     p.foo(); // error in N4JS, no error in TypeScript
-}
-</pre></div>
-
-<p>
-N4JS will issue an error "Couldn't resolve reference to IdentifiableElement 'foo'." because in N4JS, the type <code>any</code> has no properties.
-</p>
-<p>
-Furthermore, in N4JS <code>any</code> is the top type: every type is a subtype of <code>any</code>. In TypeScript it is treated as a bottom type similar to <code>undefined</code> (or <code>null</code>): <code>any</code> is a subtype of every other type. The effect of these different semantics is shown in the following example:
-</p>
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">function bar(p: string) {
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>N4JS will issue an error: <code>Couldn&#8217;t resolve reference to IdentifiableElement 'foo'</code>, because in N4JS, the type <code>any</code>
+has no properties.</p>
+</div>
+<div class="paragraph">
+<p>Furthermore, in N4JS <code>any</code> is the top type: every type is a subtype of <code>any</code>. In TypeScript it is treated as a bottom
+type similar to <code>undefined</code> (or <code>null</code>): <code>any</code> is a subtype of every other type. The effect of these different semantics is shown in the following example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">function bar(p: string) {
     p.charAt(0);
 }
 
@@ -114,237 +215,500 @@ var s: string = "Hello";
 var x: any = 42;
 
 bar(s);
-bar(x); // error in N4JS, no error in TypeScript
-</pre></div>
-
-<p>
-Of course, you would get an error at runtime: "TypeError: p.charAt is not a function".
-</p>
-<p>
-The different interpretations of <code>any</code> reflect the different approaches visualized in the figure at the beginning. <code>any</code> in TypeScript is JavaScript in its purest form: access anything, assign to everything. <code>any</code> in N4JS is even more rigorous than type <code>Object</code> in Java: access nothing, assign to nothing (except <code>any</code> itself).
-<!--
-It also illustrates how both languages are moving closer to each other: The better the type inferencer is and the more alternative concepts are provided, the less often any is to be used. With the introduction of union types for instance, the usage of any has been reduced in TypeScript and N4JS. Another example is "this" type, introduced with TypeScript 1.8 and also available in N4JS; it also makes some usages of any expandable.
--->
-</p>
-
-<p>Note: N4JS allows developers to use types in a dynamic way by using the "<code>+</code>" type modifier. This so-called <em>dynamic type modifier</em> allows for accessing arbitrary properties even when they are not known to the type system. The following example shows the effect:
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">function f(p: any, d: any+) {
-    p.foo(); // error in N4JS
-    d.foo(); // no error in N4JS, as d is "dynamic"
-}
-</pre></div>
-
-<p>
-While <code>any+</code> resembles TypeScript's behavior of <code>any</code>, it is still more restrictive: <code>any+</code> will never be used as a default, it has to be declared explicitly. A value of type <code>any+</code> still cannot be assigned to variables of other types except <code>any</code>.
-</p>
-
-<table class="Table Table--verticalLines Table--horizontalLines">
-<tr><td colspan="2"></td><th>access anything</th><th>assign to everything</th><th>used as default</th></tr>
-<tr><td colspan="5"></td></tr>
-<tr><th rowspan="2">N4JS</th><th>any</th><td>&#x2715;</td><td>&#x2715;</td><td>&bull;</td></tr>
-<tr><th>any+</th><td>&#x2713;</td><td>&#x2715;</td><td></td></tr>
-<tr><td colspan="5"></td></tr>
-<tr><th>TypeScript</th><th>any</th><td>&#x2713;</td><td>&#x2713;</td><td>&bull;</td></tr>
-</table>
-<!-- cross would be 2715 -->
-
-
-<h3>Type Errors Are Show Stoppers in N4JS</h3>
-<p>
-N4JS has two general levels of issues reported by the compiler: <em>warning</em> and <em>error</em>.
-Serious issues like type errors are treated as errors in N4JS and all errors will prevent
-the transpiler to emit any JavaScript code in order to avoid (as far as possible) producing
-code that can break at runtime.
-For TypeScript, on the other hand, one main goal is never to get in the way of the developer.
-TypeScript's transpiler will thus produce JavaScript output code even in the case of compile errors.
-Given the example from the beginning:
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">var str = 'Hello';
-str = 42;  // both N4JS and TypeScript show an error here
-str.charAt(2);
-</pre></div>
-
-<p>
-The N4JS transpiler will reject the compilation of this code while TypeScript will create a JavaScript output file that breaks at runtime in the last line.
-</p>
-
-
-<h3>Use-Site Variance vs. Assumed Co-Variance</h3>
-<p>One of the tricky subtleties of generics is co- and contra-variance. Let's have a look at the hello-world example for generics, a simplified list that can hold only a single element:
-</p>
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">class List&lt;T&gt; {
-    read(): T;
-    write(T);
-}
-</pre></div>
-
-<p>
-Furthermore, we assume two types <code>A</code> and <code>B</code> with
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">class A {}
-class B extends A { foo() {} }
-let a: A = new A(), b: B = new B();
-let la: List&lt;A&gt;(), lb: List&lt;B&gt;;
-</pre></div>
-
-<p>
-That is, <code>B</code> is a subtype of <code>A</code> (it doesn't matter whether we use nominal or structural subtyping). Now for the interesting question; when <code>B</code> is a subtype of <code>A</code>, is <code>List&lt;B&gt;</code> a subtype of <code>List&lt;A&gt;</code>? That is, is it possible to use an instance of <code>List&lt;B&gt;</code> wherever an instance of <code>List&lt;A&gt;</code> is expected? If this were true, <code>List&lt;T&gt;</code> would be co-variant. If the opposite were true, that is, <code>List&lt;A&gt;</code> a subtype of <code>List&lt;B&gt;</code>, then we would say <code>List&lt;T&gt;</code> is contra-variant. If both conclusions are wrong then <code>List&lt;T&gt;</code> is invariant.
-</p>
-
-<p>
-Now, let's look at the following assignments:
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">la = lb; // works in TypeScript, N4JS issues an error
-lb = la; // both TypeScript and N4JS issue an error
-</pre></div>
-
-<p>
-Do these assignments work? N4JS and TypeScript will actually give you different answers:
-In N4JS, both assignments are rejected. TypeScript, on the other hand, allows the first
-assignment but rejects the second. It assumes that when <code>B</code> is a subtype of <code>A</code>, then
-<code>List&lt;B&gt;</code> is a subtype of <code>List&lt;B&gt;</code>. TypeScript makes the assumption that generics
-are always co-variant.
-</p>
-
-<p>
-Since it is not obvious why both assignments are rejected by N4JS, let's have a look what happens here:
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">la = new List&lt;A&gt;(); la.write(a); lb = la; lb.read().foo();
-lb = new List&lt;B&gt;(); la = lb; la.write(a); lb.read().foo();
-</pre></div>
-<p>
-In the first line, we create a new list of <code>A</code> and add an a. After assigning <code>lb</code> to <code>la</code>, we have a list of <code>B</code> but it actually contains an <code>A</code>. When we try to call <code>foo()</code> on the object returned (from which we think it is a <code>B</code>), we have a problem!
-In the second line, the issue is similar. We create a list of <code>B</code> and instead of adding a <code>B</code>, we first assign <code>lb</code> to <code>la</code> then add an <code>A</code> to the list that says that it accepts <code>A</code>s. It does! But since the list actually is a list of <code>B</code>, we have trouble accessing the (very same) list via <code>lb</code> -- we assume it contains <code>B</code>s, and again we have a problem when calling <code>foo()</code>.
-</p>
-<p>
-This is the case because <code>List&lt;T&gt;</code> is invariant and, in practice, this is very inconvenient. It would be ok to use <code>lb</code> instead of <code>la</code>, assuming we only want to read from the list. On the other hand, if we only want to write to the list then we could use <code>la</code> instead of <code>lb</code> since adding <code>B</code>s to a list expecting <code>A</code> does not do any harm.
-</p>
-<p>
-There are different solutions to the same problem. N4JS follows Java and uses <b>use-site variance</b>. Meaning when the list is used, we can define whether we want to read or write from it. This can be done by using so-called 'wildcards' and constraints when parameterizing the list, for example:
-</p>
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">function copy(readOnlyList: List&lt;? extends A&gt;, writeOnlyList: List&lt;? super A&gt;) {
-    writeOnlyList.write( readOnlyList.read );
-}
-</pre></div>
-
-<p>
-Reading (from a list) is much more often used then writing, practically speaking. And in this case, TypeScript's covariant assumption causes no problems. When writing, however, it can cause the above issue.
-</p>
-
-<p>
-For more information on generics, please refer to the <a href="../features/generics.html">generics feature page</a>.
-</p>
-
-
-<!-- ======================================================================= -->
-<h2 id="similarities">Similarities</h2>
-<!-- ======================================================================= -->
-
-<h3>Explicit and Implicit typing</h3>
-<p>
-In both languages, types can be defined either implicitly or explicitly via a type annotation. In the former case, the type is to be inferred by the type system. A simple example is the assignment of a value to a newly declared variable:
-</p>
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">let foo = "Hello";
-</pre></div>
-
-<p>
-Both languages would infer the type of <code>foo</code> to <code>string</code>. In both languages, the following assignment would lead to an error:
-
-</p>
-
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">foo = 42; // error
-</pre></div>
-<p>
-N4JS would issue "int is not a subtype of string.", TypeScript "Type 'number' is not assignable to type 'string'".
-</p>
-
-
-<h3>Structural Types</h3>
-<p>
-N4JS and TypeScript both support <a href="../features/nominal-and-structural-typing.html">structural types</a>. This allows for managing relations between types without the need for excessive declarations. Instead of explicitly defining type relations via "extends" or "implements", the type system compares the properties of two types. If one type has all the properties of another type, it is considered to be a subtype.
-</p>
-<p>
-As a significant difference between the two languages, N4JS also supports <em>nominal types</em> and nominal typing <em>is the default</em>. Thus, structural types have to be explicitly annotated as being structural using the <code>~</code> or <code>~~</code> type constructors.
-</p>
-
-<div class="Comparison">
-  <div class="Comparison-left">
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">  export public interface ~Point {
-      x : number;
-      y : number;
-  }
-  export public interface ~Point3D {
-      x : number;
-      y : number;
-      z : number;
-  }
-  var p: Point = { x: 0, y: 10, };
-  var p3d: Point3D = { x: 0, y: 10, z: 20 }
-
-  p = p3d;
-  p3d = p; // error
-</pre><div class="Example-caption">N4JS</div></div>
-  </div>
-  <div class="Comparison-right">
-<div class="Example"><pre name="code" class="n4js:nocontrols:nogutter">  interface Point {
-      x : number;
-      y : number;
-  }
-  interface Point3D {
-      x : number;
-      y : number;
-      z : number;
-  }
-  var p: Point = { x: 0, y: 10, };
-  var p3d: Point3D = { x: 0, y: 10, z: 20 }
-
-  p = p3d;
-  p3d = p; // error
-</pre><div class="Example-caption">TypeScript</div></div>
-  </div>
+bar(x); // error in N4JS, no error in TypeScript</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Of course, you would get an error at runtime: <code>TypeError: p.charAt is not a function</code></p>
+</div>
+<div class="paragraph">
+<p>The differing interpretations of <code>any</code> reflect the different approaches visualized in the figure at the beginning.
+<code>any</code> in TypeScript is JavaScript in pure form: access anything, assign to everything. <code>any</code> in N4JS is even more rigorous than type <code>Object</code> in Java: access nothing, assign to nothing (except <code>any</code> itself).</p>
+</div>
+<div class="paragraph">
+<p>N4JS allows developers to use types in dynamic way, by using the <code>+</code> type modifier.
+This so-called <strong> dynamic type modifier</strong> allows for accessing arbitrary properties even when they are not known to the type system. The following example shows the effect:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">function f(p: any, d: any+) {
+    p.foo(); // error in N4JS
+    d.foo(); // no error in N4JS, as <code>d</code> is "dynamic"
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>While <code>any+</code> resembles TypeScript&#8217;s behavior of <code>any</code>, it is still more restrictive: <code>any+</code> will never be used as a default, it has to be declared explicitly; and a value of type <code>any+</code> still cannot be assigned to variables of other types except <code>any</code>.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"></td>
+<th class="tableblock halign-left valign-top"><p class="tableblock">access anything</p></th>
+<th class="tableblock halign-left valign-top"><p class="tableblock">assign to everything</p></th>
+<th class="tableblock halign-left valign-top"><p class="tableblock">used as default</p></th>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">N4JS</p></th>
+<th class="tableblock halign-left valign-top"><p class="tableblock"><code>any</code></p></th>
+<th class="tableblock halign-left valign-top"><p class="tableblock">no</p></th>
+<th class="tableblock halign-left valign-top"><p class="tableblock">no</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">•</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock"><code>any+</code></p></th>
+<th class="tableblock halign-left valign-top"><p class="tableblock">yes</p></th>
+<th class="tableblock halign-left valign-top"><p class="tableblock">no</p></th>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">TypeScript</p></th>
+<th class="tableblock halign-left valign-top"><p class="tableblock"><code>any</code></p></th>
+<th class="tableblock halign-left valign-top"><p class="tableblock">yes</p></th>
+<th class="tableblock halign-left valign-top"><p class="tableblock">yes</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">• <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_type-errors-are-show-stoppers-in-n4js"><a class="link" href="#_type-errors-are-show-stoppers-in-n4js">Type Errors Are Show-Stoppers in N4JS</a></h3>
+<div class="paragraph">
+<p>N4JS has two general levels of issues reported by the compiler: <strong> warning</strong>  and <strong>error</strong>.
+Serious issues like type errors are treated as errors in N4JS and all errors will prevent the transpiler to emit any JavaScript code in order to avoid producing code that might cause exceptions at runtime.
+For TypeScript, on the other hand, it is a main concern to never impede the developer, the transpiler will thus produce JavaScript output code even in the case of compile errors.
+Given the example from the beginning</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">var str = 'Hello';
+str = 42;  // both N4JS and TypeScript show an error here
+str.charAt(2);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The N4JS transpiler will reject the compilation of that code, while TypeScript will create a JavaScript output file
+that causes exceptions at runtime in the last line.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_parameter-contra-variance-vs-bivariance"><a class="link" href="#_parameter-contra-variance-vs-bivariance">Parameter Contra-variance vs. Bivariance</a></h3>
+<div class="paragraph">
+<p>In N4JS (and Java), when overriding a method in a subtype, the types of the parameters may be super types, and (in N4JS but not in Java) the return type may be a sub type. E.g., given the following classes</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">class A           { fa() {} }
+class B extends A { fb() {} }
+class C extends B { fc() {} }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and the following super type</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">class Sup {
+  f(b: B): B { return new B() }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>a sub type of <code>Sup</code> may override <code>f</code> as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">class Sub extends Sup {
+  @Override
+  f(a: A): C { return new C() }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In type theory, this is expressed with co- and contra-variance: Given a type <code>Sup</code> with a method <code>M</code>, and a subtype of <code>Sub</code> with a method <code>N</code> overriding <code>M</code> (that is, <code>M</code> and <code>N</code> have the same names), then:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the parameter types of overriding methods need to be contra-variant - the type of the parameters of <code>N</code> need to be super types <sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</sup> of the types of the parameters of <code>M</code></p>
+</li>
+<li>
+<p>the return type of overriding methods need to be co-variant, that is the type of the parameters of <code>N</code> need to be a sub type of the return type of <code>M</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The same is true when checking assignability for function types, e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">f(callback: (B)=&gt;B) {}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>can be called with</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">f((a: A) =&gt; return new C())</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Typescript, the parameter types may be contra- or covariant, that is bivariant (see <a href="http://www.typescriptlang.org/docs/handbook/type-compatibility.html#function-parameter-bivariance">Handbook</a> and <a href="https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md#3.11.4">TypeScript Spec, Assignment Compatibility</a> and <a href="https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md#8.2.3">Inheritance and Overriding</a>).</p>
+</div>
+<div class="paragraph">
+<p>This is <strong>unsound</strong>, as already stated in the TypeScript handbook: "This is unsound because a caller might end up being given a function that takes a more specialized type, but invokes the function with a less specialized type." (<a href="http://www.typescriptlang.org/docs/handbook/type-compatibility.html#function-parameter-bivariance">Handbook</a>). In the context of function objects (as in the example with the callback parameter) this may be quite convenient. And for that very special use case, we agree with the TS handbook: "In practice, this sort of error is rare, and allowing this enables many common JavaScript patterns." However, in the context of overriding methods and generics, this leads to severe problems, which are probably not that "rare".</p>
+</div>
+<div class="sect3">
+<h4 id="_violated-substitution-principle"><a class="link" href="#_violated-substitution-principle">Violated Substitution Principle</a></h4>
+<div class="paragraph">
+<p>This assumed bivariance actually violates the so called <a href="https://en.wikipedia.org/wiki/Liskov_substitution_principle">subsitution principle</a>. In TypeScript, the following code is accepted without errors or warnings:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">class TSSub extends Sup {
+  f(b: C): B { b.fc(); return new B() }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following function uses the super class <code>Sup</code> and assumes that its method <code>f</code> accepts a parameter of type <code>B</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">function g(s: Sup) {
+  let b = s.f(new B());
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The substitution principles states that we can use a subclass instead of the super class.
+However, this is not true in case of TypeScript anymore.
+The following code will create a runtime error:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">f(new TSSub());</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will be surprising for the programmer of that call, but also for the developer of function <code>g</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_use-site-variance-vs-assumed-co-variance"><a class="link" href="#_use-site-variance-vs-assumed-co-variance">Use-Site Variance vs. Assumed Co-Variance</a></h4>
+<div class="paragraph">
+<p>Parameter bivariance seems to solve some variance problems in the context of generics.
+Let&#8217;s have a look at the hello-world example for generics, a simplified list that can hold only a single element:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">class List&lt;T&gt; {
+   read(): T { /* .. */ }
+   write(T)  { /* .. */ }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and two variables</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">let la: List&lt;A&gt;(), lb: List&lt;B&gt;;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Programmers familiar with Java or Scala know that it often causes headaches when using generics and assigning instances of generics.
+Take the following assignments for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">la = lb; // works in TypeScript, N4JS (and Java) issue an error
+lb = la; // both TypeScript and N4JS (and Java) issue an error</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>On first glance, it looks great that TypeScript does not issue any errors here.
+Since it&#8217;s not obvious why both assignments are rejected by N4JS, let&#8217;s have a look at what happens next:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">la = new List&lt;A&gt;(); la.write(a); lb = la; lb.read().fb();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>TypeScript would issue no errors, but we would get a runtime error in the last call:
+since the list does not contain an instance of <code>B</code>, the method is undefined.
+The same error occurs in the following case:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">lb = new List&lt;B&gt;(); la = lb; la.write(a); lb.read().fb());</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is true because <code>List&lt;T&gt;</code> is invariant (that it is neither co- nor contra-variant):
+* List is not co-variant: Even if <code>B</code> is a subtype of <code>A</code>, <code>List&lt;B&gt;</code> is not a subtype of <code>List&lt;A&gt;</code>
+* List is not contra-variant: Even if <code>B</code> is a subtype of <code>A</code>, <code>List&lt;B&gt;</code> is not a supertype of <code>List&lt;A&gt;</code></p>
+</div>
+<div class="paragraph">
+<p>In practice, this is very inconvenient.
+It would be O.K. to use <code>lb</code> instead of <code>la</code> assuming we only want to read from the list.
+On the other hand, if we only want to write to the list then we could use <code>la</code> instead of <code>lb</code> since adding <code>B</code> s to a list expecting <code>A</code> does not do any harm.
+There are different solutions to the same problem.</p>
+</div>
+<div class="paragraph">
+<p>Java uses use-site variance, and this is also supported by N4JS.
+When the list is used, we can define whether we want to read or write from it.
+This can be done by using so-called 'wildcards' and constraints when parameterizing the list, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">function copy(readOnlyList: List&lt;? extends A&gt;, writeOnlyList: List&lt;? super A&gt;) {
+   writeOnlyList.write( readOnlyList.read() );
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Scala uses def-site variance, which is also supported by N4JS. In that case, you define at the definition of a generic type that a type variable is only used for read or write. E.g.,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">interface ReadOnlyList&lt;out T&gt; {
+  read(): T
+}
+interface WriteOnlyList&lt;in T&gt; {
+  write(T): void
+}
 
-<p>
-Note that N4JS is using different default for access modifiers, e.g. <code>public</code> is not the default. For that reason, the interfaces have to be marked as public (and exported).
-</p>
-<p>
-In both languages, an error will be issued on the last line:
-"Point is not a structural subtype of Point3D: missing field z." (N4JS) and "Type 'Point' is not assignable to Type 'Point3D'. Property 'z' is missing in type 'Point'." (TypeScript), respectively.
-</p>
-<p>
-The difference between structural and nominal typeing is described in further detail <a href="../features/nominal-and-structural-typing.html">here</a>.
-</p>
+class List &lt;T&gt; implements ReadOnlyList&lt;T&gt;, WriteOnlyList&lt;T&gt; {
+  @Override
+  read(): T { /* .. */ return null;}
+  @Override
+  write(T) { /* .. */ }
+}
 
-<h3>Using Existing JavaScript Libraries</h3>
-<p>
-An important benefit of being an ECMAScript superset is enabling developers to use existing JavaScript libraries. N4JS and TypeScript support type definitions for existing code. For TypeScript there is a great project called <a href="http://definitelytyped.org/">DefinitelyTyped</a> where these type definitions are collected. For N4JS, a similar <a href="https://github.com/NumberFour/n4jsd">GitHub project exists</a>, but it contains very few definitions at the moment. Contributions are welcome for both projects.
-</p>
-<p>It is also possible in both languages to use existing code, in particular Common.js modules, without type definitions. The N4JS IDE <a href="../features/nodejs-support.html">integrates support for NPM</a> so that these modules, even without a type definition, can seamlessly be used in N4JS.
-</p>
+function copy(readOnlyList: ReadOnlyList&lt;A&gt;, writeOnlyList: WriteOnlyList&lt;A&gt;) {
+   writeOnlyList.write( readOnlyList.read() );
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For more information on generics, please refer to the <a href="../features/generics.html">generics feature page</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_similarities"><a class="link" href="#_similarities">Similarities</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_explicit-and-implicit-typing"><a class="link" href="#_explicit-and-implicit-typing">Explicit and Implicit typing</a></h3>
+<div class="paragraph">
+<p>In both languages, types can either be defined explicitly (via a type annotation) or implicitly.
+In the latter case, the type is to be inferred by the type system. A simple example is the assignment
+of a value to a newly declared variable, such as</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">let foo = "Hello";</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Both languages would infer the type of <code>foo</code> to <code>string</code>.
+In both languages the following assignment would, therefore, lead to an error:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">foo = 42; // error</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>N4JS would issue <code>int is not a subtype of string.</code>,</p>
+</li>
+<li>
+<p>TypeScript would issue <code>Type <code>number</code> is not assignable to type <code>string</code></code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_structural-types"><a class="link" href="#_structural-types">Structural Types</a></h3>
+<div class="paragraph">
+<p>N4JS and TypeScript both support <a href="../features/nominal-and-structural-typing.html#nominal_and_structural_typing">structural types</a>.
+This allows for managing relations between types without the need for excessive declarations.
+Instead of explicitly defining type relations via <code>extends</code> or <code>implements</code>, the type system compares the properties of two types.
+If one type has all the properties of another type, it is considered to be a subtype.</p>
+</div>
+<div class="paragraph">
+<p>As a significant difference between the two languages, N4JS also supports <strong>nominal types</strong> and nominal typing <strong>is the default</strong>.
+Thus, structural types have to be explicitly annotated as being structural, using the ~ or ~~ type constructors.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public interface~Point {
+    x: number;
+    y: number;
+}
+export public interface~Point3D {
+    x: number;
+    y: number;
+    z: number;
+}
+var p: Point = {
+    x: 0,
+    y: 10,
+};
+var p3d: Point3D = {
+    x: 0,
+    y: 10,
+    z: 20
+}
 
+p = p3d;
+p3d = p; // error</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript" data-lang="javascript">interface Point {
+    x: number;
+    y: number;
+}
+interface Point3D {
+    x: number;
+    y: number;
+    z: number;
+}
+var p: Point = {
+    x: 0,
+    y: 10,
+};
+var p3d: Point3D = {
+    x: 0,
+    y: 10,
+    z: 20
+}
 
-
-    </article>
-
-  </div>
-
-
-  <footer class="Grid">
-    <div class="Cell Cell--12-12">
-      <a href="http://www.numberfour.eu" target="_blank">NumberFour AG</a> · <a href="https://twitter.com/n4jsdev" target="_blank">Twitter</a>
-
-      <a href="../#getting-started" class="Link--action">Get the N4JS IDE now!</a>
-    </div>
-  </footer>
-  <script>
-    dp.SyntaxHighlighter.HighlightAll('code');
-  </script>
-
+p = p3d;
+p3d = p; // error</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+N4JS is using different defaults for access modifiers, e.g. <code>public</code> is not the default. For that reason, the interfaces have to be marked as public (and exported).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In both languages, an error will be issued on the last line:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>N4JS:</em> <code>Point is not a structural subtype of Point3D: missing field z.</code></p>
+</li>
+<li>
+<p><em>Typescript:</em> <code>Type 'Point' is not assignable to Type 'Point3D'. Property 'z' is missing in type 'Point'.</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The difference between structural and nominal typing is described in further detail in the <a href="features/nominal-vs-structural-typing.html#nominal_vs_structural_typing">nominal vs. structural subtyping feature</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using-existing-javascript-libraries"><a class="link" href="#_using-existing-javascript-libraries">Using Existing JavaScript Libraries</a></h3>
+<div class="paragraph">
+<p>An important aspect of being an ECMAScript superset is to enable developers to use existing JavaScript libraries. N4JS and
+TypeScript support type definitions for existing code. For TypeScript, there is a great project called
+<a href="http://definitelytyped.org/">DefinitelyTyped</a> where type definitions are collected. For
+N4JS, a similar <a href="https://github.com/NumberFour/n4jsd">GitHub project</a> exists, but it contains
+very few definitions at the moment. Contributions are welcome for both projects.</p>
+</div>
+<div class="paragraph">
+<p>It is also possible to use existing code in both languages without type definitions, Common.js modules in particular.
+The N4JS IDE <a href="../features/nodejs-support.html#nodejs-support">integrates support for NPM</a>, so that these modules, even without a
+type definition, can seamlessly be used in N4JS.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnote_1">
+<a href="#_footnoteref_1">1</a>. In TypeScript, implicit usage of <code>any</code> can be disallowed by means of a compiler flag.
+</div>
+<div class="footnote" id="_footnote_2">
+<a href="#_footnoteref_2">2</a>. Super and sub type relation is reflexive here.
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+</div>
+</div>
+<div class="social">
+	<ul>
+    	<li><a href="http://www.numberfour.eu" target="_blank"></i>NumberFour AG</a> </li>· <li> <a href="https://twitter.com/n4jsdev" target="_blank"></i>N4JS Twitter</a> </li>
+		<li><a href="../index.html#getting-started" id="bottomright"  class="Link--action"></i>Get the N4JS IDE now!</a></li>
+	</ul>
+</div>
+<script>
+// Toggle the table of contents
+$( "button#tocbutton" ).click(function() {
+  if ($("#tocbutton").css('right') == '25px') {
+    $( "#tocbutton" ).animate({right: '215px'},"slow");
+    $( "#toc.toc2" ).animate({right: '0'},"slow");
+}
+  else {
+    $( "#tocbutton" ).animate({right: '25px'},"slow");
+    $( "#toc.toc2" ).animate({right: '-13rem'},"slow");
+}
+});
+</script>
+<script>
+// Initialise mobile menu
+  $(function(){
+    $('#menu').slicknav();
+  });
+</script>
+<script type="text/javascript">
+// Create a back to top button
+$('body').prepend('<a href="#" class="back-to-top">Back to Top</a>');
+var amountScrolled = 300;
+$(window).scroll(function() {
+if ( $(window).scrollTop() > amountScrolled ) {
+	$('a.back-to-top').fadeIn('slow');
+} else {
+	$('a.back-to-top').fadeOut('slow');
+}
+});
+$('a.back-to-top, a.simple-back-to-top').click(function() {
+$('html, body').animate({
+	scrollTop: 0
+}, 700);
+return false;
+});
+</script>
+<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
+<script src="../scripts/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>

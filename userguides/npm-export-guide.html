@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>N4JS npm Export Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<!-- ************* Meta ************* -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<!-- ************* OpenGraph ************-->
+<meta name="description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects.">
+
+<meta property="og:site_name" content="N4JS"/>
+<meta property="og:title" content="N4JS Language and IDE"/>
+<meta property="og:url" content="https://numberfour.github.io/n4js"/>
+<meta property="og:description" content="The N4JS language and its IDE enable high-quality JavaScript development for large Node.js projects."/>
+<meta property="og:image" content="../images/n4js.png">
+
+<!-- ************* Favicon ************-->
+<link rel="icon" href="../images/favicon.ico" />
+<link rel="icon" type="image/png" href="../images/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="../images/favicon-16x16.png" sizes="16x16" />
+
+<!-- ************* Back-to-top JQuery ************* -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="../scripts/nav-mobile.js"></script>
+
+<!-- ****************** Scripts ****************** -->
+<script type="text/javascript" src="../scripts/analytics.js"></script>
+
+<!-- ************* Styles ************* -->
+<link type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/20974f8a-0939-4574-aef9-681eda2faca8.css"/>
+<link rel="stylesheet" type="text/css" href="../styles/n4js-adoc.css">
+
+<!-- ****************** NavBar ****************** -->
+<div id="menubar">
+    <div class="banner">
+        <a href="../index.html"><img id="logo" src="../images/n4js-logo.png" alt="N4JS Language and IDE"></a>
+    </div>
+<ul>
+  <li><a href="../index.html#getting-started"></i>Download</a></li>
+  <li><a href="../features/index.html">Features</a>
+      <ul>
+        <li><a href="../features/index.html">All N4JS Features</a></li>
+        <li><a href="../features/async-await.html">Async/Await</a></li>
+        <li><a href="../features/dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="../features/generics.html">Generics</a></li>
+        <li><a href="../features/modules.html">Modules</a></li>
+        <li><a href="../features/nodejs-support.html">Node.js Support</a></li>
+        <li><a href="../features/nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="../features/testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a href="index.html">Documentation</a>
+    <ul>
+      <li><a href="n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a href="npm-export-guide.html">Export as npm</a></li>
+      <li><a href="tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a href="../faq/index.html">FAQ</a>
+    <ul>
+      <li><a href="../faq/index.html">FAQ</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+<button id="tocbutton">TOC</button>
+
+<!-- ****************** Mobile NavBar ****************** -->
+<div class="mobile-navbar">
+<ul id="menu">
+  <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
+  <li><a class="scroll" href="../features/index.html">Features</a>
+      <ul>
+        <li><a href="../features/index.html">All N4JS Features</a></li>
+        <li><a href="../features/async-await.html">Async/Await</a></li>
+        <li><a href="../features/dependency-injection.html">Dependency Injection</a></li>
+        <li><a href="../features/generics.html">Generics</a></li>
+        <li><a href="../features/modules.html">Modules</a></li>
+        <li><a href="../features/nodejs-support.html">Node.js Support</a></li>
+        <li><a href="../features/nominal-and-structural-typing.html">Nominal and Structural Typing</a></li>
+        <li><a href="../features/testing.html">Testing</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="index.html">Documentation</a>
+    <ul>
+      <li><a href="n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
+      <li><a href="npm-export-guide.html">Export as npm</a></li>
+      <li><a href="tutorial.html">N4JS Tutorial</a></li>
+    </ul>
+  </li>
+  <li><a class="scroll" href="../faq/index.html">FAQ</a>
+    <ul>
+      <li><a href="../faq/index.html">FAQ</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+</head>
+<body class="book toc2 toc-right">
+<div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Jump to section:</div>
+<ul class="sectlevel0">
+<li><a href="#_n4js-npm-export-guide">N4JS npm Export Guide</a>
+<ul class="sectlevel1">
+<li><a href="#_project-example">Project Example</a></li>
+<li><a href="#_exporting-as-npm">Exporting as npm</a></li>
+<li><a href="#_running-from-the-command-line">Running from the Command Line</a></li>
+<li><a href="#_modifying-package-info">Modifying Package Info</a>
+<ul class="sectlevel2">
+<li><a href="#_editing-the-package-json-from-the-command-line">Editing the package.json from the Command Line</a></li>
+</ul>
+</li>
+<li><a href="#_publishing-to-npm">Publishing to npm</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<h1 id="_n4js-npm-export-guide" class="sect0"><a class="link" href="#_n4js-npm-export-guide">N4JS npm Export Guide</a></h1>
+<div class="openblock partintro">
+<div class="title">N4JS npm Export Guide</div><div class="content">
+N4JS was created with the intention of supporting safe and intuitive Node.js development.
+When a Node application
+is ready to be published, the default
+package manager is npm which is bundled with Node.js (a prerequisite of the N4JS IDE). npm is run on the
+command
+line and will organise and install
+dependencies for an application. npm can also be used to install Node.js applications available on the npm
+registry. This npm export guide demonstrates how N4JS can be used to develop and publish Node
+applications with a simple example module.
+</div>
+</div>
+<div class="sect1">
+<h2 id="_project-example"><a class="link" href="#_project-example">Project Example</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In order to demonstrate exporting as npm, we can begin by creating a new N4JS
+Project using the keyboard shortcut <span class="keyseq"><kbd>&#8984;</kbd>+<kbd>N</kbd></span> and naming
+it "fibonacci". We then create a class "Fibonacci" and define it as follows:</p>
+</div>
+<div class="listingblock">
+<div class="title">Fibonacci.n4js</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js"> export public class Fibonacci {
+ public seq()  {
+      var arr = [];
+          var a = 0;
+          var b = 1;
+          for (var n = 1; n &lt; 15; n++)  {
+            var current = a + b;
+            arr.push(current);
+            a = b + a;
+            b = a - b;
+          }
+      console.log(arr);
+      }
+}
+var run = new Fibonacci();
+run.seq();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the above example, we are creating a function which will iterate through the Fibonacci sequence,
+push each new value into an array and report the results in the console after the for loop is complete.
+When right-clicking the module and selecting <span class="menuseq"><span class="menu">Run as</span>&#160;&#9656; <span class="menuitem">Launch in node.js</span></span>, we have the
+following output in the console:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/fibonacciconsole.png" alt="fibonacciconsole">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_exporting-as-npm"><a class="link" href="#_exporting-as-npm">Exporting as npm</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To export our Fibonacci example, navigate to the Project
+Explorer view, right-click our Fibonacci.n4js file or the project name and select <strong>Export</strong>.
+An Export wizard will list the available types of exports.
+Select <strong>N4JS npm export</strong> in the <strong>N4 Exports</strong> folder.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/exportwizard.png" alt="exportwizard">
+</div>
+</div>
+<div class="paragraph">
+<p>On the following screen, we can select a target folder and click "Finish" to complete the export. There is
+an option to compress the files on export which will create a tarball.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/npmtargetfolder.png" alt="npmtargetfolder">
+</div>
+</div>
+<div class="paragraph">
+<p>If we have a look in the target folder, we can see that a new folder has been created which is our
+exported package. The contents of the package are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Fibonacci.js</strong> the Fibonacci.n4js file transpiled to JavaScript.</p>
+</li>
+<li>
+<p><strong>package.json</strong> npm package description (name, author, version etc.) which is described in detail below.</p>
+</li>
+<li>
+<p><strong>manifest.n4mf</strong> N4JS project dependencies.</p>
+</li>
+<li>
+<p><strong>Fibonacci.map</strong> contains debugging information.</p>
+</li>
+<li>
+<p><strong>src</strong> folder containing the original Fibonacci.n4js file.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_running-from-the-command-line"><a class="link" href="#_running-from-the-command-line">Running from the Command Line</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the example so far, we exported our npm package to a folder on the desktop called "npm". We create
+a folder called <strong>newinstall</strong> located at <code>User/bsmith/Desktop/npm/newinstall</code>, but this can be anywhere
+outside of the exported project folder.</p>
+</div>
+<div class="paragraph">
+<p>With a Terminal window, cd to our new folder:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>$ cd /User/Desktop/npm/newinstall</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and install the package</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>$ npm install ../fibonacci</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All dependiencies required for running the package will then be downloaded and installed
+to the "newinstall" folder</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text" data-lang="text">/User/Desktop/npm/newinstall
+└─┬ fibonacci@ 0.0.1
+└─┬ n4js-node@ 0.3.1
+├── n4js-es5@ 0.3.0
+├─┬ node-fetch@ 1.4.1
+│ ├─┬ encoding@ 0.1.12
+│ │ └── iconv-lite@ 0.4.13
+│ └── is-stream@ 1.0.1
+└─┬ systemjs@ 0.19.25
+└── when@ 3.7.7</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can now create a new JavaScript file saved as "index.js" that calls the method in our package. In our
+case, the index.js only needs to contain the following line</p>
+</div>
+<div class="listingblock">
+<div class="title">index.js</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript" data-lang="javascript">var fib = require("fibonacci/Fibonacci");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Our example module can now be called if we run the index.js file from the command line with node:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>$ node index.js
+[ 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610 ]
+$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we wanted to run this node module by itself without the use of the index.js file, we can use the command</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>$ node -r fibonacci/Fibonacci</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_modifying-package-info"><a class="link" href="#_modifying-package-info">Modifying Package Info</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In our exported npm project, a package.json file is created from the project <strong>manifest</strong> which contains
+information about the package. The minimum information required for a package.json file is:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>name</strong> of the package (all lowercase, one word, no spaces, dashes and underscores allowed).</p>
+</li>
+<li>
+<p><strong>version</strong> following <a href="https://docs.npmjs.com/getting-started/semantic-versioning">semver conventions</a> i.e.
+<strong>1.0.0</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s say we wanted to change the version of our npm package, we can edit this in the manifest.n4mf file
+in the root of our fibonacci project:</p>
+</div>
+<div class="listingblock">
+<div class="title">manifest.n4mf</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">ProjectId: fibonacci
+ProjectType: library
+ProjectVersion: 1.2.3
+VendorId: eu.numberfour
+VendorName: "NumberFour AG"
+Output: "src-gen"
+Sources {
+    source {
+        "src"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Above, we have made the simple change of our project from version "0.0.1" (the default) to "1.2.3"
+and the package.json file will contain our new version number the next time we export as npm.</p>
+</div>
+<div class="sect2">
+<h3 id="_editing-the-package-json-from-the-command-line"><a class="link" href="#_editing-the-package-json-from-the-command-line">Editing the package.json from the Command Line</a></h3>
+<div class="paragraph">
+<p>It&#8217;s possible to edit the package.json from the command line by using <code>npm init</code> which is normally
+used to create a new package:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>$ cd /User/brian.smith/Desktop/npm/fibonacci
+$ npm init</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will load a questionnaire that will cycle through the attributes of your existing package and
+update the <strong>package.json</strong> file if new information is provided.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It is recommended to edit the package information via the manifest.n4mf
+file within the N4JS IDE as exporting the project again will overwrite changes made to the package.json
+via the command line.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_publishing-to-npm"><a class="link" href="#_publishing-to-npm">Publishing to npm</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In order to publish to npm, you must have an account on the npm registry. To store your credentials on the
+client:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>$ npm login</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you do not already have an account, use <code>npm adduser</code> to
+create a new account. Test that your credentials are stored on the client with *npm config ls.</p>
+</div>
+<div class="paragraph">
+<p>To publish our exported npm package, cd to the package and use the command <code>npm publish</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>$ cd /Users/brian.smith/Desktop/npm/fibonacci
+$ npm publish</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can now check if our package has been published to the registry, in our case, it would be published
+at <strong><a href="https://npmjs.com/package/fibonacci" class="bare">https://npmjs.com/package/fibonacci</a></strong></p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+</div>
+</div>
+<div class="social">
+	<ul>
+    	<li><a href="http://www.numberfour.eu" target="_blank"></i>NumberFour AG</a> </li> · <li> <a href="https://twitter.com/n4jsdev" target="_blank"></i>N4JS Twitter</a> </li>
+		<li><a href="../index.html#getting-started" id="bottomright" class="Link--action"></i>Get the N4JS IDE now!</a></li>
+	</ul>
+</div>
+<script>
+// Toggle the table of contents
+$( "button#tocbutton" ).click(function() {
+  if ($("#tocbutton").css('right') == '25px') {
+    $( "#tocbutton" ).animate({right: '215px'},"slow");
+    $( "#toc.toc2" ).animate({right: '0'},"slow");
+}
+  else {
+    $( "#tocbutton" ).animate({right: '25px'},"slow");
+    $( "#toc.toc2" ).animate({right: '-13rem'},"slow");
+}
+});
+</script>
+<script>
+// Initialise mobile menu
+  $(function(){
+    $('#menu').slicknav();
+  });
+</script>
+<script type="text/javascript">
+// Create a back to top button
+$('body').prepend('<a href="#" class="back-to-top">Back to Top</a>');
+var amountScrolled = 300;
+$(window).scroll(function() {
+if ( $(window).scrollTop() > amountScrolled ) {
+	$('a.back-to-top').fadeIn('slow');
+} else {
+	$('a.back-to-top').fadeOut('slow');
+}
+});
+$('a.back-to-top, a.simple-back-to-top').click(function() {
+$('html, body').animate({
+	scrollTop: 0
+}, 700);
+return false;
+});
+</script>
+<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
+<script src="../scripts/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
+</body>
+</html>
