@@ -1004,6 +1004,12 @@ div.slicknav_menu li:last-of-type
 }
 
 
+div.box p { 
+text-indent: 0px; 
+position: absolute;
+display: none;
+}
+
 
 #menubar ul { margin: 0; padding: 0; white-space:nowrap; padding-left: 10px; padding-right: 10px; line-height: 2rem;}
 #menubar li { margin: 0; padding: 0;   }
@@ -1027,13 +1033,32 @@ div.slicknav_menu li:last-of-type
 
 @media only screen and (max-width: 890px) {
 
+#n4js-mobile-logo { 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 178px;
+    height: 60px;
+    background-color: transparent;
+}
+
+div.box p { 
+text-indent: -999px; 
+position: absolute;
+}
+
   #menubar > ul > li, #menubar {
     visibility: hidden;
     display: none;
   }
+
 }
 
 @media only screen and (max-width: 500px) {
+
+
+
+
 #menubar {
   display: none;
 }
@@ -1103,7 +1128,7 @@ body.home li.home, body.tech li.tech {font-weight:bold; }
     position: absolute;
     top: 55px;
     left: 50%;
-    margin-left: -90px;
+    margin-left: -200px;
 -webkit-transition: all .3s .1s;
    -moz-transition: all .3s .1s;
      -o-transition: all .3s .1s;

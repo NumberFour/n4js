@@ -35,7 +35,18 @@
   <!-- ****************** Scripts ****************** -->
   <script type="text/javascript" src="scripts/scripts-legacy.js"></script>
   <script type="text/javascript" src="scripts/scripts.js"></script>
-  <script type="text/javascript" src="scripts/analytics.js"></script>
+
+<!-- ****************** Analytics ****************** -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-78747727-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 
 
   <!-- ****************** Required for buttom to top scripts ****************** -->
@@ -229,9 +240,9 @@
 
         <p>Nightly Builds:</p>
         <ul>
-          <li><a href="http://goo.gl/2QDLfc">Windows 64 bit</a></li>
-          <li><a href="http://goo.gl/qGKcm9">Linux 64 bit</a></li>
-          <li><a href="http://goo.gl/DszAu3">Mac OS X 64 bit</a></li>
+          <li><a href="http://n4js.s3-website.eu-central-1.amazonaws.com/ide/n4jside-win32.win32.x86_64.zip">Windows 64 bit</a></li>
+          <li><a href="http://n4js.s3-website.eu-central-1.amazonaws.com/ide/n4jside-linux.gtk.x86_64.zip">Linux 64 bit</a></li>
+          <li><a href="http://n4js.s3-website.eu-central-1.amazonaws.com/ide/n4jside-macosx.cocoa.x86_64.zip">Mac OS X 64 bit</a></li>
         </ul>
         
         <br />
@@ -247,7 +258,7 @@
         <h3>N4JS Command Line Interface <small><em>(experimental)</em></small></h3>
         <p>Transpile from N4JS to ECMAScript from the command line:</p>
         <ul>
-          <li><a href="http://goo.gl/09dfYB">n4jsc.jar</a></li>
+          <li><a href="http://n4js.s3-website.eu-central-1.amazonaws.com/ide/n4jsc.jar">n4jsc.jar</a></li>
         </ul>
       </div>
 
