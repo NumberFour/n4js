@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>N4JS IDE Setup</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../res/styles/n4js-adoc.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -29,6 +30,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../scripts/nav-mobile.js"></script>
+
+<!-- ************* Prism.js Syntax Highlighter ******-->
+<link href="../styles/prism.min.css" rel="stylesheet"/>
+<script src="../scripts/prism.js"></script>
 
 <!-- ****************** Analytics ****************** -->
 <script>
@@ -67,7 +72,8 @@
   </li>
   <li><a href="index.html">Documentation</a>
     <ul>
-      <li><a href="n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="npm-export-guide.html">Export as npm</a></li>
       <li><a href="tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -75,8 +81,8 @@
   <li><a href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -84,7 +90,7 @@
 <button id="tocbutton">TOC</button>
 
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language &amp; IDE</p></div>
+<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language & IDE</p></div>
 <div class="mobile-navbar">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
@@ -102,7 +108,8 @@
   </li>
   <li><a class="scroll" href="index.html">Documentation</a>
     <ul>
-      <li><a href="n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="npm-export-guide.html">Export as npm</a></li>
       <li><a href="tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -110,8 +117,8 @@
   <li><a class="scroll" href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -122,34 +129,33 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Jump to topic:</div>
 <ul class="sectlevel0">
-<li><a href="#_n4js-ide-setup">N4JS IDE Setup</a>
+<li><a href="#_n4js_ide_setup">N4JS IDE Setup</a>
 <ul class="sectlevel1">
 <li><a href="#_installation">Installation</a>
 <ul class="sectlevel2">
 <li><a href="#_requirements">Requirements</a></li>
 </ul>
 </li>
-<li><a href="#_launching-the-ide">Launching the IDE</a></li>
-<li><a href="#_creating-a-new-project-a-id-new_project-a">Creating a new project<a id="new_project"></a></a>
+<li><a href="#_launching_the_ide">Launching the IDE</a></li>
+<li><a href="#_creating_a_new_project_a_id_new_project_a">Creating a new project<a id="new_project"></a></a>
 <ul class="sectlevel2">
-<li><a href="#_project-explorer">Project Explorer</a></li>
+<li><a href="#_project_explorer">Project Explorer</a></li>
 </ul>
 </li>
-<li><a href="#_creating-a-new-class-a-id-creating_classes-a">Creating a new class<a id="creating_classes"></a></a></li>
-<li><a href="#_outline-view-a-id-outline_view-a">Outline View<a id="outline_view"></a></a></li>
-<li><a href="#_running-as-node-js">Running as node.js</a></li>
-<li><a href="#_what-s-next">What&#8217;s Next?</a></li>
+<li><a href="#_creating_a_new_class_a_id_creating_classes_a">Creating a new class<a id="creating_classes"></a></a></li>
+<li><a href="#_outline_view_a_id_outline_view_a">Outline View<a id="outline_view"></a></a></li>
+<li><a href="#_running_as_node_js">Running as node.js</a></li>
+<li><a href="#_what_s_next">What&#8217;s Next?</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<h1 id="_n4js-ide-setup" class="sect0"><a class="link" href="#_n4js-ide-setup">N4JS IDE Setup</a></h1>
+<h1 id="_n4js_ide_setup" class="sect0"><a class="link" href="#_n4js_ide_setup">N4JS IDE Setup</a></h1>
 <div class="openblock partintro">
 <div class="content">
 <div class="paragraph">
-<div class="title">N4JS IDE Setup</div>
 <p><strong>Get the most from type safe development with the custom-built N4JS IDE</strong></p>
 </div>
 <div class="paragraph">
@@ -210,7 +216,7 @@ In general, N4JS is based on the Eclipse Mars release.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_launching-the-ide"><a class="link" href="#_launching-the-ide">Launching the IDE</a></h2>
+<h2 id="_launching_the_ide"><a class="link" href="#_launching_the_ide">Launching the IDE</a></h2>
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
@@ -227,7 +233,7 @@ use the default settings.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-tip" title=""></i>
 </td>
 <td class="content">
 To manage the workspaces that are displayed in the workspace launcher,
@@ -253,7 +259,7 @@ in the upper-right of the window as shown above.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_creating-a-new-project-a-id-new_project-a"><a class="link" href="#_creating-a-new-project-a-id-new_project-a">Creating a new project<a id="new_project"></a></a></h2>
+<h2 id="_creating_a_new_project_a_id_new_project_a"><a class="link" href="#_creating_a_new_project_a_id_new_project_a">Creating a new project<a id="new_project"></a></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>After having set up a default workspace, a new project can be created using the New N4JS
@@ -278,7 +284,7 @@ multiple projects, working sets can be a highly efficient way of switching betwe
 projects and resources.</p>
 </div>
 <div class="sect2">
-<h3 id="_project-explorer"><a class="link" href="#_project-explorer">Project Explorer</a></h3>
+<h3 id="_project_explorer"><a class="link" href="#_project_explorer">Project Explorer</a></h3>
 <div class="paragraph">
 <p>The Project Explorer view will display the structure of our new project:</p>
 </div>
@@ -308,7 +314,7 @@ The IDE automatically transpiles n4js files on save.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_creating-a-new-class-a-id-creating_classes-a"><a class="link" href="#_creating-a-new-class-a-id-creating_classes-a">Creating a new class<a id="creating_classes"></a></a></h2>
+<h2 id="_creating_a_new_class_a_id_creating_classes_a"><a class="link" href="#_creating_a_new_class_a_id_creating_classes_a">Creating a new class<a id="creating_classes"></a></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In our new N4JS project, we can use the New N4JS Class wizard (accessed at <strong><span class="menuseq"><span class="menu">File</span>&#160;&#9656; <span class="submenu">New</span>&#160;&#9656; <span class="menuitem">N4JS Class</span></span></strong>
@@ -326,7 +332,7 @@ to create a new class called "HelloWorld":</p>
 <div class="listingblock">
 <div class="title">HelloWorld.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public class HelloWorld {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export public class HelloWorld {
   public say_hi() {
 	  var message: string = "Hello World!";
 	  console.log(message);
@@ -366,7 +372,7 @@ The default visibility of an element is project.</p>
 <div class="listingblock">
 <div class="title">HelloCaller.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { HelloWorld } from "HelloWorld";
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { HelloWorld } from "HelloWorld";
 
 export public class Caller  {
   public call ()  {
@@ -382,7 +388,7 @@ export public class Caller  {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_outline-view-a-id-outline_view-a"><a class="link" href="#_outline-view-a-id-outline_view-a">Outline View<a id="outline_view"></a></a></h2>
+<h2 id="_outline_view_a_id_outline_view_a"><a class="link" href="#_outline_view_a_id_outline_view_a">Outline View<a id="outline_view"></a></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Outline View is a useful tool that provides a quick overview of the structure of our applications.
@@ -403,7 +409,7 @@ Outline View becomes helpful by assisting with navigating through the structure 
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-tip" title=""></i>
 </td>
 <td class="content">
 Instead of having the Outline View always open in the IDE, the shortcut <span class="keyseq"><kbd>&#8984;</kbd>+<kbd>O</kbd></span>
@@ -416,7 +422,7 @@ easily search for fields, methods and classes.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_running-as-node-js"><a class="link" href="#_running-as-node-js">Running as node.js</a></h2>
+<h2 id="_running_as_node_js"><a class="link" href="#_running_as_node_js">Running as node.js</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To run this file, right-click inside the editor view and select <strong>Run as | Launch in Node.js</strong>:</p>
@@ -434,7 +440,7 @@ errors.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_what-s-next"><a class="link" href="#_what-s-next">What&#8217;s Next?</a></h2>
+<h2 id="_what_s_next"><a class="link" href="#_what_s_next">What&#8217;s Next?</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>After creating a project and running some sample code, the next step we can have a look at is
@@ -446,6 +452,7 @@ publishing to the npm registry. This is covered in the <a href="npm-export-guide
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2017-03-14 10:23:54 CET
 </div>
 </div>
 <div class="social">
@@ -491,8 +498,5 @@ $('html, body').animate({
 return false;
 });
 </script>
-<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
-<script src="../scripts/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>

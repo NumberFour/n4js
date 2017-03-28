@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>N4JS npm Export Guide</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../res/styles/n4js-adoc.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -29,6 +30,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../scripts/nav-mobile.js"></script>
+
+<!-- ************* Prism.js Syntax Highlighter ******-->
+<link href="../styles/prism.min.css" rel="stylesheet"/>
+<script src="../scripts/prism.js"></script>
 
 <!-- ****************** Analytics ****************** -->
 <script>
@@ -67,7 +72,8 @@
   </li>
   <li><a href="index.html">Documentation</a>
     <ul>
-      <li><a href="n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="npm-export-guide.html">Export as npm</a></li>
       <li><a href="tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -75,8 +81,8 @@
   <li><a href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -84,7 +90,7 @@
 <button id="tocbutton">TOC</button>
 
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language &amp; IDE</p></div>
+<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language & IDE</p></div>
 <div class="mobile-navbar">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
@@ -102,7 +108,8 @@
   </li>
   <li><a class="scroll" href="index.html">Documentation</a>
     <ul>
-      <li><a href="n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="npm-export-guide.html">Export as npm</a></li>
       <li><a href="tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -110,8 +117,8 @@
   <li><a class="scroll" href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -122,26 +129,26 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Jump to section:</div>
 <ul class="sectlevel0">
-<li><a href="#_n4js-npm-export-guide">N4JS npm Export Guide</a>
+<li><a href="#_n4js_npm_export_guide">N4JS npm Export Guide</a>
 <ul class="sectlevel1">
-<li><a href="#_project-example">Project Example</a></li>
-<li><a href="#_exporting-as-npm">Exporting as npm</a></li>
-<li><a href="#_running-from-the-command-line">Running from the Command Line</a></li>
-<li><a href="#_modifying-package-info">Modifying Package Info</a>
+<li><a href="#_project_example">Project Example</a></li>
+<li><a href="#_exporting_as_npm">Exporting as npm</a></li>
+<li><a href="#_running_from_the_command_line">Running from the Command Line</a></li>
+<li><a href="#_modifying_package_info">Modifying Package Info</a>
 <ul class="sectlevel2">
-<li><a href="#_editing-the-package-json-from-the-command-line">Editing the package.json from the Command Line</a></li>
+<li><a href="#_editing_the_package_json_from_the_command_line">Editing the package.json from the Command Line</a></li>
 </ul>
 </li>
-<li><a href="#_publishing-to-npm">Publishing to npm</a></li>
+<li><a href="#_publishing_to_npm">Publishing to npm</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<h1 id="_n4js-npm-export-guide" class="sect0"><a class="link" href="#_n4js-npm-export-guide">N4JS npm Export Guide</a></h1>
-<div class="openblock partintro">
-<div class="title">N4JS npm Export Guide</div><div class="content">
+<h1 id="_n4js_npm_export_guide" class="sect0"><a class="link" href="#_n4js_npm_export_guide">N4JS npm Export Guide</a></h1>
+<div class="openblock">
+<div class="content">
 N4JS was created with the intention of supporting safe and intuitive Node.js development.
 When a Node application
 is ready to be published, the default
@@ -154,7 +161,7 @@ applications with a simple example module.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_project-example"><a class="link" href="#_project-example">Project Example</a></h2>
+<h2 id="_project_example"><a class="link" href="#_project_example">Project Example</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In order to demonstrate exporting as npm, we can begin by creating a new N4JS
@@ -164,7 +171,7 @@ it "fibonacci". We then create a class "Fibonacci" and define it as follows:</p>
 <div class="listingblock">
 <div class="title">Fibonacci.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js"> export public class Fibonacci {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js"> export public class Fibonacci {
  public seq()  {
       var arr = [];
           var a = 0;
@@ -196,7 +203,7 @@ following output in the console:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_exporting-as-npm"><a class="link" href="#_exporting-as-npm">Exporting as npm</a></h2>
+<h2 id="_exporting_as_npm"><a class="link" href="#_exporting_as_npm">Exporting as npm</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To export our Fibonacci example, navigate to the Project
@@ -244,7 +251,7 @@ exported package. The contents of the package are:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_running-from-the-command-line"><a class="link" href="#_running-from-the-command-line">Running from the Command Line</a></h2>
+<h2 id="_running_from_the_command_line"><a class="link" href="#_running_from_the_command_line">Running from the Command Line</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In the example so far, we exported our npm package to a folder on the desktop called "npm". We create
@@ -256,7 +263,7 @@ outside of the exported project folder.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>$ cd /User/Desktop/npm/newinstall</code></pre>
+<pre class="highlight"><code>$ cd /User/Desktop/npm/newinstall</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -264,7 +271,7 @@ outside of the exported project folder.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>$ npm install ../fibonacci</code></pre>
+<pre class="highlight"><code>$ npm install ../fibonacci</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -273,7 +280,7 @@ to the "newinstall" folder</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-text" data-lang="text">/User/Desktop/npm/newinstall
+<pre class="highlight"><code class="language-text" data-lang="text">/User/Desktop/npm/newinstall
 └─┬ fibonacci@ 0.0.1
 └─┬ n4js-node@ 0.3.1
 ├── n4js-es5@ 0.3.0
@@ -292,7 +299,7 @@ case, the index.js only needs to contain the following line</p>
 <div class="listingblock">
 <div class="title">index.js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-javascript" data-lang="javascript">var fib = require("fibonacci/Fibonacci");</code></pre>
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">var fib = require("fibonacci/Fibonacci");</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -300,7 +307,7 @@ case, the index.js only needs to contain the following line</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>$ node index.js
+<pre class="highlight"><code>$ node index.js
 [ 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610 ]
 $</code></pre>
 </div>
@@ -310,13 +317,13 @@ $</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>$ node -r fibonacci/Fibonacci</code></pre>
+<pre class="highlight"><code>$ node -r fibonacci/Fibonacci</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_modifying-package-info"><a class="link" href="#_modifying-package-info">Modifying Package Info</a></h2>
+<h2 id="_modifying_package_info"><a class="link" href="#_modifying_package_info">Modifying Package Info</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In our exported npm project, a package.json file is created from the project <strong>manifest</strong> which contains
@@ -340,7 +347,7 @@ in the root of our fibonacci project:</p>
 <div class="listingblock">
 <div class="title">manifest.n4mf</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">ProjectId: fibonacci
+<pre class="highlight"><code class="language-n4mf" data-lang="n4mf">ProjectId: fibonacci
 ProjectType: library
 ProjectVersion: 1.2.3
 VendorId: eu.numberfour
@@ -358,14 +365,14 @@ Sources {
 and the package.json file will contain our new version number the next time we export as npm.</p>
 </div>
 <div class="sect2">
-<h3 id="_editing-the-package-json-from-the-command-line"><a class="link" href="#_editing-the-package-json-from-the-command-line">Editing the package.json from the Command Line</a></h3>
+<h3 id="_editing_the_package_json_from_the_command_line"><a class="link" href="#_editing_the_package_json_from_the_command_line">Editing the package.json from the Command Line</a></h3>
 <div class="paragraph">
 <p>It&#8217;s possible to edit the package.json from the command line by using <code>npm init</code> which is normally
 used to create a new package:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>$ cd /User/brian.smith/Desktop/npm/fibonacci
+<pre class="highlight"><code>$ cd /User/brian.smith/Desktop/npm/fibonacci
 $ npm init</code></pre>
 </div>
 </div>
@@ -377,7 +384,7 @@ update the <strong>package.json</strong> file if new information is provided.</p
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=""></i>
 </td>
 <td class="content">
 It is recommended to edit the package information via the manifest.n4mf
@@ -391,7 +398,7 @@ via the command line.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_publishing-to-npm"><a class="link" href="#_publishing-to-npm">Publishing to npm</a></h2>
+<h2 id="_publishing_to_npm"><a class="link" href="#_publishing_to_npm">Publishing to npm</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In order to publish to npm, you must have an account on the npm registry. To store your credentials on the
@@ -399,7 +406,7 @@ client:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>$ npm login</code></pre>
+<pre class="highlight"><code>$ npm login</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -411,7 +418,7 @@ create a new account. Test that your credentials are stored on the client with *
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>$ cd /Users/brian.smith/Desktop/npm/fibonacci
+<pre class="highlight"><code>$ cd /Users/brian.smith/Desktop/npm/fibonacci
 $ npm publish</code></pre>
 </div>
 </div>
@@ -424,6 +431,7 @@ at <strong><a href="https://npmjs.com/package/fibonacci" class="bare">https://np
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2017-03-14 10:23:54 CET
 </div>
 </div>
 <div class="social">
@@ -469,8 +477,5 @@ $('html, body').animate({
 return false;
 });
 </script>
-<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
-<script src="../scripts/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>

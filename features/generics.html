@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>Generics</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../res/styles/n4js-adoc.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -29,6 +30,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../scripts/nav-mobile.js"></script>
+
+<!-- ************* Prism.js Syntax Highlighter ******-->
+<link href="../styles/prism.min.css" rel="stylesheet"/>
+<script src="../scripts/prism.js"></script>
 
 <!-- ****************** Analytics ****************** -->
 <script>
@@ -67,7 +72,8 @@
   </li>
   <li><a href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -75,15 +81,15 @@
   <li><a href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
 </div>
 <button id="tocbutton">TOC</button>
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language &amp; IDE</p></div>
+<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language & IDE</p></div>
 <div class="mobile-banner">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
@@ -101,7 +107,8 @@
   </li>
   <li><a class="scroll" href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -109,8 +116,8 @@
   <li><a class="scroll" href="../faq/index.html">FAQ</a>
     <ul>
       <li><a  href="../faq/index.html">FAQ</a></li>
-      <li><a  href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a  href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -124,9 +131,9 @@
 <li><a href="#_generics">Generics</a>
 <ul class="sectlevel1">
 <li><a href="#_motivation">Motivation</a></li>
-<li><a href="#_generic-classes-and-interfaces">Generic Classes (and Interfaces)</a></li>
-<li><a href="#_generic-functions-and-methods">Generic Functions (and Methods)</a></li>
-<li><a href="#_differences-to-java">Differences to Java</a></li>
+<li><a href="#_generic_classes_and_interfaces">Generic Classes (and Interfaces)</a></li>
+<li><a href="#_generic_functions_and_methods">Generic Functions (and Methods)</a></li>
+<li><a href="#_differences_to_java">Differences to Java</a></li>
 </ul>
 </li>
 </ul>
@@ -134,8 +141,8 @@
 </div>
 <div id="content">
 <h1 id="_generics" class="sect0"><a class="link" href="#_generics">Generics</a></h1>
-<div class="openblock partintro">
-<div class="title">Generics</div><div class="content">
+<div class="openblock">
+<div class="content">
 Generics in N4JS are a language feature that allows for generic programming. They enable
 a function, class, interface, or method to operate on the values of various (possibly unknown)
 types while preserving compile-time type safety. If you are familiar with Java&#8217;s generics,
@@ -156,7 +163,7 @@ bundles a pair of two strings:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public class PairOfString {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export public class PairOfString {
     first: string;
     second: string;
 }</code></pre>
@@ -169,7 +176,7 @@ Let&#8217;s add another class:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public class PairOfNumber {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export public class PairOfNumber {
     first: number;
     second: number;
 }</code></pre>
@@ -186,7 +193,7 @@ code duplication, terrible maintainability and many other problems.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public class PairOfWhatEver {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export public class PairOfWhatEver {
     first: any;
     second: any;
 }</code></pre>
@@ -200,7 +207,7 @@ type might be.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_generic-classes-and-interfaces"><a class="link" href="#_generic-classes-and-interfaces">Generic Classes (and Interfaces)</a></h2>
+<h2 id="_generic_classes_and_interfaces"><a class="link" href="#_generic_classes_and_interfaces">Generic Classes (and Interfaces)</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The way to solve our previous conundrum using generics is to introduce a <strong>type variable</strong> for the class
@@ -209,7 +216,7 @@ A type variable can then be used within the class declaration just as any other 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public class Pair&lt;T&gt; {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export public class Pair&lt;T&gt; {
     first: T;
     second: T;
 }</code></pre>
@@ -226,7 +233,7 @@ declaration.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Pair } from 'Pair';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { Pair } from 'Pair';
 
 let myPair = new Pair&lt;string&gt;();
 myPair.first = '1st value';
@@ -240,7 +247,7 @@ have also given the type system a chance to track the types of values stored in 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Pair } from 'Pair';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { Pair } from 'Pair';
 
 let myPair2 = new Pair&lt;string&gt;();
 myPair2.first = '1st value';
@@ -262,7 +269,7 @@ and we can use it accordingly.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_generic-functions-and-methods"><a class="link" href="#_generic-functions-and-methods">Generic Functions (and Methods)</a></h2>
+<h2 id="_generic_functions_and_methods"><a class="link" href="#_generic_functions_and_methods">Generic Functions (and Methods)</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>With the above, we can now avoid introducing a multitude of classes that are basically serving the
@@ -272,7 +279,7 @@ then return the new first value would look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { PairOfString } from 'PairOfString';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { PairOfString } from 'PairOfString';
 
 function swapStrings1(pair: PairOfString): string {
     let backup = pair.first; // inferred type of 'backup' will be string
@@ -288,7 +295,7 @@ function swapStrings1(pair: PairOfString): string {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Pair } from 'Pair';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { Pair } from 'Pair';
 
 function swapStrings2(pair: Pair&lt;string&gt;): string {
     let backup = pair.first; // inferred type of 'backup' will be string
@@ -304,7 +311,7 @@ function swapStrings2(pair: Pair&lt;string&gt;): string {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Pair } from 'Pair';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { Pair } from 'Pair';
 
 function &lt;T&gt; swap(pair: Pair&lt;T&gt;): T {
     let backup = pair.first; // inferred type of 'backup' will be T
@@ -334,7 +341,7 @@ The following example illustrates the difference:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public class Pair&lt;T&gt; {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export public class Pair&lt;T&gt; {
     …
     public foo(): T { … }
     public &lt;S&gt; bar(pair: Pair2&lt;S&gt;): void { … }
@@ -349,7 +356,7 @@ The following example illustrates the difference:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">class Pair&lt;T&gt; {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">class Pair&lt;T&gt; {
 	…
 	&lt;R&gt; merge(merger: {function(T,T): R}): R {
 		return merger(this.first, this.second);
@@ -367,7 +374,7 @@ var i = p.merge( (f,s)=&gt; f.length+s.length )</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_differences-to-java"><a class="link" href="#_differences-to-java">Differences to Java</a></h2>
+<h2 id="_differences_to_java"><a class="link" href="#_differences_to_java">Differences to Java</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Important differences between generics in Java and N4JS include:</p>
@@ -389,6 +396,7 @@ from the context.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2017-03-14 10:23:54 CET
 </div>
 </div>
 <div class="social">
@@ -434,8 +442,5 @@ $('html, body').animate({
 return false;
 });
 </script>
-<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
-<script src="../scripts/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>

@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>N4JS and TypeScript</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../res/styles/n4js-adoc.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -29,6 +30,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../scripts/nav-mobile.js"></script>
+
+<!-- ************* Prism.js Syntax Highlighter ******-->
+<link href="../styles/prism.min.css" rel="stylesheet"/>
+<script src="../scripts/prism.js"></script>
 
 <!-- ****************** Analytics ****************** -->
 <script>
@@ -67,7 +72,8 @@
   </li>
   <li><a href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -75,8 +81,8 @@
   <li><a href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="index.html">FAQ</a></li>
-      <li><a href="comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -93,7 +99,7 @@
 </nav>
 </div>
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language &amp; IDE</p></div>
+<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language & IDE</p></div>
 <div class="mobile-navbar">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
@@ -111,7 +117,8 @@
   </li>
   <li><a class="scroll" href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -119,8 +126,8 @@
   <li><a class="scroll" href="index.html">FAQ</a>
     <ul>
       <li><a  href="index.html">FAQ</a></li>
-      <li><a  href="comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a  href="comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a  href="comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -131,20 +138,20 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel0">
-<li><a href="#_n4js-and-typescript">N4JS and TypeScript</a>
+<li><a href="#_n4js_and_typescript">N4JS and TypeScript</a>
 <ul class="sectlevel1">
 <li><a href="#_differences">Differences</a>
 <ul class="sectlevel2">
 <li><a href="#_any">Any</a></li>
-<li><a href="#_type-errors-are-show-stoppers-in-n4js">Type Errors Are Show-Stoppers in N4JS</a></li>
-<li><a href="#_parameter-contra-variance-vs-bivariance">Parameter Contra-variance vs. Bivariance</a></li>
+<li><a href="#_type_errors_are_show_stoppers_in_n4js">Type Errors Are Show-Stoppers in N4JS</a></li>
+<li><a href="#_parameter_contra_variance_vs_bivariance">Parameter Contra-variance vs. Bivariance</a></li>
 </ul>
 </li>
 <li><a href="#_similarities">Similarities</a>
 <ul class="sectlevel2">
-<li><a href="#_explicit-and-implicit-typing">Explicit and Implicit typing</a></li>
-<li><a href="#_structural-types">Structural Types</a></li>
-<li><a href="#_using-existing-javascript-libraries">Using Existing JavaScript Libraries</a></li>
+<li><a href="#_explicit_and_implicit_typing">Explicit and Implicit typing</a></li>
+<li><a href="#_structural_types">Structural Types</a></li>
+<li><a href="#_using_existing_javascript_libraries">Using Existing JavaScript Libraries</a></li>
 </ul>
 </li>
 </ul>
@@ -153,11 +160,10 @@
 </div>
 </div>
 <div id="content">
-<h1 id="_n4js-and-typescript" class="sect0"><a class="link" href="#_n4js-and-typescript">N4JS and TypeScript</a></h1>
+<h1 id="_n4js_and_typescript" class="sect0"><a class="link" href="#_n4js_and_typescript">N4JS and TypeScript</a></h1>
 <div class="openblock partintro">
 <div class="content">
 <div class="paragraph faq-intro">
-<div class="title">N4JS and TypeScript</div>
 <p>N4JS and TypeScript are both supersets of ECMAScript. They both introduce type annotations and a
 static type checker. However, in their relation to JavaScript, they follow different approaches.</p>
 </div>
@@ -179,7 +185,7 @@ The idea is that this fulfills the expectations of JavaScript programmers while 
 </div>
 </div>
 </div>
-<div class="sect1">
+<div class="sect1 language-n4js">
 <h2 id="_differences"><a class="link" href="#_differences">Differences</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -202,7 +208,7 @@ Simply put:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">function f(p: any) {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">function f(p: any) {
     p.foo(); // error in N4JS, no error in TypeScript
 }</code></pre>
 </div>
@@ -217,7 +223,7 @@ type similar to <code>undefined</code> (or <code>null</code>): <code>any</code> 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">function bar(p: string) {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">function bar(p: string) {
     p.charAt(0);
 }
 
@@ -237,13 +243,13 @@ bar(x); // error in N4JS, no error in TypeScript</code></pre>
 </div>
 <div class="paragraph">
 <p>N4JS allows developers to use types in dynamic way, by using the <code>+</code> type modifier.
-This so-called <strong> dynamic type modifier</strong> allows for accessing arbitrary properties even when they are not known to the type system. The following example shows the effect:</p>
+This so-called <strong>dynamic type modifier</strong> allows for accessing arbitrary properties even when they are not known to the type system. The following example shows the effect:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">function f(p: any, d: any+) {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">function f(p: any, d: any+) {
     p.foo(); // error in N4JS
-    d.foo(); // no error in N4JS, as <code>d</code> is "dynamic"
+    d.foo(); // no error in N4JS, as `d` is "dynamic"
 }</code></pre>
 </div>
 </div>
@@ -289,19 +295,27 @@ This so-called <strong> dynamic type modifier</strong> allows for accessing arbi
 </table>
 </div>
 <div class="sect2">
-<h3 id="_type-errors-are-show-stoppers-in-n4js"><a class="link" href="#_type-errors-are-show-stoppers-in-n4js">Type Errors Are Show-Stoppers in N4JS</a></h3>
+<h3 id="_type_errors_are_show_stoppers_in_n4js"><a class="link" href="#_type_errors_are_show_stoppers_in_n4js">Type Errors Are Show-Stoppers in N4JS</a></h3>
 <div class="paragraph">
-<p>N4JS has two general levels of issues reported by the compiler: <strong> warning</strong>  and <strong>error</strong>.
+<p>N4JS has two general levels of issues reported by the compiler: <strong>warning</strong>  and <strong>error</strong>.
 Serious issues like type errors are treated as errors in N4JS and all errors will prevent the transpiler to emit any JavaScript code in order to avoid producing code that might cause exceptions at runtime.
 For TypeScript, on the other hand, it is a main concern to never impede the developer, the transpiler will thus produce JavaScript output code even in the case of compile errors.
 Given the example from the beginning</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">var str = 'Hello';
-str = 42;  // both N4JS and TypeScript show an error here
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">var str = 'Hello';
+str = 42;  <i class="conum" data-value="1"></i><b>(1)</b>
 str.charAt(2);</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Both N4JS and TypeScript show an error here.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>The N4JS transpiler will reject the compilation of that code, while TypeScript will create a JavaScript output file
@@ -309,13 +323,15 @@ that causes exceptions at runtime in the last line.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_parameter-contra-variance-vs-bivariance"><a class="link" href="#_parameter-contra-variance-vs-bivariance">Parameter Contra-variance vs. Bivariance</a></h3>
+<h3 id="_parameter_contra_variance_vs_bivariance"><a class="link" href="#_parameter_contra_variance_vs_bivariance">Parameter Contra-variance vs. Bivariance</a></h3>
 <div class="paragraph">
-<p>In N4JS (and Java), when overriding a method in a subtype, the types of the parameters may be super types, and (in N4JS but not in Java) the return type may be a sub type. E.g., given the following classes</p>
+<p>In N4JS, when overriding a method in a subtype, the types of the parameters may be super types, and the return type may be a sub type.
+Compare this to Java, where the return type may also be a sub type, but the parameter types must be the same.
+Given the following classes</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">class A           { fa() {} }
+<pre class="highlight"><code class="language-java" data-lang="java">class A           { fa() {} }
 class B extends A { fb() {} }
 class C extends B { fc() {} }</code></pre>
 </div>
@@ -325,7 +341,7 @@ class C extends B { fc() {} }</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">class Sup {
+<pre class="highlight"><code class="language-java" data-lang="java">class Sup {
   f(b: B): B { return new B() }
 }</code></pre>
 </div>
@@ -335,7 +351,7 @@ class C extends B { fc() {} }</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">class Sub extends Sup {
+<pre class="highlight"><code class="language-java" data-lang="java">class Sub extends Sup {
   @Override
   f(a: A): C { return new C() }
 }</code></pre>
@@ -359,7 +375,7 @@ class C extends B { fc() {} }</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">f(callback: (B)=&gt;B) {}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">f(callback: (B)=&gt;B) {}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -367,23 +383,45 @@ class C extends B { fc() {} }</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">f((a: A) =&gt; return new C())</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">f((a: A) =&gt; return new C())</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>In Typescript, the parameter types may be contra- or covariant, that is bivariant (see <a href="http://www.typescriptlang.org/docs/handbook/type-compatibility.html#function-parameter-bivariance">Handbook</a> and <a href="https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md#3.11.4">TypeScript Spec, Assignment Compatibility</a> and <a href="https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md#8.2.3">Inheritance and Overriding</a>).</p>
 </div>
 <div class="paragraph">
-<p>This is <strong>unsound</strong>, as already stated in the TypeScript handbook: "This is unsound because a caller might end up being given a function that takes a more specialized type, but invokes the function with a less specialized type." (<a href="http://www.typescriptlang.org/docs/handbook/type-compatibility.html#function-parameter-bivariance">Handbook</a>). In the context of function objects (as in the example with the callback parameter) this may be quite convenient. And for that very special use case, we agree with the TS handbook: "In practice, this sort of error is rare, and allowing this enables many common JavaScript patterns." However, in the context of overriding methods and generics, this leads to severe problems, which are probably not that "rare".</p>
+<p>This is <strong>unsound</strong>, as already stated in the TypeScript (<a href="http://www.typescriptlang.org/docs/handbook/type-compatibility.html#function-parameter-bivariance">Handbook</a>):</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+This is unsound because a caller might end up being given a function that takes a more specialized type, but invokes the function with a less specialized type.
+</blockquote>
+<div class="attribution">
+&#8212; TypeScript Handbook
+</div>
+</div>
+<div class="paragraph">
+<p>In the context of function objects (as in the example with the callback parameter) this may be quite convenient. And for that very special use case, we agree with the TS handbook:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+In practice, this sort of error is rare, and allowing this enables many common JavaScript patterns.
+</blockquote>
+<div class="attribution">
+&#8212; TypeScript Handbook
+</div>
+</div>
+<div class="paragraph">
+<p>However, in the context of overriding methods and generics, this leads to severe problems, which are probably not that "rare".</p>
 </div>
 <div class="sect3">
-<h4 id="_violated-substitution-principle"><a class="link" href="#_violated-substitution-principle">Violated Substitution Principle</a></h4>
+<h4 id="_violated_substitution_principle"><a class="link" href="#_violated_substitution_principle">Violated Substitution Principle</a></h4>
 <div class="paragraph">
 <p>This assumed bivariance actually violates the so called <a href="https://en.wikipedia.org/wiki/Liskov_substitution_principle">subsitution principle</a>. In TypeScript, the following code is accepted without errors or warnings:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">class TSSub extends Sup {
+<pre class="highlight"><code class="language-java" data-lang="java">class TSSub extends Sup {
   f(b: C): B { b.fc(); return new B() }
 }</code></pre>
 </div>
@@ -393,7 +431,7 @@ class C extends B { fc() {} }</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">function g(s: Sup) {
+<pre class="highlight"><code class="language-java" data-lang="java">function g(s: Sup) {
   let b = s.f(new B());
 }</code></pre>
 </div>
@@ -405,7 +443,7 @@ The following code will create a runtime error:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">f(new TSSub());</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">f(new TSSub());</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -413,14 +451,14 @@ The following code will create a runtime error:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_use-site-variance-vs-assumed-co-variance"><a class="link" href="#_use-site-variance-vs-assumed-co-variance">Use-Site Variance vs. Assumed Co-Variance</a></h4>
+<h4 id="_use_site_variance_vs_assumed_co_variance"><a class="link" href="#_use_site_variance_vs_assumed_co_variance">Use-Site Variance vs. Assumed Co-Variance</a></h4>
 <div class="paragraph">
 <p>Parameter bivariance seems to solve some variance problems in the context of generics.
 Let&#8217;s have a look at the hello-world example for generics, a simplified list that can hold only a single element:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">class List&lt;T&gt; {
+<pre class="highlight"><code class="language-java" data-lang="java">class List&lt;T&gt; {
    read(): T { /* .. */ }
    write(T)  { /* .. */ }
 }</code></pre>
@@ -431,7 +469,7 @@ Let&#8217;s have a look at the hello-world example for generics, a simplified li
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">let la: List&lt;A&gt;(), lb: List&lt;B&gt;;</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">let la: List&lt;A&gt;(), lb: List&lt;B&gt;;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -440,9 +478,21 @@ Take the following assignments for example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">la = lb; // works in TypeScript, N4JS (and Java) issue an error
-lb = la; // both TypeScript and N4JS (and Java) issue an error</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">la = lb; <i class="conum" data-value="1"></i><b>(1)</b>
+lb = la; <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This works in TypeScript. N4JS (and Java) issue an error</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Both TypeScript and N4JS (and Java) issue an error</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>On first glance, it looks great that TypeScript does not issue any errors here.
@@ -450,7 +500,7 @@ Since it&#8217;s not obvious why both assignments are rejected by N4JS, let&#821
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">la = new List&lt;A&gt;(); la.write(a); lb = la; lb.read().fb();</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">la = new List&lt;A&gt;(); la.write(a); lb = la; lb.read().fb();</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -460,7 +510,7 @@ The same error occurs in the following case:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">lb = new List&lt;B&gt;(); la = lb; la.write(a); lb.read().fb());</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">lb = new List&lt;B&gt;(); la = lb; la.write(a); lb.read().fb());</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -481,7 +531,7 @@ This can be done by using so-called 'wildcards' and constraints when parameteriz
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">function copy(readOnlyList: List&lt;? extends A&gt;, writeOnlyList: List&lt;? super A&gt;) {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">function copy(readOnlyList: List&lt;? extends A&gt;, writeOnlyList: List&lt;? super A&gt;) {
    writeOnlyList.write( readOnlyList.read() );
 }</code></pre>
 </div>
@@ -491,7 +541,7 @@ This can be done by using so-called 'wildcards' and constraints when parameteriz
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">interface ReadOnlyList&lt;out T&gt; {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">interface ReadOnlyList&lt;out T&gt; {
   read(): T
 }
 interface WriteOnlyList&lt;in T&gt; {
@@ -521,7 +571,7 @@ function copy(readOnlyList: ReadOnlyList&lt;A&gt;, writeOnlyList: WriteOnlyList&
 <h2 id="_similarities"><a class="link" href="#_similarities">Similarities</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_explicit-and-implicit-typing"><a class="link" href="#_explicit-and-implicit-typing">Explicit and Implicit typing</a></h3>
+<h3 id="_explicit_and_implicit_typing"><a class="link" href="#_explicit_and_implicit_typing">Explicit and Implicit typing</a></h3>
 <div class="paragraph">
 <p>In both languages, types can either be defined explicitly (via a type annotation) or implicitly.
 In the latter case, the type is to be inferred by the type system. A simple example is the assignment
@@ -529,7 +579,7 @@ of a value to a newly declared variable, such as</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">let foo = "Hello";</code></pre>
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">let foo = "Hello";</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -538,7 +588,7 @@ In both languages the following assignment would, therefore, lead to an error:</
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">foo = 42; // error</code></pre>
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">foo = 42; // error</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -553,7 +603,7 @@ In both languages the following assignment would, therefore, lead to an error:</
 </div>
 </div>
 <div class="sect2">
-<h3 id="_structural-types"><a class="link" href="#_structural-types">Structural Types</a></h3>
+<h3 id="_structural_types"><a class="link" href="#_structural_types">Structural Types</a></h3>
 <div class="paragraph">
 <p>N4JS and TypeScript both support <a href="../features/nominal-and-structural-typing.html#nominal_and_structural_typing">structural types</a>.
 This allows for managing relations between types without the need for excessive declarations.
@@ -562,11 +612,24 @@ If one type has all the properties of another type, it is considered to be a sub
 </div>
 <div class="paragraph">
 <p>As a significant difference between the two languages, N4JS also supports <strong>nominal types</strong> and nominal typing <strong>is the default</strong>.
-Thus, structural types have to be explicitly annotated as being structural, using the ~ or ~~ type constructors.</p>
+Thus, structural types have to be explicitly annotated as being structural, using the <code>~</code> or <code>~~</code> type constructors.</p>
 </div>
-<div class="listingblock">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">N4JS</th>
+<th class="tableblock halign-center valign-top">JavaScript</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public interface~Point {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export public interface~Point {
     x: number;
     y: number;
 }
@@ -588,10 +651,10 @@ var p3d: Point3D = {
 p = p3d;
 p3d = p; // error</code></pre>
 </div>
-</div>
-<div class="listingblock">
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-javascript" data-lang="javascript">interface Point {
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">interface Point {
     x: number;
     y: number;
 }
@@ -613,12 +676,15 @@ var p3d: Point3D = {
 p = p3d;
 p3d = p; // error</code></pre>
 </div>
-</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=""></i>
 </td>
 <td class="content">
 N4JS is using different defaults for access modifiers, e.g. <code>public</code> is not the default. For that reason, the interfaces have to be marked as public (and exported).
@@ -629,22 +695,24 @@ N4JS is using different defaults for access modifiers, e.g. <code>public</code> 
 <div class="paragraph">
 <p>In both languages, an error will be issued on the last line:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><em>N4JS:</em> <code>Point is not a structural subtype of Point3D: missing field z.</code></p>
-</li>
-<li>
-<p><em>Typescript:</em> <code>Type 'Point' is not assignable to Type 'Point3D'. Property 'z' is missing in type 'Point'.</code></p>
-</li>
-</ul>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">N4JS</dt>
+<dd>
+<p><code>Point is not a structural subtype of Point3D: missing field z.</code></p>
+</dd>
+<dt class="hdlist1">Typescript</dt>
+<dd>
+<p><code>Type 'Point' is not assignable to Type 'Point3D'. Property 'z' is missing in type 'Point'.</code></p>
+</dd>
+</dl>
 </div>
 <div class="paragraph">
 <p>The difference between structural and nominal typing is described in further detail in the <a href="features/nominal-vs-structural-typing.html#nominal_vs_structural_typing">nominal vs. structural subtyping feature</a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_using-existing-javascript-libraries"><a class="link" href="#_using-existing-javascript-libraries">Using Existing JavaScript Libraries</a></h3>
+<h3 id="_using_existing_javascript_libraries"><a class="link" href="#_using_existing_javascript_libraries">Using Existing JavaScript Libraries</a></h3>
 <div class="paragraph">
 <p>An important aspect of being an ECMAScript superset is to enable developers to use existing JavaScript libraries. N4JS and
 TypeScript support type definitions for existing code. For TypeScript, there is a great project called
@@ -672,6 +740,7 @@ type definition, can seamlessly be used in N4JS.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2017-03-14 10:23:54 CET
 </div>
 </div>
 <div class="social">
@@ -717,8 +786,5 @@ $('html, body').animate({
 return false;
 });
 </script>
-<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
-<script src="../scripts/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>

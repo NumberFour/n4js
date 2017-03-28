@@ -1,0 +1,1746 @@
+
+= Members
+task:IDE-12[] task:IDE-381[]
+
+////
+Copyright (c) 2017 NumberFour AG.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+  NumberFour AG - Initial API and implementation
+////
+
+A member is either a method (which may be a special constructor function), a data field, or a getter or a setter.
+The latter two implicitly define an accessor field.
+Similar to object literals, there must be no data field with the same name as a getter or setter.
+
+(overriding, implementation and consumption) is
+described in <<_redefinition-of-members>>.
+
+[.language-n4js]
+== Syntax
+
+.Syntax N4JS member access modifier
+[source,xtext]
+----
+enum N4JSMemberAccessModifier: private | project | protected | public;
+
+N4MemberDeclaration: N4MethodDeclaration | N4FieldDeclaration | N4GetterDeclaration | N4SetterDeclaration;
+----
+
+=== Properties
+
+Members share the following properties:
+
+`annotations` ::
+Arbitrary annotations, see <<Annotations>> for details.
+
+`accessModifier` ::
+N4JS member access modifier: `private`, `project`, `potected`, or `public`; the latter two can be combined with `@Internal`; default is `project` for classes and private interfaces.
+For a non-private interface defaults to the interface’s visibility.
+
+task:IDE-84[]
+
+`name` ::
+The simple name of the member, that is an identifier name (cf. <<_valid-names>>).
+
+`static` ::
+Boolean property to distinguish instance from classifier members, see <<_static-members>>.
+
+
+The following pseudo properties are defined via annotations:
+
+
+`deprecated` ::
+Boolean property set to true if annotation `@Deprecated` is set. footnote:[ version 0.4  - not implemented in version 0.3]
+
+task:IDE-138[]
+
+And we additionally define the following pseudo properties:
+
+
+`acc` ::
+Member access modifier as described in <<_accessibility-of-members>>, it is the aggregated value of
+the $accessModifier$ and the $export$ property.
+
+`owner` ::
+Owner classifier of the member.
+
+`typeRef` ::
+Type of the member—this is the type of a field or the type of the method which is a function type (and not the return type).
+
+`assignability` ::
+Enumeration, may be one of the following values:
++
+`set`:::  Member may only be set, i.e. it could only be used on the left hand   side of an assignment.
++
+`get`:::
+  Member may only be retrieved, i.e. it could only be used on the right hand side of an assignment. This is the default setting for methods.
++
+`any`:::
+  Member may be set or retrieved, i.e. it could only be used on the left or right hand side of an assignment.
+This is the default setting for fields.
+
+NOTE: $assignability$ is related but not equal to writable modifiers used for fields.
+We define a partial order on this enumeration as follows: +
+[math]
+++++
+<(l,r) \spc ::= \spc \{ (\lenum{set}, \lenum{any}), (\lenum{get}, \lenum{any})  \}
+++++
+
+
+`abstract` ::
+All members have a flag $abstract$, which is user-defined for methods, getters and setter, but which is always false for fields.
+
+The following pseudo property is set to make fields compatible with properties of an object literal, however it cannot be changed:
+
+`configurable` ::
+Boolean flag reflecting the property descriptor $configurable$, this is always set to false for members.
+
+=== Semantics
+
+The members of a given classifier `C` must be named such that the following constraints are met:
+
+task:IDE-550[] task:IDE-551[]
+
+.Member Names
+[req,id=IDE-52,version=1]
+--
+. The name of a member is given as an identifier, a string literal, a numeric literal, or as a computed property name with
+.. a string literal, e.g. `['myProp']`,
+.. a built-in symbol, for example as in `[Symbol.iterator]`, or
+.. a literal of a `@StringBased` enum.
+.  No two members may have the same name, except one is static and the
+other is non-static:
++
+[math]
+++++
+\beginalign
+\forall m_1,m_2 \in C.ownedMembers, m_1\neq m_2: m_1 .name\neq m_2 .name \lor m_1 .static\neq m_2 .static
+\endalign
+++++
+.  The member name must be a valid identifier name, see <<_identifier-names-and-identifiers,Identifier Grammar>>.
+
+--
+
+Thus, over__loading__ of methods is not supported footnote:[In order to emulate method overloading, union types are to be used.] and no field may have the same name as a method.
+However, over__riding__ of methods, getters, and setters are possible, see <<_redefinition-of-members>>.
+Static members may also have the same name as non-static members.footnote:[ cite:[ECMA15a(p214)], `ClassBody : ClassElementList` indicates that it is possible to have the same name for instance and static members.]
+
+The dollar character `\$` is not allowed for user-defined member identifiers as the dollar sign is used for rewriting private members.
+
+[.language-n4js]
+== Methods
+task:IDE-8[] task:IDE-12[]
+
+Methods are simply JavaScript functions.
+They are defined similarly to methods as proposed in cite:[ECMA15a(S13.5)] except for the type information and some modifiers.
+
+
+=== Syntax
+
+.Syntax Method Declaration
+[source,xtext]
+----
+N4MethodDeclaration <Yield>:
+    => ({N4MethodDeclaration}
+        annotations+=Annotation*
+        accessModifier=N4JSMemberAccessModifier?
+        (abstract?=’abstract’ | static?=’static’)?
+        TypeVariables?
+        (
+                generator?='*' LiteralOrComputedPropertyName<Yield> -> MethodParamsReturnAndBody <Generator=true>
+            |   AsyncNoTrailingLineBreak LiteralOrComputedPropertyName<Yield> -> MethodParamsReturnAndBody <Generator=false>
+        )
+    ) ';'?
+;
+
+fragment MethodParamsAndBody <Generator>*:
+    StrictFormalParameters<Yield=Generator>
+    (body=Block<Yield=Generator>)?
+;
+
+fragment MethodParamsReturnAndBody <Generator>*:
+    StrictFormalParameters<Yield=Generator>
+    (':' returnTypeRef=TypeRef)?
+    (body=Block<Yield=Generator>)?
+;
+
+fragment LiteralOrComputedPropertyName <Yield>*:
+    name=IdentifierName | name=STRING | name=NumericLiteralAsString
+    | '[' (=>((name=SymbolLiteralComputedName<Yield> | name=StringLiteralAsName) ']') | computeNameFrom=AssignmentExpression<In=true,Yield> ']')
+;
+
+SymbolLiteralComputedName <Yield>:
+    BindingIdentifier<Yield> ('.' IdentifierName)?
+;
+
+BindingIdentifier <Yield>:
+    IDENTIFIER
+    | <!Yield> 'yield'
+    | N4Keyword
+;
+
+IdentifierName: IDENTIFIER | ReservedWord | N4Keyword;
+NumericLiteralAsString: DOUBLE | INT | OCTAL_INT | HEX_INT | SCIENTIFIC_INT;
+StringLiteralAsName: STRING;
+
+fragment AsyncNoTrailingLineBreak *: (declaredAsync?='async' NoLineTerminator)?;  // See Asynchronous Functions
+
+fragment StrictFormalParameters <Yield>*:
+    '(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')'
+;
+
+FormalParameter <Yield>:
+    {FormalParameter} BindingElementFragment<Yield>
+;
+
+fragment BindingElementFragment <Yield>*:
+    (=> bindingPattern=BindingPattern<Yield>
+    | annotations+=Annotation*
+        (
+            variadic?='...'? name=BindingIdentifier<Yield> ColonSepTypeRef?
+        )
+    )
+    ('=' initializer=AssignmentExpression<In=true, Yield>)?
+;
+
+fragment ColonSepTypeRef*:
+    ':' declaredTypeRef=TypeRef
+;
+----
+
+
+[.language-n4js]
+=== Properties
+
+Methods have all the properties of members and the following additional properties can be explicitly defined:
+
+
+`abstract` ::
+Method is declared but not defined.
+
+`typePars` ::
+Collection of type parameters of a generic method; empty by default.
+
+`returnTypeRef` ::
+Return type of the method, default return type is $\mathit{Void}$.
+The type of the method as a member of the owning classifier is not the method’s return type but is instead a function type.
+
+`fpars` ::
+List of formal parameters, may be left empty.
+
+`body` ::
+The body of the method (this is not available in the pure types model)
+
+The following pseudo properties are defined via annotations:
+
+`final` ::
+Boolean flag set to true if annotation `@Final` is set.
+The flag indicates that method must not be overridden in subclasses; see <<_final-methods>>.
+
+`declaresOverride` ::
+Flag set to true if annotation `@Overrides` is set. The flag indicates that method must override a method of a superclass; see <<_overriding-of-members>>.
+
+
+Additionally, we define the following pseudo properties:
+
+`overrides` ::
+True if method overrides a super method or implements an interface method, false otherwise.
+
+`typeRef` ::
+Type of the method. This is, in fact, a function type (and not the return type).
+
+The following pseudo property is set to make methods compatible with properties of an object literal, however it cannot be changed:
+
+`enumerable` ::
+Boolean flag reflecting the property descriptor $enumerable$, this is always set to false for methods.
+
+=== Semantics
+
+Since methods are ECMAScript functions, all constraints specified in <<_function-type>> apply to methods as well.
+This section describes default values and function type conformance which is required for overriding and implementing methods.
+
+In addition, method declarations and definitions have to comply with the constraints for naming members of classifiers (cf. <<Req-IDE-52>>)
+and with the constraints detailed in the following sections on final methods (<<_final-methods>>), abstract methods (<<_abstract-methods>> and
+method overriding and implementation (<<_overriding-of-members>>, <<_implementation-of-members>>).
+
+The following constraints are defined for methods in ECMAScript 6 cite:[ECMA15a(207)]
+
+.Method Definition ECMAScript 6
+[req,id=IDE-53,version=1]
+--
+* It is a Syntax Error if any element of the BoundNames of StrictFormalParameters also occurs in the VarDeclaredNames of FunctionBody.
+* It is a Syntax Error if any element of the BoundNames of StrictFormalParameters also occurs in the LexicallyDeclaredNames of FunctionBody.
+--
+
+Methods – like functions – define a variable execution environment and therefore provide access to the actual passed-in parameters through the implicit `arguments` variable inside of their bodies (c.f. <<_arguments-object>>).
+
+Methods are similar to function definitions but they must not be assigned to or from variables.
+The following code issues an error although the type of the method would be compatible to the type of the variable `v`:
+
+[source,n4js]
+----
+class C {
+    m(): void {}
+}
+var v: {function():void} = new C().m;
+----
+
+.Method Assignment
+[req,id=IDE-54,version=1]
+--
+. In contrast to ECMAScript 2015, methods are defined as readonly, that is, it is not possible to dynamically re-assign a property defined as method with a new value.
+This is because assigning or re-assigning a method breaks encapsulation. Methods are the <<Acronyms>> of a class, their implementation is internal to the class.
+.  When assigning a method to a variable, a warning is issued since this would lead to an detached this reference inside the method when it is called without explicitly providing the receiver. No warning is issued only if it is guaranteed that no problems will occur:
+..  The method’s body can be determined at compile time (i.e., it has been declared `@Final`) and it lacks usages of `this` or `super`. This is true for instance and static methods.
+..  The method is the constructor. task:GH-224[]
+
+--
+
+NOTE: The following code demonstrates problems arising when methods are assigned to variables in terms of function expressions.
+Given are two classes and instances of each class as follows:
+
+[source,n4js]
+----
+class C {
+    m(): void { }
+    static k(): void {}
+}
+class D extends C {
+    @Override m(): void { this.f()}
+    f(): void {}
+
+    @Override static k(): void { this.f()}
+    static f(): void {}
+}
+var c: C = new C();
+var d: C = new D(); // d looks like a C
+----
+
+Assigning an instance method to a variable could cause problems, as the method assumes this to be bound to the class in which it is defined.
+This may work in some cases, but will cause problems in particular in combination with method overriding:
+
+[source,n4js]
+----
+var v1: {@This(C)function():void} = c.m;
+var v2: {@This(C)function():void} = d.m;
+
+v1.call(c);
+v2.call(c);
+----
+
+Calling `c.m` indirectly via `v1` with `c` as this object will work.
+However, it won’t work for `v2`: the method is overridden in `D`, and the method in expects other methods available in `D` but not in `C`.
+That is, the last call would lead to a runtime error as method `f` which is called in `D.m` won’t be available.
+
+The same scenario occurs in case of static methods if they are retrieved polymorphically via the variables of type `constructor{C}`:
+
+[source,n4js]
+----
+var ctor: constructor{C} = C;
+var dtor: constructor{C} = D;
+
+var v3: {@This(constructor{C})function():void} = ctor.k;
+var v4: {@This(constructor{C})function():void} = dtor.k;
+----
+
+In both cases, the problem could be solved by restricting these kinds of assignments to final methods only.
+In the static case, the problem would also be solved by accessing the static method directly via the class type (and not polymorphically via the constructor).
+Both restrictions are severe but would be necessary to avoid unexpected runtime problems.
+
+The following example shows a problem with breaking the encapsulation of a class.
+
+[source,n4js]
+----
+class C {
+    x: any = "";
+    f(): void { this.g(this); }
+    g(c: C): void { c.h(); }
+    h(): void {}
+}
+class D extends C {
+
+    @Override f(): void {
+        this.g(this.x);
+    }
+    @Override g(c: any) {
+        // do nothing, do not call h())
+    }
+}
+
+var c = new C();
+var d = new D();
+
+var v5: {@This(C)function():void} = c.f;
+var v6: {@This(C)function():void} = d.f;
+
+v5.call(c)
+v6.call(c)
+----
+
+In `D`, method `g` is overridden to accept more types as the original method defined in `C`.
+Calling this new method with receiver type `C` (as done in the last line) will cause problems, as in `D` not only `f` has been adapted but also `g`.
+Eventually, this would lead to a runtime error as well.
+
+=== Final Methods
+task:IDE-157[]
+
+By default, methods can be overridden.
+To prevent a method from being overridden, it must be annotated with `@Final`.
+
+Of course, a method cannot be declared both abstract and final (cf. <<Req-IDE-46>>).
+Private methods are implicitly declared final.
+Because static methods can be overridden in subclasses (which is different to Java), they also can be marked as final.
+
+Default methods in interfaces, cf. <<_default-methods-in-interfaces>>, may also be declared `@Final`.
+
+.Final Methods in Interfaces
+[example]
+====
+If a method in an interface is provided with a body, it may be declared final.
+This will ensure that the given method’s body will be in effect for all instances of the interface.
+Note that this means that;
+
+[loweralpha]
+. a class implementing that interface must not define a method with the same name and
+. a class inheriting a method of that name cannot implement this interface.
+
+The latter case is illustrated here:
+
+[source,n4js]
+----
+interface I {
+    @Final m(): void {}
+}
+
+class C1 {
+    m(): void {}
+}
+
+// error at "I": "The method C1.m cannot override final method I.m."
+class C2 extends C1 implements I {
+}
+----
+====
+
+=== Abstract Methods
+
+
+A method can be declared without defining it, i.e. without providing a method body, and is then called an __abstract method__.
+Such methods must be declared with modifier `abstract` and have their property $abstract$ set to true.
+Constraints for abstract methods are covered in <<Req-IDE-46>> (see <<_abstract-classes>>).
+
+In interfaces, methods are always abstract by default and they do not have to be marked as abstract.
+If a method in an interface provides a body, then this is the default implementation.
+See <<_implementation-of-members>> about how the default implementation may be mixed in the consumer.
+
+[.language-n4js]
+=== Generic Methods
+task:IDE-38[] task:IDE-39[]
+
+Methods of generic classes can, of course, refer to the type variables defined by type parameters of the generic class.
+These type variables are used similarly to predefined or declared types.
+Additionally, methods may be declared generic independently from their containing class.
+That is to say that type parameters (with type variables) can be defined for methods as well, just like for generic functions (see <<_generic-functions>>).
+
+.Type variable names for generic methods
+[req,id=IDE-55,version=1]
+--
+For a given generic method `M` of a class `C`, the following
+constraint must hold: +
+$\forall\ tp_m \in m.typePars, tp_C \in C.typePars: tp_m.name \neq  tp_C.name$
+--
+
+Since type variables can be used similarly to types in the scope of a generic class, a generic method may refer to a type variable of its containing class.
+
+[Generic Method Definition]
+
+[source,n4js]
+----
+class C {
+    <T> foo(p: T p): T { return p;}
+};
+----
+
+If a generic type parameter is not used as a formal parameter type or the return type, a warning is generated unless the method overrides a member inherited from a super class or interface.
+
+== Default Methods in Interfaces
+
+If a method declared in an interface defines a body, then this is the so-called _default implementation_ and the method is called a __default method__.
+This will be mixed into an implementor of the interface if, and only if, neither the implementing class nor any of its direct or indirect superclasses already provides an implementation for this method;
+for details see <<_member-consumption>>.
+Since the implementor is not known, some constraints exist for the body. I.e., no access to super is possible, cf. <<Req-IDE-124>>.
+
+In order to declare an interface to provide a default implementation in a definition file, annotation `@ProvidesDefaultImplementation` can be used, cf. <<Req-IDE-167>>.
+
+When a method in an interface is provided with a default implementation, it may even be declared `@Final`, see <<_final-methods>>.
+
+//todo{it is currently unclear whether default methods are allowed in structural interfaces; see task IDE-1666 for details} task:IDE-1666[]
+
+=== Asynchronous Methods
+
+N4JS implements the async/await concept proposed for ECMAScript 7, which provides a more convenient and readable syntax for writing asynchronous code compared to using built-in type Promise directly.
+This concept can be applied to methods in exactly the same way as to declared functions.
+See <<Asynchronous Functions>> and <<Asynchronous Arrow Functions>> for details.
+
+
+[.language-n4js]
+== Constructors
+task:IDE-159[]
+
+A constructor is a special function defined on a class which returns an instance of that class.
+The constructor looks like a normal method with name "constructor".
+The constructor can be defined explicitly or implicitly and every class has an (implicit) constructor.
+
+For a given a class `C`, the constructor is available via two properties:
+
+$ownedCtor$:: the explicitly defined constructor (if any).
+
+$ctor$:: the explicit or implicit constructor.
+
+If `C` is provided with an explicit constructor, we have $C.ctor = C.ownedCtor$ and $C.ownedCtor \in C.ownedMembers$.
+Note that $C.ctor \notin C.ownedMethods$ in all cases.
+
+The return type of the constructor of a class `C` is `C`.
+If `C` has type parameters $T_1, \dots ,T_n$, then the return type is $C<T_1, \dots ,T_n>$. The constructor is called with the operator.
+Since the return type of a constructor is implicitly defined by the class, it is to be omitted.
+By this definition, a constructor looks like the following:
+
+[source,n4js]
+----
+class C {
+    public constructor(s: string) {
+        // init something
+    }
+}
+----
+
+Constructors define a variable execution environment and therefore provide access to the actual passed-in parameters through the implicit variable inside of their bodies (c.f. <<_arguments-object>>).
+
+.Defining and Calling Constructors
+[req,id=IDE-56,version=1]
+--
+For a constructor $ctor$ of a class `C`, the following conditions
+must hold:
+
+.  $ctor$ must neither be abstract nor static nor final and it must not be annotated with `@Override`.
+.  If a class does not explicitly define a constructor then the constructor’s signature of the superclass constructor is assumed.
+.  If a class defines a constructor with formal parameters then this constructor has to be called explicitly in constructors defined in subclasses.
+.  If a super constructor is called explicitly, this call must be the only expression of an expression statement which has to be the first statement of the body.
+.  Constructors may appear in interfaces, but some restrictions apply:
+..  constructors in interfaces must not have a body.
+..  constructors in interfaces or their containing interface or one of its direct or indirect super interfaces must be annotated with `@CovariantConstructor`.
+.  A constructor must not have an explicit return type declaration.
+.  The implicit return type of a constructor is `this?`.
+
+--
+
+Properties of object literals may be called `constructor`.
+However they are not recognized as constructors in these cases.
+
+.Initialization of Final Fields in the Constructor
+[req,id=IDE-57,version=1]
+--
+
+1.  Required attributes must be initialized: +
+$\forall a \in C.attr: a.required \Rightarrow \exists e \in r.elements: a.name = e.name$
+
+--
+
+Note on syntax: ECMAScript 6 defines constructors similarly, cite:[ECMA15a(S13.5)]. In
+ECMAScript 6 the super constructor is not called automatically as well.
+
+The super literal used in order to call super methods is further
+described in <<_the-super-keyword>>.
+
+
+=== Structural This Type in Constructor and Spec Parameter
+task:IDE-651[]
+
+The use of a structural this reference as a formal parameter type is possible only in constructors.
+This parameter can be annotated with `@Spec` which causes the compiler to generate initialization code.
+
+Simply using `this` as a type in the constructor causes the constructor to require an object providing all public fields of the class for initialization purposes.
+The fields have to be set manually as shown in the following code snippet.
+
+[source,n4js]
+----
+class A{
+    public s: string;
+    public constructor(src: ~~this) {
+        this.s = src.s;
+    }
+}
+----
+
+Remarks:
+
+* The type of the formal parameter `pass:[~~this]` refers to the structural field type, see <<_structural-typing>> for details on structural typing.
+It contains all public fields of the type.
+* Subclasses may override the constructor and introduce additional parameters.
+They have to call the super constructor explicitly, however, providing a parameter with at least all required attributes of the superclass.
+Usually the type `this` is replaced with the actual subclass, but in the case of a `super()` call the `this` type of structural formal parameters is replaced with the `this` type of the superclass,
+hence only required fields of the superclass must be present. task:IDEBUG-262[]
+
+As with other structural references, it is possible to add the structural reference with additional structural members, which can be used to initialize private fields which
+become not automatically part of the structural field type. For example:
+
+[source,n4js]
+----
+class A{
+    public s: string;
+    private myPrivateNumber: number;
+    public constructor(src: ~~this with { x: number; }) {
+        this.s = src.s;
+        this.myPrivateNumber = src.x;
+    }
+}
+----
+
+Defining additional members may become a problem if a subclass defines  public fields with the same name, as the `pass:[~~this]` type will contain these fields in the subclass.
+This is marked as an error in the subclass.
+
+task:IDEBUG-81[]
+
+.Names of additional members of structural this type in constructor
+[req,id=IDE-58,version=1]
+--
+If the structural this type is used in a constructor of a class `C`, and if this structural reference contains an additional structural member $SM$, the following constraints must hold true:
+
+1.  For any subclass `S` of `C`, with $S.ctor=C.ctor$ (the subclass does not define its own constructor), `S` must not contain a public member with same name as $SM$:
++
+$S <: C, S.ctor = C.ctor $
+$\hspace{3em}\Rightarrow \nexists M \in S.members:$
+$\hspace{5em}M.acc=\lenum{public} \land M.name = SM.name$
+
+2.  `C` itself must not contain a public member with same name as $SM$:
++
+[math]
+++++
+\nexists M \in C.members: M.acc=\lenum{public} \land M.name = SM.name
+++++
+
+--
+
+.Field name conflicts with structural member name
+[example]
+====
+
+The situation described in <<Req-IDE-58>> is demonstrated in the following code fragment:
+
+[source,n4js]
+----
+class A {
+    private myPrivateNumber: number;
+    public constructor(src: ~~this with { x: number; }) {
+        this.myPrivateNumber = src.x;
+    }
+}
+
+class B extends A {
+    public x: number; // will cause an error message
+}
+----
+====
+
+
+@Spec-style Constructor [[spec-style-constructor]] ::
+
+The tedious process of copying the members of the parameter to the fields of the class can be automated via the `@Spec` annotation if the argument has `pass:[~i~this]` structural initializer field typing.
+For more details about this typing can be found in <<_structural-read-only-write-only-and-initializer-field-typing>>.
+This can be used as shown in the following listing:
+
+[source,n4js]
+----
+class A {
+    public constructor(@Spec spec: ~i~this) {}
+}
+----
+
+.Spec-style Constructor
+[req,id=IDE-59,version=1]
+--
+
+1.  Annotation `@Spec` may only appear on a formal parameter of a constructor.
+2.  Only a single formal parameter of a constructor may be annotated with `@Spec`.
+3.  If a formal parameter is annotated with `@Spec`, the parameter’s type must be `pass:[~this]` or `pass:[~i~this]` (i.e. use-site structurally typed `this`).
+4.  Fields provided by the parameter, but not defined in the structural field type, are _not_ used to set fields.
+5.  Non-`public` fields explicitly added to the specparameter are copied as well. task:IDEBUG-134[]
+6.  Even if the `@Spec` annotation is used, the super constructor must be calledaccordingly.
+7.  The type of an additional member which match owned non-public fieldmust be subtype of the field’s type:
++
+[%hardbreaks]
+$\forall s \in ctor.fpar.structuralMembers, ctor.fpar.spec: $
+$\hspace{2em}\exists f \in ctor.owner.ownedFields \Rightarrow \tee s \subtype f $
+8.  `pass:[~i~this]` constructor ignores superfluous properties provided by an object literal.
+These ignored properties are _not_ used to set non-$\lenum{public}$ fields.
+9.  Since use-site structural initializer field types can be defined via public, non-static, non-optional writable fields, `pass:[~i~this]` constructor accepts those properties provided by an object literal which has the corresponding readble fields.
+These properties will be initialzed.
+
+--
+
+.Anonymous Interface in Constructor
+[example]
+====
+
+The base class `A` in the examples redefines the constructor already defined in `N4Object`. This is not
+generally necessary and is only used here to make the example legible.
+
+[source,n4js]
+----
+class A {
+    public s: string;
+    public constructor(@Spec spec: ~i~this) {
+        // initialization of s is automatically generated
+    }
+}
+class B extends A {
+    public t: string;
+    private n: number;
+    public constructor(spec: ~~this with {n: number;}) {
+        super(spec);    // only inherited field s is set in super constructor
+    }
+}
+----
+
+====
+
+.Spec Object and Subclasses
+[example]
+====
+
+[source,n4js]
+----
+class A1 {
+    public s: string;
+    public n: number;
+    public constructor(@Spec spec: ~i~this) {}
+}
+class B extends A1 {
+    public constructor() {
+        super({s:"Hello"}); // <-- error, n must be set in object literal
+    }
+}
+class C extends A1 {
+    public constructor() {
+        super({s:"Hello"}); // <-- error, n must be set in object literal
+        this.n = 10; // <-- this has no effect on the super constructor!
+    }
+}
+
+class A2 {
+    public s: string;
+    public n: number?; // now n is optional!
+    public constructor(@Spec spec: ~i~this) {}
+}
+class D extends A2 {
+    public constructor() {
+        super({s:"Hello"}); // and this is ok now!
+        this.n = 10; // this explains why it is optional
+    }
+}
+
+class A3 {
+    public s: string;
+    public n: number = 10; // now n is not required in ~~this
+    public constructor(@Spec spec: ~i~this) {}
+}
+class E extends A3 {
+    public constructor() {
+        super({s:"Hello"}); // and this is ok now!
+    }
+}
+----
+
+The last case (class E) demonstrates a special feature of the typing strategy modifier in combination with the `this` type, see <<_structural-typing>> for details.
+
+
+The constructor in class `B` contains an error because the super constructor expects all required attributes in `A1` to be set.
+The additional initialization of the required field `A1.n` as seen in `C` does not change that expectation.
+In this example, the field `n` should not have been defined as required in the first place.
+
+Optional fields like `n?` in class `A2` or fields with default values like `n=10` in class `A3` are not required to be part of the `spec` object.
+====
+
+
+.Superfluous Properties in Spec-style Constructor
+[example]
+====
+
+Each non-$\lenum{public}$ field has to be set in the constructor via the $\lstnfjs{with}$ to the parameter otherwise properties are _not_ used to set non-$\lenum{public}$ fields.
+
+[source,n4js]
+----
+class C {
+    public s: string;
+    n: number;
+    constructor(@Spec spec: ~i~this) {}
+}
+
+// n is ignored here
+new C( { s: "Hello", n: 42 });
+
+// but:
+var ol = { s: "Hello", n: 42 };
+// "ol may be used elsewhere, we cannot issue warning here" at "ol"
+new C(ol) ;
+
+// of course this is true for all superfluous properties
+// weird is not used in constructor
+new C( { s: "Hello", weird: true } );
+----
+
+====
+
+=== Callable Constructors
+
+=== Covariant Constructors
+
+Usually, the constructor of a subclass need not be override compatible with the constructor of its super class.
+By way of annotation `@CovariantConstructor` it is possible to change this default behavior and enforce all subclasses to have constructors with override compatible signatures.
+A subclass can achieve this by either inheriting the constructor from the super class (which is usually override compatible,
+with the special case of `@Spec` constructors) or by defining a new constructor with a signature compatible to the inherited constructor.
+The same rules as for method overriding apply.
+
+The `@CovariantConstructor` annotation may be applied to the constructor, the containing classifier, or both.
+It can also be used for interfaces; in fact, constructors are allowed in interfaces only if they themselves or the interface is annotated with `@CovariantConstructor` (see <<Req-IDE-60>>).
+
+.Covariant Constructor
+[def]
+--
+A classifier `C` is said to `__have a covariant constructor__` if and
+only if one of the following applies:
+
+1.  `C` has a direct super class $C'$ and $C'$ is annotated with `@CovariantConstructor` or $C'$ has a constructor annotated with `@CovariantConstructor`.
+2.  `C` has a directly implemented interface `I and `I` is annotated with  `@CovariantConstructor` or `I` has a constructor annotated with `@CovariantConstructor`.
+3.  `C` has a direct super class or directly implemented interface that `__has a covariant constructor__` (as defined here).
+--
+
+Note that `C` does not need to have an owned(!) constructor; also a constructor inherited from a super class can be declared covariant.
+
+The following rules apply to covariant constructors.
+
+.Covariant Constructors
+[req,id=IDE-60,version=1]
+--
+.  Annotation `@CovariantConstructor` may only be applied to classes, interfaces, and constructors.
+Annotating a constructor with this annotation, or its containing classifier, or both have all the same effect.
+.  Given a class `C` with an owned constructor $ctor$ and a super class $Sup$ that has a covariant constructor (owned or inherited, see <<_covariant-constructors>>),
+then $Sup.constructor$ must be accessible from `C`,
+..  $ctor$ must be override compatible with $S.constructor$:
++
+$overrideCompatible(ctor, S.constructor)$
++
+This constraint corresponds to <<Req-IDE-72>> except for the `Override` annotation which is not required here.
+.  Given a classifier `C` implementing interface `I` and `I` has a covariant constructor (owned or inherited, see <<_covariant-constructors>>), we require
+..  $I.constructor$ must be accessible from `C`,
+..  an implementation-compatible constructor $ctor$ must be defined in C with
++
+$overrideCompatible(ctor, I.constructor)$
++
+This constraint corresponds to <<Req-IDE-74>> except for the `@Override` annotation, which is not required, here.
+..  Given a classifier `C` without an owned constructor and an extended class or interface $Sup$ that has a covariant constructor (owned or inherited, see <<_covariant-constructors>>),
+we require the inherited constructor $ctor$ of `C` within the context of `C` to be override compatible to itself in the context of $Sup$.
+Using notation $m[T]$ to denote that a member `M` is to be treated as defined in container type `T`, which means the this-binding is set to `T`, we can write:
++
+$overrideCompatible(ctor[C], ctor[Sup])$
++
+This constraint does not correspond to any of the constraints for the redefinition of ordinary members.
+--
+
+The following example demonstrates a use case for covariant constructors.
+It shows a small class hierarchy using covariant constructors, `Cls` and `Cls2`, together with a helper function `createAnother` that creates and returns a new instance of the same type as its argument `value`.
+
+
+[[ex:covariant_constructors]]
+.Covariant Constructors
+[example]
+====
+
+[source,n4js]
+----
+class A {}
+class B extends A {}
+
+@CovariantConstructor
+class Cls {
+    constructor(p: B) {}
+}
+class Cls2 extends Cls {
+    constructor(p: A) { // it's legal to generalize the type of parameter 'p'
+        super(null);
+    }
+}
+
+function <T extends Cls> createAnother(value: T, p: B): T {
+    let ctor = value.constructor;
+    return new ctor(p);
+}
+
+let x = new Cls2(new A());
+let y: Cls2;
+
+y = createAnother(x, new B());
+----
+
+====
+
+In the code of <<ex:covariant_constructors>>, we would get an error if we changed the type of parameter `p` in the constructor of `Cls2` to some other type that
+is not a super type of `B`, i.e. the type of the corresponding parameter of `Cls`’s constructor.
+If we removed the `@CovariantConstructor` annotation on `Cls`, we would get an error in the new expression inside function `createAnother`.
+
+The next example illustrates how to use `@CovariantConstructor` with interfaces and shows a behavior that might be surprising at first sight.
+
+[[ex:covariant-constructors-in-interfaces]]
+.Covariant Constructors in Interfaces
+[example]
+====
+
+[source,n4js]
+----
+@CovariantConstructor
+interface I {
+    constructor(p: number)
+}
+
+class C implements I {
+    // no constructor required!
+}
+
+class D extends C {
+    // XPECT errors --> "Signature of constructor of class D does not conform to overridden constructor of class N4Object: {function(number)} is not a subtype of {function()}." at "constructor"
+    constructor(p: number) {}
+}
+----
+
+====
+
+Interface `I` declares a covariant constructor expecting a single parameter of type `number`.
+Even though class `C` implements `I`, it does not need to define an owned constructor with such a parameter.
+According to <<Req-IDE-60>>, it is enough for `C` to have a constructor, either owned or inherited, that is override compatible with the one declared by `I`.
+Class `C` inherits the default constructor from `N4Object`, which does not have any arguments and is thus override compatible to `I`’s constructor.
+
+In addition, subclasses are now required to have constructors which are override compatible with the constructor of class `C`, i.e. the one inherited from `N4Object`.
+<<ex:covariant-constructors-in-interfaces>> shows that this is violated even when repeating the exact same constructor signature from interface `I`,
+because that constructor now appears on the other side of the subtype test during checking override compatibility.
+
+[.language-n4js]
+== Data Fields
+task:IDE-381[]
+
+A data field is a simple property of a class.
+There must be no getter or setter defined with the same name as the data field.
+In ECMAScript 6, a class has no explicit data fields.
+It is possible, however, to implicitly define a data field by simply assigning a value to a variable of the this element (e.g. `this.x = 10` implicitly defines a field `x`).
+Data fields in N4JS are similar to these implicit fields in ECMAScript 6 except that they are defined explicitly in order to simplify validation and user assistance.
+
+=== Syntax [[data-fields-syntax]]
+
+
+[source,xtext]
+----
+N4FieldDeclaration <Yield>:
+    {N4FieldDeclaration}
+    annotations+=Annotation*
+    FieldDeclarationImpl<Yield>
+;
+
+fragment FieldDeclarationImpl <Yield>*:
+    accessModifier=N4JSMemberAccessModifier?
+    (static?=’static’ | const?=’const’)?
+    LiteralPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)? ';'
+;
+----
+
+=== Properties [[data-fields-properties]]
+
+Fields have the following properties which can be explicitly defined:
+
+
+`typeRef` ::
+Type of the field; default value is $Any$.
+
+`expr` ::
+Initializer expression, i.e. sets default value.
+
+`static` ::
+Boolean flag set to true if field is a static field.
+
+`const` ::
+Boolean flag set to true if field cannot be changed. Note that const fields are automatically static.
+Const fields need an initializer. Also see <<_assignment-modifiers>>.
+
+task:IDE-946[]
+
+NOTE: $const$ is _not_ the (reversed) value of the property descriptor $writable$ as the latter is checked at runtime while const may or may not be checked at runtime.
+
+
+The following pseudo properties are defined via annotations for setting the values of the property descriptor:
+
+
+`enumerable` ::
+Boolean flag reflecting the property descriptor $enumerable$, set via annotation `@Enumerable(true|false)`.
+The default value is $\TRUE$.footnote:[ version 4.0]
+
+`declaredWriteable` ::
+Boolean flag reflecting the property descriptor $writeable$, set via annotation `@Writeable(true|false)`.
+The default value is $\TRUE$.footnote:[ This cannot be done w/o `null`/`undefined` analysis]
+
+`final` ::
+Boolean flag making the field read-only, and it must be set in the constructor. Also see <<_assignment-modifiers>>.
+
+[[data-fields-derived-values]]
+[discrete]
+==== Derived values for fields
+
+`readable` ::
+Always true for fields.
+
+`abstract` ::
+Always false for fields.
+
+`writeable` ::
+Set to false if field is declared const or final. In the latter case, it may be set in the constructor (cf. <<_assignment-modifiers>>).
+
+==== Semantics [[data-fields-semantics]]
+
+.Attributes
+[req,id=IDE-61,version=1]
+--
+For any attribute $a$ if a
+class `C`, the following constraints must hold:
+
+1.  A required data field must not define an initializer: +
+$a.required \Rightarrow a.init=null$
+2.  There must be no other member with the same name of a data field `f`.
+In particular, there must be no getter or setter defined with the same name: +
+$\spc \forall\ m \in f.owner.members : m \neq f \Rightarrow m.name \neq f.name$
+
+If a subclass should set a different default value, this has to be done in the constructor of the subclass.
+
+For the relation of data fields and field accessors in the context of extending classes or implementing interfaces see <<_redefinition-of-members>>.
+--
+
+==== Type Inference [[data-fields-type-inference]]
+
+The type of a field is the type of its declaration:
+
+[math]
+++++
+\infer{\tee f: \tee d}{}
+++++
+
+The type of a field declaration is either the declared type or the inferred type of the initializer expression:
+
+[%hardbreaks]
+$\spc \infer{\tee d: T}{d.declaredType \neq \NULL \spc T = d.declaredType} $
+$\spc \infer{\tee d: T}{d.declaredType = \NULL \spc d.expression \neq \NULL} $
+$\spc E = \tee d.expression \spc E \not\in \{\type{null, undefined}\} \spc T = E} $
+$\spc \infer{\tee d: \type{any}}{else} $
+
+
+If the type contains type variables they are substituted according to
+type parameters which are provided by the reference:
+
+[math]
+++++
+\infer{\typeEnv \entails \type{TField}\ tfield: T}{\typeEnv \entails tfield.typeRef: T}
+++++
+
+=== Assignment Modifiers
+task:IDE-946[]
+
+Assignment of data fields can be modified by the assignment modifiers `const` (similar to constant variable declarations, see <<Const>>) and `@Final`.
+
+.Const Data Fields
+[req,id=IDE-62,version=1]
+--
+For a data field `f` marked as `const`, the following constraints must hold:
+
+.  An initializer expression must be provided in the declaration (except in n4jsd files): +
+$f.expr \neq \NULL$
+.  A constant data field is implicitly static and must be accessed only via the classifier type.
+It is not possible, therefore, to use the `this` keyword in the initializer expression of a constant field: +
+$\nexists sub \in f.expr^*: sub="this"$
+// **
+.  A constant data field must not be annotated with `@Final`: +
+$f.const \to \lnot f.final$
+. Constant data fields are not writeable (cf. <<Req-IDE-68>>): +
+$f.const \to \lnot f.writeable$
+--
+
+.Final Data Fields
+[req,id=IDE-63,version=1]
+--
+For a data field `f` marked as `@Final`, the following constraints must hold:
+
+.  A final data field must not be modified with `const` or `static`: +
+$f.final \to \lnot f.const \land \lnot f.declaredStatic$
++
+.  A final data field is not writeable: +
+$f.final \to \lnot f.writeable$ +
+A final field may, however, be set in the constructor.
+See <<Req-IDE-68>> for details.
+.  A final data field must be either initialized by an initializer expression or in the constructor.
+If the field is initialized in the constructor, this may be done either explicitly or via a spec-style constructor.
+task:IDEBUG-575[]
++
+[math]
+++++
+\beginalign
+\spc f.expr \neq \NULL \\
+\spc \lor (\exists assignExp: assignExpr.containingFunction = f.owner.constructor \\
+\spc \hspace{3em} \land assignExpr.left.target = \lstnfjs{"this"} \\
+\spc \hspace{3em} \land bind(assignExpr.left.property, f)) \\
+\spc \lor (f.public \land \exists fpar \in f.owner.constructor.fpars: \\
+\spc \hspace{3em} fpar.spec \land \exists sm \in structuralMembers: sm.name=f.name)
+\endalign
+++++
+--
+// todo{Constraints for final assignment are not completely implemented yet, also they have some problems here (e.g., not all control flows are required to assign a value). They will be implemented in the progress of adding more powerful program analysis in general}
+
+
+=== Field Accessors (Getter/Setter)
+task:IDE-160[] task:IDE-381[]
+
+Instead of a simple data field, a field can be defined by means of the getter and setter accessor methods.
+These accessor methods are similar to the accuser methods in object literals:
+
+==== Syntax [[field-acessors-syntax]]
+task:IDE-8[]
+
+[source,xtext]
+----
+N4GetterDeclaration <Yield>:
+    => ({N4GetterDeclaration}
+    annotations+=Annotation*
+    accessModifier=N4JSMemberAccessModifier?
+    (abstract?='abstract' | static?='static')?
+    GetterHeader<Yield>)
+    (body=Block<Yield>)? ';'?
+;
+
+fragment GetterHeader <Yield>*:
+    ('get' -> LiteralOrComputedPropertyName <Yield> '(' ')' ColonSepTypeRef?)
+;
+
+N4SetterDeclaration <Yield>:
+    =>({N4SetterDeclaration}
+        annotations+=Annotation*
+        accessModifier=N4JSMemberAccessModifier?
+        (abstract?='abstract' | static?='static')?
+        'set'
+        ->LiteralOrComputedPropertyName <Yield>
+    )
+    '(' fpar=FormalParameter<Yield> ')' (body=Block<Yield>)? ';'?
+;
+----
+
+Notes with regard to syntax: Although ECMAScript 6 does not define fields in classes, it defines getter and setter methods similarly (cf. cite:[ECMA15a(S13.3,p.209)]).
+
+.Getter and Setter
+[example]
+--
+
+The getter and setter implementations usually reference data fields internally.
+These are to be declared explicitly (although ECMAScript allows creating fields on the fly on their first usage (see task IDE-422 task:IDE-422[])).
+The following example demonstrates a typical usage of getter and setter in combination with a data field.
+The getter lazily initializes the field on demand.
+The setter performs some notification.
+
+.Getter Setter
+[source,n4js]
+----
+class A {}
+
+class C {
+    private _data: A = null;
+
+    public get data(): A {
+        if (this._data==null) {
+            this._data = new A();
+        }
+        return this._data;
+    }
+
+    public set data(data: A) {
+        this._data = data;
+        this.notifyListeners();
+    }
+
+    notifyListeners(): void {
+        // ...
+    }
+}
+----
+
+--
+
+==== Properties [[field-acessors-properties]]
+
+Derived values for field accessors:
+
+
+`readable` ::
+True for getters and false for setters.
+
+`writable` ::
+False for getters and true for setters.
+
+==== Semantics [[field-accessors-semantics]]
+
+There must be no field or method with the same name as a field accessor (follows from <<Req-IDE-52>>). In addition, the following constraints must hold:
+
+.Field Accessors
+[req,id=IDE-64,version=1]
+--
+
+* The return type of a getter must not be `void`.
+* The type of the parameter of a setter must not be `void`.
+* If a getter $g$ is defined or consumed (from an interface) or merged-in (via static polyfill) in a class `C` and a setter `S` with $s.name=g.name \land s.static=g.static$ is inherited by
+`C` from one of its super classes, then `C` must define a setter $s'$ with
+$s'.name=g.name \land s'.static=g.static$ footnote:[This is required, because in Javascript a getter shadows a corresponding setter defined further up in the prototype chain; likewise a setter shadows a corresponding getter.].
+* A setter must have exactly one formal parameter, i.e. variadic or default modifiers are not allowed.
+
+The same applies to setters, accordingly.
+
+* <<Req-IDE-72>>, <<Req-IDE-73>>, and <<Req-IDE-74>> apply to field accessors accordingly (getter / setter overriding).
+
+[.language-n4js]
+NOTE: A getter and setter with the same name need not have the same type, i.e. the getter’s return type need not be the same as a subtype of
+the type of the setter’s parameter (the types can be completely unrelated).footnote:[Thus, the type of one accessor is not used to infer the type of the other one. E.g., from `set x(string s)`, we cannot infer `get x()` to return `string` — instead, the getter is inferred to return `any`.]
+
+--
+
+Getters and setters – like functions – define a variable execution environment and therefore provide access to the actual passed-in parameters through the implicit `arguments`
+variable inside of their bodies (c.f. <<_arguments-object>>).
+
+[.language-n4js]
+== Static Members
+task:IDE-151[] task:IDE-505[]
+
+Static data fields, field accessors and methods are quite similar to instance members, however they are not members of instances of the type but the type itself.
+They are defined similarly to instance members except that they are specified with the modifier `static`.
+Since they are members of the type, the `this` keyword is not bound to instances of the class, but again to the type itself.
+This is similar as in ECMAScript 6 (cite:[ECMA15a(14.5.15)]).
+Since static members are not instance but type members, it is even possible that a static member has the same name as an instance member.
+
+Note that static members are not only allowed in classes but also in interfaces, but there are important differences
+(for example, no inheritance of static members of interfaces, cf. Section <<_static-members-of-interfaces>>).
+
+.Static member not abstract
+[req,id=IDE-65,version=1]
+--
+For a static field accessor or method `S`, the following constraint must hold:
+
+* $s.static \iff \lnot s.abstract$
+
+--
+
+Like instance methods, static methods of classes are inherited by subclasses and it is possible to override static methods in subclasses.
+The very same override constraints are valid in this case as well.
+
+=== Access From and To Static Members
+
+
+.Accessing Static Members
+[req,id=IDE-66,version=1]
+--
+
+Let `M` be a static member of class `C`. Except for write-access to
+fields, which will be explained later, you can access `M`
+via:
+
+1.  The class declaration instance, i.e. the classifier or constructor type, `constructor{C}`, i.e. `C.m`
+2.  The class declaration instance of a subtype, i.e. the classifier or constructor type, i.e. `D.m`, if `D` is a subclass of `C`.
+3.  `v.m`, if `v` is a variable of type `C` (i.e. classifier type as defined in <<_constructor-and-classifier-type>>) or a subtype thereof.
+4. `this.m` inside the body of any static method declared in `C` or any sub-class of `C`.
+5.  Via a type variable `T` which upper bound is a subclassof `C` e.g., `function <T extends C> f(){T.m}` task:GH-222[]
+
+--
+
+
+.Static Member Access
+[req,id=IDE-67,version=1]
+--
+It is not possible to access instance members from static members.
+This is true in particular for type variables defined by a generic classifier.
+--
+
+
+.Write-access to static data fields and static setter
+[req,id=IDE-68,version=1]
+--
+
+task:IDE-1071[] task:IDEBUG-442[]
+For static data fields and static setter `f` the following constraint must hold:
+
+* For every assign expression $assignExpr$ with $f.static \land assignExpr.left = T.f \Rightarrow T=f.owner$.
+* For every writing unary expression $u$ with $u.op \in \{++,--\}  \land   f.static \land  u.expression = T.f \Rightarrow T=f.owner$.
+
+--
+
+// TODO missing notation below
+In the special case of `m` being a static data field, write-access is only possible via the defining type name `C.m`.
+In the list above, only the first line can be used when assigning values to a field. Note that this only applies to fields and set-accessors.footnote:[The technical reason for this rule is the way properties are stored in JavaScript. Take for an example subclass-write access : [language-n4js]`class C { static f="a";}` with [language-n4js]`class D extends C { }`.
+Now the data field `f` on `C` can also be queried using `D` ([language-n4js]`var q=D.f;`) but writing ([language-n4js]`D.f="b";`) would introduce a newly created property `f` on class `D`,
+which differs from the one defined on `C`.
+It would do this without explicitly overriding the inherited property.
+Subsequent reads to [language-n4js]`D.f` would route to this ’accidentally’ introduced property.
+Such a behavior would not be expected and therefore has been disallowed.
+Note that this write restriction applies to data-fields and to field setters.]
+
+It is even possible to call a static field accessor or method of a class using dynamic polymorphism, as demonstrated in the following example:
+
+[[ex:Polymorphism_and_static_methods]]
+.Static members of classes, inheritance and polymorphism
+[example]
+--
+
+[source,n4js]
+----
+class A {
+    static m(): void { console.log('A#m'); }
+
+    static foo(): void { console.log('A#foo'); }
+
+    static bar(): void {
+        this.foo();
+    }
+}
+
+class B extends A {
+    @Override
+    static foo(): void { console.log('B#foo'); }
+}
+
+A.m(); // will print "A#m"
+B.m(); // will print "A#m" (m is inherited by B)
+
+var t: type{A} = A;
+t.foo(); // will print "A#foo"
+t = B;
+t.foo(); // will print "B#foo"
+
+// using 'this':
+
+A.bar(); // will print "A#foo"
+B.bar(); // will print "B#foo"
+----
+
+--
+
+This is quite different from Java where static methods are not inherited and references to static methods are statically bound at compile time
+depending on the declared type of the receiver (and not its value):
+
+.Static members in Java
+[example]
+--
+[source,java]
+----
+// !!! JAVA CODE !!!
+public class C {
+
+    static void m() { System.out.println("C#m"); }
+
+    public static void main(String[] args) {
+        final C c = null;
+        c.m();  // will print "C#m" (no NullPointerException at runtime)
+    }
+}
+----
+--
+
+=== Generic static methods
+task:IDE-151[] task:IDE-38[] task:IDE-39[]
+
+It is not possible to refer to type variables of a generic class, as these type variables are never bound to any concrete types.
+A static method can, however, be declared generic.
+Generic static methods are defined similarly to generic instance methods.
+Since they cannot refer to type variables of a generic class, the constraint to avoid type variables with equal names (see <<Req-IDE-55>>) does not need to hold for generic static methods.
+
+=== Static Members of Interfaces
+
+Data fields, field accessors and methods of interfaces may be declared
+static. A few restrictions apply:
+
+.Static Members of Interfaces
+[req,id=IDE-69,version=1]
+--
+
+1.  Static members of interfaces may only be accessed directly via the containing interface’s type name task:IDEBUG-386[]
+(this means, of the four ways of accessing static members of classes defined in <<Req-IDE-66>> above, only the first one applies to static members of interfaces).
+2.  The `this` literal may not be used in static methods or field accessors of interfaces and it may not be used in the initializer expression of static fields of interfaces. See <<Req-IDE-173>>.
+3.  The `super` literal may not be used in static methods or field accessors of interfaces (in fact, it may not be used in interfaces at all, cf. <<Req-IDE-123>>).
+
+--
+
+Note that the `this` type as a return type for methods is only allowed for instance methods and as an argument type only in constructors (structurally typed).
+There is no need to disallow these cases for static interface methods in the constraints above.
+
+In general, static members may not be abstract, cf. <<Req-IDE-46>>, which applies here as well.
+Static methods and field accessors of interfaces, therefore, always have to provide a body.
+
+Static members of interfaces are much more restricted than those of classes.
+Compare the following example to <<_polymorphism-and-static-methods>> for classes above:
+
+.Static members of interfaces
+[example]
+--
+
+
+[source,n4js]
+----
+interface I {
+    static m(): void { console.log('I#m'); }
+}
+
+interface J extends I {}
+
+I.m(); // prints "I#m"
+J.m(); // ERROR! (m is not inherited by J)
+
+var ti: type{I} = I;
+ti.m(); // ERROR! (access to m only allowed directly via type name I)
+ti = J;
+ti.m(); // ERROR! (access to m only allowed directly via type name I)
+----
+
+--
+
+The last line in is the reason why access to static members has to be restricted to direct access via the type name of the containing interfaces.
+
+== Redefinition of Members
+
+Members defined in classes or interfaces can be redefined by means of being overridden or implemented in subclasses, sub-interfaces, or implementing classes.
+Fields and methods with default implementation defined in interfaces can be consumed by the implementor, but certain restrictions apply.
+
+.Override Compatible
+[req,id=IDE-70,version=1]
+--
+A member `M` is _override compatible_ to a member `S` if and only if the
+following constraints hold:
+
+.  The name and static modifiers are equal: +
+$M.name=S.name \land M.static=S.static$
+.  The metatypes are compatible:
++
+[%hardbreaks]
+$\mu(S)=\type{Method} \spc \to \spc \mu(M) = \type{Method} $
+$\mu(S)=\type{Field}  \spc \to \spc \mu(M) \in \type{Field, Getter, Setter} $
+$\mu(S)=\type{Getter} \spc \to \spc \mu(M) \in \type{Field, Getter} $
+$\mu(S)=\type{Setter} \spc \to \spc \mu(M) \in \type{Field, Setter} $
+. The overridden member must not be declared final: +
+$\lnot S.final$
+.  Overridden member declared const can only be overridden (redefined) by const members: +
+$S.const \Leftrightarrow M.const$
+.  It is not possible to override a non-abstract member with an abstract one: +
+$\lnot M.abstract \lor S.abstract$
+.  The types are compatible:
++
+[%hardbreaks]
+$(\mu(M) \in \types{Method, Getter, Field} \land \mu(S)\neq\type{Setter}) \spc  \to \tee M \subtype S $
+$(\mu(M) \in \type{Setter, Field}         \land \mu(S)\neq\type{Getter} \land \lnot S.const) \spc   \to \tee S \subtype M $4
+.  The access modifier is compatible: +
+$M.acc \geq S.acc$
+
+--
+
+We define a relation $overrideCompatible(M, S)$ accordingly.
+
+Members overriding or implementing other members must be declared as override.
+If a member does not override another, however, it must not be declared as override.
+
+.Non-Override Declaration
+[req,id=IDE-71,version=1]
+--
+If and only if a member `M` of a class `C` (extending a class `S` and interfaces $I_i$) does not override or implement another member, then it must not be declared as override.
+That is the following constraint must hold:
+
+[%hardbreaks]
+$\spc \lnot M.override$
+$\spc \land $
+$\spc \nexists M' \in C.super.members \cup \bigcup^{n}_{i=1}I_i.members:$
+$\spc  M'.name=M.name \land M'.static=M.static $
+$\spc \land M'.acc> \lenum{private} $
+
+--
+
+[.language-n4js]
+=== Overriding of Members
+task:IDE-12[] task:IDE-158[]
+
+In general, the N4 platform supports overriding members by redefining them in sub-classes.
+This definition allows for overriding of static methods, but it does not apply to constructors because $C.ctor \notin C.ownedMethods$.
+
+.Overriding Members
+[req,id=IDE-72,version=1]
+--
+Given a class `C` and a superclass $Sup$.
+If for an instance or static member `M` defined in `C` a member `S` exists with $& \exists S \in Sup.members:  M.name=S.name \land M.static=S.static$
+then we call `M` the overriding member and `S` the overridden member.
+In that case the following constraints must hold:
+
+1.  `S` must be accessible from `C`
+2.  `M` must be override compatible with `S`: +
+$overrideCompatible(M, S)$
+3.  If `S` is a field and `M` is an accessor, then an additional accessor $M'$ must exists so that $M, M'$ are an accessor pair for `S`:
++
+[%hardbreaks]
+$\spc \mu(S)=\type{Field} \land \mu(M)={Accessor} $
+$\spc \to \exists M'\in C.member: $
+$\spc \hspace{4em} overrideCompatible(M',S) \land \{\mu(M),\mu(M')\}=\types{Getter,Setter}$
+4.  `M` must be declared as override: +
+`M.override`
+--
+
+Remarks:
+
+* An overridden method, getter, or setter may called via `super`.
+Note that this is not possible for fields.
+* There is no ’hiding’ of fields as in Java, instead there is field overriding.
+* It is not possible to override a field with a consumed getter and an overridden setter, because the getter is not consumed if there exists a field in a superclass.
+In this case, the consuming and extending class needs to define the accessor pair explicitly.
+The same is true for other combination of accessors and fields.
+* Overriding a field usually makes only sense if the visibility of the field is to be increased.
+
+=== Implementation of Members
+task:IDE-12[] task:IDE-158[] task:IDE-700[] task:IDE-1236[]
+
+.Interface and Class Member Sets
+[def]
+--
+For the following constraints, we define two helper sets $M_C$ and $M_I$ as follows:
+
+Given a `C`, and interface $I_1, \dots , I_n$, implemented by `C`, with
+
+[%hardbreaks]
+$M_C \spc =  C.ownedMembers \cup \{ m \in C.superType.members | m.acc > \lenum{private}\}$
+$M_I \spc = \bigcup^{n}_{i=1}I_i.members $
+
+Note that these sets already contain only non-private data fields.
+--
+
+==== Member Consumption
+
+
+.Member Consumption and Implementation
+[def]
+--
+A member `M` defined in an interface `I` is _consumed_ by an implementor `C`, if it becomes a member of the class, that is, $M \in C.members$.
+
+A member `M` is consumed if there is no member defined in the implementor with the same name and if there is no non-private,
+non-abstract member with that name inherited by the implementor from its superclass. footnote:[There had been the idea of preventing static members of being consumed. However, this would break the type subtype relation.]
+
+If the implementor defines the member itself, then the member is implemented rather than consumed.
+
+The concrete rules are described in the following;
+
+It is not always possible to directly consume a member.
+In general, a rather conservative strategy is used: if two implemented interfaces define the same (non-abstract) member then the implementor must redefine the member in order to solve conflicts.
+Even if the two conflicting members have the same types, the implementor must redefine them as we generally assume semantic differences which the consumer has to be aware of.
+Data fields defined in interfaces, in particular, are assumed to be concrete.
+It is not, therefore, possible to consume a field defined in two implemented interfaces.
+--
+
+.Consumption of Interface Members
+[req,id=IDE-73,version=1]
+--
+Given a classifier `C` footnote:[`C` could either be a class or an interface.], and interfaces $I_1, \dots , I_n$ implemented (or extended) by `C`, and sets $M_C$ and $M_I$ as defined in <<interface_and_class_member_sets>>.
+// TODO add ref to def:Interface_and_Class_Member_Sets above
+A non-static member `M` defined in any interface $I_i$ is merged into the consumer (`C`), if for all other (possible) members $M'$ of `C`
+
+[math]
+++++
+\forall M' \in M_C\cup M_I \setminus \{M\} :  M.name=M'.name \land \neg M'.static
+++++
+
+the following constraints hold:
+
+.  The other member’s meta type matches the meta type of the merge candiate:
++
+[%hardbreaks]
+$\mu(M)=\type{Method}    \spc \to \mu(M') = \type{Method} $
+$\mu(M)\neq\type{Method} \spc \to \mu(M') \in \types{Field, FieldAccessor} $
+.  The other member is abstract and not owned by the consumer:
++
+[%hardbreaks]
+$\spc \mu(M)=\mu(M') \lor \mu(M)=\type{Field} $
+$\spc \hspace{2em}\to M'.abstract \land M' \not\in C.ownedMembers $
+// TODO getter does not affect setter and vice versa
+.  The merge candidate’s access modifier is not less than the modifier of the other member:
++
+[%hardbreaks]
+$\spc \mu(M)=\mu(M') \lor \mu(M)=\type{Field}$
+$\spc \hspace{2em} \to M.acc \geq M'.acc$
+// TODO - getter does not affect setter and vice versa
+.  The merge candidate’s type compatible with the other member:
++
+[%hardbreaks]
+$\mu(M) \in \{\types{Method, Getter, Field}\} \land \mu(M') \neq \type{Setter}   \spc \to \tee M \subtype M' $
+$\mu(M) \in \{\types{Setter, Field}\} \land \mu(M') \neq \type{Getter}           \spc \to \tee M' \subtype M $
+
+--
+
+[.language-n4js]
+==== Member Implementation
+
+.Implementation of Interface Members
+[req,id=IDE-74,version=1]
+--
+For any non-static abstract member `M` defined in an interface `I implemented (or extended) by a classifier `C`, `M` must be accessible
+from `C` and one or two member(s) in `C` must exist which are implementation-compatible with `M`.
+The implementing member(s) must be declared as override if they are directly defined in the consumer.
+
+.  `M` must be accessible from `C`.
+.  An implementation-compatible member $M'$ must exist in `C`:
+..  if `M` is not a field:
++
+[%hardbreaks]
+$\mu(M) \neq\type{Field} \spc \to $
+            $\spc \exists M' \in C.members: $
+            $\spc \hspace{3em} overrideCompatible(M',M) $
+            $\spc \hspace{3em} \land (M' \in C.ownedMembers \to M'.override)$
+..  if `M` is a field, then either an
+implementation-compatible field $F'$ or accessor pair $G', S'$ must exist:
++
+[%hardbreaks]
+$\mu(M)=\type{Field} \spc \to $
+                        $\spc \exists F' \in C.fields: $
+                            $\spc \hspace{3em} overrideCompatible(F',M) $
+                            $\spc \hspace{3em} \land (F' \in C.ownedMembers \to F'.override) $
+                        $\spc \lor $
+                        $\spc \exists G' \in C.getters, S' \in C.setters: $
+                            $\spc \hspace{3em} overrideCompatible(G',M) $
+                            $\spc \hspace{3em} \land overrideCompatible(S',M) $
+                            $\spc \hspace{3em} \land (G' \in C.ownedMembers \to G'.override) $
+                            $\spc \hspace{3em} \land (S' \in C.ownedMembers \to S'.override) $
+
+--
+
+Methods defined in interfaces are automatically declared abstract if they do not provide a default implementation.
+This can also be expressed explicitly via adding the `abstract` modifier.
+If a class implementing an abstract interface does not implement a method declared in the interface, the class needs to be declared abstract (cf. <<_abstract-classes>>).
+
+Consequences for method implementation:
+
+1.  It may be require the implementor to explicitly define a method in order to solve type conflicts produced by methods of different interfaces with same name but different signatures.
+2.  Methods in an implementor cannot decrease the accessibility of methods from implemented interfaces, that is
++
+[%hardbreaks]
+$\spc \forall M \in C.methods, M' \in I_i.methods (i=1\dots n): $
+$\spc \hspace{2em} M.name=M'.name \to M.acc \neq private \Rightarrow M.acc \geq M'.acc $
+3.  Methods in the implementor must be a supertype footnote:[As defined in <<_function-type>> for function types.] of methods from implemented interfaces.
+That is to say the implemented methods are override-compatible.
+4.  There may be several methods $M_1, \dots , M_n$ defined in different implemented interfaces and a single owned method $M'$ in $M_C$.
+In this case, the above constraints must hold for _all_ methods. In particular, $M'$’s signature must conform to all conflicting methods’ signatures.
+This is possible by using union types for the arguments and an intersection type as return type.
+Such a method $M'$ is said to _resolve_ the conflict between the implemented (and also inherited) methods.
+5.  Since abstracts methods may become part of the implementor methods, the implementor must either define these methods or it must be declared abstract itself.
+Since interfaces are abstract by default, responsibility for implementing abstract methods is passed on to any implementor of interfaces.
+6.  If two implemented interfaces provide (non-abstract) members with the same name, they are not automatically consumed by the implementor even if the types would be similar.
+In these cases, the implementor has to redefine the members in order to be aware of possible semantic differences. task:IDE-752[]
+
+There is currently no separate annotation to indicate that methods are implemented or overridden in order to solve conflicts.
+We always use the `@Override` annotation.
+
+
+.Method Consumption
+[example]
+--
+
+<<tab:methodConsumption>> shows simple examples of above rules.
+Assuming that `class C` extends super `class S` and implements interface `I1` and `I2`:
+
+[source,n4js]
+----
+class C extends S implements I1, I2 {...}
+----
+
+--
+
+The columns describe different scenarios in which a method (with same name) is defined in different classifiers.
+We assume that the defined methods are always non-abstract (i.e. have default implementations), non-private and have the same signature.
+The last row shows which method will be actually used in class `C`.
+If the method is defined in class `C`, and if this method is printed bold, then this means that the method is required to be defined in `C` in order to solve conflicts.
+
+[[tab:methodConsumption]]
+.Consumption of methods
+[cols="2,^1,^1,^1,^1,^1,^1"]
+|===
+h| Interface `I1` | _M~I1~_ | _M~I1~_ |_M~I1~_ | _M~I1~_ | _M~I1~_ | _M~I1~_
+h| Interface `I2` | | | _M~I2~_ | | _M~I2~_ | _M~I2~_
+h| class `S`| | | | _M~S~_  | _M~S~_ | _M~S~_
+h| class `C` | | _M~C~_ | *M~C~* | | |_M~C~_
+h| $\in C.members$ |_M~I1~_ | _M~C~_ | _M~C~_ | _M~S~_ | _M~S~_  |_M~C~_
+|===
+
+[[consuming-field-initializers]]
+Consuming Field Initializers ::
+Aside from the fields themselves, an implementor _always_ consumes the field initialization if the field is consumed – this is how the consumption is noticed at runtime.
+
+.Field and Field Initializer Consumption
+[example]
+--
+
+[source,n4js]
+----
+/* XPECT  output ~~~
+<==
+stdout:
+s: C , t: D ,u: I1 ,v: I2
+stderr:
+==>
+~~~ */
+
+interface I0 {
+    v: string = "I0";
+}
+
+interface I1 {
+    s: string = "I1";
+    t: string = "I1";
+    u: string = "I1";
+}
+
+interface I2 extends I1, I0 {
+    @Override
+    t: string = "I2";
+    @Override
+    v: string = "I2";
+}
+
+class C {
+    s: string = "C";
+}
+
+class D extends C implements I1, I2 {
+    @Override
+    t: string = "D";
+}
+
+var d = new D();
+
+console.log(
+    "s:", d.s, ", t:", d.t, ",u:", d.u, ",v:", d.v
+)
+----
+
+
+
+// TODO task:IDE-1236[] {review example in bundle}
+
+We expect the following output (for each field):
+
+* `d.s = "C"` : `s`: is inherited from `C`, so it is not consumed from `I1` (or `I2`).
+Consequently, the initializer of `s` in `C` is used.
+* `d.t = "D"`: `t` is defined in `D`, solving a conflict stemming from the definition of `t` in `I1` and `I2`. Thus, the initializer of `t` in `D` is used.
+* `d.u = "I1"` : `u` is only defined in `I1`, thus the initializer defined in `I1` is used.
+* `d.v = "I2"` : `v` is overridden in `I2`, so is the field initializer. This is why `d.v` must be assigned to `I2` and not `I0`.
+
+--
+

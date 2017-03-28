@@ -1,0 +1,159 @@
+
+= Annotations
+task:IDE-139[] task:IDE-260[] task:IDE-272[]
+////
+Copyright (c) 2017 NumberFour AG.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+  NumberFour AG - Initial API and implementation
+////
+
+[.language-n4js]
+== Introduction
+
+Annotations are used to further define meta properties of language elements such as types, variables and functions.
+These annotations are used by the compiler and validator to prohibit the developer from introducing constructs which are either not allowed or are unnecessary in certain contexts.
+
+Since annotations are to be processed by the compiler and the compilation cannot be extended by third-party users for security reasons, annotations cannot be defined by developers.
+Instead, the compiler comes with a predefined set of annotations which are summarized here.
+
+=== Syntax
+
+Annotations are used similarly as in Java (although new annotations cannot be defined by the user).
+They are formally defined as follows:
+
+[source,xtext]
+----
+Annotation:'@' AnnotationNoAtSign;
+ScriptAnnotation returns Annotation: '@@' AnnotationNoAtSign;
+
+AnnotationNoAtSign returns Annotation:
+    name=AnnotationName (=> '(' (args+=AnnotationArgument (',' args+=AnnotationArgument)*)? ')')?;
+
+AnnotationArgument:
+    LiteralAnnotationArgument | TypeRefAnnotationArgument
+;
+
+LiteralAnnotationArgument:
+    literal=Literal
+;
+
+TypeRefAnnotationArgument:
+    typeRef=TypeRef
+;
+----
+
+=== Properties
+
+
+We use the map notation for retrieving annotation properties and values from a list of annotations,
+for example $x.annotations[Required]$, or shorter $x@Required$.
+
+<<<
+
+=== Element-Specific Annotations
+
+The following annotations are element-specific and are explained in the corresponding sections:
+
+.Element-Specific Annotations
+[cols="m,m,a"]
+|===
+|Annotation ^| Element Types | Section
+
+|@Internal              |TypeDefiningElement, Member, Function, Export |<<_access-control>>
+|@Undefined             |Variable                                      |<<_undefined-type>>
+|@StringBased           |Enum                                          |<<_string-based-enums>>
+|@Final                 |Class, Member                                 |<<_final-methods>>
+|@Spec                  |FPar                                          |<<Req-IDE-59>>
+|@Override              |Method                                        |<<_redefinition-of-members>>
+|@Promisifiable         |Function                                      |<<_promisifiable-functions>>
+|@Promisify             |CallExpression                                |<<_promisifiable-functions>>
+|@This                  |Function                                      |<<_this-keyword>>
+|@N4JS                  |Class, Export Statement                       |<<_external-declarations>>
+|@IgnoreImplementation  |Script, ExportDeclaration, ExportableElement  |<<_external-declarations>>
+|@Global                |External Declaration                          |<<_global-definitions>>
+|@ProvidedByRuntime     |External Declaration                          |<<_runtime-definitions>>
+|@TestAPI               |TypeDefiningElement, Member                   |<<_test-support>>
+|@Polyfill              |Class                                         |<<_polyfill-definitions>>
+|@StaticPolyfill        |Class                                         |<<_static-polyfill-definitions>>
+|@StaticPolyfillAware   |Script                                        |<<_static-polyfill-definitions>>
+|@StaticPolyfillModule  |Script                                        |<<_static-polyfill-definitions>>
+|@Transient             |Field                                         | footnote:[intended for internal use only; will be removed]
+|===
+
+=== General Annotations
+
+
+==== IDEBUG
+
+`@IDEBUG` is an annotation similar to Java’s `@SuppressWarnings`.
+It changes the severity of an issue from an error to a warning so that code can be compiled regardless of validation errors.
+This is to be used for known IDE bugs only.
+
+=== Syntax [[idebug-syntax]]
+
+[source,xtext]
+----
+'@IDEBUG' '(' bugID = INT ',' errorMessage=STRING ')'
+----
+
+The annotation is defined transitively and repeatable on script, type declaration, function and method level.
+
+==== Semantics
+
+This annotation will cause errors issued in the scope of the annotation (in the defined script, type, or method) to be transformed to warnings if their message text is similar to the $errorMessage$ text.
+If $errorMessage$ ends with `…` (three dots as a single character, created by Eclipse to abbreviate messages), then the error’s message text must start with the specified text.
+
+If no matching error is found, the annotation itself will issue an error.
+
+[[ex:IDEBUG]]
+.IDEBUG Example
+====
+In the following code snippet, two errors are to be transformed to warnings.
+
+[source,n4js]
+----
+export class TestDataBridge with IModuleTest {
+    @IDEBUG(166, "{function(number):void} is not a subtype of {function(T):void}.") // <1>
+    @IDEBUG(91, "Incorrect number of arguments: expected 1, got 2.") // <2>
+    @Override public run(): void {
+        var foo = new Foo(),
+            cb = function(val: number): void {},
+            db = DataBridge.<number>bind(foo, "bar");
+        db.add(cb); // <3>
+        Assert.isTrue(called);
+    }
+}
+----
+<1> The annotation transforms the error `{function(number):void} is not a subtype of {function(T):void}` into a warning with the following text:
++
+[source,n4js]
+----
+IDEBUG-166: {function(number):void} is not a subtype of {function(T):void}.
+----
++
+where `IDEBUG-166` refers to the corresponding bug report, that is https://github.com/NumberFour/n4js/issues/166[IDEBUG-166].
+<2> This annotation was proposed as a workaround for https://github.com/NumberFour/n4js/issues/91[IDEBUG-91] which has been fixed. +
+No error message is produced and an error will be issued on this line instead:
++
+[source,n4js]
+----
+No matching error found, apparently bug IDEBUG-91 has been fixed or does not occur here.
+----
+<3> The first error occurs since there is a bug in the IDE type system (as of writing this example) where type arguments are not correctly bound in the case of function expressions used as callback methods.
+
+
+====
+
+==== Suppress Warnings
+
+TIP: *version>0.5* - This is not part of version 0.3
+
+[.language-n4js]
+== Declaration of Annotations
+
+TIP: *version>0.5* - Not implemented in version 0.3 task:IDE-139[]

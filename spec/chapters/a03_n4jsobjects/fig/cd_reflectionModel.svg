@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+
+<!-- Page 1 -->
+<svg x="0" y="0" width="1239" height="1031" viewBox="0 0 1239 1031" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+style="display: block;margin-left: auto;margin-right: auto;">
+<defs>
+
+<style type="text/css"><![CDATA[
+
+.g3_1{
+fill: none;
+stroke: #000000;
+stroke-width: 2;
+stroke-linecap: butt;
+stroke-linejoin: miter;
+}
+.g2_1{
+fill: none;
+stroke: #000000;
+stroke-width: 2;
+stroke-linecap: round;
+stroke-linejoin: round;
+}
+.g4_1{
+}
+.g1_1{
+fill: #FFFFFF;
+}
+
+.s4_1{
+font-size: 18.33px;
+font-family: Helvetica-Bold_c;
+fill: #000000;
+}
+.s7_1{
+font-size: 15.28px;
+font-family: Helvetica_9;
+fill: #000000;
+}
+.s8_1{
+font-size: 12.22px;
+font-family: Helvetica_9;
+fill: #000000;
+}
+.s5_1{
+font-size: 16.81px;
+font-family: Helvetica_9;
+fill: #000000;
+}
+.s10_1{
+font-size: 10.69px;
+font-family: Helvetica-Bold_c;
+fill: #F0170C;
+}
+.s3_1{
+font-size: 16.81px;
+font-family: Helvetica-Oblique_a;
+fill: #000000;
+}
+.s6_1{
+font-size: 10.69px;
+font-family: Helvetica-Oblique_a;
+fill: #000000;
+}
+.s2_1{
+font-size: 18.33px;
+font-family: Helvetica-BoldOblique_b;
+fill: #000000;
+}
+.s12_1{
+font-size: 18.33px;
+font-family: Helvetica_9;
+fill: #000000;
+}
+.s1_1{
+font-size: 13.75px;
+font-family: Helvetica_9;
+fill: #000000;
+}
+.s9_1{
+font-size: 18.33px;
+font-family: Helvetica-BoldOblique_b;
+fill: #0CB32B;
+}
+.s11_1{
+font-size: 18.33px;
+font-family: Helvetica-Bold_c;
+fill: #F0170C;
+}
+
+]]></style>
+
+</defs>
+<path d="M0,0
+L0,1031
+L1239,1031
+L1239,0 Z " 
+fill="#FFFFFF" stroke="none" />
+<path d="M582,628l418,0l0,48l-418,0Z" class="g1_1" />
+<path d="M582,628l418,0l0,48l-418,0Z" class="g2_1" />
+<text 
+x="590" 
+y="649" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s1_1"
+>+ members/methods/dataFields-WithAnnotation(name: String,</text>
+
+<text 
+x="636" 
+y="666" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-0.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s1_1"
+>transitive: boolean?, static: boolean?): Array&lt;N4Member&gt;</text>
+
+<path d="M582,592l418,0l0,36l-418,0Z" class="g1_1" />
+<path d="M582,592l418,0l0,36l-418,0Z" class="g2_1" />
+<path d="M582,556l418,0l0,36l-418,0Z" class="g1_1" />
+<path d="M582,556l418,0l0,36l-418,0Z" class="g2_1" />
+<text 
+x="738" 
+y="580" 
+dx="0,0,0,0,0,0,0,0,0,0,0" 
+class="s2_1"
+>N4Classiﬁer</text>
+
+<path d="M233,632l169,0l0,35l-169,0Z" class="g1_1" />
+<path d="M233,632l169,0l0,35l-169,0Z" class="g2_1" />
+<path d="M233,597l169,0l0,35l-169,0Z" class="g1_1" />
+<path d="M233,597l169,0l0,35l-169,0Z" class="g2_1" />
+<text 
+x="241" 
+y="620" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s3_1"
+>+ isStatic: boolean</text>
+
+<path d="M233,560l169,0l0,37l-169,0Z" class="g1_1" />
+<path d="M233,560l169,0l0,37l-169,0Z" class="g2_1" />
+<text 
+x="271" 
+y="585" 
+dx="0,0,0,0,0,0,0,0" 
+class="s2_1"
+>N4Member</text>
+
+<path d="M190,820l130,0l0,35l-130,0Z" class="g1_1" />
+<path d="M190,820l130,0l0,35l-130,0Z" class="g2_1" />
+<path d="M190,785l130,0l0,35l-130,0Z" class="g1_1" />
+<path d="M190,785l130,0l0,35l-130,0Z" class="g2_1" />
+<path d="M190,748l130,0l0,37l-130,0Z" class="g1_1" />
+<path d="M190,748l130,0l0,37l-130,0Z" class="g2_1" />
+<text 
+x="211" 
+y="773" 
+dx="0,0,0,0,0,0,0,0" 
+class="s4_1"
+>N4Method</text>
+
+<path d="M39,102l459,0l0,35L39,137Z" class="g1_1" />
+<path d="M39,102l459,0l0,35L39,137Z" class="g2_1" />
+<text 
+x="52" 
+y="125" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-0.9,0,0,0,0,0,0,0,0" 
+class="s5_1"
+>+ getDetail(index: number): union{string,number,boolean}</text>
+
+<path d="M39,47l459,0l0,55L39,102Z" class="g1_1" />
+<path d="M39,47l459,0l0,55L39,102Z" class="g2_1" />
+<text 
+x="47" 
+y="70" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s5_1"
+>+ name: String</text>
+
+<text 
+x="47" 
+y="90" 
+dx="0,0,-0.9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-0.9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s5_1"
+>- Array&lt;union{string,number,boolean}&gt; details</text>
+
+<path d="M39,10l459,0l0,37L39,47Z" class="g1_1" />
+<path d="M39,10l459,0l0,37L39,47Z" class="g2_1" />
+<text 
+x="170" 
+y="35" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s4_1"
+>N4Annotation </text>
+
+<text 
+x="295" 
+y="35" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s6_1"
+>extends Object</text>
+
+<path d="M1084,603l151,0l0,55l-151,0Z" class="g1_1" />
+<path d="M1084,603l151,0l0,55l-151,0Z" class="g2_1" />
+<path d="M1092,628l51,0" class="g3_1" />
+<path d="M1149,628l46,0" class="g3_1" />
+<text 
+x="1092" 
+y="626" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s5_1"
+>valueByName(Stri</text>
+
+<text 
+x="1092" 
+y="646" 
+dx="0,0,0,0,0,0,0,0" 
+class="s5_1"
+>ng name)</text>
+
+<path d="M1084,568l151,0l0,35l-151,0Z" class="g1_1" />
+<path d="M1084,568l151,0l0,35l-151,0Z" class="g2_1" />
+<path d="M1084,519l151,0l0,49l-151,0Z" class="g1_1" />
+<path d="M1084,519l151,0l0,49l-151,0Z" class="g2_1" />
+<text 
+x="1123" 
+y="544" 
+dx="0,0,0,0,0,0" 
+class="s4_1"
+>N4Enum</text>
+
+<text 
+x="1124" 
+y="557" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s6_1"
+>extends Object</text>
+
+<path d="M568.6,576.6l-166.4,2.1" class="g2_1" />
+<path d="M580.8,576.4l-6.1,-4.5l-6.1,4.7l6.2,4.5Z" class="g4_1" />
+<path d="M580.8,576.4l-6.1,-4.5l-6.1,4.7l6.2,4.5Z" class="g3_1" />
+<text 
+x="423" 
+y="592" 
+dx="0" 
+class="s1_1"
+>*</text>
+
+<text 
+x="550" 
+y="569" 
+dx="0" 
+class="s1_1"
+>1</text>
+
+<text 
+x="533" 
+y="592" 
+dx="0,0,0,0,0" 
+class="s7_1"
+>owner</text>
+
+<text 
+x="403" 
+y="571" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s7_1"
+>ownedMembers</text>
+
+<path d="M277,748l0,-24l0,-16l40,0l0,-17l0,-3" class="g2_1" />
+<path d="M318,670.1l-10.7,18.3l21.4,0Z" class="g3_1" />
+<path d="M624,74l335,0l0,71l-335,0Z" class="g1_1" />
+<path d="M624,74l335,0l0,71l-335,0Z" class="g2_1" />
+<text 
+x="632" 
+y="97" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s7_1"
+>+hasAnnotation(string): boolean</text>
+
+<text 
+x="632" 
+y="116" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s7_1"
+>+anyAnnotation(string): N4Annotation</text>
+
+<text 
+x="632" 
+y="134" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-0.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s7_1"
+>+allAnnotations(string): Array&lt;N4Annotation&gt;</text>
+
+<path d="M624,39l335,0l0,35L624,74Z" class="g1_1" />
+<path d="M624,39l335,0l0,35L624,74Z" class="g2_1" />
+<text 
+x="632" 
+y="62" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s3_1"
+>origin: String</text>
+
+<path d="M624,3L959,3l0,36L624,39Z" class="g1_1" />
+<path d="M624,3L959,3l0,36L624,39Z" class="g2_1" />
+<text 
+x="706" 
+y="27" 
+dx="0,0,0,0,0,0,0,0,0,0" 
+class="s2_1"
+>N4Element </text>
+
+<text 
+x="806" 
+y="27" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s6_1"
+>extends Object</text>
+
+<path d="M610,74L498,74" class="g2_1" />
+<path d="M622.6,74.1l-6.1,-4.6l-6.1,4.6l6.1,4.6Z" class="g4_1" />
+<path d="M622.6,74.1l-6.1,-4.6l-6.1,4.6l6.1,4.6Z" class="g3_1" />
+<text 
+x="512" 
+y="88" 
+dx="0" 
+class="s1_1"
+>*</text>
+
+<text 
+x="601" 
+y="67" 
+dx="0" 
+class="s1_1"
+>1</text>
+
+<text 
+x="577" 
+y="95" 
+dx="0,0,0,0,0,0" 
+class="s7_1"
+>target</text>
+
+<text 
+x="505" 
+y="71" 
+dx="0,0,0,0,0,0,0,0,0,0,0" 
+class="s7_1"
+>annotations</text>
+
+<path d="M791.7,556.3l0,-23.7l0.1,-7.9l0,-3.1" class="g2_1" />
+<path d="M791.8,503.3l-10.7,18.3l21.4,0Z" class="g3_1" />
+<path d="M333,820l130,0l0,35l-130,0Z" class="g1_1" />
+<path d="M333,820l130,0l0,35l-130,0Z" class="g2_1" />
+<path d="M333,785l130,0l0,35l-130,0Z" class="g1_1" />
+<path d="M333,785l130,0l0,35l-130,0Z" class="g2_1" />
+<path d="M333,748l130,0l0,37l-130,0Z" class="g1_1" />
+<path d="M333,748l130,0l0,37l-130,0Z" class="g2_1" />
+<text 
+x="365" 
+y="773" 
+dx="0,0,0,0,0,0,0" 
+class="s4_1"
+>N4Field</text>
+
+<path d="M365,748l0,-24l0,-16l-48,0l0,-17l0,-3" class="g2_1" />
+<path d="M318,670.1l-10.7,18.3l21.4,0Z" class="g3_1" />
+<path d="M1087.7,411.9l-23.7,0l-131.9,0l-3,0" class="g2_1" />
+<path d="M910.7,411.9l18.4,10.7l0,-21.4Z" class="g3_1" />
+<path d="M648,820l130,0l0,35l-130,0Z" class="g1_1" />
+<path d="M648,820l130,0l0,35l-130,0Z" class="g2_1" />
+<path d="M648,785l130,0l0,35l-130,0Z" class="g1_1" />
+<path d="M648,785l130,0l0,35l-130,0Z" class="g2_1" />
+<path d="M648,748l130,0l0,37l-130,0Z" class="g1_1" />
+<path d="M648,748l130,0l0,37l-130,0Z" class="g2_1" />
+<text 
+x="677" 
+y="773" 
+dx="0,0,0,0,0,0,0" 
+class="s4_1"
+>N4Class</text>
+
+<path d="M789,820l130,0l0,35l-130,0Z" class="g1_1" />
+<path d="M789,820l130,0l0,35l-130,0Z" class="g2_1" />
+<path d="M789,785l130,0l0,35l-130,0Z" class="g1_1" />
+<path d="M789,785l130,0l0,35l-130,0Z" class="g2_1" />
+<path d="M789,748l130,0l0,37l-130,0Z" class="g1_1" />
+<path d="M789,748l130,0l0,37l-130,0Z" class="g2_1" />
+<text 
+x="804" 
+y="773" 
+dx="0,0,0,0,0,0,0,0,0,0,0" 
+class="s4_1"
+>N4Interface</text>
+
+<path d="M1070,612l-4,0l-30,0l0,77l99,0l0,-13l0,-3" class="g2_1" />
+<path d="M1135,661.6l0,12.2m-4.6,0l4.6,-12.2l4.6,12.2" class="g3_1" />
+<path d="M1082.7,612.3l-6.1,-4.6l-6.1,4.6l6.1,4.6Z" class="g4_1" />
+<path d="M1082.7,612.3l-6.1,-4.6l-6.1,4.6l6.1,4.6Z" class="g3_1" />
+<text 
+x="1128" 
+y="703" 
+dx="0" 
+class="s1_1"
+>*</text>
+
+<text 
+x="1041" 
+y="605" 
+dx="0" 
+class="s1_1"
+>1</text>
+
+<text 
+x="1095" 
+y="686" 
+dx="0,0,0,0,0,0" 
+class="s7_1"
+>values</text>
+
+<path d="M854,748l0,-24l0,-12l-63,0l0,-12l0,-3" class="g2_1" />
+<path d="M791.7,679.3L781,697.6l21.4,0Z" class="g3_1" />
+<path d="M713,748l0,-24l0,-12l78,0l0,-12l0,-3" class="g2_1" />
+<path d="M791.7,679.3L781,697.6l21.4,0Z" class="g3_1" />
+<path d="M675,465l233,0l0,35l-233,0Z" class="g1_1" />
+<path d="M675,465l233,0l0,35l-233,0Z" class="g2_1" />
+<path d="M682,491l27,0" class="g3_1" />
+<text 
+x="682" 
+y="488" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0,-0.9,0,0" 
+class="s3_1"
+>+ of(any): N4Type</text>
+
+<path d="M675,430l233,0l0,35l-233,0Z" class="g1_1" />
+<path d="M675,430l233,0l0,35l-233,0Z" class="g2_1" />
+<text 
+x="682" 
+y="453" 
+dx="0,0,0,0,0,0,0,0,0,0,0" 
+class="s3_1"
+>fqn: String</text>
+
+<path d="M675,394l233,0l0,36l-233,0Z" class="g1_1" />
+<path d="M675,394l233,0l0,36l-233,0Z" class="g2_1" />
+<text 
+x="759" 
+y="418" 
+dx="0,0,0,-1.4,0,0" 
+class="s2_1"
+>N4Type</text>
+
+<path d="M791,394l0,-24l0,-40l0,-4" class="g2_1" />
+<path d="M791.8,308.6l-10.7,18.3l21.4,0Z" class="g3_1" />
+<path d="M317,560l0,-23l0,-179l474,0l0,-28l0,-4" class="g2_1" />
+<path d="M791.8,308.6l-10.7,18.3l21.4,0Z" class="g3_1" />
+<path d="M410,978l130,0l0,46l-130,0Z" class="g1_1" />
+<path d="M410,978l130,0l0,46l-130,0Z" class="g2_1" />
+<text 
+x="418" 
+y="998" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s8_1"
+>+ isGetter(): boolean</text>
+
+<text 
+x="418" 
+y="1013" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s8_1"
+>+ isSetter(): boolean</text>
+
+<path d="M410,947l130,0l0,31l-130,0Z" class="g1_1" />
+<path d="M410,947l130,0l0,31l-130,0Z" class="g2_1" />
+<path d="M410,911l130,0l0,36l-130,0Z" class="g1_1" />
+<path d="M410,911l130,0l0,36l-130,0Z" class="g2_1" />
+<text 
+x="422" 
+y="935" 
+dx="0,0,0,0,0,0,0,0,0,0" 
+class="s4_1"
+>N4Accessor</text>
+
+<path d="M475,911l0,-24l0,-4l-77,0l0,-4l0,-3" class="g2_1" />
+<path d="M398.4,857.9l-10.7,18.3l21.4,0Z" class="g3_1" />
+<path d="M700,271l183,0l0,35l-183,0Z" class="g1_1" />
+<path d="M700,271l183,0l0,35l-183,0Z" class="g2_1" />
+<path d="M700,236l183,0l0,35l-183,0Z" class="g1_1" />
+<path d="M700,236l183,0l0,35l-183,0Z" class="g2_1" />
+<text 
+x="707" 
+y="258" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s3_1"
+>name: String</text>
+
+<path d="M700,199l183,0l0,37l-183,0Z" class="g1_1" />
+<path d="M700,199l183,0l0,37l-183,0Z" class="g2_1" />
+<text 
+x="713" 
+y="223" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s2_1"
+>N4NamedElement</text>
+
+<path d="M791.8,199.4l0,-23.7l0.3,-6.9l0,-3" class="g2_1" />
+<path d="M792.1,147.4l-10.7,18.4l21.4,0Z" class="g3_1" />
+<path d="M258,969l130,0l0,35l-130,0Z" class="g1_1" />
+<path d="M258,969l130,0l0,35l-130,0Z" class="g2_1" />
+<path d="M258,947l130,0l0,22l-130,0Z" class="g1_1" />
+<path d="M258,947l130,0l0,22l-130,0Z" class="g2_1" />
+<path d="M258,911l130,0l0,36l-130,0Z" class="g1_1" />
+<path d="M258,911l130,0l0,36l-130,0Z" class="g2_1" />
+<text 
+x="270" 
+y="935" 
+dx="0,0,0,0,0,0,0,0,0,0,0" 
+class="s4_1"
+>N4DataField</text>
+
+<path d="M323,911l0,-24l0,-4l75,0l0,-4l0,-3" class="g2_1" />
+<path d="M398.4,857.9l-10.7,18.3l21.4,0Z" class="g3_1" />
+<path d="M651,992l124,0l0,35l-124,0Z" class="g1_1" />
+<path d="M651,992l124,0l0,35l-124,0Z" class="g2_1" />
+<path d="M651,957l124,0l0,35l-124,0Z" class="g1_1" />
+<path d="M651,957l124,0l0,35l-124,0Z" class="g2_1" />
+<path d="M651,908l124,0l0,49l-124,0Z" class="g1_1" />
+<path d="M651,908l124,0l0,49l-124,0Z" class="g2_1" />
+<text 
+x="673" 
+y="932" 
+dx="0,0,0,0,0,0,0,0" 
+class="s9_1"
+>N4Object</text>
+
+<text 
+x="677" 
+y="946" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s6_1"
+>extends Object</text>
+
+<path d="M713.4,908.5l0.2,-37.8" class="g2_1" />
+<path d="M713.6,858.5l0,12.2m-4.6,0l4.6,-12.2l4.6,12.2" class="g3_1" />
+<path d="M720,873l45,0" class="g3_1" />
+<text 
+x="720" 
+y="871" 
+dx="0,0,0,0,0,0,0" 
+class="s1_1"
+>n4class</text>
+
+<text 
+x="697" 
+y="870" 
+dx="0" 
+class="s8_1"
+>1</text>
+
+<path d="M1087,430l145,0l0,35l-145,0Z" class="g1_1" />
+<path d="M1087,430l145,0l0,35l-145,0Z" class="g2_1" />
+<path d="M1087,395l145,0l0,35l-145,0Z" class="g1_1" />
+<path d="M1087,395l145,0l0,35l-145,0Z" class="g2_1" />
+<path d="M1087,358l145,0l0,37l-145,0Z" class="g1_1" />
+<path d="M1087,358l145,0l0,37l-145,0Z" class="g2_1" />
+<text 
+x="1102" 
+y="382" 
+dx="0,0,0,0,0,0,0,-1.4,0,0" 
+class="s4_1"
+>N4EnumType</text>
+
+<path d="M1160.2,519.6l0,-39.1" class="g2_1" />
+<path d="M1160.2,468.3l0,12.2m-4.6,0l4.6,-12.2l4.6,12.2" class="g3_1" />
+<path d="M1073,484l57,0" class="g3_1" />
+<path d="M1135,484l2,0" class="g3_1" />
+<path d="M1140,484l11,0" class="g3_1" />
+<text 
+x="1073" 
+y="483" 
+dx="0,0,0,0,0,0,0,-0.8,0,0" 
+class="s1_1"
+>n4enumType</text>
+
+<text 
+x="1169" 
+y="480" 
+dx="0" 
+class="s8_1"
+>1</text>
+
+<path d="M3,813l123,0l0,49L3,862Z" class="g1_1" />
+<path d="M3,813l123,0l0,49L3,862Z" class="g2_1" />
+<text 
+x="27" 
+y="830" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s10_1"
+>«ECMAScript»</text>
+
+<text 
+x="26" 
+y="850" 
+dx="0,0,0,0,0,0,0,0" 
+class="s11_1"
+>Function</text>
+
+<path d="M126.5,838.3l49.3,-0.4" class="g2_1" />
+<path d="M188.1,837.8l-12.3,0.1m0,-4.6l12.3,4.5l-12.2,4.7" class="g3_1" />
+<text 
+x="128" 
+y="855" 
+dx="0,0,0,0,0,0,0,0" 
+class="s1_1"
+>n4member</text>
+
+<text 
+x="175" 
+y="830" 
+dx="0" 
+class="s8_1"
+>1</text>
+
+<path d="M190,766l-18,0l-87,0l0,29l0,3" class="g2_1" />
+<path d="M85.4,811l0,-12.2m4.5,0L85.4,811L80.8,798.8" class="g3_1" />
+<path d="M99,805l53,0" class="g3_1" />
+<text 
+x="95" 
+y="803" 
+dx="0,0,0,0,0,0,0,0,0,0" 
+class="s1_1"
+>jsfunction</text>
+
+<text 
+x="69" 
+y="800" 
+dx="0" 
+class="s8_1"
+>1</text>
+
+<text 
+x="172" 
+y="781" 
+dx="0" 
+class="s12_1"
+>*</text>
+
+<path d="M582.7,636.8L417.3,632.5" class="g2_1" />
+<path d="M405.1,632.2l12.2,0.3m-0.1,4.6l-12.1,-4.9l12.3,-4.3" class="g3_1" />
+<text 
+x="424" 
+y="647" 
+dx="0" 
+class="s1_1"
+>*</text>
+
+<text 
+x="552" 
+y="633" 
+dx="0" 
+class="s1_1"
+>*</text>
+
+<text 
+x="411" 
+y="629" 
+dx="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" 
+class="s7_1"
+>consumedMembers</text>
+
+
+
+<!-- Any embedded fonts defined here -->
+<style type="text/css" ><![CDATA[
+
+@font-face {
+	font-family: Helvetica-Bold_c;
+	src: url("fonts/Helvetica-Bold_c.woff") format("woff");
+}
+
+@font-face {
+	font-family: Helvetica-BoldOblique_b;
+	src: url("fonts/Helvetica-BoldOblique_b.woff") format("woff");
+}
+
+@font-face {
+	font-family: Helvetica_9;
+	src: url("fonts/Helvetica_9.woff") format("woff");
+}
+
+@font-face {
+	font-family: Helvetica-Oblique_a;
+	src: url("fonts/Helvetica-Oblique_a.woff") format("woff");
+}
+
+]]></style>
+
+</svg>

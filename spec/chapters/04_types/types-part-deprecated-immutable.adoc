@@ -1,0 +1,232 @@
+= Mutable and Immutable Types
+////
+Copyright (c) 2017 NumberFour AG.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+  NumberFour AG - Initial API and implementation
+////
+
+
+The N4 platform distinguishes between mutable and immutable types for
+the N4 data model. Every data object (DO) in the N4 data model exists as
+a mutable and an immutable type. The root class of the data object model
+hierarchy is marked with the special JSDoc tag .
+
+To distinguish both families of types in type expressions, we currently
+use the same syntax as for parameterized types:
+
+* is a type constructor that returns the immutable version of a type T.
+* is a type constructor that returns the mutable version of a type T.
+
+The type conformance for data object types $S$ and
+$T$ is defined as follows:
+
+1.  $S <: T =>
+\\ Immutable<S> <: Immutable<T>
+\\ \wedge Mutable<S> <: Mutable<T>$
+2.  $Immutable<T> <: T \wedge Mutable<T> <: T$
+3.  To convert an immutable object into a mutable object, special
+conversion methods must be used. These methods are declared like normal
+methods, but they use the the mutable and immutable type constructors in
+their declaration (for an example, see ).
+
+The operator called on a DO always returns a mutable version of the DO.
+
+For declaring methods for $m$ and $i$,
+additional JSDoc tags are used:
+
+* marks a method for inclusion in the mutable type family
+* marks a method for inclusion in the mutable type family
+* on a methods allows to define an alias name for the member. In the
+example below the method has as alias. Only the alias should be visible
+to external developers.
++
+[source]
+----
+methods: {
+    /**
+     * Creates a mutable copy of the object.
+     *
+     * @return {Mutable<This>}  A mutable copy of this object.
+     * @n4.data.member.immutable
+     * @n4.data.member.alias createMutableCopy
+     */
+    $createMutableCopy: function() {
+[source]
+----
+
+[[sec:Command_Methods]]
+== Command Methods
+
+
+Command methods are declared for specific (generated) data model types.
+Command methods on classes are declared with a special syntax for the
+has attribute builder:
+
+[source]
+----
+CommandMethodInClassDecl:   JSDoc(~\JSTagDef{n4.data.object.commands}~)
+                            'cmd_' $group$ = CommandGroup ':' '{'
+                                'init:' 'function' '('')' '{' 'return' '{'
+                                    $commandMethods$ += Method*
+                                    '}'
+                                '}'
+                            '}'
+enum CommandGroup:          'batch' | 'delete' | 'other' | 'ref';
+----
+
+Command methods on classes can be declared non-static or statically
+inside a builder. The following snippet shows an example:
+
+[source]
+----
+        has: {
+
+
+            /** @n4.data.object.commands */
+            $cmd_other: {
+                init: function() {
+                    return {
+                /**
+                 * Remove (disable) a discount.
+                 *
+                 * @final
+                 * @public
+                 * @this {n4/metacompany/discounts/Discount}
+                 * @return {n4/async/Promise}
+                 */
+                remove: function() {
+----
+
+Command methods on roles are declared differently and not inside the has
+builder. They can only be declared as non-static. The following syntax
+is used:
+
+[source]
+----
+CommandsBlock:              'var' 'commands' '=' '{'
+                                CS('cmd\_' $group$ = CommandGroup ':' '{'
+                                    $commandMethods$ += Method*
+                                '}')
+                            '}' ';';
+
+CommandMethodInRoleDecl:        JSDoc(~\JSTagDef{n4.data.augmentation.commands}~)
+                            'module.exports.' 'cmd\_' $group$ = CommandGroup '=' 'commands' '[' '"''cmd\_' CommandGroup ']' ';'
+----
+
+This snippet shows an example:
+
+[source]
+----
+var commands = {
+            $cmd_other: {
+                /**
+                 * TODO: add documentation
+                 *
+                 * @final
+                 * @public
+                 * @this {n4/coreservices/myplace/Likeable}
+                 * @return {n4/async/Promise}
+                 */
+                like: function() {
+                    ...
+                }
+            }
+
+};
+
+/** @n4.data.augmentation.commands */
+module.exports.$cmd_other = commands["$cmd_other"];
+----
+
+A command method belongs to one of the following groups:
+
+delete::
+  delete command methods
+batch::
+  command methods that work on command batches
+ref::
+  command methods that work on data object references
+other::
+  all other command methods
+
+Logically there is another command method group **create**, which
+contains all commands for creation of commands. But these command
+methods are declared with the normal and are then annotated with so that
+they are only available on mutable types.
+
+The command methods of groups _delete_ and _other_ are available on the
+mutable version of the correspondding type. For the other groups,
+special pragmas are used to enable the commands methods on certain
+types. The pragma enables adding command methods to the annotated type
+and the pragma add the command methods of group to the annotated type.
+The following example shows how to use these pragmas:
+
+[source]
+----
+/**
+ * @pragma metatype TypeParameterCommands
+ * @pragma class commandType:$cmd_ref
+ */
+DataObjectRef = Class({
+...
+});
+----
+
+This then collects the commands of all PDO types from the corresponding
+group and adds them to the annotated type.
+
+[[sec:Static_Attributes]]
+=== Class Properties
+
+
+An additional JSDoc tag is used to describe class properties (static
+attributes) for value object with named instances. The following syntax
+is used:
+
+[source]
+----
+var UnitOfLength = module.exports;
+/** @n4.class.property */
+UnitOfLength.KILOMETERS = UnitOfLength.my.KILOMETERS = new UnitOfLength({name:"kilometers",baseUnit:"millimeters",symbol:"km",multiplier:goog.math.Long.fromString("1000000000000")});
+----
+
+This then allows using the class properties as static attributes of the
+class.
+
+[[sec:Type_Constructors]]
+== Type Constructors
+
+
+We now describe how to construct mutable and immutable versions of a
+data object type . These definitions are recursively defined, because a
+data object type typically contains or references other data object
+types.
+
+We first define how to construct a from a data object type :
+
+* Copy every attribute $a$ declared by to a new attribute
+$a_i$ with $a_i.type := Immutable<a.type>$.
+* Copy every command method $m$ from the groups and defined
+for .
+* Copy every method marked with and rename it if an alias is defined
+with .
+* Set the super type of to .
+* For every consumed role $r$ of create a new role
+$r_i := Immutable<r.type>$ and add it to the consumed roles
+of .
+
+We them define how to construct a from a data object type :
+
+* Copy every attribute $a$ declared by to a new attribute
+$a_i with a_i.type := Immutable<a.type> and a_i.readOnly := false$.
+* Copy every method marked with and rename it if an alias is defined
+with .
+* Set the super type of to .
+* For every consumed role $r$ of create a new role
+$r_i := Mutable<r.type>$ and add it to the consumed roles of
+.

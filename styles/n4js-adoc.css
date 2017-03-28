@@ -245,7 +245,7 @@ strong, b { font-weight: 600; line-height: inherit; }
 
 small { font-size: 60%; line-height: inherit; }
 
-code { font-family: Fira Mono, Consolas, "Liberation Mono", Courier, monospace; font-weight: bold; color: #7f0a0c; }
+code { font-family: Fira Mono, Consolas, "Liberation Mono", Courier, monospace;  }
 
 /* Lists */
 ul, ol, dl {  list-style-position: outside; font-family: ITC Officina Sans W01, sans-serif; padding-left: 0rem; list-style-type: none}
@@ -612,7 +612,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-si
 
 .listingblock code[data-lang]:before { display: none; content: attr(data-lang); position: absolute; font-size: 0.75em; top: 0.425rem; right: 0.5rem; line-height: 1; text-transform: uppercase; color: #999; padding-right: 2rem; }
 
-.listingblock:hover code[data-lang]:before { display: block; }
+.listingblock:hover code[data-lang]:before { display: none; }
 
 .listingblock.terminal pre .command:before { content: attr(data-prompt); padding-right: 0.5em; color: #999; }
 

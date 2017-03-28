@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>N4JS Userguides</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../res/styles/n4js-adoc.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -29,6 +30,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../scripts/nav-mobile.js"></script>
+
+<!-- ************* Prism.js Syntax Highlighter ******-->
+<link href="../styles/prism.min.css" rel="stylesheet"/>
+<script src="../scripts/prism.js"></script>
 
 <!-- ****************** Analytics ****************** -->
 <script>
@@ -67,7 +72,8 @@
   </li>
   <li><a href="index.html">Documentation</a>
     <ul>
-      <li><a href="n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="npm-export-guide.html">Export as npm</a></li>
       <li><a href="tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -75,8 +81,8 @@
   <li><a href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -84,7 +90,7 @@
 <button id="tocbutton">TOC</button>
 
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language &amp; IDE</p></div>
+<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language & IDE</p></div>
 <div class="mobile-navbar">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
@@ -102,7 +108,8 @@
   </li>
   <li><a class="scroll" href="index.html">Documentation</a>
     <ul>
-      <li><a href="n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="npm-export-guide.html">Export as npm</a></li>
       <li><a href="tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -110,8 +117,8 @@
   <li><a class="scroll" href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -121,15 +128,35 @@
 <div id="header">
 </div>
 <div id="content">
-<h1 id="_n4js-userguides" class="sect0"><a class="link" href="#_n4js-userguides">N4JS Userguides</a></h1>
+<h1 id="_n4js_userguides" class="sect0"><a class="link" href="#_n4js_userguides">N4JS Userguides</a></h1>
+<div class="openblock">
+<div class="content">
+All the resources you need to begin type safe development with the N4JS IDE
+</div>
+</div>
 <div class="sect1">
 <h2 id="_index"><a class="link" href="#_index">Index</a></h2>
 <div class="sectionbody">
+<hr>
 <div class="paragraph">
-<div class="title">All the resources you need to begin type safe development with the N4JS IDE</div>
+<p><strong><a id="language-spec"></a>N4JS Specification</strong></p>
+</div>
+<div class="paragraph">
+<p>For a complete reference of the N4JS Language, the Specification
+is available at the following location:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="paragraph">
 <p><strong><a id="ide-setup"></a>IDE Setup &amp; HelloWorld!</strong></p>
 </div>
-<div id="ide-setup" class="paragraph">
+<div class="paragraph">
 <p>This short introduction covers the basics of getting up and running with the
 N4JS IDE. From installation to running HelloWorld!, quickly learn about new features
 of the N4JS IDE, how to create a new project, manage workspaces and begin development!</p>
@@ -175,26 +202,12 @@ New features of the N4JS IDE are introduced along the way such as <strong>module
 </li>
 </ul>
 </div>
-<hr>
-<div class="paragraph">
-<p><strong><a id="language-spec"></a>N4JS Specification</strong></p>
-</div>
-<div class="paragraph">
-<p>For a complete reference of the N4JS Language, the Specification
-is available to download as a pdf from the following link:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://n4js.s3-website.eu-central-1.amazonaws.com/specs/N4JSSpec.pdf">N4JS Language Specification (pdf)</a></p>
-</li>
-</ul>
-</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2017-03-14 10:23:54 CET
 </div>
 </div>
 <div class="social">
@@ -240,8 +253,5 @@ $('html, body').animate({
 return false;
 });
 </script>
-<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
-<script src="../scripts/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>

@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>N4JS Language and IDE Features</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../res/styles/n4js-adoc.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -29,6 +30,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../scripts/nav-mobile.js"></script>
+
+<!-- ************* Prism.js Syntax Highlighter ******-->
+<link href="../styles/prism.min.css" rel="stylesheet"/>
+<script src="../scripts/prism.js"></script>
 
 <!-- ****************** Analytics ****************** -->
 <script>
@@ -67,7 +72,8 @@
   </li>
   <li><a href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -75,15 +81,15 @@
   <li><a href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
 </div>
 <button id="tocbutton">TOC</button>
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language &amp; IDE</p></div>
+<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language & IDE</p></div>
 <div class="mobile-banner">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
@@ -101,7 +107,8 @@
   </li>
   <li><a class="scroll" href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -109,8 +116,8 @@
   <li><a class="scroll" href="../faq/index.html">FAQ</a>
     <ul>
       <li><a  href="../faq/index.html">FAQ</a></li>
-      <li><a  href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a  href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -120,33 +127,10 @@
 <div id="header">
 </div>
 <div id="content">
-<h1 id="_n4js-language-and-ide-features" class="sect0"><a class="link" href="#_n4js-language-and-ide-features">N4JS Language and IDE Features</a></h1>
-<div class="openblock partintro">
+<h1 id="_n4js_language_and_ide_features" class="sect0"><a class="link" href="#_n4js_language_and_ide_features">N4JS Language and IDE Features</a></h1>
+<div class="openblock">
 <div class="content">
-<div id=features-nav>
-<nav>
-  <h2>N4JS Features</h2>
-  <ul>
-      <li><a href="#_statements-and-expressions">Statements and Expressions</a></li>
-      <li><a href="#_scoping-and-access-restrictions">Scoping and Access Restrictions</a></li>
-      <li><a href="#_functions">Functions</a></li>
-      <li><a href="#_declared-types">Declared Types</a></li>
-      <li><a href="#_types">Types</a></li>
-      <li><a href="#_generics">Generics</a></li>
-      <li><a href="#_type-constructors-and-special-types">Type Constructors and Special Types</a></li>
-      <li><a href="#_asynchronous-programming">Asynchronous Programming</a></li>
-      <li><a href="#_components-and-modules">Components and Modules</a></li>
-      <li><a href="#_api">API</a></li>
-      <li><a href="#_testing">Testing</a></li>
-      <li><a href="#_node-js-support">Node.js Support</a></li>
-      <li><a href="#_n4js-ide-features">N4JS IDE Support</a></li>
-      <li><a href="#_n4js-headless-compiler">N4JS Headless Compiler</a></li>
-  </ul>
-</nav>
-</div>
-<div class="paragraph">
-<p>The following table gives an overview of features implemented by N4JS.</p>
-</div>
+The following table gives an overview of features implemented by N4JS.
 </div>
 </div>
 <div class="sect1">
@@ -170,7 +154,7 @@ There are no user-defined annotations supported at the moment (this is why we do
 </div>
 </div>
 <div class="sect1">
-<h2 id="_feature-table"><a class="link" href="#_feature-table">Feature Table</a></h2>
+<h2 id="_feature_table"><a class="link" href="#_feature_table">Feature Table</a></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all spread done">
 <colgroup>
@@ -1056,6 +1040,7 @@ Additional support simplifying installation and usage will be added in future re
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2017-03-14 10:23:54 CET
 </div>
 </div>
 <div class="social">
@@ -1101,8 +1086,5 @@ $('html, body').animate({
 return false;
 });
 </script>
-<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
-<script src="../scripts/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>

@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>Async/Await</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../res/styles/n4js-adoc.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -29,6 +30,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../scripts/nav-mobile.js"></script>
+
+<!-- ************* Prism.js Syntax Highlighter ******-->
+<link href="../styles/prism.min.css" rel="stylesheet"/>
+<script src="../scripts/prism.js"></script>
 
 <!-- ****************** Analytics ****************** -->
 <script>
@@ -67,7 +72,8 @@
   </li>
   <li><a href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -75,15 +81,15 @@
   <li><a href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
 </div>
 <button id="tocbutton">TOC</button>
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language &amp; IDE</p></div>
+<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language & IDE</p></div>
 <div class="mobile-banner">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
@@ -101,7 +107,8 @@
   </li>
   <li><a class="scroll" href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -109,8 +116,8 @@
   <li><a class="scroll" href="../faq/index.html">FAQ</a>
     <ul>
       <li><a  href="../faq/index.html">FAQ</a></li>
-      <li><a  href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a  href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -121,21 +128,20 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel0">
-<li><a href="#_async-await">Async/Await</a>
+<li><a href="#_async_await">Async/Await</a>
 <ul class="sectlevel1">
-<li><a href="#_error-handling">Error Handling</a></li>
-<li><a href="#_-await-for-legacy-code">"await" for Legacy Code</a></li>
+<li><a href="#_error_handling">Error Handling</a></li>
+<li><a href="#__await_for_legacy_code">"await" for Legacy Code</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<h1 id="_async-await" class="sect0"><a class="link" href="#_async-await">Async/Await</a></h1>
+<h1 id="_async_await" class="sect0"><a class="link" href="#_async_await">Async/Await</a></h1>
 <div class="openblock partintro">
 <div class="content">
 <div class="paragraph">
-<div class="title">Async/Await</div>
 <p>Due to the event-driven nature inherent in JavaScript, asynchronous code has
 always been explicit and verbose, leading to projects which are hard to read and maintain.
 N4JS already implements the async/await proposal and it provides additional features allowing
@@ -157,7 +163,7 @@ results using the keyword <code>async</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">async function foo(): int {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">async function foo(): int {
     let res = await anotherAsyncFunction();
     ++res;
     return res;
@@ -175,7 +181,7 @@ object:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">function fetch(url: string): Promise&lt;Response, any&gt; {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">function fetch(url: string): Promise&lt;Response, any&gt; {
     // WHATWG fetch
     return null;
 }
@@ -189,7 +195,7 @@ async function foo() {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_error-handling"><a class="link" href="#_error-handling">Error Handling</a></h2>
+<h2 id="_error_handling"><a class="link" href="#_error_handling">Error Handling</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Since there&#8217;s a one-to-one mapping to Promises, exceptions being thrown within
@@ -197,7 +203,7 @@ an async function call are rejecting the corresponding Promise:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">function throwr() { return Promise.reject(new Error('bah!')); }
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">function throwr() { return Promise.reject(new Error('bah!')); }
 
 async function foo() {
     try {
@@ -214,7 +220,7 @@ async function:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">async function throwr() { throw new Error('bah!'); }
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">async function throwr() { throw new Error('bah!'); }
 let promise: Promise&lt;void, ?&gt; = throwr();
 
 promise.catch(err =&gt; (err as Error).message === 'bah!');</code></pre>
@@ -223,7 +229,7 @@ promise.catch(err =&gt; (err as Error).message === 'bah!');</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_-await-for-legacy-code"><a class="link" href="#_-await-for-legacy-code">"await" for Legacy Code</a></h2>
+<h2 id="__await_for_legacy_code"><a class="link" href="#__await_for_legacy_code">"await" for Legacy Code</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>There&#8217;s quite a lot of callback-driven code alive that is not returning Promises,
@@ -231,7 +237,7 @@ especially with reference to Node.js core modules:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import * as fs from 'fs';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import * as fs from 'fs';
 
 fs.readFile('myFile.txt', (err, content) =&gt; {
     if (err) throw err;
@@ -250,7 +256,7 @@ case (and actually the Node.js runtime definitions provided by N4JS already make
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">@Promisifiable
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">@Promisifiable
 export external public function readFile(
   filename: string,
   options: ~Object with {encoding: string?; flag: string?;},
@@ -263,7 +269,7 @@ transpiler wire up a Promise for you using the <strong>@Promisify</strong> annot
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { readFile } from 'fs';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { readFile } from 'fs';
 
 function foo(): Promise&lt;string, any&gt; {
     var promise = @Promisify readFile('myFile.txt', { encoding: 'UTF-8' });
@@ -277,7 +283,7 @@ condense this down:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { readFile } from 'fs';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { readFile } from 'fs';
 
 async function foo(): string {
     var content = await readFile('myFile.txt', { encoding: 'UTF-8' });
@@ -292,7 +298,7 @@ code to throw an error using an async arrow expression in the context of the N4J
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Assert } from 'n4/mangel/assert/Assert';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { Assert } from 'n4/mangel/assert/Assert';
 
 export public class FooTest {
 
@@ -310,6 +316,7 @@ export public class FooTest {
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2017-03-14 10:23:54 CET
 </div>
 </div>
 <div class="social">
@@ -355,8 +362,5 @@ $('html, body').animate({
 return false;
 });
 </script>
-<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
-<script src="../scripts/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>

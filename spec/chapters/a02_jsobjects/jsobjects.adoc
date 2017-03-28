@@ -1,0 +1,742 @@
+
+= JSObjects
+////
+Copyright (c) 2017 NumberFour AG.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+  NumberFour AG - Initial API and implementation
+////
+
+The built-in ECMAScript Objects
+cite:[ECMA11a(S15,p.102)] are supported and their properties are annotated with types as described in this chapter. The semantics of these properties do not change. The short description is copied from cite:[ECMA11a] repeated here for convenience.
+
+[.language-n4js]
+== Object
+
+`Object` is the super type of all declared types and `N4Object`. It is almost similar to the JavaScript type `Object` except that no properties may be dynamically added to it. In order to declare a variable to which properties can be dynamically added, the `Object+` type has to be declared (cf.
+<<_dynamic>>).
+//TODO : fix xref above
+
+[discrete]
+=== Attributes
+
+`constructor:Object`::
+Returns a reference to the Object function that created the instance’s
+prototype.
+
+[discrete]
+=== Methods
+
+`toString():Object`::
+Returns a string representing the specified object.
+
+`toLocaleString():Object`::
+Returns a string representing the object. This method is meant to be
+overridden by derived objects for locale-specific purposes.
+
+`valueOf():Object`::
+Returns the primitive value of the specified object.
+
+`hasOwnProperty(prop:String):Boolean`::
+Returns a boolean indicating whether an object contains the specified
+property as a direct property of that object and not inherited through
+the prototype chain.
+
+`isPrototypeOf(object:Object):Boolean`::
+Returns a boolean indication whether the specified object is in the
+prototype chain of the object this method is called upon.
+
+`propertyIsEnumerable(prop:String):Boolean`::
+Returns a boolean indicating if the internal ECMAScript DontEnum
+attribute is set.
+
+[discrete]
+=== Static Methods
+
+`getPrototypeOf(object:Object):Object`::
+Returns the prototype of the specified object.
+
+`create(object:Object,properties:Object=):Object`::
+Creates a new object with the specified prototype object and properties.
+
+`defineProperty(object:Object,prop:Object,descriptor:Object):Object`::
+Defines a new property directly on an object or modifies an existing
+property on an object and returns the object.
+
+`defineProperties(object:Object,properties:Object):Object`::
+Defines new or modifies existing properties directly on an object,
+returning the object.
+
+`seal(object:Object,properties:Object)`::
+Seals an object, preventing new properties from being added to it and
+marking all existing properties as non-configurable. Values of present
+properties can still be changed as long as they are writable.
+
+`freeze(object:Object):Object`::
+Freezes an object: that is, prevents new properties from being added to it, prevents existing properties from being removed, prevents existing properties or their enumerability, configurability, or writability from being changed.
+In essence, the object is made effectively immutable.
+The method returns the object being frozen.
+
+`preventExtensions(object:Object):Object`::
+Prevents new properties from ever being added to an object (i.e.
+prevents future extensions to the object).
+
+`isSealed(object:Object):Boolean static`::
+Determine if an object is sealed.
+
+`isFrozen(object:Object):Boolean`::
+Determine if an object is frozen.
+
+`isExtensible(object:Object):Boolean`::
+Determines if an object is extensible (whether it can have new
+properties added to it).
+
+`keys(object:Object):Array<String>`::
+Returns an array of all own enumerable properties found upon a given
+object in the same order as that provided by a for-in loop (the
+difference being that a for-in loop enumerates properties in the
+prototype chain as well).
+
+[.language-n4js]
+== String
+
+String is a global object that may be used to construct String
+instances and is a sub class of Object.
+
+[discrete]
+=== Attributes [[string-attributes]]
+
+`number: length` ::
+The length of a string.
+
+[discrete]
+=== Methods [[methods-1]]
+
+`String(thing:Object=)`:: -
+
+`anchor(anchorname:String):String`::
+Creates an HTML anchor.
+
+`big():String`::
+Returns a string in a big font.
+
+`blink():String`::
+Returns a string in a blinking string.
+
+`bold():String`::
+Returns a string in a bold font.
+
+`charAt(index:Number):String`::
+Returns the character at a specified position.
+
+`charCodeAt(index:Number):Number`::
+Returns the Unicode of the character at a specified position.
+
+`concat(strings:String...):String`::
+Joins two or more strings.
+
+`equals(object:Object):Boolean` :: -
+
+`equalsIgnoreCase(object:Object):Boolean`  :: -
+
+`fromCharCode(num:Any...):String`::
+Returns a string created by using the specified sequence of Unicode values.
+
+`fixed():String`::
+Returns a string as teletype text.
+
+`fontcolor(color):String`::
+Returns a string in a specified color.
+
+`fontsize(size):String`::
+Returns a string in a specified size.
+
+`indexOf(searchValue, fromIndex:Number=):Number`::
+Returns the position of the first occurrence of a specified string value in a string.
+
+`italics():String`::
+Returns a string in italic.
+
+`lastIndexOf(searchValue, fromIndex:Number=):Number`::
+Returns the position of the last occurrence of a specified string value, searching backwards from the specified position in a string.
+
+`link(url):String`::
+Returns a string as a hyperlink.
+
+`localeCompare(otherString):Number`::
+This method returns a number indicating whether a reference string comes before or after or is the same as the given string in sort order.
+
+`match(search value):String`::
+Searches for a specified value in a string.
+
+`replace(findString,newString):String`::
+Replaces some characters with some other characters in a string.
+
+`search(search string):Number`::
+Searches a string for a specified value.
+
+`slice(beginSlice:Number, endSclice:Number=):String`::
+Extracts a part of a string and returns the extracted part in a new string.
+
+`small():String`::
+Returns a string in a small font.
+
+`split(separator, howmany:Number=):Array<String>`::
+Splits a string into an array of strings.
+
+`strike():String`::
+Returns a string with a strikethrough.
+
+`sub():String`::
+Returns a string as subscript.
+
+`substr(start:Number,length:Number=):String`::
+Extracts a specified number of characters in a string, from a start index.
+
+`substring(beginIndex:number,endIndex:Number=):String`::
+Extracts the characters in a string between two specified indices.
+
+`sup():String`::
+Returns a string as superscript.
+
+`toLocaleUpperCase():String`::
+Returns a string in lowercase letters.
+
+`toString():String`::
+Returns a String value for this object.
+
+`toUpperCase():String`::
+Returns a string in uppercase letters.
+
+`valueOf():String`::
+Returns the primitive value of a String object.
+
+
+[discrete]
+=== Static Methods [[static-methods-1]]
+
+`String(value:Object=)`::
+Static constructor.
+
+[.language-n4js]
+== Boolean
+
+`Boolean` does not have a super class.
+
+[discrete]
+=== Static Methods [[static-methods-2]]
+
+`Boolean(value:Object=):Boolean`
+
+[.language-n4js]
+== Number
+
+`Number` does not have a super class.
+
+=== Static Attributes
+
+`MAX\_VALUE:Number`::
+The largest representable number.
+
+`MIN\_VALUE:Number`::
+The smallest representable number.
+
+`NaN:Number`::
+Special 'not a number' value.
+
+`NEGATIVE\_INFINITY:Number`::
+Special value representing negative infinity, returned on overflow.
+
+`POSITIVE\_INFINITY:Number`::
+Special value representing infinity, returned on overflow.
+
+[discrete]
+=== Methods [[methods-2]]
+
+`toExponential(numberOfDecimals:Number=):String`::
+Converts the value of the object into an exponential notation.
+
+`toFixed(numberOfDecimals:Number=):String`::
+Formats a number to the specified number of decimals.
+
+`toPrecision(numberOfDecimals:Number=):String`::
+Converts a number into an exponential notation if it has more digits than specified.
+
+`valueOf():Number`::
+Returns the primitive value of a Number object.
+
+`toString(radix:Number=):String`::
+Returns a String value for this object. The toString method parses its first argument and attempts to return a string representation in the specified radix (base).
+
+
+[discrete]
+=== Static Methods [[static-methods-3]]
+
+`Number(value:Object=):Number`::
+Static constructor.
+
+[.language-n4js]
+== Function [[function]]
+
+`Function` does not have a super class.
+
+[discrete]
+=== Attributes [[attributes-2]]
+
+`prototype:Object`::
+Allows the addition of properties to the instance of the object created by the constructor function.
+
+`length:Number`::
+Specifies the number of arguments expected by the functio
+
+
+[discrete]
+=== Methods [[methods-3]]
+
+`apply(thisArg,argsArray:Array=):Object`::
+Applies the method of another object in the context of a different object (the calling object); arguments can be passed as an Array object.
+
+`call(thisArg,arg...):Object`::
+Calls (executes) a method of another object in the context of a different object (the calling object); arguments can be passed as they are.
+
+`bind(thisArg:Object,arg...):Function`::
+Creates a new function that, when called, itself calls this function in the context of the provided this value with a given sequence of arguments preceding any provided when the new function was called.
+
+[.language-n4js]
+== Error
+
+`Error` does not have a super class.
+
+
+[discrete]
+=== Attributes [[attributes-3]]
+
+`name:String`::
+Error name.
+
+`message:String`::
+Error message.
+
+
+[discrete]
+=== Static Methods [[static-methods-4]]
+
+`Error(message:Object=):Error`::
+Static Constructor.
+
+[.language-n4js]
+== Array
+
+
+`Array` is a generic type with the type parameter `E` and  does not have a super class.
+
+[discrete]
+=== Methods [[methods-4]]
+
+`concat(array...):Array<E>)`::
+Joins two or more arrays and returns the result.
+
+`every(callback:Function):Boolean`::
+Tests whether all elements in the array pass the test implemented by the provided function. The callback will be called with 3 arguments (elementValue,elementIndex,traversedArray).
+
+`filter(callback:Function):Array<E>`::
+Creates a new array with all elements that pass the test implemented by the provided function. The callback will be called with 3 arguments (elementValue,elementIndex,traversedArray).
+
+`forEach(callback:Function,thisArg=)`::
+Calls a function for each element in the array. The callback will be called with 3 arguments (elementValue,elementIndex,traversedArray). Optionally with a thisObject argument to use as this when executing callback.
+
+`indexOf(searchElement,fromIndex=):Number`::
+Returns the first index at which a given element can be found in the array, or -1 if it is not present.
+
+`join(separator=):String`::
+Puts all the elements of an array into a string. The elements are separated by a specified delimiter.
+
+`lastIndexOf(searchElement,fromIndex=):Number`::
+Returns the last (greatest) index of an element within the array equal to the specified value. Will return -1 if none are found.
+
+`length():Number`::
+The length returns an integer representing the length of an array.
+
+`map(callback:Function,thisArg=):Array`::
+Creates a new array with the results of calling a provided function on every element in this array. The callback will be called with 3 arguments (elementValue,elementIndex,traversedArray). Optionally, with a thisObject argument to use as this when executing callback.
+
+`pop():E`::
+Removes and returns the last element of an array.
+
+`push(element...):E`::
+Adds one or more elements to the end of an array and returns the new length.
+
+`reverse():Array<E>`::
+Reverses the order of the elements in an array.
+
+`shift()`::
+Removes and returns the first element of an array.
+
+`slice(start:Number,end:Number=):Array<E>`::
+Returns selected elements from an existing array.
+
+`some(callback:Function,thisArg=):Boolean`::
+Tests whether some element in the array passes the test implemented by the provided function. The callback will be called with 3 arguments (elementValue,elementIndex,traversedArray). Optionally, with a thisObject argument to use as this when executing callback.
+
+`sort(sortByFunction:Function=):Array<E>`::
+Sorts the elements of an array. The function will be called with 2 arguments (a,b).
+
+`splice(index:Number,how many:Number,element...):Array<E>`::
+Removes and adds new elements to an array. Returns the removed elements as an Array.
+
+`toLocaleString():String`::
+
+`toString():String`::
+Returns a String value for Array.
+
+`unshift(element...):E`::
+Adds one or more elements to the beginning of an array and returns the new length.
+
+[[static-methods-5]]
+[discrete]
+=== Static Methods
+
+`Array(item:Object...)`::
+Static constructor.
+
+[.language-n4js]
+== Date
+
+`Date` does not have a super class.
+
+[[static-methods-6]]
+[discrete]
+=== Static Methods
+
+`Date():Date`::
+Static constructor.
+
+`Date(milliseconds:Number):Date`::
+Constructor.
+
+`Date(date:Date):Date`::
+Constructor.
+
+`Date(dateString:String):Date`::
+Constructor.
+
+`Date(year:Number,month:Number,day=Number=,hour:Number=,minute:Number=,second:Number=,millisecond:Number=):Date`::
+Constructor.
+
+`parse(dateString:String):Date`::
+Parses a string representation of a date, and returns the number of milliseconds since midnight Jan 1, 1970.
+
+`now():Number`::
+Returns the numeric value corresponding to the current time.
+
+`UTC(year:Number,month:Number,date:Number=,hrs:Number=,min:Number=,sec:Number=,ms:Number=):Number`::
+UTC takes comma-delimited date parameters and returns the number of milliseconds between January 1, 1970, 00:00:00, Universal Time and the time you specified.
+
+[[methods-5]]
+[discrete]
+=== Methods
+
+`getDate():Number`::
+Returns the day of the month from a Date object (from 1-31).
+
+`getDay():Number`::
+Returns the day of the week from a Date object (from 0-6).
+
+`getFullYear():Number`::
+Returns the year, as a four-digit number.
+
+`getHours():Number`::
+Returns the hour of a day (from 0-23).
+
+`getMilliseconds():Number`::
+Returns the milliseconds of a Date object (from 0-999).
+
+`getMinutes():Number`::
+Returns the minutes of a date (from 0-59).
+
+`getMonth():Number`::
+Returns the month from a date (from 0-11).
+
+`getSeconds():Number`::
+Returns the seconds of a date (from 0-59).
+
+`getTime():Number`::
+Returns the number of milliseconds since midnight Jan 1, 1970.
+
+`valueOf():Number`::
+Returns the primitive value of a Date object as a number data type, the number of milliseconds since midnight 01 January, 1970 UTC. This method is functionally equivalent to the getTime method.
+
+`getTimezoneOffset():Number`::
+Returns the difference in minutes between local time and Greenwich Mean Time (GMT).
+
+`getUTCDate():Number`::
+Returns the day of the month from a date according to Universal Time (from 1-31).
+
+`getUTCDay():Number`::
+Returns the day of the week from a date according to Universal Time (from 0-6).
+
+`getUTCFullYear():Number`::
+Returns the four-digit year from a date according to Universal Time.
+
+`getUTCHours():Number`::
+Returns the hour of a date according to Universal Time (from 0-23).
+
+`getUTCMilliseconds():Number`::
+Returns the milliseconds of a date according to Universal Time (from 0-999).
+
+`getUTCMinutes():Number`::
+Returns the minutes of a date according to Universal Time (from 0-59).
+
+`getUTCMonth():Number`::
+Returns the month from a Date object according to Universal Time (from 0-11).
+
+`getUTCSeconds():Number`::
+Returns the seconds of a date according to Universal Time (from 0-59).
+
+`getYear():Number deprecated`::
+Returns the year as a two-digit or a three/four-digit number, depending on the browser. Use getFullYear() instead!
+
+`setDate(day):Number`::
+Sets the day of the month from a Date object (from 1-31).
+
+`setFullYear(full year, month=, day=):Number`::
+Sets the year as a four-digit number.
+
+`setHours(hours,minutes=,seconds=,milis=):Number`::
+Sets the hour of a day (from 0-23).
+
+`setMilliseconds(mills):Number`::
+Sets the milliseconds of a Date object (from 0-999).
+
+`setMinutes(minutes,=seconds,=millis):Number`::
+Sets the minutes of a date (from 0-59).
+
+`setMonth" directType="Number(month,day=):Number`::
+Sets the month from a date (from 0-11).
+
+`setSeconds(seconds,millis=):number`::
+Sets the seconds of a date (from 0-59).
+
+`setTime(mills):Number`::
+Sets the number of milliseconds since midnight Jan 1, 1970.
+
+`setUTCDate(day):Number`::
+Sets the day of the month from a date according to Universal Time (from 0-6).
+
+`setUTCFullYear(fullyear,month=,day=):Number`::
+Sets the four-digit year from a date according to Universal Time.
+
+`setUTCHours(hours,minutes=,seconds=,millis=):Number`::
+Sets the hour of a date according to Universal Time (from 0-23).
+
+`setUTCMilliseconds(mills):Number`::
+Sets the milliseconds of a date according to Universal Time (from 0-999).
+
+`setUTCMinutes(minutes,seconds=,millis=):Number`::
+Sets the minutes of a date according to Universal Time time (from 0-59).
+
+`setUTCMonth(month,day=):Number`::
+Sets the month from a Date object according to Universal Time (from 0-11).
+
+`setUTCSeconds(seconds,millis=):Number`::
+Sets the seconds of a date according to Universal Time (from 0-59).
+
+`setYear(year):Number deprecated`::
+Sets the year, as a two-digit or a three/four-digit number, depending on the browser. Use setFullYear() instead!!
+
+`toDateString():String`::
+Returns the date portion of a Date object in readable form.
+
+`toLocaleDateString():String`::
+Converts a Date object, according to local time, to a string and returns the date portion.
+
+`toLocaleString():String`::
+Converts a Date object, according to local time, to a string.
+
+`toLocaleTimeString():String`::
+Converts a Date object, according to local time, to a string and returns the time portion.
+
+`toString():String`::
+Returns a String value for this object.
+
+`toTimeString():String`::
+Returns the time portion of a Date object in readable form.
+
+`toUTCString():String`::
+Converts a Date object, according to Universal Time, to a string.
+
+[.language-n4js]
+== Math
+
+`Math` is not instantiable and only provides static properties and methods.
+
+=== Static Attributes [[static-attributes-1]]
+
+`E:Number`::
+Euler's constant and the base of natural logarithms, approximately 2.718.
+
+`LN2:Number`::
+Natural logarithm of 2, approximately 0.693.
+
+`LN10:Number`::
+Natural logarithm of 10, approximately 2.302.
+
+`LOG2E:Number`::
+Base 2 logarithm of E, approximately 1.442.
+
+`LOG10E:Number`::
+Base 10 logarithm of E, approximately 0.434.
+
+`PI:Number`::
+Ratio of the circumference of a circle to its diameter, approximately 3.14159.
+
+`SQRT1\_2:Number`::
+Square root of 1/2; equivalently, 1 over the square root of 2, approximately 0.707.
+
+`SQRT2:Number`::
+Square root of 2, approximately 1.414.
+
+[discrete]
+=== Static Methods [[static-methods-7]]
+
+`abs(x):Number`::
+Returns the absolute value of a number.
+
+`acos(x:Number):Number`::
+Returns the arccosine of a number.
+
+`asinx:Number):Number`::
+Returns the arcsine of a number.
+
+`atan(x:Number):Number`::
+Returns the arctangent of a number.
+
+`atan2(y:Number,x:Number):Number`::
+Returns the arctangent of the quotient of its arguments.
+
+`ceil(x):Number`::
+Returns the smallest integer greater than or equal to a number.
+
+`cos(x):Number`::
+Returns the arctangent of the quotient of its arguments.
+
+`exp(x):Number`::
+Returns Enumber, where number is the argument, and E is Euler's constant (2.718...), the base of the natural logarithm.
+
+`floor(x):Number`::
+Returns the largest integer less than or equal to a number.
+
+`log(x):Number`::
+Returns the natural logarithm (loge, also ln) of a number.
+
+`max(value...):Number`::
+Returns the largest of zero or more numbers.
+
+`min(value...):Number`::
+Returns the smallest of zero or more numbers.
+
+`pow(base:Number,exponent:Number):Number`::
+Returns base to the exponent power, that is, baseexponent.
+
+`random():Number`::
+Returns a pseudorandom number between 0 and 1.
+
+`round(x:Number):Number`::
+Returns the value of a number rounded to the nearest integer.
+
+`sin(x:Number):Number`::
+Returns the sine of a number.
+
+`sqrt(x:Number):Number`::
+Returns the positive square root of a number.
+
+`tan(x:Number):Number`::
+Returns the tangent of a number.
+
+[.language-n4js]
+== RegExp
+
+`RegExp` does not have a super class.
+
+[discrete]
+=== Attributes [[attributes-4]]
+
+`global:Boolean`::
+Whether to test the regular expression against all possible matches in a string, or only against the first.
+
+`ignoreCase:Boolean`::
+Whether to ignore case while attempting a match in a string.
+
+`lastIndex:Number`::
+The index at which to start the next match.
+
+`multiline:Boolean`::
+Whether or not to search in strings across multiple lines.
+
+`source:String`::
+The text of the pattern.
+
+[discrete]
+=== Methods [[methods-6]]
+
+`exec(str:String):Array`::
+Executes a search for a match in its string parameter.
+
+`test(str:String):Boolean`::
+Tests for a match in its string parameter.
+
+[.language-n4js]
+== JSON
+
+
+`JSON` is a global object and a subclass of `Object`. Its functionality is provided by two static methods.
+It is not possible to create new instances of type JSON.
+
+[discrete]
+=== Attributes [[attributes-5]]
+
+The JSON object does not define own properties.
+
+[discrete]
+=== Methods [[methods-7]]
+
+The JSON object does not define own methods.
+
+[discrete]
+=== Static Methods [[static-methods-8]]
+
+The parse function parses a JSON text (a JSON-formatted String) and
+produces an ECMAScript value. The JSON format is a restricted form of
+ECMAScript literal. JSON objects are realized as ECMAScript objects.
+JSON arrays are realized as ECMAScript arrays. JSON strings, numbers,
+booleans, and null are realized as ECMAScript Strings, Numbers,
+Booleans, and null. For detailed information see cite:[ECMA11a(S15.12.2)]
+
+The optional reviver parameter is a function that takes two parameters
+(key and value). It can filter and transform the results. It is called
+with each of the key/value pairs produced by the parse and its return
+value is used instead of the original value. If it returns what it
+received, the structure is not modified. If it returns then the property
+is deleted from the result.
+
+//\item[stringify(any value, union\{Array<any>, \{function(string key, any value) : any\} \}? replacer, union\{number , string\}? space) : string]
+
+The stringify function returns a String in JSON format representing an
+ECMAScript value. It can take three parameters. The first parameter is
+required. The value parameter is an ECMAScript value which is usually an
+object or array, although it can also be a String, Boolean, Number or
+null.
+
+The optional replacer parameter is either a function that alters the way
+objects and arrays are stringified or an array of Strings and Numbers
+that act as a white list for selecting the object properties that will
+be stringified.
+
+The optional space parameter is a String or Number that allows the
+result to have whitespace injected into it to improve human readability.
+
+For detailed information see cite:[ECMA11a(S15.12.3)].

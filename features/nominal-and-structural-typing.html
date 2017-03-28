@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>Nominal And Structural Typing</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../res/styles/n4js-adoc.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -29,6 +30,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../scripts/nav-mobile.js"></script>
+
+<!-- ************* Prism.js Syntax Highlighter ******-->
+<link href="../styles/prism.min.css" rel="stylesheet"/>
+<script src="../scripts/prism.js"></script>
 
 <!-- ****************** Analytics ****************** -->
 <script>
@@ -67,7 +72,8 @@
   </li>
   <li><a href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -75,15 +81,15 @@
   <li><a href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
 </div>
 <button id="tocbutton">TOC</button>
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language &amp; IDE</p></div>
+<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language & IDE</p></div>
 <div class="mobile-banner">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
@@ -101,7 +107,8 @@
   </li>
   <li><a class="scroll" href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -109,8 +116,8 @@
   <li><a class="scroll" href="../faq/index.html">FAQ</a>
     <ul>
       <li><a  href="../faq/index.html">FAQ</a></li>
-      <li><a  href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a  href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -121,19 +128,19 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel0">
-<li><a href="#_nominal-and-structural-typing">Nominal And Structural Typing</a>
+<li><a href="#_nominal_and_structural_typing">Nominal And Structural Typing</a>
 <ul class="sectlevel1">
-<li><a href="#_nominal-typing">Nominal Typing</a></li>
-<li><a href="#_structural-typing">Structural Typing</a></li>
+<li><a href="#_nominal_typing">Nominal Typing</a></li>
+<li><a href="#_structural_typing">Structural Typing</a></li>
 <li><a href="#_comparison">Comparison</a>
 <ul class="sectlevel2">
 <li><a href="#_maintainability">Maintainability</a></li>
 <li><a href="#_flexibility">Flexibility</a></li>
 </ul>
 </li>
-<li><a href="#_combination-of-nominal-and-structural-typing-in-n4js">Combination of Nominal and Structural Typing in N4JS</a>
+<li><a href="#_combination_of_nominal_and_structural_typing_in_n4js">Combination of Nominal and Structural Typing in N4JS</a>
 <ul class="sectlevel2">
-<li><a href="#_field-structural-typing">Field Structural Typing</a></li>
+<li><a href="#_field_structural_typing">Field Structural Typing</a></li>
 </ul>
 </li>
 </ul>
@@ -142,11 +149,10 @@
 </div>
 </div>
 <div id="content">
-<h1 id="_nominal-and-structural-typing" class="sect0"><a class="link" href="#_nominal-and-structural-typing">Nominal And Structural Typing</a></h1>
+<h1 id="_nominal_and_structural_typing" class="sect0"><a class="link" href="#_nominal_and_structural_typing">Nominal And Structural Typing</a></h1>
 <div class="openblock partintro">
 <div class="content">
 <div class="paragraph">
-<div class="title">Nominal And Structural Typing</div>
 <p>One of the core responsibilities of a type system is to decide if two given types
 are <strong>type compatible</strong>, or if a type is a <strong>subtype</strong> of another type.
 N4JS provides support for different strategies of checking whether two types are compatible,
@@ -183,7 +189,7 @@ the coming sections before we show how they are combined in N4JS.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_nominal-typing"><a class="link" href="#_nominal-typing">Nominal Typing</a></h2>
+<h2 id="_nominal_typing"><a class="link" href="#_nominal_typing">Nominal Typing</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In a <strong>nominal</strong>, or <strong>nominative</strong>, type system, two types
@@ -201,7 +207,7 @@ declaration.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">class Person {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">class Person {
     public name: string;
 }
 
@@ -228,7 +234,7 @@ subtype of <code>Person</code>, although it provides the same members.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_structural-typing"><a class="link" href="#_structural-typing">Structural Typing</a></h2>
+<h2 id="_structural_typing"><a class="link" href="#_structural_typing">Structural Typing</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In a <strong>structural</strong> type system, two types are deemed the same if they are of the <strong>same structure</strong>.
@@ -261,7 +267,7 @@ advantages and disadvantages of such an explicit relation?</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public interface Identifiable {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export public interface Identifiable {
     public get name(): string
 
     static check(identifiable: Identifiable): boolean {
@@ -272,7 +278,7 @@ advantages and disadvantages of such an explicit relation?</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">class A {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">class A {
 
     public get name(): string { return 'John'; }
 }</code></pre>
@@ -280,7 +286,7 @@ advantages and disadvantages of such an explicit relation?</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Identifiable } from 'Identifiable';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { Identifiable } from 'Identifiable';
 
 class A implements Identifiable {
     @Override
@@ -293,7 +299,7 @@ class A implements Identifiable {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">Identifiable.check(new A());</code></pre>
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">Identifiable.check(new A());</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -309,7 +315,7 @@ You start by renaming the function in the interface:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public interface Identifiable {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export public interface Identifiable {
     public get id(): string
   // …
 }</code></pre>
@@ -349,7 +355,7 @@ neither your framework nor the person framework.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_combination-of-nominal-and-structural-typing-in-n4js"><a class="link" href="#_combination-of-nominal-and-structural-typing-in-n4js">Combination of Nominal and Structural Typing in N4JS</a></h2>
+<h2 id="_combination_of_nominal_and_structural_typing_in_n4js"><a class="link" href="#_combination_of_nominal_and_structural_typing_in_n4js">Combination of Nominal and Structural Typing in N4JS</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Because both classes of type systems have their advantages and because structural typing is particularly
@@ -376,7 +382,7 @@ to as<strong>definition-site structural typing</strong></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public interface Identifiable {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export public interface Identifiable {
     public get name(): string
 
     static check(identifiable: ~Identifiable): boolean {
@@ -411,7 +417,7 @@ refactoring later.
 This is comparable to access modifiers which serve the same purpose.</p>
 </div>
 <div class="sect2">
-<h3 id="_field-structural-typing"><a class="link" href="#_field-structural-typing">Field Structural Typing</a></h3>
+<h3 id="_field_structural_typing"><a class="link" href="#_field_structural_typing">Field Structural Typing</a></h3>
 <div class="paragraph">
 <p>N4JS provides some variants of structural types. Usually two structural types are compatible, if they
 provide the same properties, or in case of classes, public members. In ECMAScript we often only need to
@@ -429,6 +435,7 @@ at least a getter (or readable data field).</p>
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2017-03-14 10:23:54 CET
 </div>
 </div>
 <div class="social">
@@ -474,8 +481,5 @@ $('html, body').animate({
 return false;
 });
 </script>
-<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
-<script src="../scripts/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>

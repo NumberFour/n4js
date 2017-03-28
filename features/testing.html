@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>Testing</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../res/styles/n4js-adoc.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -29,6 +30,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../scripts/nav-mobile.js"></script>
+
+<!-- ************* Prism.js Syntax Highlighter ******-->
+<link href="../styles/prism.min.css" rel="stylesheet"/>
+<script src="../scripts/prism.js"></script>
 
 <!-- ****************** Analytics ****************** -->
 <script>
@@ -67,7 +72,8 @@
   </li>
   <li><a href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -75,15 +81,15 @@
   <li><a href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
 </div>
 <button id="tocbutton">TOC</button>
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language &amp; IDE</p></div>
+<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language & IDE</p></div>
 <div class="mobile-banner">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
@@ -101,7 +107,8 @@
   </li>
   <li><a class="scroll" href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -109,8 +116,8 @@
   <li><a class="scroll" href="../faq/index.html">FAQ</a>
     <ul>
       <li><a  href="../faq/index.html">FAQ</a></li>
-      <li><a  href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a  href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -123,10 +130,10 @@
 <ul class="sectlevel0">
 <li><a href="#_testing">Testing</a>
 <ul class="sectlevel1">
-<li><a href="#_built-in-test-support">Built-In Test Support</a></li>
-<li><a href="#_n4js-language-support">N4JS Language Support</a></li>
-<li><a href="#_n4js-ide-support">N4JS IDE Support</a></li>
-<li><a href="#_additional-features">Additional Features</a></li>
+<li><a href="#_built_in_test_support">Built-In Test Support</a></li>
+<li><a href="#_n4js_language_support">N4JS Language Support</a></li>
+<li><a href="#_n4js_ide_support">N4JS IDE Support</a></li>
+<li><a href="#_additional_features">Additional Features</a></li>
 </ul>
 </li>
 </ul>
@@ -134,8 +141,8 @@
 </div>
 <div id="content">
 <h1 id="_testing" class="sect0"><a class="link" href="#_testing">Testing</a></h1>
-<div class="openblock partintro">
-<div class="title">Testing</div><div class="content">
+<div class="openblock">
+<div class="content">
 Test Driven Development (TDD) is one of the key techniques to write large systems with maintainable code.
 The more tests you write, the more confident you can be that your software works as expected and the more
 comfortable you feel when your refactoring the code, because the tests will tell you if you break something.
@@ -144,7 +151,7 @@ to support TDD as well as possible.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_built-in-test-support"><a class="link" href="#_built-in-test-support">Built-In Test Support</a></h2>
+<h2 id="_built_in_test_support"><a class="link" href="#_built_in_test_support">Built-In Test Support</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>From the language perspective, there are annotations that can be used to declare and configure the test
@@ -159,7 +166,7 @@ that could come handy when test assertions or preconditions have to be used in t
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Assert } from 'n4/mangel/assert/Assert';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { Assert } from 'n4/mangel/assert/Assert';
 import { Precondition } from 'n4/mangel/precondition/Precondition';
 
 export public class FooTest {
@@ -189,7 +196,7 @@ export public class FooTest {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_n4js-language-support"><a class="link" href="#_n4js-language-support">N4JS Language Support</a></h2>
+<h2 id="_n4js_language_support"><a class="link" href="#_n4js_language_support">N4JS Language Support</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="https://www.junit.org">Junit-like</a> annotations are are available to configure the test suits, such as:</p>
@@ -216,7 +223,7 @@ one can easily test different aspects of the application without breaking the en
 </div>
 </div>
 <div class="sect1">
-<h2 id="_n4js-ide-support"><a class="link" href="#_n4js-ide-support">N4JS IDE Support</a></h2>
+<h2 id="_n4js_ide_support"><a class="link" href="#_n4js_ide_support">N4JS IDE Support</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In the N4 IDE, the Test Results view provides an informative overview of all executed and running
@@ -233,7 +240,7 @@ one single, fine-grained test case from a particular test class.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_additional-features"><a class="link" href="#_additional-features">Additional Features</a></h2>
+<h2 id="_additional_features"><a class="link" href="#_additional_features">Additional Features</a></h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -259,6 +266,7 @@ one single, fine-grained test case from a particular test class.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2017-03-14 10:23:54 CET
 </div>
 </div>
 <div class="social">
@@ -304,8 +312,5 @@ $('html, body').animate({
 return false;
 });
 </script>
-<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
-<script src="../scripts/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>

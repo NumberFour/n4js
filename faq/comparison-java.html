@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>N4JS and Java</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../res/styles/n4js-adoc.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -29,6 +30,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../scripts/nav-mobile.js"></script>
+
+<!-- ************* Prism.js Syntax Highlighter ******-->
+<link href="../styles/prism.min.css" rel="stylesheet"/>
+<script src="../scripts/prism.js"></script>
 
 <!-- ****************** Analytics ****************** -->
 <script>
@@ -67,7 +72,8 @@
   </li>
   <li><a href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -75,8 +81,8 @@
   <li><a href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="index.html">FAQ</a></li>
-      <li><a href="comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -93,7 +99,7 @@
 </nav>
 </div>
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language &amp; IDE</p></div>
+<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language & IDE</p></div>
 <div class="mobile-navbar">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
@@ -111,7 +117,8 @@
   </li>
   <li><a class="scroll" href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -119,8 +126,8 @@
   <li><a class="scroll" href="index.html">FAQ</a>
     <ul>
       <li><a  href="index.html">FAQ</a></li>
-      <li><a  href="comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a  href="comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a  href="comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -131,23 +138,23 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel0">
-<li><a href="#_n4js-and-java">N4JS and Java</a>
+<li><a href="#_n4js_and_java">N4JS and Java</a>
 <ul class="sectlevel1">
 <li><a href="#_introduction">Introduction</a></li>
 <li><a href="#_similarities">Similarities</a>
 <ul class="sectlevel2">
-<li><a href="#_nominal-typing">Nominal Typing</a></li>
+<li><a href="#_nominal_typing">Nominal Typing</a></li>
 <li><a href="#_generics">Generics</a></li>
-<li><a href="#_interfaces-and-abstract-declarations">Interfaces and Abstract Declarations</a></li>
-<li><a href="#_access-modifiers">Access Modifiers</a></li>
+<li><a href="#_interfaces_and_abstract_declarations">Interfaces and Abstract Declarations</a></li>
+<li><a href="#_access_modifiers">Access Modifiers</a></li>
 </ul>
 </li>
 <li><a href="#_differences">Differences</a>
 <ul class="sectlevel2">
-<li><a href="#_auto-boxing">Auto-Boxing</a></li>
-<li><a href="#_function-subtyping">Function Subtyping</a></li>
+<li><a href="#_auto_boxing">Auto-Boxing</a></li>
+<li><a href="#_function_subtyping">Function Subtyping</a></li>
 <li><a href="#_overloading">Overloading</a></li>
-<li><a href="#_static-members">Static Members</a></li>
+<li><a href="#_static_members">Static Members</a></li>
 </ul>
 </li>
 </ul>
@@ -156,12 +163,11 @@
 </div>
 </div>
 <div id="content">
-<h1 id="_n4js-and-java" class="sect0"><a class="link" href="#_n4js-and-java">N4JS and Java</a></h1>
+<h1 id="_n4js_and_java" class="sect0"><a class="link" href="#_n4js_and_java">N4JS and Java</a></h1>
 <div class="sect1">
 <h2 id="_introduction"><a class="link" href="#_introduction">Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<div class="title">N4JS and Java</div>
 <p>N4JS is an extension of ECMAScript. It is therefore as different from Java as ECMAScript is. There are additional features which
 are quite similar to Java, actually making ECMAScript feel more like <strong>Java</strong>Script. In the following, we describe the most
 important similarities and differences of Java and N4JS.</p>
@@ -176,7 +182,7 @@ important similarities and differences of Java and N4JS.</p>
 Many concepts of this type system are similar to Java&#8217;s type system.</p>
 </div>
 <div class="sect2">
-<h3 id="_nominal-typing"><a class="link" href="#_nominal-typing">Nominal Typing</a></h3>
+<h3 id="_nominal_typing"><a class="link" href="#_nominal_typing">Nominal Typing</a></h3>
 <div class="paragraph">
 <p>N4JS supports both, <a href="../features/nominal-and-structural-typing.html#nominal_and_structural_typing">nominal and structural typing</a>. Java has a nominal
 type system and this is also the default mode in N4JS. When you just use a simple type reference, nominal typing (as in Java) is applied.</p>
@@ -186,7 +192,7 @@ type system and this is also the default mode in N4JS. When you just use a simpl
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">class A { public foo(): void {} }
+<pre class="highlight"><code class="language-java" data-lang="java">class A { public foo(): void {} }
 class B extends A {}
 class C { public foo(): void {} }
 
@@ -201,7 +207,7 @@ f(new C()); // error: C is not a subtype of A.</code></pre>
 </div>
 <div class="paragraph">
 <p>Overriding of members in N4JS is quite similar to Java although N4JS allows for slightly more flexibility due to the underlying
-ECMAScript semantics (see <a href="#_function-subtyping">Function Subtyping</a>).</p>
+ECMAScript semantics (see <a href="#_function_subtyping">Function Subtyping</a>).</p>
 </div>
 </div>
 <div class="sect2">
@@ -243,7 +249,7 @@ one called "existential types". Future releases of N4JS will fix these issues.</
 </div>
 </div>
 <div class="sect2">
-<h3 id="_interfaces-and-abstract-declarations"><a class="link" href="#_interfaces-and-abstract-declarations">Interfaces and Abstract Declarations</a></h3>
+<h3 id="_interfaces_and_abstract_declarations"><a class="link" href="#_interfaces_and_abstract_declarations">Interfaces and Abstract Declarations</a></h3>
 <div class="paragraph">
 <p>ECMAScript 2015 introduces classes similar to Java. In both languages, single inheritance is used. Although this simplifies
  many scenarios, the limitations of single inheritance are often problematic. In Java, many of these problematic cases can
@@ -257,7 +263,7 @@ also supported in N4JS similarly to Java.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_access-modifiers"><a class="link" href="#_access-modifiers">Access Modifiers</a></h3>
+<h3 id="_access_modifiers"><a class="link" href="#_access_modifiers">Access Modifiers</a></h3>
 <div class="paragraph">
 <p>When designing larger systems and frameworks, limiting access to certain elements is important for maintainability. Similar
 to Java, N4JS introduces access modifiers to limit visibility of types and members. The following table shows the access
@@ -304,14 +310,14 @@ from the same container (project in N4JS and package in Java).</p>
 <h2 id="_differences"><a class="link" href="#_differences">Differences</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_auto-boxing"><a class="link" href="#_auto-boxing">Auto-Boxing</a></h3>
+<h3 id="_auto_boxing"><a class="link" href="#_auto_boxing">Auto-Boxing</a></h3>
 <div class="paragraph">
 <p>In Java, primitive types can be auto-boxed to their corresponding object types (and vice versa). This is also true for
 ECMAScript but there are subtle differences which might lead to misconceptions as shown in the following example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">let bool: boolean = false;
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">let bool: boolean = false;
 let Bool: Boolean = new Boolean( false );
 
 console.log( bool.valueOf(), bool ? "true" : "false");
@@ -323,7 +329,7 @@ console.log( Bool.valueOf(), Bool ? "true" : "false");</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">false 'false'
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">false 'false'
 false 'true'</code></pre>
 </div>
 </div>
@@ -333,7 +339,7 @@ explicitly converted using either the <code>constructor</code>, <code>Object.val
 </div>
 </div>
 <div class="sect2">
-<h3 id="_function-subtyping"><a class="link" href="#_function-subtyping">Function Subtyping</a></h3>
+<h3 id="_function_subtyping"><a class="link" href="#_function_subtyping">Function Subtyping</a></h3>
 <div class="paragraph">
 <p>Function (or method) subtyping comes into play in two cases: method overriding and passing functions as arguments
 (callbacks, for example). In both cases, the type checker has to ensure that a function <code><strong>f</strong></code> is compatible with
@@ -389,7 +395,7 @@ in N4JS.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">class A {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">class A {
   foo(s: string): void {}
 }
 class B extends A {
@@ -407,7 +413,7 @@ overloading to a certain degree, union types and optional parameters can be used
 </div>
 </div>
 <div class="sect2">
-<h3 id="_static-members"><a class="link" href="#_static-members">Static Members</a></h3>
+<h3 id="_static_members"><a class="link" href="#_static_members">Static Members</a></h3>
 <div class="paragraph">
 <p>In Java, a static member of a class can be accessed either</p>
 </div>
@@ -430,7 +436,7 @@ static polymorphism as shown in the next example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">class A {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">class A {
   public static s() { console.log("A.s"); this.t(); };
   public static t() { console.log("A.t"); };
 }
@@ -448,7 +454,7 @@ B.s();</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>A.s
+<pre class="highlight"><code>A.s
 A.t
 A.s
 B.t</code></pre>
@@ -463,6 +469,7 @@ B.t</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2017-03-14 10:23:54 CET
 </div>
 </div>
 <div class="social">
@@ -508,8 +515,5 @@ $('html, body').animate({
 return false;
 });
 </script>
-<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
-<script src="../scripts/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>

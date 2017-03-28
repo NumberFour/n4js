@@ -1,0 +1,2514 @@
+
+= Expressions
+:find:
+////
+Copyright (c) 2017 NumberFour AG.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+  NumberFour AG - Initial API and implementation
+////
+
+[.language-n4js]
+--
+For all expressions, we define the following pseudo properties:
+
+
+`containingExpression` ::
+The parent expression, in which an expression is contained, may be null.
+
+`containingStatement` ::
+The statement in which the expression is (indirectly) contained.
+
+`containingFunctionOrAccessor` ::
+The function, method, getter or setter in which the expression is (indirectly) contained, may be null.
+
+`containingClass` ::
+The class in which the expression is (indirectly) contained, may be null.
+
+`probableThisTarget` ::
+The potential target of a this keyword binding, this is not necessarily the containing class or object literal.
+In case of instance methods of a class `T`, this usually is the classifier `T`; in case of static methods, it is the classifier type `type{type}`.
+
+`container` ::
+The direct owner of the expression.
+--
+////
+\todo[JvP,LB]{How to best model that the inferred type must always be "conform" to a declared type if present?}
+\todo[JvP,LB]{Autoconversion: See chapter conversions}
+////
+
+The expressions and statements are ordered, describing first the constructs available in the 5th edition of ECMA-262, referred to as cite:[ECMA11a] in the following.
+It is worth noting that the grammar snippets already use newer constructs in some cases.
+
+[.language-n4js]
+== ECMAScript 5 Expressions
+task:IDE-232[]
+
+N4JS supports the same expressions as ECMAScript.
+The semantics are described in cite:[ECMA11a(S11)].
+In N4JS, some expressions are extended for supporting the declaration of types, annotations, or parameterized usages.
+These extensions and type-related aspects as well as specific N4JS constraints are described in this section.
+
+Some operators come in different ’flavors’, that is as binary operator, unary pre- or postfix operators, or assignment operators.
+For these operators, type constraints are only defined for the binary operator version and the other variants are deduced to that binary version.
+E.g., `pass:[++]` and `pass:[+=]` are deduced to `pass:[+]` (and simple assignment).
+
+
+=== The this Literal
+task:IDE-229[] task:IDE-505[]
+
+This section describes the `this` literal and the semantics of the `@This` annotation, the type `this` is described in <<_this-type>>.
+
+[discrete]
+==== Semantics
+
+Semantics are similar to the original ECMAScript this keyword, see cite:[ECMA11a(11.1.1,p.63)])
+Also see cite:[West06a] and https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this[MozillaJSRef]
+
+Regarding the location where `this` may be used, the following restrictions apply:
+
+.Valid location for this literal
+[req,id=IDE-173,version=1]
+--
+The literal may not be used in
+
+1.  the initializer expression of static data fields in classes.
+2.  the initializer expression of data fields in interfaces (applies to both static and non-static).
+3.  static methods of interfaces and static field accessors of interfaces.
+
+See also <<Req-IDE-69>>.
+
+--
+
+
+Note: <<Req-IDE-173>> also applies for this literals inside arrow expressions in initializers. task:GH-348[]
+
+The use of `this` is illustrated with some examples as it can often be confusing.
+Type inference heuristics and explanations are provided in the next section.
+
+
+.This in Unrestricted Mode
+[example]
+--
+In unrestricted mode, `this` is bound to the receiver.
+If there is no receiver it is bound to the global object, however, we often do not know exactly what the global object would be.
+
+////
+% This example only works in Browsers. Or in node-repl console. When loaded from a file (aka as a module)
+% node assigns a local environment.
+% Nevertheless see /eu.numberfour.ide.n4js.transpiler.es5.tests/testdata/spec_chap_07_01_01/Ex58_this_keyword.n4js.xt
+////
+
+[source,n4js]
+----
+var name = "global a"; // assume the top level is similar to the global object
+this.name; // <-- "global a"
+function f() {
+    return this.name; // <-- depends on call, usually "global a"
+}
+var ol1 = {
+    name: "John",
+    greeting: "Hello " + this.name, // "Hello global a" -- we do not greet John!
+}
+var ol2 = {
+    name: "John",
+    f: function() {
+        this.name; // usually "John", as we assume f is called like ol2.f()
+        var g = function() {
+           return this.name; // "global a"
+        }
+        return g(); // no receiver, this in nested function g will be global scope
+    }
+}
+----
+--
+
+.This in strict mode
+[example]
+--
+In strict mode, `this` is bound to the receiver.
+If there is no receiver, it is bound to `undefined`.
+Thus, we will probably get a lot of errors:
+
+[source,n4js]
+----
+"use strict"
+var name = "global a"; // assume the top level is similar to the global object
+this.name; // <-- error, this is undefined, there is no receiver
+function f() {
+    return this.name; // <-- depends on call, usually this produces an error as this is undefined
+}
+var ol1 = {
+    name: "John",
+    greeting: "Hello " + this.name, // will produce an error, as this is undefined
+}
+var ol2 = {
+    name: "John",
+    f: function() {
+        this.name; // usually "John", as we assume f is called like ol2.f()
+        var g = function() {
+           this.name; // an error, see call below:
+        }
+        return g(); // no receiver, this in nested function g is undefined
+    }
+}
+----
+--
+
+.This in N4JS mode
+[example]
+--
+As in strict mode, `this` is bound to the receiver and if there is no receiver, it is bound to `undefined`. So the example above is also true for N4JS mode.
+Classes behave slightly differently:
+
+[source,n4js]
+----
+class A {
+    name = "John";
+    greeting  = "Hello " + this.name; // works, in N4JS classes, greeting is "Hello John"
+
+    f() {
+        return this.name; // this usually is instance object, similar to object literals.
+    }
+
+    g() {
+        var h = function() {
+            return this.name; // as in object literals: no receiver, no this.
+        }
+        return h();
+    }
+}
+----
+
+--
+
+NOTE: In N4JS classes, `this` is always bound to the instance when used in field initialization.
+
+
+[discrete]
+==== Type Inference
+task:IDE-244[]
+
+[.language-n4js]
+--
+The type is inferred from the `this` type is bound to. The inference,
+therefore, has to consider the original semantics as described in cite:[ECMA11a(10.4.,10.4.3,p.58)].
+In ECMAScript the type of this is unfortunately determined by the function call and not by the function definition:
+
+* By default, `this` is bound to the global object cite:[ECMA11a(10.4.1.1)].
+Unfortunately it is often unknown what the global object will be at run time (e.g., node.js differs from browsers).
+* If a function is called without a receiver, `this` is bound to
+** the global object or
+** to `undefined` in strict mode.
+* If a function is called with a receiver,`this` is bound to the receiver object.
+
+Actually, `this` is bound to the newly created object if a function is called with the `new` operator.
+If a function is known to be invoked with an explicit $thisArg$ (`apply()` etc.), the `@This` annotation can be used to explicitly set the this type.
+This annotation has precedence over otherwise inferred bindings. task:IDE-1010[]
+
+--
+
+.Type Inference Heuristic for This-Keyword
+[req,id=IDE-90,version=1]
+--
+In general, the actual this target can not be inferred from the context of the this keyword.
+A heuristic is defined, however, to compute the probable this type:
+
+.  [[this-keyword-constraint-1]] If the this keyword is used in some function annotated with an annotation `@This`, the type specified in the annotation is used.
+The inferred type is always nominal.
++
+[%hardbreaks]
+$f=\lstnfbnf{"this"}.containingFunctionOrAccessor$
+$\infer{\tee \lstnfbnf{"this"}: \tsNom T}{f.hasAnnotation(\lstnfbnf{"@This"}) \spc T = f.annotation\lstnfjs{["@This"]}}$
+. [[this-keyword-constraint-2]] If the this keyword is used in some _instance_ method of a  classifier or in an _instance_ field initializer,`this` is bound to the `T` itself.
+If the this keyword is used in some _static_ method of a classifier `T` or in a _static_ field initializer, the prototype type (or constructor) of the classifier is used, that is `type[T]`.
+In both cases, the target is determined by using the expressions’s pseudo property `probableThisTarget`.
+If the this keyword is used in a function expression assigned to an property of an object literal, the type of the object literal is used.
+Note that usually this is the `this` type in instance methods, and the `this` type in static methods. task:IDE-785[]
++
+[math]
+++++
+\infer{\tee \lstnfbnf{"this"}: \tsNom T}{T=\lstnfbnf{"this"}.probableThisTarget \spc T\neq\NULL} \\
+++++
+. task:IDE-185[] In all other cases: Non-strict mode:
++
+[math]
+++++
+\infer{\tee \lstnfbnf{"this"}: \type{global}}{mode=\lenum{unrestricted}}\\
+++++
+
+Strict mode and N4JS mode:
+
+[math]
+++++
+\infer{\tee \lstnfbnf{"this"}: \type{global} \type{undefined}}{mode\neq\lenum{unrestricted}}\\
+++++
+
+--
+
+If the actual this type is defined as a structural type, the structural type information is moved to the this type itself.
+This is transparent to the user in general but maybe visible in case of error messages.
+That is to say that the actual this type is always a nominal type.
+This is indicated by the nominal modifier $\tsNom$ (cf. <<Req-IDE-90>> constraints <<this-keyword-constraint-1,1>> and <<this-keyword-constraint-2,2>>.).
+
+////
+
+TODO check if this constraint is still relevant
+
+Constraints 86 (No @This Annotation on Accessors):
+Since property- and field-acces- sors (also known as getter & setter) are not referable, their this type cannot be changed and is always bound to the current instance.
+Therefore, it is not allowed to use a @This (..) annotation on any getter or setter.
+////
+
+.Valid Target and Argument for @This Annotation
+[req,id=IDE-91,version=1]
+--
+task:IDE-802[]
+
+1.  The `@This` annotation is only allowed on declared functions, function expressions (including arrow functions), methods, and field accessors, i.e. getters and setters, except static members of interfaces.
+2.  The type declared by way of `@This(..)` an annotation of a method or field accessor must be a subtype of the member’s containing classifier.
+
+--
+
+.Single @This Annotation
+[req,id=IDE-92,version=1]
+--
+task:IDE-802[]
+It is not allowed to use more then one `@This(..)` annotation on an element.
+--
+
+.Effect of Nominal This Type
+[example]
+====
+Given the following declaration
+
+[source,n4js]
+----
+@This(~Object with {a: string;}) f() {}
+----
+
+Since the this type is always nominal, `pass:[~ Object]` becomes `Object`.
+In case of method call, however, the returned value becomes structural again.
+In case of error messages the type of the return type is then
+
+[source,n4js]
+----
+~this[Object] with {a: string;}
+----
+
+For the sake of simplicity, additional structural members are usually
+omitted in error messages, leading to
+
+[source,n4js]
+----
+~this[Object]
+----
+
+instead of
+
+[source,n4js]
+----
+this[~Object]
+----
+
+====
+
+.This and Function Declaration
+[example]
+--
+This example demonstrates the usage of functions annotated with `@This`.
+By using the argument  `union{A,B}` it is possible to have two completely unrelated classes as the receiver type of the function `logger`.
+To pass an actual object the `apply()` method of the function is used.
+
+[source,n4js]
+----
+class A {
+    log: string() { return "A was logged"; }
+}
+
+class B {
+    log: string() { return "B was logged"; }
+}
+
+@This(union{A,B})
+function logger() { console.log("~ "+this.log()+" ~"); }
+
+
+var a: A = new A();
+logger.apply(a,[]); // prints "~ A was logged ~"
+logger.apply( new B(),[]) // prints "~ B was logged ~"
+----
+
+--
+
+.This and Function Expressions
+[example]
+====
+In this example a function is created via a function expression.
+The function is then assigned to member field of class B.
+Via annotating the expression with `@This(B)`, access to the receiver of type B is enabled.
+
+[source,n4js]
+----
+class B {
+    log(): string { return "B was logged"; }     // method
+    logMe : {@This(B) function():void}; // reference to a function
+}
+
+var b: B = new B();
+b.logMe = @This(B) function() { console.log("*>"+this.log()+"<*"); }
+b.logMe(); // prints "*>B was logged<*"
+----
+--
+
+.This and Constructor Functions
+[example]
+--
+Note that if a function is called as a constructor function with new, the
+type of `this` can be declared via annotation `@This(..)`, as shown in the following
+snippet:
+
+[source,n4js]
+----
+@This(
+    ~Object with {
+        w: number; h: number;
+        area: {function():number};
+    })
+function Box(w: number w, h: number) {
+    this.w = w;
+    this.h = h;
+    this.area = @This(
+        ~Object with {
+            w: number; h: number;
+            area: {function():number};
+        }) function() { return this.w * this.h }
+}
+var bError = Box(1,2)
+var bOK = new Box(1,2)
+----
+
+====
+
+Inside the constructor function `Box`, `this` is bound to the structural type definition due to the annotation.
+
+Inside the nested function `area`, `this` is bound to the receiver object (if the function is called like `bOk.area()`).
+Again, this depends on the way the nested function is called, which can usually not be determined at the declaration location.
+The nested function must then be annotated accordingly.
+
+When calling this function, the type of this is checked against the declared this type, which would cause an error in the first case.
+
+The use of the `@This` annotation is not allowed on methods. task:IDE-2313[]
+
+TIP: Using constructor functions is not recommended and an error or warning will be created.
+This is only useful for adapting third-party library code.
+Even in the latter case, it would probably make more sense to declare a (library) *class* Rectangle rather then defining the constructor function.
+
+=== Identifier
+
+[discrete]
+==== Syntax
+
+Identifiers as expressions are identifier references.
+They are defined as follows:
+
+[source,xtext]
+----
+IdentifierRef <Yield>:
+    id=[types::IdentifiableElement|BindingIdentifier<Yield>]
+;
+
+BindingIdentifier <Yield>:
+    IDENTIFIER
+    | <!Yield> 'yield'
+    | N4Keyword
+;
+----
+
+[discrete]
+==== Semantics
+
+The type of an identifier $i$ is resolved depending on its binding and scope respectively (cf. cite:[ECMA11a(10.2.2.1GetIdentifierReference,p.56)].
+The following scopes (aka __Lexical Environments__) are defined:
+
+* function local; local variables, parameters
+* zero or more function closure in case of nested functions
+* module
+* global
+
+These scope are nested as illustrated in <<fig:scopes>>.
+
+Note that classes definitions and object literal do not define a scope: members of a class or properties of an object literal are to be accessed via `this`.
+Identifier references always reference declared elements, that is to say either variable, function, or class declarations.
+Properties of object literals or members of a class are referenced via $PropertyAccess-Expression.property$ (see <<_property-accessors>>).
+
+[[fig:scopes]]
+.Scopes
+image::{find}fig/scopes.png[scaledwidth="40%",align="center"]
+
+An identifier may be bound to a variable (global or local variable, parameter, variable defined in a function’s closure), or to a property of an object.
+The latter case is known as property access as further described in <<_property-accessors>>.
+
+.Read Access to Identifier
+[req,id=IDE-93,version=1]
+--
+If an identifier $i$ is accessed, the bound declared element $D$ must be readable if it is not used on the left-hand side of an assignment expression.
+
+[%hardbreaks]
+$\spc bind(i, D) $
+$\spc \hspace{2em}\land \nexists\ \type{AssignmentExpression}\ ae \in i.container^*: $
+$\spc \hspace{3em} ae.left = i $
+$\spc \hspace{4em}\lor (\mu(ae.left)=\type{PropertyAccessExpression} \land ae.left.property=i): $
+$\spc \Rightarrow D.readable $
+
+--
+
+[discrete]
+==== Type Inference
+task:IDE-244[]
+
+
+An identifier reference $i$ is bound to an identifiable element $i.id$, which is expressed with the function $bind(i, i.id)$.
+The type of the reference is then inferred as follows:
+
+[math]
+++++
+\infer{\typeEnv \entails \type{IdentifierRef}\ idref: T}{\typeEnv \entails idref.id: T}
+++++
+
+=== Literals
+
+cf. cite:[ECMA11a(S11.1.3p.63,S7.8p.19ff)].
+
+[discrete]
+==== Type Inference
+
+The type of a literal can directly be derived from the grammar.
+The following axioms are defined for literals:
+
+[%hardbreaks]
+$ \lspc \infer{\type{NullLiteral}: \type{null}}{} $
+$ \lspc \infer{\type{BooleanLiteral}: \type{boolean}}{}  $
+$ \lspc \infer{\type{NumericLiteral}: \type{int} or \type{number}}{} $
+$ \lspc \infer{\type{StringLiteral}: \type{string}}{} $
+$ \lspc \infer{\type{RegularExpressionLiteral}: \type{RegExpr}}{} $
+
+////
+TODO - convert tags to section links
+
+\tag{\S7.8.1}\\
+\tag{\S7.8.2}\\
+\tag{\S7.8.3}\\
+\tag{\S7.8.4}\\
+\tag{\S7.8.5}
+
+[sidebar]
+null
+boolean
+number
+string
+RegExpr
+////
+
+Note that there are no literals specific for `pathSelector` or `i18nkey`.
+
+==== Integer Literals
+
+Numeric literals representing integers in the range of JavaScript’s int32 are inferred to the built-in primitive type `int` instead of `number`.
+The following rules apply:
+
+.Numeric literals
+[req,id=IDE-94,version=1]
+--
+
+* Numeric literals with a fraction or using scientific notation, e.g. `2.0` and `2e0`, respectively, are always inferred to `number`, even if they represent integers in the range of int32.
+* Numeric literals that represent integers in the range of JavaScript’s int32, i.e. from $-2^{31}$ to $2^{31}-1$, are inferred to `int`.
+* Hexadecimal and octal literals are always interpreted as positive numbers, so all values above `0x7fffffff` and `017777777777` lie outside the range of int32 and will thus
+be inferred to `number`; this is an important difference to Java. See below for further elaboration.
+
+There are differences to numeric literals in Java:
+
+[cols="2m,2e,1m,2e,1m"]
+|===
+| 2+^| Java  2+^| JavaScript  N4JS
+
+h|Literal  h| Value h| Type h| Value h| Type
+
+|2147483648         |  -2147483648      |  int          |  -2147483648  |  int
+|2147483647         |  2147483647       |  int          |  2147483647   |  int
+|0x7fffffff         |  2147483647       |  int          |  2147483647   |  int
+|0x80000000         |  -2147483648      |  int          | +2147483648   |  number
+|0xffffffff         |  -1               |  int          |  4294967295   |  number
+|0x100000000    2+^h| n/a                              e|  4294967296  m|  number
+|017777777777       |  2147483647       |  int          |  2147483647   |  int
+|020000000000       |  -2147483648      |  int          |  +2147483648  |  number
+|037777777777       |  -1               |  int          |  4294967295   |  number
+|040000000000       |  0                |  int          |  4294967296   |  number
+|0100000000000  2+^h|  n/a                             e|  8589934592  m|  number
+|===
+
+The literals `0x100000000` and `0100000000000` produce a syntax error in Java.
+
+Until IDE-1881 task:IDE-1881[] is complete, all built-in operations always return a `number` even if all operands are of type `int`.
+For the time being, we therefore interpret `-1` as a negative integer literal (inferred to `int`), but `-(1)` as the negation of a positive integer literal (inferred to `number`).
+
+--
+
+=== Array Literal
+
+[discrete]
+==== Syntax
+
+cf cite:[ECMA11a(S11.1.4,p.63)]
+
+[source,xtext]
+----
+ArrayLiteral <Yield> returns ArrayLiteral:
+    {ArrayLiteral} '['
+        elements+=ArrayPadding* (
+            elements+=ArrayElement<Yield>
+            (',' elements+=ArrayPadding* elements+=ArrayElement<Yield>)*
+            (trailingComma?=',' elements+=ArrayPadding*)?
+        )?
+    ']'
+;
+
+/**
+ * This array element is used to pad the remaining elements, e.g. to get the
+ * length and index right
+ */
+ArrayPadding returns ArrayElement: {ArrayPadding} ',';
+
+ArrayElement <Yield> returns ArrayElement: {ArrayElement} spread?='...'? expression=AssignmentExpression<In=true,Yield>;
+----
+
+
+[discrete]
+==== Type Inference
+
+task:IDE-244[] task:IDE-342[]
+
+In general, an array literal is inferred as `Array<T>` (similar to the type of `new Array()`).
+The interesting question is the binding of the type variable $T$.
+
+The type of an array padding _p_ is inferred as follows:
+
+[math]
+++++
+\infer{\tee p: \type{undefined}}{} \\
+++++
+
+
+The element type of an array literal is simply inferred as the (simplified) union of the type elements of the array.
+Thus, the type of an array literal $a$ is inferred as follows:
+
+[math]
+++++
+\infer{\tee(a): Array<T>}{\tee a.\seq{elements}: \seq{T_e}   T = \bigcup \seq{T_e}}
+++++
+
+
+In other languages not supporting union types, the element type is often inferred as the join (<<Acronyms,LCST>>) of the element types.
+Using a union type here preserves more information (as the actual types are still known).
+For many use cases the behavior is similar though, as the members of a union type are the members of the join of the elements of the union.
+
+Note that `typeof [1,2,3]` does not return `Array<number>` (as ECMAScript is not aware of the generic array type), but `Object`.
+
+.Array Type Inference
+[example]
+====
+The type for all variables declared in this example is inferred to ``Array<string>``:
+
+[source,n4js]
+----
+var names1          = ["Walter", "Werner"];
+var names2          = new Array("Wim", "Wendelin");
+var names3          = new Array<string>(3); // length is 3
+var names4: Array<string>;
+----
+
+Empty array literals are inferred to `any`, by default.
+We are not using `Array<?>` here because then a typical JavaScript pattern would no longer be supported:
+
+[source,n4js]
+----
+var a = [];
+a.push('hello'); // <1>
+----
+<1> This would fail if `a` and thus `[]` were inferred to `Array<?>`
+
+====
+
+IMPORTANT: An important exception; if a type expectation exists for the empty array literal and the expected type is `Array<T>`, this will be used as the type of the array literal.
+
+.Empty array literal
+[req,id=IDE-95,version=1]
+--
+An empty array literal will be inferred as follows:
+
+* If there is a type expectation for the empty array literal and the expected type is `Array<T>`, for any type `T`, then the type of the empty array literal will be inferred to `Array<T>`.
+* Otherwise, the type of the empty array literal will be inferred to `Array<any>`.
+
+--
+
+=== Object Literal
+
+[discrete]
+==== Syntax  [[object-literal-syntax]]
+
+Cf. cite:[ECMA11a(S11.1.5,p.65ff)]
+The syntax of an object literal is given by:
+
+[source,xtext]
+----
+ObjectLiteral <Yield>: {ObjectLiteral}
+    '{'
+        ( propertyAssignments+=PropertyAssignment<Yield>
+          (',' propertyAssignments+=PropertyAssignment<Yield>)* ','?
+        )?
+    '}'
+;
+
+PropertyAssignment <Yield>:
+      PropertyNameValuePair<Yield>
+    | PropertyGetterDeclaration<Yield>
+    | PropertySetterDeclaration<Yield>
+    | PropertyMethodDeclaration<Yield>
+    | PropertyNameValuePairSingleName<Yield>
+;
+
+
+PropertyMethodDeclaration <Yield>:
+    => ({PropertyMethodDeclaration}
+        annotations+=Annotation*
+        TypeVariables? returnTypeRef=TypeRef?
+            (
+                generator?='*'  LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody<Generator=true>
+                | LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody <Generator=false>
+            )
+        )
+    ';'?
+;
+
+PropertyNameValuePair <Yield>:
+    => (
+        {PropertyNameValuePair}
+        annotations+=Annotation*
+        declaredTypeRef=TypeRef? LiteralOrComputedPropertyName<Yield> ':'
+    )
+    expression=AssignmentExpression<In=true,Yield>
+;
+
+/*
+ * Support for single name syntax in ObjectLiteral (but disallowed in actual object literals by ASTStructureValidator
+ * except in assignment destructuring patterns)
+ */
+PropertyNameValuePairSingleName <Yield>:
+    declaredTypeRef=TypeRef?
+    identifierRef=IdentifierRef<Yield>
+    ('=' expression=AssignmentExpression<In=true,Yield>)?
+;
+
+PropertyGetterDeclaration <Yield>:
+    =>(
+        {PropertyGetterDeclaration}
+        annotations+=Annotation*
+        GetterHeader<Yield>
+    )
+    body=Block<Yield=false>
+;
+
+PropertySetterDeclaration <Yield>:
+    =>(
+        {PropertySetterDeclaration}
+        annotations+=Annotation*
+        'set'
+        ->LiteralOrComputedPropertyName <Yield>
+    )
+    '(' fpar=FormalParameter<Yield> ')' body=Block<Yield=false>
+;
+----
+
+[source,n4js]
+----
+import Address from "my/Address";
+var simple = {name: "Walter", age: 72, address: new Address()};
+----
+
+==== Properties
+
+PropertyAssignments have common properties of PropertyNameValuePair, PropertyGetterDeclaration, and PropertySetterDeclaration:
+
+
+`annotations` ::
+The annotations of the property assignment.
+
+`name` ::
+The name of the property. This may be an identifier, a string or a numeric literal.
+When comparing names, we implicitly assume the name to be converted to an identifier, even if this identifier is not a valid ECMAScript identifier.
+
+`declaredType` ::
+The declared type of the property which may be null.
+This property is a pseudo property for PropertySetterDeclaration, in this case it is derived from the declared type of the setter’s formal parameter.
+
+Additionally, we introduce the following pseudo properties to simplify constraints:
+
+
+`isAccessor` ::
+The read-only boolean property. This is true if the property assignment is a setter or getter declaration.
+This is comparable to ECMAScript’s spec function `IsAccessoprDescriptor`.
+For a given property assignment _p_ this is semantically equivalent to $\mu(p)=\type{PropertyGetterDeclaration} \lor \mu(p)=\type{PropertySetterDeclaration}$.
+
+`isData` ::
+The read-only boolean property.
+This is true if the property assignment is a name value pair.
+For a given property assignment _p_ this is semantically equivalent to $\mu(p)=\type{PropertyNameValuePair}$.
+It is comparable to ECMAScript’s spec function `isDataDescriptor`.
+The equation $isAccessor = \lnot isData$ is always true.
+
+[discrete]
+==== Semantics [[properties-semantics]]
+
+.Object literal
+[req,id=IDE-96,version=1]
+--
+For a given object literal $ol$ the following constraints must hold (cf. cite:[ECMA11a(p.66)]:
+
+* the name of each property is given as an identifier, a string literal, a numeric literal, or as a computed property name with
+** a string literal, e.g. `['myProp']`,
+** a built-in symbol, for example as in `[Symbol.iterator]`, or
+** a literal of a `@StringBased` enum.
+* Object literal may not have two PropertyNameValuePairs with the same name in strict mode (cf. 4.a):
++
+[%hardbreaks]
+$mode=\lenum{strict} \rightarrow \spc \forall pa \in ol.propertyAssignments, pa.isData:$
+$\spc \nexists pa' \in ol.propertyAssignments:$
+$\spc pa'.isAccessor \land pa'.name = pa.name$
+
+* Object literal may not have PropertyNameValuePair and ``PropertyGetterDeclaration``/``PropertySetterDeclaration`` with the same name (cf. 4.b/c):
++
+[%hardbreaks]
+$\forall \spc pa \in ol.propertyAssignments, pa.isData : $
+$\nexists \spc pgsd \in ol.propertyAssignments : $
+$\mu(pgsd) \neq\type{PropertyNameValuePair} \land pgsd.name = pa.name$
+
+* Object literal may not have multiple `PropertyGetterDeclaration` or `PropertySetterDeclaration` with the same name (cf. 4.d):
++
+[%hardbreaks]
+$\forall \spc pg \in ol.propertyAssignments, pg.isAccessor:$
+$\nexists \spc pg' \in ol.propertyAssignments\{pg\}: $
+$\spc \mu(pg')=\mu(pg) \land pg'.name = pg.name$
+
+[quote]
+It is a SyntaxError if the Identifier `eval` or the Identifier `arguments` occurs as the Identifier in a `PropertySetParameterList` of a `PropertyAssignment` that is contained in strict code or if its
+`FunctionBody` is strict code. cite:[ECMA11a(p.66)]
+
+* If two or more property assignments have the same name (and the previous conditions hold), then the types of these assignments must _conform_.
+That is to say that the inferred (but not declared) type of all assignments must be type of probably declared types and if the types are explicitly declared, they must be equal.
+//todo[JvP, LB]{How to express that?}
+
+* In N4JS mode, the name of a property must be a valid N4JSIdentifier:
++
+[%hardbreaks]
+$mode=\lenum{n4js} \rightarrow \spc \forall pa \in ol.propertyAssignments:$
+$\spc \mu(pa.name)=\type{N4JSIdentifier}$
+
+
+// TODO check math here
+
+--
+
+
+==== Scoping and linking
+task:IDE-173[]
+
+.Scoping and linking
+[example]
+====
+[source,n4js]
+----
+var p = {
+    f: function() {
+        console.log("p´s f");
+    },
+    b: function() {
+        this.f();
+    },
+    o: {
+        nested: "Hello"
+    }
+};
+p.b();
+p.o.nested;
+----
+
+* Other properties within an object literal property can be accessed using this.
+In the expression of property name value pairs, however, `this` is not be bound to the containing object literal, but usually to undefined or global.
+* The properties of an object literal are accessible from outside.
+* Nested properties of an object literal are also accessible from outside.
+
+====
+
+[discrete]
+==== Type Inference [[type-inference-3]]
+task:IDE-244[] task:IDE-343[] task:IDE-691[]
+
+An object literal implicitly extends `pass:[~Object]`, therefore, object literal types use structural typing.
+For details see <<_structural-typing>>.
+From a type systems point of view, the two variables `ol` and `st` below have the same type.
+
+[source,n4js]
+----
+var ol = {
+    s: "hello",
+    n: 42
+}
+var st: ~Object with { s: string; n: number;};
+----
+
+=== Parenthesized Expression and Grouping Operator
+The grouping operator is defined here as a parenthesized expression.
+
+[discrete]
+==== Syntax [[parenthesized-expression-grouping-syntax]]
+
+cf. cite:[ECMA11a(S11.1.6,p.67)]
+
+[source,xtext]
+----
+ParenExpression <Yield>: '(' expression=Expression<In=true,Yield> ')';
+----
+
+[discrete]
+==== Type Inference [[Grouping-Operator-type-inference]]
+task:IDE-244[] task:IDE-345[]
+
+The type of the grouping operator simply is the type of its nested expression.
+The type if a parenthesized expression $pe$ is inferred as follows:
+
+[math]
+++++
+\infer{\tee \lstnfbnf{'('} e \lstnfbnf{')'}: T}{\tee e: T}
+++++
+
+// TODO check  \tag{\S11.1.6}
+
+.Parenthesized Expression Type Examples
+[example]
+--
+In the following listing, the type of the plain expressions is equivalent to the parenthesized versions:
+
+[source,n4js]
+----
+class A{} class B extends A{}
+var f: boolean; var a: A a; var b: B;
+
+/* simple       <->     parenthesized */
+10;                     (10);
+"hello";                ("hello");
+true;                   (true);
+a;                      (a);
+10-5;                   (10-5);
+f?a:b                   (f?a:b);
+----
+
+--
+
+=== Property Accessors
+
+[discrete]
+==== Syntax [[property-accessor-syntax]]
+
+Property accessors in N4JS are based on cite:[ECMA11a(S11.2.1,p.67ff)].
+They cannot only be used for accessing properties of an object, but also for accessing members of a class instance.
+In order to support parameterized calls, the syntax is extended to optionally allow type arguments.
+
+[source,xtext]
+----
+ParameterizedPropertyAccessExpression:
+    target=PrimaryExpression<Yield> ParameterizedPropertyAccessExpressionTail<Yield>
+;
+
+IndexedAccessExpression:
+    target=PrimaryExpression<Yield> IndexedAccessExpressionTail<Yield>
+;
+
+fragment IndexedAccessExpressionTail <Yield>*:
+    '[' index=Expression<In=true,Yield> ']'
+;
+
+fragment ParameterizedPropertyAccessExpressionTail <Yield>*:
+    '.' TypeArguments? property=[types::IdentifiableElement|IdentifierName]
+;
+----
+
+Note that in cite:[ECMA11a], the `index access` is called `__bracket notation__`.
+
+==== Properties [[properties-1]]
+We define the following properties:
+
+`target` ::
+The receiver of the property access.
+
+`index` ::
+The index expression in case of an IndexedAccessExpression (returns $\NULL$ otherwise).
+
+`property` ::
+The name of the property in case of non-indexed-access expressions (returns $\NULL$ otherwise, although the index may be interpreted as property name).
+
+We define the following pseudo properties:
+
+
+`isDotAccess` ::
+Read-only boolean property, returns true for non-index access expression (similar to $\mu(p) \neq\type{IndexedAccessExpression}$).
+
+`isIndexAccess` ::
+Read-only boolean property, returns true for index access expression (similar to $\mu(p)=\type{IndexedAccessExpression}$. +
+The equation $p.isDotAccess = \lnot p.isIndexAccess$ is always true.
+
+`name` ::
+Returns the name of the property.
+This is either the $property$ converted to a simple name or the index converted to a name (where possible) if it is an indexed-accessed expression.
+
+[discrete]
+==== Semantics [[property-acessors-semantics]]
+task:IDE-12[]
+
+The parameterization is part of the property access in case of generic methods.
+For generic functions, a parameterized function call is introduced (cf. <<_function-calls>>).
+The constraints are basically similar.
+
+.Property Access and Dot Notation
+[req,id=IDE-97,version=1]
+--
+
+1.  If dot notation is used in N4JS mode, the referenced property must exist unless receiver is a dynamic type: task:IDE-422[]
++
+[math]
+++++
+\spc pae.isDotAccess \land \lnot R.dyn \rightarrow \\
+\spc \exists m \in pae.target.type.properties: m.name=pae.name
+++++
++
+2.  If dot notation is used and the referenced property exists, then the property must be accessible:
++
+[math]
+++++
+\spc pae.isDotAccess \land \lnot R.dyn \rightarrow\\
+\spc (\exists m \in pae.target.type.properties : m.name=pae.name) \rightarrow  \alpha(pae, m)
+++++
++
+3.  If dot notation is used and the referenced property exists and this property is a member with a declared `@This` type (only possible for methods or field accessors),
+then the receiver must be a subtype of the declared `@This` type.
+--
+
+.Index Access
+[req,id=IDE-98,version=1]
+--
+task:IDE-656[] task:IDE-1734[]
+
+1.  A limited form of computed-name indexed-access is allowed in N4JS mode.
+In case the receiver is of dynamic type, the index can be any expression task:GH-238[].
+Otherwise, the indexed-access is limited in that the index must be a string literal.
+Feasible targets of such accesses are the same as for dot-access.
++
+This notation is useful when interoperating with libraries that define members whose names contain special characters (for example, a field name starting with commercial-at).
+2.  Additionally, an indexed-access expression is allowed when targeting one of the types
++
+or subtypes, for `Object` (not including subtypes of `Object` and not for `pass:[~Object]` and `pass:[~~Object]` ), and for dynamic types.
+It is not allowed to access members of enums in particular.
+That is to say, for an indexed-access expression $iae$, the following constraint must hold:
++
+[math]
+++++
+\beginalign
+\spc\tee ia.target \subtype T, T \in \types{Array, ArgumentType, string, String, Iterable} \\
+\spc\lor\\
+\spc\tee ia.target = \type{Object}
+\endalign
+++++
++
+3. In N4JS mode, if the receiver is an array and is not dynamic, in case of index access the index expression must be a number:
++
+[%hardbreaks]
+$\spc mode=\lenum{n4js} \land pae.target.type=\type{Array} \land pae.isIndexAccess $
+$\spc \Rightarrow \tee pae.index \subtype[number]$
+4.  In N4JS mode, if the receiver is a subtype of types or and is not dynamic, in case of index access the index expression must be a number:  task:IDE-837[]
++
+[%hardbreaks]
+$\spc mode=\lenum{n4js} $
+$\spc \hspace{3em} \land (\tee pae.target\subtype {string} \lor \tee pae.target \subtype {String}) $
+$\spc \hspace{3em} \land pae.isIndexAccess $
+$\spc \Rightarrow \tee pae.index \subtype{number} $
+5.  In N4JS mode, if the receiver is an iterable and is not dynamic, in case of index access the index expression must be a property access expression to the built-in symbol `Symbol.iterator`:
++
+[%hardbreaks]
+$\spc mode=\lenum{n4js} \land pae.target.type=\type{Iterable} \land pae.isIndexAccess $
+$\spc \Rightarrow $
+$\spc \hspace{3em} \mu(pae.index)=\type{IndexedAccessExpression} $
+$\spc \hspace{3em} \land pae.index.isDotAccess $
+$\spc \hspace{3em} \land pae.index.target = \type{Symbol} $
+$\spc \hspace{3em} \land pae.index.property = "iterator" $
+
+
+--
+
+Although index access is very limited, it is still possible to use immediate instances of `Object` in terms of a map (but this applies only to index access, not the dot notation):
+
+.Object as Map
+[example]
+====
+
+
+[source,n4js]
+----
+var map: Object = new Object();
+map["Kant"] = "Imperative";
+map["Hegel"] = "Dialectic";
+map.spinoza = "Am I?";  // error: Couldn't resolve reference to IdentifiableElement 'spinoza'.
+----
+====
+
+.Parameterized Property Access
+[req,id=IDE-99,version=1]
+--
+For a parameterized property access expression $pae$, the following constraints must hold:
+
+1.  The receiver or target must be a function or method: +
+$pae.target.type \subtype \type{Function}$
+2.  The number of type arguments must match the number of type parameters of the generic function or method: +
+$|pae.typeArgs|=|pae.target.typeVars|$
++
+3.  The type arguments of a parameterized property access expression must be subtypes of the boundaries of the parameters of the called generic method.
+//\todo[JvP, LB]{How to formalize that best?}
+
+Also see constraints on read (<<Req-IDE-93>>) and write (<<Req-IDE-121>>) access.
+
+--
+
+[discrete]
+==== Type Inference [[type-inference-5]]
+
+task:IDE-244[] task:IDE-182[] task:IDE-183[]
+
+Cf. cite:[ECMA11a(S11.2.1,p.67ff)]
+
+We define the following type inferencing rules for property accessors:
+
+* The type of an indexed-access expression _p_ is inferred as follows task:IDE-342[]:
++
+[math]
+++++
+\beginalign
+\infer{\tee p: T}{\lnot p.target.dyn \lor p.index.type \subtype[number] \spc \tee p.target: \type{Array}< \type{T} > } \\
+\infer{\tee p: \type{any}}{else}
+\endalign
+++++
+* The type of a property access expression is inferred as follows:
++
+[math]
+++++
+\beginalign
+\infer{\type{PropertyAccessExpression}\ expr: T}{\typeEnvAdd \typeSubs(R) \entails expr.target : R \spc \typeEnv \entails expr.property : T}
+\endalign
+++++
+
+* The type of a parameterized access expression _p_ is inferred as follows:
++
+[math]
+++++
+\beginalign
+\infer{\tee p: T}{\exists m \in p.target: m.name=p.name \spc \tee m: T} \\
+\infer{\tee p: \type{any}}{}
+\endalign
+++++
+
+
+=== New Expression
+task:IDE-192[] task:IDE-204[]
+
+cf. cite:[ECMA11a(S11.2.2,p.68)]
+
+[discrete]
+==== Syntax [[new-expression-syntax]]
+
+[source,xtext]
+----
+NewExpression: 'new' callee=MemberExpression<Yield> (-> TypeArguments)?
+        (=> withArgs?='(' Arguments<Yield>? ')' )?
+----
+
+[source,n4js]
+----
+import Address from "my/Address";
+
+var a = new Address();
+// a.type := my/Address
+
+class C<T> {
+    constructor(param: T) {}
+}
+var c = new C<string>("hello");
+----
+
+[discrete]
+==== Semantics [[new-expression-semantics]]
+
+.New expression
+[req,id=IDE-100,version=1]
+--
+Let $ne$ be a new expression, with $\tee ne.callee: C$.
+The following constraints must hold:
+
+.  [[new-expression-1]] The callee must be a constructor type: $C <: \type{constructor}\{?\}$  or a constructable type.
+.  [[new-expression-2]] Let $O$ be the type argument of $C$, that is $C = constructor\{O\}$. In that case,
+..  $O$ must not be an interface or enum: $\mu(C) \not\in \{ \type{Interface}, \type{Enum}\}$
+..  $O$ must not contain any wildcards.
+..  $O$ must not be a type variable.
+.  [[new-expression-3]] If $C$ is not a constructor type, it must be a constructable type, that is one of the following:
++
+[math]
+++++
+\{
+\beginalign
+\type{Object, Function, String, Boolean,} \\
+\type{Number, Array, Date, RegExp, Error}
+\endalign
+\}
+++++
+In particular, it must not refer to a primitive type or a defined
+functions (i.e., subtypes of `Function`) cannot be used in new-expressions in
+N4JS.
+
+// TODO fix missing ref here
+--
+
+Remarks:
+
+to <<new-expression-1,1>> The type of an abstract class `A` is $type\{A\}$.
+Or in other words: Only instantiable classes have an inferred type of $constructor\{ \dots \}$.
+
+to <<new-expression-2,2>> Even though it is possible to use the constructor type of an abstract class – concrete subclasses with override compatible constructor signature will be subclasses of this constructor.
+
+to <<new-expression-3,3>> It is not possible to refer to union or intersection at that location. So this is not explicitly denied here since it is not possible anyway.
+
+.Abstract classes and construction
+[example]
+--
+The following examples demonstrates the usage of abstract classes and constructor types, to make the first two constraints more clearer:
+
+[source,n4js]
+----
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+abstract class A {}
+class B extends A {}
+
+// XPECT errors --> "Cannot instantiate abstract class A." at "A"
+var x = new A();
+// XPECT noerrors -->
+var y = new B();
+
+function foo(ctor : constructor{A}) {
+    // XPECT noerrors -->
+    return new ctor();
+}
+
+// XPECT errors --> "type{A} is not a subtype of constructor{A}." at "A"
+foo(A);
+// XPECT noerrors -->
+foo(B);
+----
+
+--
+
+[discrete]
+==== Type Inference [[type-inference-6]]
+
+The type of a new expression $ne$ is inferred as follows:
+
+[math]
+++++
+\infer{\tee ne: C}{\tee ne.callee: \type{constructor{C}}}
+++++
+
+For classes, constructors are described in <<_constructor-and-classifier-type>>.
+
+In N4JS it is not allowed to call new on a plain function.
+For example:
+
+[source,n4js]
+----
+function foo() {}
+var x = new foo();
+----
+
+will issue an error.
+
+=== Function Expression
+
+See <<_functions>> for details.
+
+=== Function Calls
+task:IDE-186[] task:IDE-851[]
+
+In N4JS, a function call cite:[ECMA11a(S11.2.3)] is similar to a method call.
+Additionally to the ECMAScript’s CallExpression, a ParameterizedCallExpression is introduced to allow type arguments passed to plain functions.
+
+
+[discrete]
+==== Syntax
+task:IDE-177[] [[function-calls-syntax]]
+
+Similar to cite:[ECMA11a(S11.2.3,p.68ff)], a function call is defined as follows:
+
+[source,xtext]
+----
+CallExpression <Yield>:
+    target=IdentifierRef<Yield>
+    ArgumentsWithParentheses<Yield>
+;
+
+ParameterizedCallExpression <Yield>:
+    TypeArguments
+    target=IdentifierRef<Yield>
+    ArgumentsWithParentheses<Yield>
+;
+
+fragment ArgumentsWithParentheses <Yield>*:
+    '(' Arguments<Yield>? ')'
+;
+
+fragment Arguments <Yield>*:
+    arguments+=AssignmentExpression<In=true,Yield> (',' arguments+=AssignmentExpression<In=true,Yield>)* (',' spread?='...' arguments+=AssignmentExpression<In=true,Yield>)?
+    | spread?='...' arguments+=AssignmentExpression<In=true,Yield>
+;
+----
+
+[discrete]
+==== Semantics [[function-calls-semantics]]
+
+.Function Call Constraints
+[req,id=IDE-101,version=1]
+--
+For a given call expression $f$ bound to a method or function declaration $F$, the following constraints must hold:
+
+* If less arguments are provided than formal parameters were declared, the missing formal parameters must have been declared optional: +
+$|f.args|<|F.pars| \rightarrow \forall |f.args|<i\leq|F.pars|: F_pars_i.optional$
+* If more arguments are provided than formal parameters were declared, the last formal parameter must have been declared variadic: +
+$|f.args|>|F.pars| \rightarrow F.pars_{|F.pars|-1}.variadic$
+* Types of provided arguments must be subtypes of the formal parameter types: +
+$\forall 0<i<min(|f.args|,|F.pars|): f.args_i <: F.pars_i$
+* If more arguments are provided than formal parameters were declared, the type of the exceeding arguments must be a subtype of the last (variadic) formal parameter type: +
+$\forall |F.pars|<i\leq|f.args|: f.args_i <: F.pars_{|F.pars|-1}$
+
+--
+
+
+.Parameterized Function Call Constraints
+[req,id=IDE-102,version=1]
+--
+* The number of type arguments in a parameterized call expression must be equal to the number of type parameters of the generic function / method and the
+type arguments must be subtypes of the corresponding declared upper boundaries of the type parameters of the called generic function.
+
+Note that (for a limited time), constraints <<Req-IDE-101>> and <<Req-IDE-102>> are not applied if the the type of $F$ is `Function`.
+See <<_function-object-type>>.
+
+--
+
+[discrete]
+==== Type Inference [[type-inference-7]]
+task:IDE-244[]
+
+A call expression $expr$ is bound to a method (<<Methods>>) or function declaration (which may be part of a function definition
+(<<_function-declaration>> or specified via a function type <<_function-type>>) $F$ (via evaluation of `MemberExpression`.
+The type of the call is inferred from the function declaration or type $F$ as follows:
+
+[math]
+++++
+\infer{\tee expr: T}{bind(expr.target, F) \spc F.returnType: T}
+++++
+
+task:IDE-205[]
+
+A generic method invocation may be parameterized as well.
+This is rarely required as the function argument types are usually inferred from the given arguments.
+In some cases, for instance with pathSelectors, this is useful.
+In that case, the type variable defined in the generic method declaration is explicitly bound to types by using type arguments.
+See <<_property-accessors>> for semantics and type inference.
+
+.Generic Method Invocation
+[example]
+====
+This examples demonstrate how to explicitly
+define the type argument in a method call in case it cannot be inferred
+automatically.
+
+[source,n4js]
+----
+class C {
+    static <T> foo(p: pathSelector<T>): void {..}
+};
+C.<my.Address>foo("street.number");
+----
+
+Note that in many cases, the type inferencer should be able to infer the type automatically.
+For example, for a method
+
+[source,n4js]
+----
+function <T> bar(c: T, p: pathSelector<T>): void {..};
+----
+
+and a function call
+
+[source,n4js]
+----
+bar(context, "some.path.selector");
+[source,n4js]
+----
+
+the type variable `T` can be automatically bound to the type of variable `context`.
+
+====
+
+=== Postfix Expression
+
+[discrete]
+==== Syntax [[postfix-expression-syntax]]
+
+[source,xtext]
+----
+PostfixExpression returns Expression: LeftHandSideExpression
+         (=>({PostfixExpression.expression=current} /* no line terminator here */ op=PostfixOperator))?
+    ;
+enum PostfixOperator: inc='++' | dec='--';
+----
+
+[discrete]
+==== Semantics and Type Inference [[semantics-and-type-inference]]
+
+The type inference and constraints for postfix operators `pass:[++]` and `--`, cf. cite:[ECMA11a(S11.3.1,p.70)], cite:[ECMA11a(S11.3.1,p.70)],
+are defined similarly to their prefix variants (unary expressions), see <<Unary Expression>>.
+
+.Postfix Expression Constraints
+[req,id=IDE-103,version=1]
+--
+
+task:IDE-345[]
+For a given postfix expression $u$ $u$ with $u.op \in \{++,--\}$ and $u.expression.type: T$, the following constraints must hold:
+
+* In N4JS mode, the type $T$ of the expression must be a number.
+* If $u.expression = PropertyAccess \; pa(p) \land pa.isDotAccess \rightarrow $ both $get$ _p_ and $set$ _p_ must be defined. task:IDE-737[]
+--
+
+=== Unary Expression
+
+[discrete]
+==== Syntax [[unary-expression-syntax]]
+
+We define the following unary operators and expression, similar to cite:[ECMA11a(p.70ff)]:
+
+[source,xtext]
+----
+UnaryExpression returns Expression:
+      PostfixExpression
+    | ({UnaryExpression} op=UnaryOperator expression=UnaryExpression);
+enum UnaryOperator: delete | void | typeof | inc='++' | dec='--' | pos='+' | neg='-' | inv='$\sim$' | not='!';
+----
+
+[discrete]
+==== Semantics [[unary-expression-semantics]]
+
+For semantics of the delete operator, see also cite:[MozillaJSRef]
+//todo: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Operators/delete
+
+.Delete Operator Constraints
+[req,id=IDE-104,version=1]
+--
+For a given unary expression $u$ with $u.op=\lstnfjs{delete}$, the following constraints must hold:
+
+* In strict mode, $u.expression$ must be a reference to a property of an object literal, a member of a class type, or to a property of the global type
+(i.e., the reference must be bound, and the bound target must not be a variable).
+* In N4JS mode, the referenced property or member must not be declared in the containing type and the containing type reference must be declared dynamic.
+--
+
+.Void Operator Constraints
+[req,id=IDE-105,version=1]
+--
+There are no specific constraints defined for with $u.op=\lstnfjs{void}$
+task:IDE-345[]
+--
+
+.Typeof Operator Constraints
+[req,id=IDE-106,version=1]
+--
+There are no specific constraints defined for unary expression $u$ with $u.op=\lstnfjs{typeof}$. task:IDE-345[]
+--
+
+
+.Increment/Decrement Constraints
+[req,id=IDE-107,version=1]
+--
+For a given unary expression $u$ $u$ with $u.op \in \{++,--\}$ and $u.expression.type: T$, the following constraints must hold:
+
+* If mode is N4JS, task:IDE-345[] the type $T$ of the expression must be a number
++
+[math]
+++++
+\infer{\tee \type{UnaryExpression} \expectType \type{Expression}: \type{number}}{}
+++++
+
+* If $u.expression = PropertyAccess \; pa(p)  \land  pa.isDotAccess$ $\rightarrow$ both $get$ _p_ and $set$ _p_ must be defined. task:IDE-768[]
+
+--
+
+.Unary Plus/Minus/Bitwise Not Operator Constraints
+[req,id=IDE-108,version=1]
+--
+For a given unary expression $u$ $u$ with $u.op \in \{+,-,\sim\}$ and $u.expression.type: T$, the following constraints must hold: task:IDE-345[]
+
+* In N4JS mode, the type T of the expression must be a number:
+
+[math]
+++++
+\infer{\tee \type{UnaryExpression} \expectType \type{Expression}: \type{number}}{}
+++++
+
+
+--
+
+.Logical Not Operator Constraints
+[req,id=IDE-109,version=1]
+--
+There are no specific constraints defined for with $u.op=\lstnfjs{!}$.
+
+////
+%For a given unary expression $u$ with $u.op=\lstnfjs{typeof}$ and $u.expression.type: T$, the following constraints must hold:
+%\begin{itemize}
+%\item \todo[jvp]{typeof operator constraints}
+%\end{itemize}
+////
+
+// TODO check block here
+
+--
+
+[discrete]
+==== Type Inference [[type-inference-8]]
+
+The following operators have fixed types independent of their operand types: task:IDE-244[] task:IDE-345[]
+
+[%hardbreaks]
+$ \spc \infer{\tee \lstnfbnf{'delete'}\ expression: \type{boolean}}{}  $
+$ \spc \infer{\tee \lstnfbnf{'void'}\ expression: \type{undefined}}{} $
+$ \spc \infer{\tee \lstnfbnf{'typeof'}\ expression: \type{string}}{} $
+$ \spc \infer{\tee \lstnfbnf{('++'|'--'|'+'|'-'|'~')}\ expression: \type{number}}{} $
+$ \spc \infer{\tee \lstnfbnf{'!'}\ expression: \type{boolean}}{} $
+
+=== Multiplicative Expression
+
+[discrete]
+==== Syntax [[multiplicative-expression-syntax]]
+
+Cf. cite:[ECMA11a(p.73ff)]
+
+[source,xtext]
+----
+MultiplicativeExpression returns Expression: UnaryExpression
+      (=>({MultiplicativeExpression.lhs=current} op=MultiplicativeOperator) rhs=UnaryExpression)*;
+enum MultiplicativeOperator: times='*' | div='/' | mod='%';
+----
+
+[discrete]
+==== Semantics [[multiplicative-expression-semantics]]
+
+
+.Multiplicative Expression Constraints
+[req,id=IDE-110,version=1]
+--
+For a given multiplicative expression the following constraints must hold in N4JS mode task:IDE-345[]:
+
+* The types of the operands must be subtypes of number:
++
+[math]
+++++
+\inferSup{\typeEnv \entails \type{MultiplicativeExpression} \expectType \type{Expression}: \type{number}}{}
+++++
+
+--
+
+[discrete]
+==== Type Inference
+task:IDE-244[] task:IDE-345[] [[type-inference-9]]
+
+The inferred type of a multiplicative expression always is number:
+
+[math]
+++++
+\infer{\typeEnv \entails \type{MultiplicativeExpression}: \type{number}}{}
+++++
+
+=== Additive Expression
+
+[discrete]
+==== Syntax [[additive-expression-syntax]]
+
+Cf. cite:[ECMA11a(p.75ff)]
+
+[source,xtext]
+----
+AdditiveExpression returns Expression: MultiplicativeExpression
+    (=>({AdditiveExpression.lhs=current} op=AdditiveOperator) rhs=MultiplicativeExpression)*;
+enum AdditiveOperator: add='+' | sub='-';
+----
+
+[discrete]
+==== Semantics [[additive-expression-semantics]]
+
+.Additive Expression Constraints
+[req,id=IDE-111,version=1]
+--
+task:IDE-345[]
+For a given additive expression the following constraints must hold in N4JS mode:
+
+* The types of the operands must be subtypes of number if the operator is not ’+’, otherwise, any type could be used:
+
+[math]
+++++
+\infer{\typeEnv \entails \type{AdditiveExpression}\ e \expectType \type{Expression}: \type{number}}{e.op \neq AdditiveOperator.ADD}
+++++
+--
+
+==== Type Inference [[type-inference-10]]
+task:IDE-244[] task:IDE-345[]
+
+[.language-n4js]
+The type of an additive expression is usually inferred to `number`.
+The result for the addition operator may only be a number if both operands are numbers, booleans, or one is boolean or number and the other is undefined or null.
+
+We first define two helper rules to simplify the addition operator condition:
+
+[math]
+++++
+\beginalign
+\inferRule{nb}{nb(T)}{T = \type{number} \lor T = \type{boolean}}
+\inferRule{nb}{nb(expr)}{nb\tee expr} \\
+\inferRule{un}{un(T)}{T = \type{undefined} \lor T = \type{null}}
+\inferRule{un}{un(expr)}{un\tee expr.lhs \lor un\tee expr.rhs}
+\endalign
+++++
+
+The type of an additive expression $e$ is inferred as follows:
+
+[math]
+++++
+\beginalign
+\infer{\tee e: \type{string}}{e.op='+' \spc   \lnot(nb(e.lhs)\land nb(e.rhs)) \spc   \lnot(un(e) \land (nb(e.lhs)\lor nb(e.rhs))}\\
+\spc  \infer{\tee e: \type{number}}{}\\
+\endalign
+++++
+
+.Type of addition expression
+[example]
+====
+
+[source,xtext]
+----
+1+2;            // number 3
+"1"+"2";        // string "12"
+"1"+2;          // string "12"
+1+true;         // number 2
+false+1;        // number 1
+"1"+true;       // string "1true"
+"1"+null;       // string "1null"
+1+null;         // number 1
+1+undefined;    // number NaN
+"1"+undefined;  // string "1undefined"
+----
+
+====
+
+=== Bitwise Shift Expression
+
+[discrete]
+==== Syntax [[bitwise-shift-expression-syntax]]
+
+task:IDE-288[] Cf. cite:[ECMA11a(p.76f)]
+
+[source,xtext]
+----
+ShiftExpression returns Expression: AdditiveExpression
+    (=>({ShiftExpression.lhs=current} op=ShiftOperator rhs=AdditiveExpression))*
+;
+
+ShiftOperator returns ShiftOperator:
+      '>' '>' '>'? // SHR, USHR
+    | '<' '<'  // SHL
+    ;
+----
+
+[discrete]
+==== Semantics [[bitwise-shift-expression-semantics]]
+
+.Bitwise Shift Expression Constraints
+[req,id=IDE-112,version=1]
+--
+For a given bitwise shift expression $e$ the following constraints must hold in N4JS mode: task:IDE-345[] task:IDE-771[]
+* The types of the operands must be both number.
+
+[math]
+++++
+\infer{\tee \type{BitwiseShiftExpression}\ \expectType\ \type{Expression}: \type{number}}{}
+++++
+
+--
+
+[discrete]
+==== Type Inference [[type-inference-11]]
+task:IDE-244[] task:IDE-345[]
+
+The type returned by a bitwise shift expression is always `boolean`:
+
+[math]
+++++
+\spc\infer{\tee\ (\lstnfbnf{Expression ('}<<\lstnfbnf{'|'}>>\lstnfbnf{'|'} >>> \lstnfbnf{')\ Expression}): \type{number}}{}  \\
+++++
+
+// TODO - check  \tag{\S 11.7.1/2}
+
+=== Relational Expression
+
+[discrete]
+==== Syntax [[relational-expression-syntax]]
+
+Cf. cite:[ECMA11a(p.77ff)]
+
+[source,xtext]
+----
+RelationalExpression returns Expression: ShiftExpression
+    (=>({RelationalExpression.lhs=current} op=RelationalOperator) rhs=ShiftExpression)*;
+
+RelationalExpressionNoIn returns Expression: ShiftExpression
+    (=>({RelationalExpression.lhs=current} op=RelationalOperatorNoIn) rhs=ShiftExpression)*;
+
+enum RelationalOperator:
+    lt='<' | gt='>' | lte='<=' | gte='>=' | instanceof | in;
+RelationalOperatorNoIn returns RelationalOperator:
+    '<' | '>' | '<=' | '>=' | 'instanceof';
+----
+
+[discrete]
+==== Semantics [[relational-expression-semantics]]
+
+.Greater/Less (Equals) Operator Constraints
+[req,id=IDE-113,version=1]
+--
+task:IDE-345[]
+
+For a given relational expression $e$ with $e.op \in \{ <, >, <=, >= \}$ in N4JS mode,
+the following constraints must hold:
+
+* The operands must have the same type and the type must be either a number, string, or boolean:
++
+[%hardbreaks]
+$\spc\infer{\tee  lhs\ ('<'|'<='|'>'|'>=')  rhs\  \expectType\ lhs: T}{ \tee rhs: T \spc T\in \{\type{number,string,boolean}\}}$
+$\spc\infer{\tee  lhs\ ('<'|'<='|'>'|'>=')  rhs\  \expectType\ lhs: T}{ \tee rhs: O \spc O \not\in \{\type{number,string,boolean}\} \spc T=\union{\type {number,string,boolean}}}   $
+$\spc\infer{\tee  lhs\ ('<'|'<='|'>'|'>=')  rhs\  \expectType\ rhs: T}{ \tee lhs: T \spc T\in \{\type{number,string,boolean}\}} $
+$\spc\infer{\tee  lhs\ ('<'|'<='|'>'|'>=')  rhs\  \expectType\ rhs: T}{ \tee lhs: O \spc O \not\in \{\type{number,string,boolean}\} \spc T=\union{\type{number,string,boolean}}}   $
+
+
+--
+
+.Instanceof Operator Constraints
+[req,id=IDE-114,version=1]
+--
+For a given relational expression $e$ with task:IDE-345[] $e.op = \lstnfjs{instanceof}$, the following constraints must hold:
+
+* The right operand of the instanceof operator must be a `Function` footnote:[Only [language-n4js]`Function` implements the ECMAScript specification property [language-n4js]`hasInstance`. Thus instanceof expressions are rewritten by the compiler for other types. Note that a reference to a class returns the constructor type, which actually is a function itself.]
+
+In other words,
+
+[math]
+++++
+\inferSup{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type}\{\type{Class}\}}{}
+++++
+
+is contained in the the first type rule, an object type reference footnote:[Includes interfaces, since an interface type reference is a subtype of object type reference: $\type{type}\{\type{Interface}\} <: \type{type}\{\type{Object}\}$]
+or an enum type reference. task:IDE-681[] task:IDEBUG-631[] task:IDE-652[]
+
+[math]
+++++
+\spc\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{Function}}{} \\
+\spc\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type}\{ \type{Object}\}}{} \\
+\spc\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type}\{ \type{N4Enum}\}}{}
+++++
+
+The type of a definition site structural classifier $C$ is not of type `C`.
+Thus, the `instanceof` operator cannot be used for structural types.
+Use-site structural typing is also not possible since `pass:[~]` would be interpreted (by the parser) as a binary operator.
+
+--
+
+.Operator Constraints
+[req,id=IDE-115,version=1]
+--
+task:IDE-345[]
+For a given relational expression $e$ with $e.op = \lstnfjs{in}$, the following constraints must hold:
+
+1.  The right operand of the in operator must be an `Object`:
++
+[math]
+++++
+\spc\infer{\tee lhs\ \lstnfbnf{'in'}\  rhs\  \expectType\ rhs: \type{Object}}{}
+++++
+2.  In N4JS mode, the left operand is restricted to be of type `string` or `number`:
++
+[math]
+++++
+\spc\infer{\tee  lhs\ \lstnfbnf{'in'}\ rhs\  \expectType\ lhs: \union{\type{string,number}}}{}
+++++
+
+--
+
+A special feature of N4JS is support for interface type references in combination with the `instance of` operator.
+The compiler rewrites the code to make this work. task:IDE-561[]
+
+.`instanceof` with Interface
+[example]
+--
+The following example demonstrates the use of the operator with an interface.
+This is, of course, not working in pure ECMAScript.
+
+//% see /eu.numberfour.ide.n4js.transpiler.es5.tests/testdata/spec_chap_07_01_16/Ex72_instanceof_with_interfaces.n4js.xt
+
+[source,n4js]
+----
+interface I {}
+
+class A implements I {}
+class B extends A {}
+class C {}
+
+function f(name: string, p: any) {
+    if (p instanceof I) {
+        console.log(name + " is instance of I");
+    }
+}
+
+f("A", new A())
+f("B", new B())
+f("C", new C())
+----
+
+This will print out
+
+[source,n4js]
+----
+A is instance of I
+B is instance of I
+----
+
+--
+
+[discrete]
+==== Type Inference [[type-inference-12]]
+task:IDE-244[] task:IDE-345[]
+
+The type of a relational expression always is `boolean`;
+
+[math]
+++++
+\spc\infer{\tee lhs\ \lstnfbnf{('<'|'<='|'>'|'>='|'instanceof'|'in')}\ rhs\ : \type{boolean}}{}
+++++
+
+
+// TODO check \tag{\S 11.8.1-6}
+
+
+=== Equality Expression
+
+[discrete]
+==== Syntax [[equality-expression-syntax]]
+
+Cf. cite:[ECMA11a(p.80ff)]
+
+[source,xtext]
+----
+EqualityExpression returns Expression: RelationalExpression
+    (=>({EqualityExpression.lhs=current} op=EqualityOperator) rhs=RelationalExpression)*;
+
+EqualityExpressionNoIn returns Expression: RelationalExpressionNoIn
+    (=>({EqualityExpression.lhs=current} op=EqualityOperator) rhs=RelationalExpressionNoIn)*;
+
+
+enum EqualityOperator: same='===' | nsame='!==' | eq='==' | neq='!=';
+----
+
+[discrete]
+==== Semantics [[equality-expression-semantics]]
+task:IDE-345[]
+
+There are no hard constraints defined for equality expressions.
+
+In N4JSmode, a warning is created if for a given expression $lhs \lstnfbnf{('==='|'!==')} rhs$, neither $\tee lhs.upper <: rhs.upper$ nor $\tee rhs.upper <: lhs.upper$
+and no interface or composed type is involved as the result is constant in these cases.
+
+task:IDE-773[] task:IDEBUG-260[]
+
+Note that a warning is only created if the upper bounds do not match the described constraints.
+This is necessary for wildcards. For example in
+
+[source,n4js]
+----
+// with
+class A{} class B extends A{}
+function isFirst(ar: Array<? extends A>, b: B): boolean {
+    return b === ar[0]
+}
+----
+
+the type of array elements is `? extends A`. +
+Neither $\lstnfjs{? extends A}\subtype \lstnfjs{B}$ nor $\lstnfjs{B} \subtype \lstnfjs{? extends A}$ is true.
+This is why the upper bounds are to be used.
+
+[discrete]
+==== Type Inference [[type-inference-13]]
+
+task:IDE-244[] task:IDE-345[]
+
+In N4JSmode, using the non-strict equality operators `'=='|'!='` is only allowed for internal developers.
+External developers have to use the strict equality operators `'==='|'!=='`.
+The inferred type of an equality expression always is `boolean`.
+
+[math]
+++++
+\spc\infer{\tee lhs\ \lstnfbnf{('=='|'!='|'==='|'!==')}\ rhs\ : \type{boolean}}{}
+++++
+
+=== Binary Bitwise Expression
+
+[discrete]
+==== Syntax [[binary-bitwise-expression-syntax]]
+
+Cf. cite:[ECMA11a(p.82ff)]
+
+[source,xtext]
+----
+BitwiseANDExpression returns Expression: EqualityExpression
+    (=> ({BitwiseANDExpression.lhs=current} '&') rhs=EqualityExpression)*;
+
+BitwiseANDExpressionNoIn returns Expression: EqualityExpressionNoIn
+    (=> ({BitwiseANDExpression.lhs=current} '&') rhs=EqualityExpressionNoIn)*;
+
+BitwiseXORExpression returns Expression: BitwiseANDExpression
+    (=> ({BitwiseXORExpression.lhs=current} '^') rhs=BitwiseANDExpression)*;
+
+BitwiseXORExpressionNoIn returns Expression: BitwiseANDExpressionNoIn
+    (=> ({BitwiseXORExpression.lhs=current} '^') rhs=BitwiseANDExpressionNoIn)*;
+
+BitwiseORExpression returns Expression: BitwiseXORExpression
+    (=> ({BitwiseORExpression.lhs=current} '|') rhs=BitwiseXORExpression)*;
+
+BitwiseORExpressionNoIn returns Expression: BitwiseXORExpressionNoIn
+    (=> ({BitwiseORExpression.lhs=current} '|') rhs=BitwiseXORExpressionNoIn)*;
+----
+
+[discrete]
+==== Semantics [[binary-bitwise-expression-semantics]]
+
+.Bitwise Bitwise Expression Constraints
+[req,id=IDE-116,version=1]
+--
+For a given bitwise bitwise expression $e$ the following constraints must hold in N4JS mode: task:IDE-345[]
+
+* The types of the operands must be both number.
+
+[math]
+++++
+\infer{\tee \type{BitwiseBitwiseExpression}\ \expectType\ \type{Expression}: \type{number}}{}
+++++
+
+--
+
+task:IDE-244[] task:IDE-345[]
+
+[discrete]
+==== Type Inference [[type-inference-14]]
+
+
+The type returned by a binary bitwise expression is always $number$:
+
+[math]
+++++
+\inferSup{\tee (\lstnfbnf{Expression ('&'|'\^'|'|') Expression}) : \type{number}}{}
+++++
+
+// TODO - check  \tag{\S 11.10}
+
+=== Binary Logical Expression
+
+[discrete]
+==== Syntax [[binary-logical-expression-syntax]]
+
+[source,xtext]
+----
+LogicalANDExpression returns Expression: BitwiseORExpression
+    (=> ({LogicalANDExpression.lhs=current} '&&') rhs=BitwiseORExpression)*;
+LogicalANDExpressionNoIn returns Expression: BitwiseORExpressionNoIn
+    (=> ({LogicalANDExpression.lhs=current} '&&') rhs=BitwiseORExpressionNoIn)*;
+
+LogicalORExpression returns Expression: LogicalANDExpression
+    (=> ({LogicalORExpression.lhs=current} '||') rhs=LogicalANDExpression)*;
+LogicalORExpressionNoIn returns Expression: LogicalANDExpressionNoIn
+    (=> ({LogicalORExpression.lhs=current} '||') rhs=LogicalANDExpressionNoIn)*;
+----
+
+[discrete]
+==== Semantics [[binary-logical-expression-semantics]]
+
+.Binary Logical Expression Constraints
+[req,id=IDE-117,version=1]
+--
+For a given binary logical expression $e$ with $e.lhs.type: L$ and $e.rhs.type: R$ the following constraints must hold:
+
+* In N4JS mode $L$ must not be `undefined` or `null`. task:IDE-775[]
+
+--
+
+[discrete]
+==== Type Inference [[type-inference-15]]
+task:IDE-244[]
+
+The evaluation relies on ECMAScript’s abstract operation `ToBoolean` cite:[ECMA11a(p.43)].
+A short-circuit evaluation strategy is used so that depending on the types of the operands, different result types may be inferred.
+In particular, the inferred type usually is not `boolean` ((cf. cite:[ECMA11a(S11.11.,p.83ff)] ).
+The type inference does not take this short-circuit evaluation strategy into account, as it will affect the result in case one of the types is `null`
+either or `undefined`, which is not allowed in N4JS mode.
+
+[math]
+++++
+\infer{\tee lhs \lstnfbnf{'} \&\& \lstnfbnf{'|'||'} rhs : union \{ \tee lhs, \tee rhs \}}{}
+++++
+
+=== Conditional Expression
+
+[discrete]
+==== Syntax [[conditional-expression-syntax]]
+
+Cf. cite:[ECMA11a(S11.12,p.84)]
+
+[source,xtext]
+----
+ConditionalExpression returns Expression: LogicalORExpression
+    (=> ({ConditionalExpression.expression=current} '?') trueExpression=AssignmentExpression  ':' falseExpression=AssignmentExpression)?;
+
+ConditionalExpressionNoIn returns Expression: LogicalORExpressionNoIn
+    (=> ({ConditionalExpression.expression=current} '?') trueExpression=AssignmentExpression  ':' falseExpression=AssignmentExpressionNoIn)?;
+----
+
+[discrete]
+==== Semantics [[conditional-expression-semantics]]
+task:IDE-776[]
+
+.Conditional Expression Constraints
+[req,id=IDE-118,version=1]
+--
+For a given conditional expression $e$ with
+
+[%hardbreaks]
+$e.expression.type: C,$
+$e.trueExpression.type: T,$
+$e.false-Expression.type: F$
+
+
+the following constraints must hold:
+
+* A warning will be issued in N4JSmode if $e.expression$ evaluates to a constant value.
+That is to say +
+$e.expression \in \{ false, true, null, undefined\}$ or
+$C \in \{ \type{void},\type{undefined} \}$.
+
+There are no specific constraints defined for the condition.
+The ECMAScript operation `ToBoolean` cite:[ECMA11a(S9.2,p.43)] is used to convert any type to boolean.
+--
+
+[discrete]
+==== Type Inference [[type-inference-16]]
+task:IDE-348[]
+
+// TODO missing notation below
+
+The inferred type of a conditional expression is the union of the true and false expression (cf. cite:[ECMA11a(S11.12,p.84)]   ():
+
+[math]
+++++
+\infer
+{\tee cond\ \lstnfbnf{'?'} et\ \lstnfbnf{':'} ef : T}
+    {T = \union{ \tee et, \tee ef}}
+++++
+
+
+.Type of Conditional Expressions
+[example]
+--
+Given the following declarations:
+
+[source,n4js]
+----
+class A{}       class B extends A{}
+class C{}       class D extends A{}
+class G<T> { field: T; }
+
+var ga: G<A>, gb: G<B>;
+    a: A, b: B, c: C, d: D;
+var boolean cond;
+----
+
+Then the type of the following conditional expression is inferred as noted in the comments:
+
+[source,n4js]
+----
+cond ? a : a;                           // A
+cond ? a : b;                           // union{A,B}
+cond ? a : c;                           // union{A,C}
+cond ? b : d;                           // union{B,D}
+cond ? (cond ? a : b) : (cond ? c : d); // union{A,B,C,D}
+cond ? (cond ? a : b) : (cond ? b : d); // union{A,B,D}
+cond ? ga : gb;                         // union{G<A>,G<B>}
+----
+
+--
+
+
+=== Assignment Expression
+
+[discrete]
+==== Syntax [[assignment-expression-syntax]]
+
+[source,xtext]
+----
+AssignmentExpression <In, Yield>:
+    lhs=Expression op=AssignmentOperator rhs=AssignmentExpression<In,Yield>
+;
+AssignmentOperator:
+      '='
+    | '*=' | '/=' | '%=' | '+=' | '-='
+    | '<<=' | '>>=' | '>>>='
+    | '&=' | '^=' | '|='
+;
+----
+
+[discrete]
+==== Semantics [[assignment-expression-semantics]]
+task:IDE-349[]
+
+.Simple Assignment
+[req,id=IDE-119,version=1]
+--
+For a given assignment $assignment$ with
+
+$assignment.op=\lstnfbnf{'='}$
+
+the following constraints must hold:
+
+//\todo[jvp infer type of left and even right-hand side of assignments]{Cf. pathSelectors: even the return type of a generic method may be inferred, that is, the assignment operator inference rules are a bit more complicated. Cf. generics.}
+
+1.  $\infType{assignment.lhs} \subtype \infType{assignment.rhs}$
++
+In the following inference rule and the constraint, ’@’ is to be replaced with the right part of one of the assignment operators listed above, that is,
++
+[math]
+++++
+@ \in \{\lstnfbnf{'*', '/', '\%', '+', '-', '<<', '>>', '>>>', '\&', '\^', '|'}\}
+++++
+// TODO fix block
+--
+
+.Compound Assignment
+[req,id=IDE-120,version=1]
+--
+For a given assignment $left\ op\ right$, with $op=\lstnfbnf{'@='}$ but not `pass:[+=]`, both, left and right must be subtypes of `number`. +
+For operator `+=`,
+
+* if the left-hand side is a `number`, then $left\ \lstnfbnf{'+'} right$ must return a number as well.
+The right-hand side must, in fact, be a `number` (and not a `boolean`) here in order to avoid unexpected results.
+* if the left-hand side is a `string`, then $left \lstnfbnf{'+'} right$ must return a string as well.
+That means that the right-hand side can be of `any` type.
+
+The expected type for the left-hand side is `union{number,string}`.
+
+The basic idea behind these constraints is that the type of the left-hand side is not to be changed by the compound assignment.
+
+--
+
+
+.Write Acccess
+[req,id=IDE-121,version=1]
+--
+For a given assignment expression $assignExpr$, the left-hand side must be writeable or a final data field and the assignment must be in the constructor.
+Let $v$ be the bound variable (or field) with $bind(assignExpr.left, v)$
+
+[math]
+++++
+\beginalign
+v.writeable \lor
+    v.final \land
+    \spc \hspace{2em} v.expr = \NULL \\
+    \spc \hspace{2em} \land assignExpr.containingFunction = v.owner.constructor \\
+    \spc \hspace{2em} \land \mu(assignExpr.left)=\type{PropertyAccess} \\
+    \spc \hspace{4em} \land assignExpr.left.target = \lstnfjs{"this"}
+\endalign
+++++
+
+
+The value of writeable is true for setters and usually for variables and data fields.
+Assignability of variables and data fields can be restricted via `const` or the `@Final` annotation.
+See <<_assignment-modifiers>>(data fields) and <<Const>> (const variables) for details.
+
+Also see <<Req-IDE-93>> for read access constraint.
+
+The left-hand side of an assignment expression may be an array or object literal and the assignment expression is then treated as a destructuring assignment.
+See <<_array-and-object-destructuring>> for details.
+
+--
+
+[discrete]
+==== Type Inference [[type-inference-17]]
+task:IDE-244[] task:IDE-349[]
+
+Similarly to cite:[ECMA11a(S11.1,p.84ff)], we define type inference for simple assignment (`=`) and compound assignment (`op=`) individually.
+
+The type of the assignment is simply the type of the right-hand side:
+
+[math]
+++++
+\spc\infer{\tee left\ \lstnfbnf{'='} right: T}{\tee right: T}
+++++
+
+// TODO check \tag{\S 11.13.1}
+
+Compound assignments are reduced to the former by splitting an operator `@=`, in which `@` is a simple operator,
+into a simple operator expression with operator `@` and a simple assignment `=`.
+Since the type of the latter is the right-hand side, we can define:
+
+[math]
+++++
+\infer{\tee left\ \lstnfbnf{'@='} right: T}{\tee left\ \lstnfbnf{'@'} right: T}
+++++
+
+// TODO check \tag{\S 11.13.1}
+
+=== Comma Expression
+
+[discrete]
+==== Syntax [[comma-expression-syntax]]
+
+Cf. cite:[ECMA11a(S11.14,p.85)]
+
+[source,xtext]
+----
+CommaExpression <In, Yield>:
+    exprs+=AssignmentExpression<In,Yield> ',' exprs+=AssignmentExpression<In,Yield>
+    (','    exprs+=AssignmentExpression<In,Yield>)*
+;
+----
+
+[discrete]
+==== Semantics [[comma-expression-semantics]]
+task:IDE-778[]
+
+All expressions will be evaluated even though only the value of the last expression will be the result.
+
+.Comma Expression
+[example]
+--
+Assignment expressions preceed comma expressions:
+
+[source,n4js]
+----
+var b: boolean;
+b = (12, 34, true); // ok, b=true
+b =  12, 34, true ; // error, b=12 is invalid
+----
+
+--
+
+[discrete]
+==== Type Inference [[type-inference-18]]
+task:IDE-244[]
+
+Cf. cite:[ECMA11a(S11.14,p.85)]
+
+The type of a comma expression $cexpr$ is inferred to the last expression:
+
+[math]
+++++
+\infer{\tee cexpr: T}{n=|cexpr.exprs|, \tee cexpr.exprs_n:T}
+++++
+
+// TODO: check  \tag{\S11.14}
+
+[.language-n4js]
+== ECMAScript 6 Expressions
+
+=== The super Keyword
+
+// todo{compare semantic with ES6, the current definition stems from times when ES6 was in draft mode.}
+
+
+[source,n4js]
+----
+SuperLiteral: {SuperLiteral} 'super';
+----
+
+Apart from the use of keyword `super` in wildcards of type expressions (cf. <<_type-expressions >>),
+there are two use cases for keyword `super`: super member access and super constructor calls.
+
+.Super Keyword
+[example]
+--
+
+Two use cases for keyword super:
+
+[source,n4js]
+----
+class B extends A {
+    constructor() {
+        // super call
+        super();
+    }
+    @Override
+    m();: void {
+        // super member access
+        super.m();
+    }
+}
+----
+
+--
+
+[discrete]
+==== Semantics [[super-keyword-semantics]]
+task:IDE-645[]
+
+`super` can be used to access the supertype’s constructor, methods, getters and setters.
+The supertype is defined lexically, which is different from how `this` works.footnote:[See cite:[ECMA15a], Chapter 12.3.5 "The Super Keyword"; note the use of `HomeObject` instead of `thisValue`; also see this blog - http://www.2ality.com/2011/11/super-references.html.]
+
+Note that in cite:[ECMA15a] Chapter 12.3.5 `The Super Keyword`, `super` is defined as a keyword but the syntax and semantics are defined in conjunction of member access.
+
+.Type of Super is Always Nominal
+[req,id=IDE-122,version=1]
+--
+The type referenced with the super literal is always nominal.
+This is a consequence of references to types in extend clauses to be nominal.
+
+$\tee \lstnfjs{super}: T \land T.typingStrategy = \lenum{nominal}$
+
+--
+
+.Access Super Constructor with Super Literal
+[req,id=IDE-123,version=1]
+--
+If the super literal $s$ is used to access the super constructor of a class, all of the following constraints must hold:
+
+1.  The super constructor access must be a call expression:
++
+[math]
+++++
+\mu(cexpr)=\type{CallExpression} \land c.target = cexpr
+++++
+2.  The super constructor call must be the expression of an expression statement $exprStmt$:
++
+[math]
+++++
+exprStmt = cexpr.container \land \mu(cexpr.container) = \type{ExpressionStatement}
+++++
+3.  The containing statement $stmtExpr$ must be directly contained in a constructor body:
++
+[math]
+++++
+\beginalign
+\spc\mu(exprStmt.containingFunction)=\type{Constructor}) \\
+\spc\land exprStmt.container = exprStmt.containingFunction.body
+\endalign
+++++
+4.  There must be no access to and not return statement before the containing statement $exprStmt$. task:IDEBUG-147[]
++
+Let $si$ be the index of $exprStmt$ in the constructor body:
++
+[math]
+++++
+exprStmt.container.stmts_{si}=exprStmt
+++++
++
+Then, the following constraint must hold: footnote:[$e \in^* c$ is the transitive version of $e \in c$, that is, it $e$ directly or indirectly contained in $c$.]
++
+[math]
+++++
+\spc\forall i < si: \nexists element \in^* exprStmt.container.stmts_{i}:\\
+\spc\hspace{3em} \mu(i) \in \types{ThisLiteral, ReturnStatement}
+++++
+
+Further constraints with regard to super constructor calls are described in <<_constructor-and-classifier-type>>.
+task:IDE-1753[]
+
+--
+
+.Access Super Member with Super Literal
+[req,id=IDE-124,version=1]
+--
+If the super literal $s$ is used to access a member of the super class, all of the following constraints must hold, with $c=s.container.container$
+
+1.  The super literal must be the receiver of a method call (cf. remarks below):
++
+[math]
+++++
+\beginalign
+\spc \mu(c)=\type{CallExpression}\\
+\land \spc c.target = \type{PropertyAccessExpression} \\
+\land \spc c.target.target=s
+\endalign
+++++
+2.  The super literal is used in a method or field accessor of a class:
+task:IDEBUG-386[]
+$\mu(s..containingClass) = \type{Class}$
+3.  The super literal must not be used in a nested function expression:
++
+[math]
+++++
+\mu(s.containingFunction=s.containingMethodOrFieldAccessor
+++++
+4.  If the return type of the method access via super is this, the actually bound this type will be the type of the calling class (and not of the class defining the method).
++
+[math]
+++++
+\infer
+{\type{function():T} \subtype s.m}
+{s.containingClass=T \spc \mu(m)=\type{Method} \spc m.returnType=\type{this}}
+++++
+
+--
+
+.Super Literal Usage
+[req,id=IDE-125,version=1]
+--
+For super literals, either <<Req-IDE-123>> or <<Req-IDE-124>> must hold, no other usage
+is allowed.
+
+Consequences:
+
+* Since fields cannot be overridden (except for changing the access modifier), it is not possible nor allowed to access a field via `super`.
+* Super literals must not be used with index access (e.g., `super["foo"]`)
+* It is not possible to chain super keywords. That is, it is not possible to call `super.super.m()`.
+* It is not allowed to use the super literal in interfaces or non-methods/accessors.
+* Super cannot be used to call an overridden method of an implemented method from the overriding method in the implementing class.
+* In order to be able to access a super method of a method $M$ of a class $C$, exactly one non-abstract super method $M'$ in a super class $S$ of $C$ must exist.
+This is assured by the standard rules for binding identifiers.
+
+If super is used to access a super member, the receiver type is not changed.
+This is important in particular for static methods as demonstrated in the following example:
+
+.Super Call in Static Methods
+[example]
+====
+
+[source,n4js]
+----
+class A {
+    static foo(): void { console.log("A") }
+    static bar(): void {
+        this.foo();
+    }
+}
+
+class B extends A {
+
+    @Override
+    static foo(): void { console.log("B") }
+    @Override
+    static bar(): void {
+        A.bar();        // <1>
+        super.bar();    // <2>
+    }
+}
+
+B.bar();
+----
+====
+
+<1> The receiver (which is similar to the this-binding in ECMAScript) is changed to `A`.
+<2> Using super, the receiver is preserved, i.e. `B`.
+//TODO add callout for last line
+--
+
+
+[.language-n4js]
+== ECMAScript 7 Expressions
+
+=== Await Expression
+
+
+In N4JS, `await` is implemented as a unary operator with the same precedence as `yield` in ECMAScript 6.
+
+Constraints governing the use of `await` are given together with those for `async` in <<_asynchronous-functions>>.
+
+[.language-n4js]
+== N4JS Specific Expressions
+
+=== Class Expression
+
+A class expression in N4JS is similar to a class expression in ECMAScript 6 cite:[ECMA15a(14.5)].
+
+NOTE: Class expressions are not part of version 0.3
+
+[discrete]
+==== Syntax [[class-expression-syntax]]
+
+See <<Classes>>.
+
+[discrete]
+==== Semantics and Type Inference [[class-expression-semantics-type-inference]]
+
+The inferred type of a class expression simply is the class type as described in <<_constructor-and-classifier-type>>.
+
+=== Cast (As) Expression
+task:IDE-161[]
+
+[discrete]
+==== Syntax [[cast-as-expression-syntax]]
+
+[source,xtext]
+----
+CastExpression <Yield> returns Expression: expression=Expression 'as' targetTypeRef=TypeRefForCast;
+
+TypeRefForCast returns StaticBaseTypeRef:
+      ParameterizedTypeRef
+    | ThisTypeRef
+    | ConstructorTypeRef
+    | ClassifierTypeRef
+    | FunctionTypeExpression
+    | UnionTypeExpression
+    | IntersectionTypeExpression
+----
+
+=== Semantics and Type Inference [[cast-as-expression-semantics-type-inference]]
+
+The inferred type of the type cast expression is the target type:
+
+[math]
+++++
+\infer
+{\tee expr\ \lstnfbnf{"as"}\ T: T}{}
+++++
+
+
+The type cast returns the expression without further modifications.
+Type casts are simply removed during compilation so there will be no exceptions thrown at the cast until later when accessing properties which may not be present in case of a failed cast.
+
+An error is issued if the cast is either unnecessary or cannot succeed.
+See further details in <<_type-cast>>.

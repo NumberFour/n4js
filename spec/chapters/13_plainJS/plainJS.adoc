@@ -1,0 +1,373 @@
+
+= PlainJS
+:find:
+////
+Copyright (c) 2017 NumberFour AG.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+  NumberFour AG - Initial API and implementation
+////
+
+Since N4JS is a super set of JavaScript, is it both possible to use plain JavaScript in N4JS and vice versa.
+There may be some obstacles due to concepts introduced by N4JS to make code more maintainable and robust:
+
+1.  N4JS’ static type system may complain about some older JavaScript hacks. Declared types, in particular, are assumed to be implicitly frozen.
+2.  In N4JS, modules are used as namespaces with explicit export and import statements.
+The notion of globals is not directly supported by N4JS as this leads to unexpected side effects (several components providing and thus overriding global definitions, for example).
+3.  N4JS defines a (ECMAScript 6 compatible) concept of object-oriented programming which may conflict with other plain JavaScript solutions.
+
+To overcome these problems, N4JS provides a couple of techniques summarized in this chapter.
+
+[.language-n4js]
+== Type Inference and Validation for Plain JS
+task:IDEBUG-45[]
+
+In plain JavaScript mode:
+
+1.  All declared variables are inferred to `any+`.
+2.  All declared functions return and accept a variadic number of arguments of type `any+`.
+3.  It is allowed to use the `return` statement with or without an expression.
+4.  New expressions with a receiver of `any+` is allowed.
+5.  No type arguments are required for generic built-in types.
+6.  Assigning a value to a read-only variable is not checked.
+7.  Undeclared variables are treated as `any+` as well.
+
+Note that this essentially disables all validation particularly since methods such as the ’import’-like function `require` are unknown.
+
+[.language-n4js]
+== External Declarations
+task:IDE-572[] task:IDE-1236[]
+
+N4JS supports declaring external classes as a means to declare classes whose implementation is not N4JS so they can be used from N4JS.
+Together with structural typing, this allows N4JS to seamlessly integrate frameworks and libraries which have not been implemented in N4JS but in plain ECMAScript or another language.
+
+.External allowed occurrences
+[req,id=IDE-163,version=1]
+--
+
+* Declarations with external flags are only allowed in files with the extension $n4jsd$ (so called N4JS definition files).
+* Only external classes, external interfaces marked with `@N4JS`, external enums, external function declarations and structurally typed interfaces are allowed in a $n4jsd$ file.
+* Declarations with external flags are allowed to subclass built-in type `Error` type and all of its descendants such as
+`EvalError`, `RangeError`, `ReferenceError`, `SyntaxError`, `TypeError` and `URIError`, although any of the error types are annotated with `@N4JS`.
+
+The following explanations apply to all external declarations except
+where stated otherwise.
+
+In general, an external declaration uses the same syntax as the declaration of a normal N4JS declaration with the addition of the modifier `external`.
+
+External classifiers are always ’entirely external’ in that it is not possible to combine defined methods and external methods within a single class or interface.
+--
+
+.External classes inheritance
+[req,id=IDE-164,version=1]
+--
+1.  An external class _without_ the `@N4JS` annotation can only inherit from another external class or from one of the built-in ECMAScript types (e.g. Object).
+That is, by default external classes are derived from `Object`.
+2.  An external class _with_ the annotation `@N4JS` can only inherit from another external class annotated with `@N4JS` or from non-external N4JS classes.
+
+--
+
+.Structurally typed interface implementation
+[req,id=IDE-165,version=1]
+--
+1.  An external class _without_ the annotation `@N4JS` can only be implemented by structurally typed interfaces.
+2.  An external class _with_ the annotation `@N4JS` can only be implemented by structurally typed interfaces annotated with `@N4JS`.
+3.  An external interface _without_ the annotation `@N4JS` must be defined structurally.
+--
+
+.External interface inheritance
+[req,id=IDE-166,version=1]
+--
+
+1.  An interface in a n4jsd file _without_ the annotation `@N4JS` can only inherit from another interface within a n4jsd file.
+2.  An interface _with_ the `@N4JS` annotation can only inherit from another interface annotated with `@N4JS`.
+
+--
+
+.External class/interface members
+[req,id=IDE-167,version=1]
+--
+1.  The static and instance methods, getters and setters of an external class must not have a method body.
+2.  The static and instance fields of an external class must not have an initializer.
+3.  The constructor of an external class without the annotation `@N4JS` must not be declared private. task:IDEBUG-431[]
+4.  Methods in interfaces with default implementation which cannot be expressed in the definition file must be annotated with `@ProvidesDefaultImplementation`.
+This is only allowed in interfaces annotated with `@N4JS`. task:IDE-1403[]
+5.  Fields in interfaces or classes with initializers which cannot be expressed in the definition file, must be annotated with `@ProvidesInitializer`.
+This is only allowed in classes or interfaces annotated with `@N4JS`.
+task:IDE-1509[]
+
+This means that in external classes, all members except constructors may be declared private even if the class is not annotated with `@N4JS`. In interfaces, however, private members are disallowed anyway,
+cf. <<Req-IDE-48>>.
+
+--
+
+.Other external declarations
+[req,id=IDE-168,version=1]
+--
+
+1.  The literals of an external enum must not have a value.
+2.  An external function declaration must not have a body.
+--
+
+=== Declaring externals
+
+By default, the implicit supertype of an external class is Object.
+If the `@N4JS` annotation is provided it is N4Object.
+If a superclass is explicitly given, the constraints from the previous section apply.
+
+//todo[jvp]{add comment about how @N4JS annotation affects instanceof}
+
+=== Instantiating external classes
+
+
+In most cases, it is desirable to instantiate external classes from external projects.
+Publicly exporting the class definition and providing a public constructor is good practice.
+
+In some cases, the instantiation from an outer scope is not wanted.
+A possible approach is to use a structurally typed interface instead of a class to link to the implementation.
+
+In case of API-definitions (see <<_api-and-implementation-components>>), it might be useful to limit the visibility of classes to narrower scopes such as package or private.
+
+External declarations can be instantiated if the following three requirements are fulfilled (not a constraint!):
+
+* External declarations have to be exported and be marked as public so they are accessible from outside.
+* The contained or inherited constructor of an external class must be public.
+* The external class must be linked to an implementation module (see below <<_implementation-of-external-declarations>>).
+
+=== Implementation of External Declarations
+task:IDEBUG-242[]
+
+All external declarations must be associated with an external implementation module in one way or another.
+Any time the external declaration is imported, the compiler generates code that imports the corresponding implementation module at runtime.
+
+There are two possible ways of linking an external declaration to its corresponding implementation:
+
+1.  By naming convention defined in the manifest.
+2.  By declaring that the implementation is provided by the JavaScript runtime, see <<_runtime-definitions>> for details.
+
+The naming convention is based on the `external` source fragments defined in the manifest (<<_component-manifest>>).
+If the implementation is provided by the runtime directly, then this can be also specified in the manifest by a module filter.
+
+The implicit link via the naming convention is used to link an external class declaration to its non-N4JS implementation module.
+It does not effect validation, but only compilation and runtime.
+Essentially, this makes the compiler generate code so that at runtime, the linked implementation module is imported instead of the declaration module.
+
+In most use cases of external declarations you also want to disable validation and module wrapping by specifying appropriate filters in the manifest.
+
+Occasionally it is not possible for the validation to correctly detect a corresponding implementation element.
+For that reason, it is possible to disable validation of implementations completely via `@@IgnoreImplementation`.
+
+.Implementation of External Declarations
+[req,id=IDE-169,version=1]
+--
+task:IDE-1099[]
+For a given external declaration $D$ but not for
+API-definitions footnote:[<<_api-and-implementation-components>>], the
+following constraints must hold:
+
+1.  If the declaration is neither provided by runtime nor validation of implementation is disabled,
+a corresponding implementation must be found by the naming convention.
+If no such implementation is found, a warning is generated.
+
+--
+
+[[external-definitions-and-implementations]]
+.External Definitions and Their Implementations
+[example]
+====
+
+If, in addition to standard `source`, the `source-external` fragment is provided in `Sources`, $n4jsd$ files in the folder tree below source folders
+will be related to modules of the same name in the external folders. This is shown in <<fig-external-class-naming>>.
+
+[[fig-external-class-naming]]
+.External Class Implementation, Naming Convention
+image::{find}fig/externalClassImplementation_naming.png[scaledwidth="60%",align="center"]
+
+====
+
+=== Example
+
+Assume the following non-N4JS module:
+
+[[ex:External_Classes_Example]]
+.External Classes
+====
+[source,javascript]
+----
+module.exports = {
+    "Point": function Point(x, y) {
+        this.x = x;
+        this.y = y;
+    },
+
+    "Circle": function Circle(center, radius) {
+        this.center = center;
+        this.radius = radius;
+        this.scaleX = function(x){ this.x = x; }
+    this.scaleY= function(y){ this.y = y; }
+    }
+}
+----
+
+Assuming
+
+* `shapes.js` is placed in project folder */external/a/b/shapes.js*
+* `shapes.n4jsd` is placed in project folder */src/a/b/shapes.n4jsd*
+* `manifest.n4mf` defines *src* as source folder and *external* as external source folder
+
+the following N4JS external class declarations in *shapes.n4jsd* are sufficient:
+
+[source,javascript]
+----
+export external public class Point {
+    x: number; y: number;
+    constructor(x: number, y: number);
+}
+
+export external public class Circle {
+    center: Point; radius: number;
+    constructor(center: Point, radius: number);
+}
+----
+
+Note that the class and interface names in n4jsd files must match those in the js files, respectively.
+====
+
+.Structurally-typed external interfaces
+[example]
+====
+
+[source,javascript]
+----
+export external public interface ~Scalable {
+    scaleX(factor: number);
+    scaleY(factor: number);
+}
+
+export external public class Circle implements Scalable {
+    center: Point;
+    radius: number; x: number; y: number;
+
+    @Override public scaleX(factor: number);
+    @Override public scaleY(factor: number);
+
+    constructor(center: Point, radius: number);
+}
+----
+====
+
+
+[.language-n4js]
+== Global Definitions
+task:IDE-1036[]
+
+Existing JavaScript libraries and built-in objects provided by certain JavaScript environments often globally define variables.
+Although it is not recommended to use global definitions, this cannot always be avoided.
+
+N4JS supports global definitions via the annotation `Global`.
+This annotation can only be defined on modules (via `@@Global`) – this means that all declarations in the module are
+globally defined.footnote:[Global basically means that the module defines no namespace on its own. Thus the annotation is a script/module related annotation.]
+
+We introduce a new pseudo property $global$ on all declared elements accordingly:
+
+`@Global` ::
+Boolean flag set to true if annotation `@Global` is set in containing module. The flag indicates that the exported element is globally available and must not be imported. task:IDE-1036[]
+
+Since definition of global elements is not supported by N4JS directly, this can be only used in external definitions.
+A declaration with $global$ can be used without explicit import statement. It is not possible to import these declarations.
+
+
+.Global Definitions
+[req,id=IDE-170,version=1]
+--
+Global Definitions
+
+For a declaration $D$ with $D.global=\TRUE$, not a polyfill ($D.polyfill=\FALSE)$, the following constraints must hold:
+
+1.  The name of the definition must not be equal to any primitive type (`string`, `number` etc.), `any`, or an built-in N4 type (`N4Object` etc.).
+2.  If the name of the definition equals a basic runtime time Object Type then the project must be a runtime environment:
+
+$D.name \in \{ $
+$\hspace{3em} 'Object', 'Function', 'Array', 'String', 'Boolean'$
+$\hspace{3em} 'Number', 'Math', 'Date', 'RegExp', 'Error', 'JSON' $
+$\}$
+$\Rightarrow D.containingProject.type=\lenum{runtimeEnvironment}$
+
+--
+
+[.language-n4js]
+== Runtime Definitions
+task:IDE-1036[]
+
+Some elements are predefined by the JavaScript runtime such as DOM elements by the browser or built-in ECMAScript or non-standard objects.
+These elements can be defined by means of external definitions; however, no actual implementation can be provided as these elements are actually provided by the runtime itself.
+
+Since these cases are rather rare and in order to enable additional checks such as verification that a given runtime actually provides the elements,
+this kind of element can only be defined in components of type runtime environment or runtime library (cf <<_runtime-environment-and-runtime-libraries>>).
+
+N4JS supports runtime definitions via the annotation `@ProvidedByRuntime`.
+This annotation can be defined
+
+* on modules (via `@@ProvidedByRuntime`)– this means that all declarations in the module are provided by the runtime
+* on export statements or declarations.
+
+We introduce a new pseudo property $providedByRuntime$ accordingly:
+
+`@ProvidedByRuntime` ::
+Boolean flag set to true if the annotation `@ProvidedByRuntime` is set.
+Flag indicates that the element is only declared in the module but its implementation is provided by the runtime.
+
+Since built-in types are usually defined globally, the annotation `@ProvidedByRuntime` is usually used in combination with `@Global`.
+
+.Provided By Runtime
+[req,id=IDE-171,version=1]
+--
+task:IDE-1036[]
+
+For a declaration $D$ with $D.providedByRuntime=\TRUE$, the following constraints must hold:
+
+1.  The declaration must either be an export declaration itself or an exportable declaration.
+2.  The declaration must be contained in a definition module.
+3.  The declaration must be (indirectly) contained in a component of type $\lenum{runtimeEnvironment}$ or $\lenum{runtimeLibrary}$.
+4.  There must be no implementation file with the same name as the definition module if annotation is defined for a whole module. task:IDE-1084[]
+--
+
+[.language-n4js]
+== Applying Polyfills
+task:IDE-1142[]
+
+(Runtime) Libraries often do not provide completely new types but modify existing types.
+The ECMA-402 Internationalization Standard cite:[ECMA12a], for example, changes methods of the built-in class `Date` to be timezone-aware.
+Other scenarios include new functionality provided by browsers which are not part of an official standard yet.
+Even ECMAScript 6 cite:[ECMA15a] extends the predecessor cite:[ECMA11a] in terms of new methods or new method parameters added to existing types.
+It also adds completely new classes and features, of course.
+
+The syntax of runtime polyfills is described in section <<_polyfill-definitions>>.
+Here, an example of applying a runtime polyfill is detailed.
+
+.Object.observe with Polyfill
+[example]
+--
+The following snippet demonstrates how to define a polyfill of the built-in class `Object` to add the new ECMAScript 7 observer functionality.
+This snippet has to be defined in a runtime library or environment.
+
+
+[source,n4js]
+----
+@@ProvidedByRuntime
+@@Global
+
+@Polyfill
+export external public class Object extends Object {
+    public static Object observe(Object object, Function callback, Array<string>? accept);
+
+}
+----
+
+A client referring to this runtime library (or environment) can now access the observer methods as if it were defined directly in the original declaration of `Object`.
+
+--

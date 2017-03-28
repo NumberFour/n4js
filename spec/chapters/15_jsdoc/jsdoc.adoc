@@ -1,0 +1,293 @@
+
+= JSDoc
+////
+Copyright (c) 2017 NumberFour AG.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+  NumberFour AG - Initial API and implementation
+////
+
+[.language-n4js]
+In N4JS, comments starting with two asterisks (in ``pass:[/** .. */]``) are interpreted as
+documentation comments. The format is similar to JavaDoc or Google
+Closure annotations.
+
+[.language-n4js]
+== General N4JSDoc Features
+
+We distinguish between line and inline tags.
+The format of the content of a tag is specific to the tag.
+Most line tags, however, contain a description which is simply multiline text with nested inline tags.
+Every comment may start with a description.
+
+=== Provided Inline Tags
+
+==== @code [[jsdoc_tag__code]]
+
+Small code snippet, not validated yet.
+
+==== @link [[jsdoc_tag__link]]
+
+Link to a type of element, not validated or supported in navigation yet.
+
+[.language-n4js]
+== N4JSdoc for User Projects
+
+=== Standard Tags
+
+==== @author
+
+Name of author, repeat for multiple authors. Name of author is not
+validated.
+
+==== @param [[jsdoc_tag_param]]
+
+Parameter description, not validated at the moment.
+
+==== @return [[jsdoc_tag_return]]
+
+Return description, not validated at the moment.
+
+=== Test Related Tags
+
+The following tags are supposed to be used only in tests.
+
+==== @testee [[jsdoc_tag__testee]]
+task:IDE-1469[]
+
+Link to type (maybe a function) or member tested by the test.
+
+.@testee Semantics
+[req,id=IDE-172,version=1]
+--
+.  Tag can be only used on either
+..  methods annotated with `@Test`
+..  classes in test projects or folders, cf. <<jsdoc_tag__testeeFromType>>.
+.  Tag requires a single argument, which is a fully qualified name to a type, including the module specifier.
+The format is as follows: ``pass:[moduleSpecifier '.' typeName ( ('.'|'#') memberName)?]``
+.  Tag is _not_ repeatable, that is a single test method (or class) can refer to only one testee. task:IDEBUG-635[]
+.  Tag precedes the `reqid` tag, i.e., if a `@testee` is specified, the `reqid` will be ignored.
+
+--
+// TODO: check example block formatting
+
+.@testee
+[example]
+--
+The target element is to be fully qualified including the module specifier. The module specifier is simply
+the source folder relative path name with forward slashes. Type and
+element are added to that using dot as a separator. For example:
+
+[source,n4js]
+----
+/**
+ * @testee some/package/Module.Type.member
+ */
+----
+
+--
+
+==== @testeeFromType [[jsdoc_tag__testeeFromType]]
+task:SL-41[]
+
+Instead of directly linking a test method to a testee, the testee is to
+be derived from the linked testee of the test class. This is useful if a
+base test class is defined with generic tests, e.g., for testing methods
+defined in an interface and implemented by some classes. This base test
+class is then extended by concrete test classes, correctly setting up
+the test fixture, e.g., creating instances of some classes implementing
+the interfaces tested in the base class.
+
+.Usage of testeeFromType
+[example]
+--
+In the following example, the is used. This tag will lead to a test documentation for `B.foo` and `C.foo`.
+
+[source,n4js]
+----
+abstract class Base {
+    /**
+     * @testeeFromType
+     */
+    @Test testFoo() {..}
+}
+
+/**
+ * @testee B.foo
+ */
+class TestB extends Base {}
+
+/**
+ * @testee C.foo
+ */
+class TestC extends Base {}
+
+----
+--
+
+NOTE: The resulting spec has to be double-checked for consistency
+since it is easily possible that too many constraints are generated.
+
+
+==== @testeeType and @testeeMember [[_testeeType_and__testeeMember]]
+task:SL-41[]
+
+Specifying the testee at the test method directly should be sufficient
+for most cases. The `@testeeFromType` tag already provides support for some cases in which a base test class is reused by subtypes. This case usually only works if
+the base test class tests a single method only. If the base test class
+tests several methods and if a sub test class only provides a different
+fixture, this mechanism is not sufficient. For that purpose, the two
+tags `@testeeFromType` and `@@testeeMember` are to be used.
+They enable the separation of a test related to a specific member and the concrete receiver type of the tested member.
+
+The `@testeeType` is to defined in the test class JSDoc (actually, it is not
+recognized when defined in a member JSDoc). The `@testeeMember` is specified in the test method JSDoc. The "real" testee is then computed from the testee type and the testee method.
+
+NOTE: 1. This only works for instance members, so far! +
+2. There is no validation for invalid combinations!
+
+[[ex:testeetype-and-testeemethod]]
+.testeeType and testeeMethod
+[example]
+--
+Assume the following testees:
+
+[source,n4js]
+----
+class A {
+    foo(): void {..}
+    bar(): void { .. this.foo(); ..}
+}
+class B extends A {
+    @Override foo() { .. }
+}
+----
+--
+Assume that the tests have to ensure the same semantics for `bar`, which is
+maybe changed by a wrong implementation of `foo`. That is, `bar` is to be tested in
+case of the receiver type `A` and `B`. This can be achieved by the following
+tests:
+
+[source,n4js]
+----
+/**
+ * @testeeType A.A
+ */
+class ATest {
+    fixture(): A { return new A(); }
+
+    /**
+     * @testeeMember bar
+     */
+    @Test testBar(): void { assertBehavior( fixture().bar() ); }
+}
+/**
+ * @testeeType B.B
+ */
+class BTest extends ATest {
+    @Override fixture(): B { return new B(); }
+}
+
+----
+
+This actually defines two tests, which is also recognized by the spec
+exporter:
+
+1. `testBar` for a receiver of type `A`:
++
+``ATest``'s JSDoc `@testeeType` + ``ATest.testBar``'s JSDoc `@testeeMember` = testee `A.A.bar`
+2. `testBar` for a receiver of type `B`:
++
+``BTest``'s JSDoc `@testeeType` + ``ATest.testBar``'s JSDoc `@testeeMember` = testee `B.B.bar`
+
+NOTE: In all cases when `@testeeFromType` or ``@testeeType``/``@testeeMember`` is used, the resulting spec has to be
+double-checked for consistency. Consider if the multiplication of spec
+constraints is truly required, in particular if the original semantics
+of a method is not changed. Remember: It is possible to write API tests
+and omit the spec constraint generation simply by not adding the testee
+links.
+
+.testeeType and testeeMethod with omitted constraints
+[example]
+====
+
+Assume testees similar as in <<ex:testeetype-and-testeemethod>>. Since the semantics of `bar` is not changed in `B`, it is probably not necessary to generate the same constraint in the documentation for `bar` twice (one in the section for class `A` and another one in the section of class `B`).
+Still, we want the test to be executed for both receivers. This is how it is achieved:
+
+[source,n4js]
+----
+abstract class BaseTest {
+    abstract fixture(): A;
+
+    /**
+     * @testeeMember bar
+     */
+    @Test testBar(): void { assertBehavior( fixture().bar() ); }
+}
+
+/**
+ * @testeeType A.A
+ */
+class ATest extends BaseTest {
+    fixture(): A { return new A(); }
+}
+
+class BTest extends BaseTest {
+    @Override fixture(): B { return new B(); }
+}
+
+----
+
+This actually defines two tests as in the previous example. Only one
+constraint is created in the spec by the spec exporter:
+
+1. `testBar` for a receiver of type `A`: +
+``ATest``'s JSDoc `@testeeType` + ``BaseTest.testBar``'s JSDoc `@testeeMember` = testee `A.A.bar`
+
+Although a test for receiver of type `B` is run, no additional constraint is
+created since there is no `@testeeType` available neither in `BTest` nor in `BaseTest`.
+
+====
+
+==== @reqid in Tests [[jsdoc_tag_reqid_in_Tests]]
+
+ID of feature used in `JSDoc` for the requirements section. If no
+testee (via one of the tags above) is given, then the test is linked to
+the requirement with given id.
+
+[.language-n4js]
+== N4JSDoc for API and Implementation Projects
+task:IDE-1509[]
+
+The following tags are supposed to be used in API and implementation
+projects.
+
+=== @apiNote [[jsdoc_tag__apiNote]]
+
+
+Simple note that is shown in the API compare view.
+
+=== API Project Tags [[API_Project_Tags]]
+
+
+The following tags are supposed to be used in API projects only.
+
+==== @apiState [[jsdoc_tag_apiState]]
+
+
+State of type or member definition, e.g., stable or draft. This can be
+used to define a history. In this case, the tag has to be repeated. For
+example:
+
+[source,n4js]
+----
+/**
+ * @apiState stable (WK)
+ * @apiState reviewed (JvP)
+ */
+
+----

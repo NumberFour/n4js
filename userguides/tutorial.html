@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>N4JS Tutorial</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../res/styles/n4js-adoc.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -29,6 +30,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../scripts/nav-mobile.js"></script>
+
+<!-- ************* Prism.js Syntax Highlighter ******-->
+<link href="../styles/prism.min.css" rel="stylesheet"/>
+<script src="../scripts/prism.js"></script>
 
 <!-- ****************** Analytics ****************** -->
 <script>
@@ -67,7 +72,8 @@
   </li>
   <li><a href="index.html">Documentation</a>
     <ul>
-      <li><a href="n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="npm-export-guide.html">Export as npm</a></li>
       <li><a href="tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -75,8 +81,8 @@
   <li><a href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -84,7 +90,7 @@
 <button id="tocbutton">TOC</button>
 
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language &amp; IDE</p></div>
+<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language & IDE</p></div>
 <div class="mobile-navbar">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
@@ -102,7 +108,8 @@
   </li>
   <li><a class="scroll" href="index.html">Documentation</a>
     <ul>
-      <li><a href="n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="npm-export-guide.html">Export as npm</a></li>
       <li><a href="tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -110,8 +117,8 @@
   <li><a class="scroll" href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -122,42 +129,40 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Jump to topic:</div>
 <ul class="sectlevel0">
-<li><a href="#_n4js-tutorial">N4JS Tutorial</a>
+<li><a href="#_n4js_tutorial">N4JS Tutorial</a>
 <ul class="sectlevel1">
-<li><a href="#_using-n4js-to-implement-a-node-js-application">Using N4JS to Implement a Node.js Application</a></li>
-<li><a href="#_creating-a-new-n4js-project">Creating a new N4JS Project</a>
+<li><a href="#_using_n4js_to_implement_a_node_js_application">Using N4JS to Implement a Node.js Application</a></li>
+<li><a href="#_creating_a_new_n4js_project">Creating a new N4JS Project</a>
 <ul class="sectlevel2">
-<li><a href="#_the-domain-model">The Domain Model</a></li>
-<li><a href="#_creating-new-classes-and-modules">Creating new classes and modules</a></li>
-<li><a href="#_the-storage-layer">The Storage Layer</a></li>
-<li><a href="#_implement-the-interface">Implement the Interface</a></li>
-<li><a href="#_edit-the-manifest">Edit the Manifest</a></li>
+<li><a href="#_the_domain_model">The Domain Model</a></li>
+<li><a href="#_creating_new_classes_and_modules">Creating new classes and modules</a></li>
+<li><a href="#_add_an_enumeration">Add an Enumeration</a></li>
+<li><a href="#_the_storage_layer">The Storage Layer</a></li>
+<li><a href="#_implement_the_interface">Implement the Interface</a></li>
+<li><a href="#_edit_the_manifest">Edit the Manifest</a></li>
 </ul>
 </li>
-<li><a href="#_running-a-module">Running a Module</a></li>
-<li><a href="#_extend-entities-with-spec-constructor">Extend Entities with Spec-Constructor</a></li>
-<li><a href="#_creating-a-task-manager">Creating a Task Manager</a>
+<li><a href="#_running_a_module">Running a Module</a></li>
+<li><a href="#_extend_entities_with_spec_constructor">Extend Entities with Spec-Constructor</a></li>
+<li><a href="#_creating_a_task_manager">Creating a Task Manager</a>
 <ul class="sectlevel2">
-<li><a href="#_make-the-storage-asynchronous">Make the Storage Asynchronous</a></li>
+<li><a href="#_make_the_storage_asynchronous">Make the Storage Asynchronous</a></li>
 <li><a href="#_testing">Testing</a></li>
 </ul>
 </li>
-<li><a href="#_storage-using-mongodb">Storage using MongoDB</a></li>
-<li><a href="#_dependency-injection">Dependency Injection</a></li>
-<li><a href="#_web-ui-module">Web UI module</a></li>
-<li><a href="#_export-as-npm">Export as npm</a></li>
-<li><a href="#_run-from-command-line-with-node-js">Run from command line with Node.js</a></li>
+<li><a href="#_storage_using_mongodb">Storage using MongoDB</a></li>
+<li><a href="#_dependency_injection">Dependency Injection</a></li>
+<li><a href="#_web_ui_module">Web UI module</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<h1 id="_n4js-tutorial" class="sect0"><a class="link" href="#_n4js-tutorial">N4JS Tutorial</a></h1>
+<h1 id="_n4js_tutorial" class="sect0"><a class="link" href="#_n4js_tutorial">N4JS Tutorial</a></h1>
 <div class="openblock partintro">
 <div class="content">
 <div class="paragraph">
-<div class="title">N4JS Tutorial</div>
 <p><strong>The flexibility of JavaScript with the type safety of Java</strong></p>
 </div>
 <div class="paragraph">
@@ -196,7 +201,7 @@ can be easily selected using the perspectives icons as highlighted in the upper-
 </div>
 </div>
 <div class="sect1">
-<h2 id="_using-n4js-to-implement-a-node-js-application"><a class="link" href="#_using-n4js-to-implement-a-node-js-application">Using N4JS to Implement a Node.js Application</a></h2>
+<h2 id="_using_n4js_to_implement_a_node_js_application"><a class="link" href="#_using_n4js_to_implement_a_node_js_application">Using N4JS to Implement a Node.js Application</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The following screenshot shows
@@ -235,7 +240,7 @@ before adding a REST API with <a href="http://expressjs.com/">Express</a> and, f
 </div>
 </div>
 <div class="sect1">
-<h2 id="_creating-a-new-n4js-project"><a class="link" href="#_creating-a-new-n4js-project">Creating a new N4JS Project</a></h2>
+<h2 id="_creating_a_new_n4js_project"><a class="link" href="#_creating_a_new_n4js_project">Creating a new N4JS Project</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Let&#8217;s begin by creating a new N4JS Project that contains our whole application. In case of
@@ -269,7 +274,7 @@ files. The IDE automatically transpiles n4js files on save.</p>
 </ul>
 </div>
 <div class="sect2">
-<h3 id="_the-domain-model"><a class="link" href="#_the-domain-model">The Domain Model</a></h3>
+<h3 id="_the_domain_model"><a class="link" href="#_the_domain_model">The Domain Model</a></h3>
 <div class="paragraph">
 <p>Before we start implementing the domain model, we shall take a look at a UML diagram of it:</p>
 </div>
@@ -285,7 +290,7 @@ We will begin by defining Task which is extended by Appointment and Todo.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_creating-new-classes-and-modules"><a class="link" href="#_creating-new-classes-and-modules">Creating new classes and modules</a></h3>
+<h3 id="_creating_new_classes_and_modules"><a class="link" href="#_creating_new_classes_and_modules">Creating new classes and modules</a></h3>
 <div class="paragraph">
 <p>In our new N4JS project, we can begin creating our entities. The easiest way to
 do this is to utilize the New N4JS Class wizard, accessed via <span class="menuseq"><span class="menu">File</span>&#160;&#9656; <span class="submenu">New</span>&#160;&#9656; <span class="menuitem">N4JS Class</span></span></p>
@@ -312,14 +317,14 @@ Wizard (and later in import statements) we will omit the file extension.</p>
 the module <strong>model</strong> in the project source folder.</p>
 </div>
 <div class="sect3">
-<h4 id="_implement-the-entity-classes"><a class="link" href="#_implement-the-entity-classes">Implement the entity classes</a></h4>
+<h4 id="_implement_the_entity_classes"><a class="link" href="#_implement_the_entity_classes">Implement the entity classes</a></h4>
 <div class="paragraph">
 <p>The class wizard has already created a file and the empty class "Task". We will
 manually enhance this class as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export abstract class Task {  <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export abstract class Task {  <i class="conum" data-value="1"></i><b>(1)</b>
   public id: string?;
   public label: string?;
 }</code></pre>
@@ -375,7 +380,7 @@ of elements, that is, they restrict from where an element can be accessed.</p>
 <div class="listingblock">
 <div class="title">model.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">/** An appointment. */ <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">/** An appointment. */ <i class="conum" data-value="1"></i><b>(1)</b>
 export class Appointment extends Task {   <i class="conum" data-value="2"></i><b>(2)</b>
   public time: Date;     <i class="conum" data-value="3"></i><b>(3)</b>
   public place: string;   <i class="conum" data-value="3"></i><b>(3)</b>
@@ -391,8 +396,8 @@ export class Todo extends Task {  
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Appointment is prefaced with a <strong>JSDoc</strong> annotation (a comment beginning with /**
-and closed with */ which documents that it is a single Appointment task. JSDoc comments are
+<td>Appointment is prefaced with a <strong>JSDoc</strong> annotation (a comment beginning with /** and
+closed with */ which documents that it is a single Appointment task. JSDoc comments are
 used to provide markup annotation of your code. The content of these comments is displayed when
 you hover over a reference to that element.</td>
 </tr>
@@ -425,29 +430,38 @@ As the project grows, the benefits of having individual, reusable <strong>module
 more and more useful in that they can be imported into other modules or even other projects.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_add-an-enumeration"><a class="link" href="#_add-an-enumeration">Add an Enumeration</a></h4>
+</div>
+<div class="sect2">
+<h3 id="_add_an_enumeration"><a class="link" href="#_add_an_enumeration">Add an Enumeration</a></h3>
 <div class="paragraph">
-<p>We also want to add a priority field to the Todo class. We will modify the
- Todo class and add a new type Priority as follows:</p>
+<p>We also want to add a priority field to the <code>Todo</code> class. We will modify the
+<code>Todo</code> class and add a new type <code>Priority</code> as follows:</p>
 </div>
 <div class="listingblock">
 <div class="title">model.n4js (cntd.)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export class Todo extends Task {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export class Todo extends Task {
   public dueDate: Date?;
   public priority = Priority.NORMAL;
   public done = false;
 }
 
-@StringBased // using string-based enum to simplify (de-)serialization
+@StringBased <i class="conum" data-value="1"></i><b>(1)</b>
 export enum Priority {
   LOW, NORMAL, HIGH
 }</code></pre>
 </div>
 </div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Use string-based <code>enum</code> to simplify (de-)serialization</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>Enumerations allow us to represent a fixed set of constants: LOW, NORMAL and HIGH.
+<p>Enumerations allow us to represent a fixed set of constants: <code>LOW</code>, <code>NORMAL</code> and <code>HIGH</code>.
 The reason we use an enumeration here is because we know all possible values for Priority
 at compile-time so we may limit it to these constants. N4JS provides two kinds of
 enumerations: "ordinary" and "string-based". The former
@@ -457,9 +471,8 @@ string-based enumerations are, in fact, represented as plain strings in the Java
 output code. As a result, they offer less reflection capabilities.</p>
 </div>
 </div>
-</div>
 <div class="sect2">
-<h3 id="_the-storage-layer"><a class="link" href="#_the-storage-layer">The Storage Layer</a></h3>
+<h3 id="_the_storage_layer"><a class="link" href="#_the_storage_layer">The Storage Layer</a></h3>
 <div class="paragraph">
 <p>Let&#8217;s first have a look at the UML diagram describing out storage tier:</p>
 </div>
@@ -474,7 +487,7 @@ different kinds of "persistence". We will start with a simple in-memory peristen
 which can be used for testing. Later on, we will add a proper persistence layer using MongoDB.</p>
 </div>
 <div class="sect3">
-<h4 id="_defining-an-interface"><a class="link" href="#_defining-an-interface">Defining an Interface</a></h4>
+<h4 id="_defining_an_interface"><a class="link" href="#_defining_an_interface">Defining an Interface</a></h4>
 <div class="paragraph">
 <p>We can create the storage module with the New Class wizard.
 We call it "Storage.n4js", following Java&#8217;s convention of naming the module similar
@@ -483,7 +496,7 @@ to the contained class or interface. We will manually edit the file as follows:<
 <div class="listingblock">
 <div class="title">Storage.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Task } from "model"
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { Task } from "model"
 
 export public interface Storage {
 
@@ -519,7 +532,7 @@ can implement multiple interfaces, and also interfaces can extend multiple inter
 </div>
 </div>
 <div class="sect2">
-<h3 id="_implement-the-interface"><a class="link" href="#_implement-the-interface">Implement the Interface</a></h3>
+<h3 id="_implement_the_interface"><a class="link" href="#_implement_the_interface">Implement the Interface</a></h3>
 <div class="paragraph">
 <p>Since we cannot instantiate an interface, we need a class implementing the
 interface. We will create a new module for a class called "StorageInMemory.n4js".
@@ -530,7 +543,7 @@ it is expected and we will deal with them shortly.</p>
 <div class="listingblock">
 <div class="title">StorageInMemory.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Storage } from "Storage"
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { Storage } from "Storage"
 import { Task } from "model"
 
 export class StorageInMemory implements Storage { <i class="conum" data-value="2"></i><b>(2)</b>
@@ -575,8 +588,8 @@ export class StorageInMemory implements Storage { <i class="conum" data-value="2
 <td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>We use the keyword implements (known from Java) to define that this class implements
 the interface. We have to provide specific implementation of the methods of the Storage
-interface by using the @Override annotation to define size, clear, getTasks
-and storeTasks (not all methods are shown here). This annotation is similar to
+interface by using the <code>@Override</code> annotation to define <code>size</code>, <code>clear</code>, <code>getTasks</code>
+and <code>storeTasks</code> (not all methods are shown here). This annotation is similar to
 the annotation used in Java. It ensures that whenever a method in the interface is
 changed, the type checker can issue a warning. This can be a lifesaver when larger
 projects are to be maintained over time or across several development teams.</td>
@@ -584,20 +597,20 @@ projects are to be maintained over time or across several development teams.</td
 </table>
 </div>
 <div class="paragraph">
-<p>The above code will raise a compile error because type Map is not available
+<p>The above code will raise a compile error because type <code>Map</code> is not available
 in ECMAScript Version 5. We&#8217;ll have to tell N4JS that our example is intended
 to run as ECMAScript 2015. Before doing this in the following section, let&#8217;s
 first look at the other parts of the above class declaration in more detail.</p>
 </div>
 <div class="paragraph">
-<p>We use a data field tasks to store all the tasks in a map. The type Map stems from
+<p>We use a data field <code>tasks</code> to store all the tasks in a map. The type Map stems from
 ECMAScript 2015. It is a generic type similar to Array, which the observant reader may
 have already seen in the Storage interface. N4JS provides support for generic types and methods
 is similar to Java 8.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_edit-the-manifest"><a class="link" href="#_edit-the-manifest">Edit the Manifest</a></h3>
+<h3 id="_edit_the_manifest"><a class="link" href="#_edit_the_manifest">Edit the Manifest</a></h3>
 <div class="paragraph">
 <p>By default, N4JS provides all the types known by ECMAScript 5. In order to use elements
 (types, functions or variables) defined by a newer JavaScript version, we have to add
@@ -614,7 +627,7 @@ files created by the New Project wizard look like the following:</p>
 <div class="listingblock">
 <div class="title">manifest.n4mf</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">ProjectId: n4js.example.tasks
+<pre class="highlight"><code class="language-n4mf" data-lang="n4mf">ProjectId: n4js.example.tasks
 ProjectType: library
 ProjectVersion: 0.0.1
 VendorId: eu.numberfour
@@ -633,7 +646,7 @@ assist similar to the N4JS editor.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">RequiredRuntimeLibraries {
+<pre class="highlight"><code class="language-n4mf" data-lang="n4mf">RequiredRuntimeLibraries {
   n4js-runtime-es2015
 }</code></pre>
 </div>
@@ -646,7 +659,7 @@ assist similar to the N4JS editor.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_running-a-module"><a class="link" href="#_running-a-module">Running a Module</a></h2>
+<h2 id="_running_a_module"><a class="link" href="#_running_a_module">Running a Module</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Having created the first version of our domain model and storage tier, we are ready to try it out.
@@ -654,7 +667,7 @@ assist similar to the N4JS editor.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { StorageInMemory } from "StorageInMemory"
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { StorageInMemory } from "StorageInMemory"
 import { Todo } from "model"
 
 let sim = new StorageInMemory();
@@ -688,8 +701,8 @@ view, for example</p>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_extend-entities-with-spec-constructor"><a class="link" href="#_extend-entities-with-spec-constructor">Extend Entities with Spec-Constructor</a></h2>
+<div class="sect1 language-n4js">
+<h2 id="_extend_entities_with_spec_constructor"><a class="link" href="#_extend_entities_with_spec_constructor">Extend Entities with Spec-Constructor</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>When we look at the runner code, creating a new task is quite annoying: It has to be created with
@@ -699,10 +712,10 @@ a constructor to our base entity class Task as follows:</p>
 <div class="listingblock">
 <div class="title">model.n4js (cntd.)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export abstract class Task {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export abstract class Task {
   // ...
 
-  constructor(@Spec spec: ~i~this?) {  
+  constructor(@Spec spec: ~i~this=undefined) {  
   // code for initialization will be generated due to @Spec annotation  
   }  
 }  
@@ -711,10 +724,11 @@ a constructor to our base entity class Task as follows:</p>
 </div>
 <div class="paragraph">
 <p>The concept of constructors is taken from ECMAScript 2015. However, the parameter is very special
-to N4JS. We briefly describe the type expression <code>~i~this?</code> used here. We already know <code>?</code> to be
-the optional modifier. If a parameter of a function is marked as optional, N4JS allows for
-omitting it in the call (or in case of constructors in the new expression). <code>this</code> is a known
-keyword in ECMAScript, it usually refers to the receiver of a property or, in case of classes,
+to N4JS. We briefly describe the type expression <code>~i~this=undefined</code> used here. The part <code>=undefined</code> declares
+the default initializer of the parameter <code>spec</code> (c.f. ECMAScript 2015 [<a href="#ECMA11a">ECMA11a</a>]). Parameters which have default
+initializers are optional, hence N4JS allows for omitting them in function calls (or in case of
+constructors, in the <code>NewExpression</code>).
+<code>this</code> is a known keyword in ECMAScript, it usually refers to the receiver of a property or, in case of classes,
 method call. But here we use it as a type expression, referring to the type of the <code>this</code>
 keyword. This is usually the class in which the method or constructor is defined. That is,
 in case of Task it will be <code>Task</code>. However, we have two subclasses of <code>Task</code>. We do not
@@ -728,13 +742,13 @@ create the first one? The solution comes with the <code>~i~</code> prefix.</p>
 <p>As discussed in the feature sheet, N4JS supports nominal and structural typing. Structural typing
 is activated in N4JS with the tilde <code>~</code>. Two structural types are compatible, if they provide
 the same properties, or in case of classes, public members. In the constructor, we only need to
-set the fields. In N4JS, we can use <code> ~~ </code> to refer to the so-called <strong>field structural type</strong>. Two
+set the fields. In N4JS, we can use <code>~~</code> to refer to the so-called <strong>field structural type</strong>. Two
 field structural types are compatible, if they provide the same fields - methods are
 ignored in these cases. Actually, optional fields are also ignored. This explains why we marked
 some of the fields with the optional modifier. Note that fields with an initializer are also
 treated as optional (since the initializer provides a default value). Actually, N4JS can do even
 more. There are several modifiers to further filter the properties or members to be considered:
-<code>~r~</code> only considers getters or data fields, <code> ~w~ </code> only setters and data fields. <code>~i~</code>  is used
+<code>~r~</code> only considers getters or data fields, <code>~w~</code> only setters and data fields. <code>~i~</code>  is used
 for initializer parameters: For every setter or (non-optional) data field in the type, the
 <code>~i~</code>-type needs to provide at least a getter (or a readable data field). Optional fields
 are also treated as optional in the field structural types.</p>
@@ -751,7 +765,7 @@ For Task we would write:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">constructor(spec: ~i~this?) {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">constructor(spec: ~i~this=undefined) {
   this.id = spec.id;
   this.label = spec.label;
 }</code></pre>
@@ -769,7 +783,7 @@ we have solved the problem of initialization for all our entity classes with a s
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">let todo = new Todo({dueDate: new Date(), label: "Test TODO"});
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">let todo = new Todo({dueDate: new Date(), label: "Test TODO"});
 sim.storeTask(todo);</code></pre>
 </div>
 </div>
@@ -807,7 +821,7 @@ sim.storeTask(todo);</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_creating-a-task-manager"><a class="link" href="#_creating-a-task-manager">Creating a Task Manager</a></h2>
+<h2 id="_creating_a_task_manager"><a class="link" href="#_creating_a_task_manager">Creating a Task Manager</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>We will now create the controller tier. This tier uses the entity and storage classes to provide
@@ -819,7 +833,7 @@ asynchronous functions. So before we actually implement any controller class, we
 tier to support asynchronous functions.</p>
 </div>
 <div class="sect2">
-<h3 id="_make-the-storage-asynchronous"><a class="link" href="#_make-the-storage-asynchronous">Make the Storage Asynchronous</a></h3>
+<h3 id="_make_the_storage_asynchronous"><a class="link" href="#_make_the_storage_asynchronous">Make the Storage Asynchronous</a></h3>
 <div class="paragraph">
 <p>If we would like to use a real database, all calls to the database will be asynchronous. Asynchronous
 programming is a typical task in ECMAScript and there are several solutions to do this.</p>
@@ -840,7 +854,7 @@ supported by several JavaScript frameworks and it is also built-in to N4JS inclu
 <div class="listingblock">
 <div class="title">Storage.n4js (cntd.)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Task } from "model"
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { Task } from "model"
 
 export public interface Storage {
 
@@ -888,7 +902,7 @@ warning and run it again, you will get the following</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">Promise { &lt;pending&gt; }</code></pre>
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">Promise { &lt;pending&gt; }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -901,7 +915,7 @@ of testing the code after the next step.</p>
 <div class="listingblock">
 <div class="title">TaskManager.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Todo } from "model"
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { Todo } from "model"
 import { Task } from "model"
 import { Storage } from "Storage"
 import { StorageInMemory } from "StorageInMemory"
@@ -975,7 +989,7 @@ collection of assert methods.</p>
 <div class="listingblock">
 <div class="title">manifest.n4mf (in project n4js.example.tasks.tests)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">…
+<pre class="highlight"><code class="language-n4mf" data-lang="n4mf">…
 TestedProjects {
   n4js.example.tasks
 }
@@ -998,7 +1012,7 @@ containing a class with the same name. The first test should look like that:</p>
 <div class="listingblock">
 <div class="title">TaskManagerTest.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { TaskManager } from "TaskManager"
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { TaskManager } from "TaskManager"
 import { Assert } from "n4/mangel/assert/Assert"
 
 export public class TaskManagerTest {
@@ -1046,7 +1060,7 @@ menu:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_storage-using-mongodb"><a class="link" href="#_storage-using-mongodb">Storage using MongoDB</a></h2>
+<h2 id="_storage_using_mongodb"><a class="link" href="#_storage_using_mongodb">Storage using MongoDB</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Instead of "storing" the entities in memory, we want to use a real database. In this example, we are going
@@ -1055,7 +1069,7 @@ you must have MongoDB installed and start a data base server instance via the co
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">mongod --dbpath /db</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">mongod --dbpath /db</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1065,7 +1079,7 @@ We have to open the manifest editor (of the tasks project) and add the following
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">ProjectDependencies {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">ProjectDependencies {
   mongodb
 }</code></pre>
 </div>
@@ -1090,7 +1104,7 @@ a <strong>dynamic import</strong> as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import * as mongodb+ from "mongodb"
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import * as mongodb+ from "mongodb"
 
 mongodb.MongoClient.connect('mongodb://localhost:27017/tasks', function (err: any+, db: any+) {
   if (!err) {
@@ -1108,7 +1122,7 @@ importing from an N4JS module:</p>
 <div class="listingblock">
 <div class="title">StorageMongoDB.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Storage } from "Storage";
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { Storage } from "Storage";
 import { Task, Appointment, Todo } from "model";
 import { Collection, Db, MongoClient, ObjectID } from "mongodb";
 
@@ -1144,7 +1158,7 @@ the storeTask method, we are then retrieving the inserted item id&#8217;s from M
 <div class="listingblock">
 <div class="title">StorageMongoDB.n4js (cntd.)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export class StorageMongoDB implements Storage {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export class StorageMongoDB implements Storage {
 
 // ...
 
@@ -1199,7 +1213,7 @@ languages and allows for retrieving information of a type and its members at run
 <div class="listingblock">
 <div class="title">StorageMongoDB.n4js (cntd.)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">function toData(task: Task): ~~Task {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">function toData(task: Task): ~~Task {
   let metaClass = N4Type.of(task),
   data: any+ = {};
   // note: would have to set data._id, here, if we
@@ -1220,7 +1234,7 @@ initialize it with values provided by a plain data object in properties that cor
 <div class="listingblock">
 <div class="title">StorageMongoDB.n4js (cntd.)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">function fromData(data: any+): Task {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">function fromData(data: any+): Task {
   let ctor = typeToCtor.get(data._type as string);
   if (!ctor) {
     throw new Error('Unsupported type of data model entity: ' + data._type);
@@ -1244,8 +1258,8 @@ systems many details would be handled differently, depending on the actual requi
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_dependency-injection"><a class="link" href="#_dependency-injection">Dependency Injection</a></h2>
+<div class="sect1 language-n4js">
+<h2 id="_dependency_injection"><a class="link" href="#_dependency_injection">Dependency Injection</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>We now have two implementations of the interface Storage. For testing, the in-memory solution is adequate,
@@ -1264,7 +1278,7 @@ with <code>@Inject</code>. We will do that with the storage field in the TaskMan
 <div class="listingblock">
 <div class="title">TaskManger.n4js (cntd.)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public class TaskManager {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export public class TaskManager {
 
   @Inject
   private storage: Storage;
@@ -1277,7 +1291,7 @@ with <code>@Inject</code>. We will do that with the storage field in the TaskMan
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=""></i>
 </td>
 <td class="content">
 After removing the constructor, the IDE will create a warning that one of the imports is unused. You
@@ -1300,7 +1314,7 @@ instance of StorageInMemory or StorageMongoDB. We are going to adjust the test a
 <div class="listingblock">
 <div class="title">TaskMangerTest.n4js (cntd.)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">@Binder
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">@Binder
 @Bind(Storage,StorageInMemory)
 class InMemoryBinder {}</code></pre>
 </div>
@@ -1321,7 +1335,7 @@ to tell the framework which configuration it should use for the injector, this i
 <div class="listingblock">
 <div class="title">TaskMangerTest.n4js (cntd.)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">@GenerateInjector @UseBinder(InMemoryBinder)
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">@GenerateInjector @UseBinder(InMemoryBinder)
 export public class TaskManagerTest {
   …
 }</code></pre>
@@ -1342,7 +1356,7 @@ it needs to be injected itself. The IDE warns us in the TaskManagerTest class:</
 <div class="listingblock">
 <div class="title">TaskMangerTest.n4js (cntd.)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">…
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">…
 export public class TaskManagerTest {
   @Inject
   mgr: TaskManager;
@@ -1357,7 +1371,7 @@ StorageInMemory.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_web-ui-module"><a class="link" href="#_web-ui-module">Web UI module</a></h2>
+<h2 id="_web_ui_module"><a class="link" href="#_web_ui_module">Web UI module</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The final step in building functionality into our model is to create a simple web user interface using
@@ -1373,7 +1387,7 @@ dependencies):</p>
 <div class="listingblock">
 <div class="title">manifest.n4mf (cntd.)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">ProjectDependencies {
+<pre class="highlight"><code class="language-n4mf" data-lang="n4mf">ProjectDependencies {
   mongodb,
   express,
   n4js.lang
@@ -1391,7 +1405,7 @@ above description on MongoDB).</p>
 <div class="listingblock">
 <div class="title">WebUI.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">//Creating a simple Web User Interface in HTML
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">//Creating a simple Web User Interface in HTML
 
 import { TaskManager } from "TaskManager"
 import {Application, Response } from "express";
@@ -1423,20 +1437,19 @@ example, we are importing the classes <code>Application</code> and <code>Respons
 that we can render some HTML to. Next we will add a method for creating new tasks:</p>
 </div>
 <div class="listingblock">
-<div class="title">WebUI.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">public start() {
+<pre>public start() {
 
 // ... code shown above ...
 
-  this.app.get("/create", async (req, res) =&gt; {
+  this.app.get("/create", async (req, res) => {
     let values = req.query as ~Object with {type: string, label: string};
-    if (values &amp;&amp; values.type === 'Todo' &amp;&amp; values.label &amp;&amp; values.label.length &gt; 0) {
+    if (values && values.type === 'Todo' && values.label && values.label.length > 0) {
       await this.manager.createTodo(values.label);
     }
     redirect(res, '/');
   });
-}</code></pre>
+}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1445,7 +1458,7 @@ that we can render some HTML to. Next we will add a method for creating new task
 <div class="listingblock">
 <div class="title">WebUI.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">public start() {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">public start() {
 
 // ... code shown above ...
 
@@ -1461,7 +1474,7 @@ that we can render some HTML to. Next we will add a method for creating new task
 <div class="listingblock">
 <div class="title">WebUI.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export class WebUI {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export class WebUI {
 
   // ... methods shown above ...
 
@@ -1508,7 +1521,7 @@ instance of class <code>WebUI</code>, and invokes method <code>start()</code>:</
 <div class="listingblock">
 <div class="title">launch.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Storage } from "Storage";
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { Storage } from "Storage";
 import { StorageMongoDB } from "StorageMongoDB";
 import { WebUI } from "WebUI";
 import { N4Injector } from "n4js/lang/N4Injector";
@@ -1535,114 +1548,10 @@ simple Web UI.</p>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_export-as-npm"><a class="link" href="#_export-as-npm">Export as npm</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Finally, we can export our project as an npm package to integrate it into other Node.js projects or to
-launch from command line.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>You can export one or multiple projects by selecting them in the Project Explorer and opening the
-"Export &#8230;&#8203;" wizard by right-clicking on them. On the first page select "N4 Exports / N4JS npm Export". For
-the purpose of this example, only export project <code>n4js.example.tasks</code>.</p>
-</li>
-<li>
-<p>On the second page you have to choose a target folder to export to.</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-Export to a folder outside your Eclipse workspace!
-</td>
-</tr>
-</table>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>By default, the exporter exports as a directory. Optionally, you can export as a versioned tarball by
-checking the option "Compress the contents of the file".</p>
-</li>
-<li>
-<p>The last page of the wizard shows a preview of the package.json file that will be created in the
-exported npm package, together with a comparison to an existing package.json file in your N4JS project, if
-present. You can place such a package.json file next to your <code>manifest.n4mf</code> file (optional), in case you
-need
-to define more <a href="https://docs.npmjs.com/files/package.json">specifics in the package.json</a>, that
-are not covered by the N4JS export wizard.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/npmexport.png" alt="npmexport">
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_run-from-command-line-with-node-js"><a class="link" href="#_run-from-command-line-with-node-js">Run from command line with Node.js</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Once you&#8217;ve exported your project, you can either publish it to
-<a href="https://www.npmjs.com/">npmjs.com</a> or install directly from your hard disk and call the launch
-module, for example</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">$ npm install -g n4js.example.tasks
-$ node -r n4js.example.tasks/launch
-HTTP server listening on http://localhost:4000/</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In case you want to install dependencies and run it right away in the exported npm folder, you have to
-manually set up the <code>NODE_PATH</code> to the folder hosting the exported npms, otherwise node cannot resolve the
-project/npm IDs.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">$ export NODE_PATH=`pwd`
-$ pushd n4js.example.tasks; npm install; popd
-n4js.example.tasks@0.0.1 /Users/me/prj/n4js.example.tasks
-├─┬ express@4.13.4
-...
-$ node n4js.example.tasks/launch.js
-HTML server listening on http://localhost:4000/</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>So far we&#8217;ve been loading all code via node&#8217;s <code>require()</code> function.
-In case you want to load your modules via <a href="https://github.com/systemjs/systemjs">SystemJS</a>,
-which has more support to resolve cyclic dependencies across modules, you could use a handy starter
-executable called <code>n4js</code>. The <code>n4js</code> starter is part of the <code>n4js-node</code> runtime environment npm (a default
-dependency of any exported npm) and is therefore already installed:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">$ export NODE_PATH=`pwd`
-$ cd n4js.example.tasks; npm install
-n4js.example.tasks@0.0.1 /Users/me/prj/n4js.example.tasks
-├─┬ express@4.13.4
-...
-$ ./node_modules/.bin/n4js n4js.example.tasks/launch
-HTTP server listening on http://localhost:4000/</code></pre>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2017-03-14 10:23:54 CET
 </div>
 </div>
 <div class="social">
@@ -1688,8 +1597,5 @@ $('html, body').animate({
 return false;
 });
 </script>
-<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
-<script src="../scripts/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>

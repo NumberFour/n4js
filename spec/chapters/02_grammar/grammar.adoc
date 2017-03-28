@@ -1,0 +1,183 @@
+
+= Grammar
+////
+Copyright (c) 2017 NumberFour AG.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+  NumberFour AG - Initial API and implementation
+////
+
+[.language-n4js]
+== Lexical Conventions
+
+task:IDE-7[]
+
+As a super language on top of ECMAScript, the same lexical conventions are supported as described in cite:[ECMA11a(S7)] within strict mode.
+Some further constraints are defined, however, restricting certain constructs. These constraints are described in the following.
+
+=== Identifier Names and Identifiers
+
+Cf. cite:[ECMA11a(S7.6)], cite:[ECMA11a(S11.1.2,p.63)] and cite:[ECMA11a(S01.2,p.51ff)].
+
+As a reminder, identifiers are defined as follows in the ECMAScript specification:
+
+//\Rightarrowdo{add grammar snippet from our grammar, probably simplified, adjust with ECMA spec}
+
+[source,xtext]
+----
+IdentifierName: IdentifierStart* IdentifierPart;
+IdentifierStart : UnicodeLetter | '_';
+                \ UnicodeEscapeSequence
+----
+
+N4JS supports a limited form of computed-names for member declarations:
+
+[source,xtext]
+----
+N4JSPropertyComputedName:
+    '[' (SymbolLiteralComputedName | StringLiteralComputedName) ']'
+;
+
+SymbolLiteralComputedName: N4JSIdentifier '.' N4JSIdentifier ;
+
+StringLiteralComputedName: STRING ;
+----
+
+As can be seen, a computed-name must be either
+
+* task:IDE-1220[] a symbol reference, e.g., `Symbol.iterator`
+* task:IDE-1734[] a string literal, i.e., a compile time known constant.
+This notation is useful when interoperating with libraries that define members whose names contain special characters (e.g., a field name starting with commercial-at)
+
+In N4JS, identifiers are further constrained in order to avoid ambiguities and to make code more readable.
+Some of these constraints will lead to errors, others only to warnings.
+They do not apply for identifiers declared in definitions file (n4jsd) in order to enable declaration of external entities.
+
+.N4JS Identifier Restrictions
+[req,id=IDE-1,version=1]
+--
+. If the following constraints do not hold, errors are created.
+..  Leading `$` (dollar sign) character is prohibited for any variable name such as fields, variables, types functions and methods.
+..  Leading `pass:[_]` (underscore) character is not allowed for identifying any functions or methods.
+--
+
+.N4JS identifier recommendations
+[req,id=IDE-2,version=1]
+--
+. If the following constraints do not hold, warnings are created.
+. Variable names should, in general, be constructed form the 26 ASCII upper and lower case alphabetic letters (a..z, A..Z), from the 10 decimal digits (0..9) and from the `pass:[_]` (underscore).
+Although the usage of the international characters are allowed (according to the ECMAScript specification)
+it is discouraged because these characters may not be read or understood well in every circumstance footnote:[http://javascript.crockford.com/code.html].
+
+1.  Type (and Type Variable) Identifiers
++
+[source,xtext]
+----
+TypeIdentifier: [_A-Z][_a-zA-Z0-9]*
+TypeVariableIdentifier: [_A-Z][_a-zA-Z0-9]*
+----
+2.  Package Identifiers
++
+[source,xtext]
+----
+PackageIdentifier: [_a-z][._a-zA-Z0-9]*; // i.e. the folder names, must not end with .
+----
+3.  Member Identifiers and Enum Literals
++
+[source,xtext]
+----
+InstanceFieldIdentifier: [_a-z][_a-zA-Z0-9]*
+StaticFieldIdentifier: [_A-Z][_A-Z0-9]*([_A-Z0-9]+)*
+EnumLiteral: [_A-Z][_A-Z0-9]*([_A-Z0-9]+)*
+----
+4.  Variable and Parameter Names
++
+[source,xtext]
+----
+VariableIdentifier: [_a-zA-Z0-9]*
+􏰀ParameterIdentifier: [_a-z][_a-zA-Z0-9]*
+----
+5.  Methods
++
+[source,xtext]
+----
+MethodIdentifier: [_a-z][_a-zA-Z0-9]*;
+----
+6.  Annotations
++
+[source,xtext]
+----
+AnnotationIdentifier: [_A-Z][_a-zA-Z0-9]*
+----
+
+The following rules describe how fully qualified names of elements are created.
+Note that these fully qualified names cannot be used in N4JS directly.
+Though they may be shown in error messages etc. to identify elements.
+
+[source,xtext]
+----
+TypeIdentifier:         [A-Z][a-zA-Z0-9]*;
+PackageIdentifier:      [a-z][a-zA-Z0-9]*;
+FQNType:                (PackageIdentifier '.')+ TypeIdentifier;
+----
+
+--
+
+=== This Keyword
+
+Cf. cite:[ECMA11a(S11.1.1,p.63)]
+
+=== Regular Expression Literals
+
+Cf. cite:[ECMA11a(S7.8.5)]
+task:IDE-95[]
+
+
+=== Automatic Semicolon Insertion
+
+
+Cf. cite:[ECMA11a(S7.9)]
+
+<<Acronyms,ASI>> is supported by the parser, however warnings are issued. task:IDE-95[]
+
+=== JSDoc
+
+task:IDE-56[] task:IDE-57[]
+
+JSDoc are comments similar to JavaDoc in Java for documenting types, functions and members.
+There is no semantic information expressed in JSDoc, that is, the behavior of a program must not change if all the JSDoc is removed.
+The JSDoc tags and overall syntax is a mixture of tags defined by the https://developers.google.com/closure/compiler/docs/js-for-compiler[Google Closure Compiler], Java's http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html[JavaDoc] tool and N4-specific tags.
+
+JSDoc comments are multiline comments, starting with ``pass:[/**]`` (instead of simple multiline comments, starting with ``pass:[/*]``).
+
+[source,xtext]
+----
+MultiLineComment: '/*' MultiLineCommentChars? '*/'  // from ECMAScript specification
+JSDoc:            '/**' MultiLineCommentChars? '*/'
+----
+
+In general, JSDoc comments are placed directly before the annotated language element.
+In some cases, this is slightly different, such as for method parameters, for example, where it is then explicitly specified.
+
+The content of JSDoc comments will be covered in more detail in upcoming chapters.
+For documentation purposes, multi- and single-line descriptions are used in several constructs.
+
+[source,xtext]
+----
+MLVALUE:         ([^@]+[^\n]+)+;
+SLVALUE:         ([^\n]+);
+----
+
+`MLVALUE` ::
+short for `multi-line value`. This is usually only used for the general description of types or members.
+
+`SLVALUE` ::
+short for `single-line value`. This is a description which ends at the end of a line.
+It is usually used in combination with other tags, e.g., to further describe a parameter of a method.
+
+//\Rightarrowdo[jvp: JSDoc documentation tags]{JSDoc documentation tags, such as see, link etc. Mozair suggested inheritDoc}
+

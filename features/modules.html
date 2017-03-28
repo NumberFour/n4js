@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>Modules</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../res/styles/n4js-adoc.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -29,6 +30,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../scripts/nav-mobile.js"></script>
+
+<!-- ************* Prism.js Syntax Highlighter ******-->
+<link href="../styles/prism.min.css" rel="stylesheet"/>
+<script src="../scripts/prism.js"></script>
 
 <!-- ****************** Analytics ****************** -->
 <script>
@@ -67,7 +72,8 @@
   </li>
   <li><a href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -75,15 +81,15 @@
   <li><a href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
 </div>
 <button id="tocbutton">TOC</button>
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language &amp; IDE</p></div>
+<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language & IDE</p></div>
 <div class="mobile-banner">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
@@ -101,7 +107,8 @@
   </li>
   <li><a class="scroll" href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -109,8 +116,8 @@
   <li><a class="scroll" href="../faq/index.html">FAQ</a>
     <ul>
       <li><a  href="../faq/index.html">FAQ</a></li>
-      <li><a  href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a  href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -123,11 +130,11 @@
 <ul class="sectlevel0">
 <li><a href="#_modules">Modules</a>
 <ul class="sectlevel1">
-<li><a href="#_multiple-exports">Multiple Exports</a></li>
-<li><a href="#_n4js-ide-organizes-imports">N4JS IDE Organizes Imports</a></li>
-<li><a href="#_import-removal">Import Removal</a></li>
-<li><a href="#_read-only-views">Read-only Views</a></li>
-<li><a href="#_loader-details">Loader Details</a></li>
+<li><a href="#_multiple_exports">Multiple Exports</a></li>
+<li><a href="#_n4js_ide_organizes_imports">N4JS IDE Organizes Imports</a></li>
+<li><a href="#_import_removal">Import Removal</a></li>
+<li><a href="#_read_only_views">Read-only Views</a></li>
+<li><a href="#_loader_details">Loader Details</a></li>
 </ul>
 </li>
 </ul>
@@ -135,15 +142,15 @@
 </div>
 <div id="content">
 <h1 id="_modules" class="sect0"><a class="link" href="#_modules">Modules</a></h1>
-<div class="openblock partintro">
-<div class="title">Modules</div><div class="content">
+<div class="openblock">
+<div class="content">
 Large-scale projects of almost any language require good modularization for maintenance reasons.
 It&#8217;s vital for projects that modules don&#8217;t become oversized and comprise a well-defined purpose
 that is easy to comprehend for developers. The N4JS IDE helps for keeping track of your code modules and validates their usage.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_multiple-exports"><a class="link" href="#_multiple-exports">Multiple Exports</a></h2>
+<h2 id="_multiple_exports"><a class="link" href="#_multiple_exports">Multiple Exports</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>While it&#8217;s a good habit to assign one module for a single type, it may
@@ -154,7 +161,7 @@ that N4JS already supports most of it:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public function inc(): void { ++count; }
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export public function inc(): void { ++count; }
 export public var count = 5;
 export default public class Foo {
     public callOnIt(): void { }
@@ -166,7 +173,7 @@ export default public class Foo {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { inc, count } from 'Counter';// Named imports
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { inc, count } from 'Counter';// Named imports
 import Foo from 'Counter'; // Default import
 import { readFile } from 'fs' // Node.js core modules
 import express from 'express';  // npm modules
@@ -178,14 +185,14 @@ import * as plainJsModule+ from 'plainJsModule'; // Dynamic import</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import * as foo from 'Counter'; // Namespace import</code></pre>
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import * as foo from 'Counter'; // Namespace import</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=""></i>
 </td>
 <td class="content">
 Anonymous default exports and relative module paths are not yet supported. The module specifier is the relative path of the
@@ -197,7 +204,7 @@ module in its source folder. Optionally the project name can be used as prefix, 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_n4js-ide-organizes-imports"><a class="link" href="#_n4js-ide-organizes-imports">N4JS IDE Organizes Imports</a></h2>
+<h2 id="_n4js_ide_organizes_imports"><a class="link" href="#_n4js_ide_organizes_imports">N4JS IDE Organizes Imports</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Manually writing import statements is not necessary: the N4JS IDE does this automatically.
@@ -219,7 +226,7 @@ adds any missing imports. This is also used to clean up any unused imports.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_import-removal"><a class="link" href="#_import-removal">Import Removal</a></h2>
+<h2 id="_import_removal"><a class="link" href="#_import_removal">Import Removal</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>When developing in N4JS, you may notice that you sometimes need to import types to cast
@@ -227,7 +234,7 @@ a variable or use it for a constraint in a generic.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import Foo from 'Counter';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import Foo from 'Counter';
 
 var someOtherVar: Object;
 (someOtherVar as Foo).callOnIt();
@@ -242,7 +249,7 @@ imported module and will omit loading the module.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_read-only-views"><a class="link" href="#_read-only-views">Read-only Views</a></h2>
+<h2 id="_read_only_views"><a class="link" href="#_read_only_views">Read-only Views</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>ES2015 modules have the concept of read-only views. Although you cannot modify anything imported from
@@ -251,7 +258,7 @@ the export, you will read the current value. For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import {inc, count} from 'Counter';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import {inc, count} from 'Counter';
 
 console.log(count); // 5
 inc();
@@ -265,7 +272,7 @@ dependencies across modules. N4JS might even reorder type definitions to achieve
 </div>
 </div>
 <div class="sect1">
-<h2 id="_loader-details"><a class="link" href="#_loader-details">Loader Details</a></h2>
+<h2 id="_loader_details"><a class="link" href="#_loader_details">Loader Details</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>So far, there&#8217;s no engine/platform that has implemented the ES2015 specification natively. N4JS
@@ -283,6 +290,7 @@ dependencies synchronously.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2017-03-14 10:23:54 CET
 </div>
 </div>
 <div class="social">
@@ -328,8 +336,5 @@ $('html, body').animate({
 return false;
 });
 </script>
-<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
-<script src="../scripts/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>

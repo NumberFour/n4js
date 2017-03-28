@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>Node.js Support</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../res/styles/n4js-adoc.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -29,6 +30,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../scripts/nav-mobile.js"></script>
+
+<!-- ************* Prism.js Syntax Highlighter ******-->
+<link href="../styles/prism.min.css" rel="stylesheet"/>
+<script src="../scripts/prism.js"></script>
 
 <!-- ****************** Analytics ****************** -->
 <script>
@@ -67,7 +72,8 @@
   </li>
   <li><a href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -75,15 +81,15 @@
   <li><a href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
 </div>
 <button id="tocbutton">TOC</button>
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language &amp; IDE</p></div>
+<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language & IDE</p></div>
 <div class="mobile-banner">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
@@ -101,7 +107,8 @@
   </li>
   <li><a class="scroll" href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -109,8 +116,8 @@
   <li><a class="scroll" href="../faq/index.html">FAQ</a>
     <ul>
       <li><a  href="../faq/index.html">FAQ</a></li>
-      <li><a  href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a  href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -121,24 +128,24 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel0">
-<li><a href="#_node-js-support">Node.js Support</a>
+<li><a href="#_node_js_support">Node.js Support</a>
 <ul class="sectlevel1">
-<li><a href="#_installing-and-using-npm-packages">Installing and using npm packages</a>
+<li><a href="#_installing_and_using_npm_packages">Installing and using npm packages</a>
 <ul class="sectlevel2">
-<li><a href="#_dynamic-import">Dynamic Import</a></li>
-<li><a href="#_automatic-download-of-type-definitions">Automatic Download of Type Definitions</a></li>
+<li><a href="#_dynamic_import">Dynamic Import</a></li>
+<li><a href="#_automatic_download_of_type_definitions">Automatic Download of Type Definitions</a></li>
 </ul>
 </li>
-<li><a href="#_exporting-n4js-projects-as-npm-packages">Exporting N4JS projects as npm packages</a></li>
+<li><a href="#_exporting_n4js_projects_as_npm_packages">Exporting N4JS projects as npm packages</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<h1 id="_node-js-support" class="sect0"><a class="link" href="#_node-js-support">Node.js Support</a></h1>
-<div class="openblock partintro">
-<div class="title">Node.js Support</div><div class="content">
+<h1 id="_node_js_support" class="sect0"><a class="link" href="#_node_js_support">Node.js Support</a></h1>
+<div class="openblock">
+<div class="content">
 N4JS and its IDE are optimized to develop large scale server applications with <a href="https://nodejs.org">Node.js</a>
 Besides launching and testing code from the IDE using Node.js, additional support is provided for automatically downloading
 <a href="https://www.npmjs.com/">npm</a> packages and exporting N4JS projects to npm. This allows for seamless integration
@@ -146,7 +153,7 @@ of N4JS projects with existing Node.js based environments.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installing-and-using-npm-packages"><a class="link" href="#_installing-and-using-npm-packages">Installing and using npm packages</a></h2>
+<h2 id="_installing_and_using_npm_packages"><a class="link" href="#_installing_and_using_npm_packages">Installing and using npm packages</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>N4JS helps Node.js developers to use third-party npm packages with support both on the language and tooling level. The
@@ -159,7 +166,7 @@ supported in the headless tooling.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_dynamic-import"><a class="link" href="#_dynamic-import">Dynamic Import</a></h3>
+<h3 id="_dynamic_import"><a class="link" href="#_dynamic_import">Dynamic Import</a></h3>
 <div class="paragraph">
 <p>Third-party packages are supported in two different ways. If an npm package does not have any corresponding type definition
 files defined yet, then the required module can be imported into an N4JS module dynamically. In order to support the import
@@ -169,7 +176,7 @@ This so called "dynamic module import" will be treated as a type of <code>any+</
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import * as mongodb+ from 'mongodb';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import * as mongodb+ from 'mongodb';
 
 var client = mongodb.MongoClient;
 
@@ -191,7 +198,7 @@ possible to access properties from the class as well, as shown in line 5 and 10.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_automatic-download-of-type-definitions"><a class="link" href="#_automatic-download-of-type-definitions">Automatic Download of Type Definitions</a></h3>
+<h3 id="_automatic_download_of_type_definitions"><a class="link" href="#_automatic_download_of_type_definitions">Automatic Download of Type Definitions</a></h3>
 <div class="paragraph">
 <p>If type definitions are available at <a href="https://github.com/NumberFour/n4jsd">our N4JS type definition project</a> for a
 particular npm package
@@ -224,7 +231,7 @@ them with others via <a href="https://github.com/NumberFour/n4jsd">our N4JS type
 </div>
 </div>
 <div class="sect1">
-<h2 id="_exporting-n4js-projects-as-npm-packages"><a class="link" href="#_exporting-n4js-projects-as-npm-packages">Exporting N4JS projects as npm packages</a></h2>
+<h2 id="_exporting_n4js_projects_as_npm_packages"><a class="link" href="#_exporting_n4js_projects_as_npm_packages">Exporting N4JS projects as npm packages</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Besides supporting npm package download and usage, the IDE comes with an npm package export feature.
@@ -245,6 +252,7 @@ This feature is further explained in the <a href="../userguides/npm-export-guide
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2017-03-14 10:23:54 CET
 </div>
 </div>
 <div class="social">
@@ -290,8 +298,5 @@ $('html, body').animate({
 return false;
 });
 </script>
-<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
-<script src="../scripts/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>

@@ -1,0 +1,949 @@
+
+= Statements
+////
+Copyright (c) 2017 NumberFour AG.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+  NumberFour AG - Initial API and implementation
+////
+
+For all statements, we define the following pseudo properties:
+
+[.language-n4js]
+--
+
+`containingFunction` ::
+The function or method in which the statement is (indirectly) contained, this may be null.
+
+`containingClass` ::
+The class in which the statement is (indirectly) contained, this may be null.
+--
+
+The expressions and statements are ordered, at first describing the constructs available in the 5th edition of ECMA-262
+referred to as  cite:[ECMA11a] in the following.
+The grammar snippets already use newer constructs in some cases.
+
+[.language-n4js]
+== ECMAScript 5 Statements
+
+N4JS supports the same statements as
+ECMAScript. Some of these statements are enhanced with annotations <<Annotations>> and type information.
+
+Although some statements may return a value which can be used via certain constructs such as `eval`), no type is inferred for any statement.
+The compiler will always create a warning if a statement is used instead of an expression.
+
+The following sections, therefore, do not define how to infer types for statement but how types and type annotations
+are used in these statements and the specific type constraints for a given statement.
+
+All syntax definitions taken from  cite:[ECMA11a]  are repeated here for convenience reasons and in order to define temporary variables for simplifying constraint definitions.
+If non-terminals are not defined here, the definition specified in  cite:[ECMA11a]   is to be used.
+
+=== Function or Field Accessor Bodies
+
+.Dead Code
+[req,id=IDE-126,version=1]
+--
+For all statements in a function or field accessor (getter/setter) body, the following constraints must hold:
+
+1.  Statements appearing directly after return, throw, break, or continue statements (in the same block) are considered to be dead code and a warning is issued in these cases.
+
+--
+
+=== Variable Statement
+
+[discrete]
+==== Syntax [[variable-statement-syntax]]
+
+A var statement can declare the type of the variable with a type
+reference. This is described with the following grammar similar to
+cite:[ECMA11a(S12.2,p.87)]:
+
+[source,xtext]
+----
+VariableStatement <In, Yield>:
+    =>({VariableStatement}
+        'var'
+    )
+    varDeclsOrBindings+=VariableDeclarationOrBinding<In,Yield,false> (',' varDeclsOrBindings+=VariableDeclarationOrBinding<In,Yield,false>)* Semi
+;
+
+VariableDeclarationOrBinding <In, Yield, OptionalInit>:
+        VariableBinding<In,Yield,OptionalInit>
+    |   VariableDeclaration<In,Yield,true>
+;
+
+VariableBinding <In, Yield, OptionalInit>:
+    => pattern=BindingPattern<Yield> (
+            <OptionalInit> ('=' expression=AssignmentExpression<In,Yield>)?
+        |   <!OptionalInit> '=' expression=AssignmentExpression<In,Yield>
+    )
+;
+
+VariableDeclaration <In, Yield, AllowType>:
+    {VariableDeclaration} VariableDeclarationImpl<In,Yield,AllowType>;
+
+fragment VariableDeclarationImpl <In, Yield, AllowType>*:
+    annotations+=Annotation*
+    (
+        <AllowType> =>(
+            name=BindingIdentifier<Yield> ColonSepTypeRef?
+        ) ('=' expression=AssignmentExpression<In,Yield>)?
+    |   <!AllowType> =>(
+        name=BindingIdentifier<Yield>
+        ) ('=' expression=AssignmentExpression<In,Yield>)?
+    )
+;
+----
+
+.Variable Statement
+[example]
+====
+
+[source,n4js]
+----
+var any: any;
+// any.type := any
+
+var anyNull = null;
+// anyNull.type := any
+
+var s: string;
+// s.type := string
+
+var init = "Hi";
+// init.type := string
+
+const MESSAGE = "Hello World";
+// MESSAGE.type := string
+----
+====
+
+
+[discrete]
+==== Semantics [[variable-statement-semantics]]
+
+From a model and type inference point of view, variable and constant statements and declarations are similar except that the pseudo property $const$ is set to false for variables and true for constants.
+Also see exported variable statement (<<Export Statement>>) and constant statement and declaration (<<Const>>).
+
+.Variable declaration
+[req,id=IDE-127,version=1]
+--
+For a given variable declaration $d$, the following constraints must hold:
+
+* The type of the initializer expression must conform to the declared type:
++
+[%hardbreaks]
+$d.expression\neq \NULL \land d.declaredTypeRef\neq \NULL$
+$         \rightarrow \tee d.expression.type \subtype \tee d.declaredTypeRef$
+* The initializer expression should not contain a reference to $d$ except where the reference is contained in a class expression or function expression and
+the class is not immediately initialized or the function is not immediately invoked.
+In these cases, the code is executed later and the self-reference is not a problem. +
+To clarify: _should not_ means that only a warning will be produced.
+
+[source,n4js]
+----
+// not ok (simple case)
+var n = n + 1;
+
+// ok (class expression  not in version 0.1)
+// var cls1 = class { static sfield1 = "hello"; field2 = cls1.sfield1; };
+
+// not ok, immediately instantiated (class expression  not in version 0.1)
+// var cls2 = new class { field1 = "hello"; field2 = cls2.field1; };
+
+// ok
+var fun1 = function() : number { var x = fun1; return -42; };
+
+// not ok, immediately invoked
+var fun2 = function() : number { var x = fun2;  return -42; }();
+----
+
+The variable statement may contain array or object destructuring patterns, see <<_array-and-object-destructuring>> for details.
+
+--
+
+[discrete]
+==== Type Inference [[variable-statement-type-inference]]
+
+The type of a variable is the type of its declaration:
+
+[math]
+++++
+& \infer{\tee v: \tee d}{} \\
+++++
+
+
+The type of a variable declaration is either the declared type or the inferred type of the initializer expression:
+
+[math]
+++++
+& \infer{\tee d: T}{d.declaredType \neq \NULL & T = d.declaredType} \\
+& \infer{\tee d: T}{
+    d.declaredType = \NULL & d.expression \neq \NULL \\
+    E = \tee d.expression & E \not\in \{\type{null, undefined}\} & T = E} \\
+& \infer{\tee d: \type{any}}{else}
+++++
+
+
+// \todo{known limitation: if the initializer expression is an ObjectLiteral or FunctionExpression, the variable type will be inferred to \lstnfjs{any}.task:IDE-865[]
+
+[.language-n4js]
+=== If Statement
+
+[discrete]
+==== Syntax [[if-statement-syntax]]
+
+Cf. cite:[ECMA11a(S12.5,p.89)]
+
+[source,xtext]
+----
+IfStatement <Yield>:
+    'if' '(' expression=Expression<In=true,Yield> ')'
+    ifStmt=Statement<Yield>
+    (=> 'else' elseStmt=Statement<Yield>)?;
+----
+
+
+[discrete]
+==== Semantics [[if-statement-semantics]]
+
+There are no specific constraints defined for the condition, the ECMAScript operation `ToBoolean` cite:[ECMA11a(S9.2,p.43)] is used to convert any type to boolean.
+
+.If Statement
+[req,id=IDE-128,version=1]
+--
+In N4JS, the expression of an if statement must not evaluate to `void`.
+If the expressions is a function call in particular, the called function must not be declared to return `void`.
+--
+
+=== Iteration Statements
+
+[discrete]
+==== Syntax [[iterations-statements-syntax]]
+
+Cf. cite:[ECMA11a(S12.6,p.90ff)]
+
+The syntax already considers the for-of style described in <<_for-of-statement>>.
+
+[source,xtext]
+----
+IterationStatement <Yield>:
+        DoStatement<Yield>
+    |   WhileStatement<Yield>
+    |   ForStatement<Yield>
+;
+
+DoStatement <Yield>: 'do' statement=Statement<Yield> 'while' '(' expression=Expression<In=true,Yield> ')' => Semi?;
+WhileStatement <Yield>: 'while' '(' expression=Expression<In=true,Yield> ')' statement=Statement<Yield>;
+
+ForStatement <Yield>:
+    {ForStatement} 'for' '('
+    (
+        // this is not in the spec as far as I can tell, but there are tests that rely on this to be valid JS
+            =>(initExpr=LetIdentifierRef forIn?='in' expression=Expression<In=true,Yield> ')')
+        |   (   ->varStmtKeyword=VariableStatementKeyword
+                (
+                        =>(varDeclsOrBindings+=BindingIdentifierAsVariableDeclaration<In=false,Yield> (forIn?='in' | forOf?='of') ->expression=AssignmentExpression<In=true,Yield>?)
+                    |   varDeclsOrBindings+=VariableDeclarationOrBinding<In=false,Yield,OptionalInit=true>
+                        (
+                                (',' varDeclsOrBindings+=VariableDeclarationOrBinding<In=false,Yield,false>)* ';' expression=Expression<In=true,Yield>? ';' updateExpr=Expression<In=true,Yield>?
+                            |   forIn?='in' expression=Expression<In=true,Yield>?
+                            |   forOf?='of' expression=AssignmentExpression<In=true,Yield>?
+                        )
+                )
+            |   initExpr=Expression<In=false,Yield>
+                (
+                        ';' expression=Expression<In=true,Yield>? ';' updateExpr=Expression<In=true,Yield>?
+                    |   forIn?='in' expression=Expression<In=true,Yield>?
+                    |   forOf?='of' expression=AssignmentExpression<In=true,Yield>?
+                )
+            |   ';' expression=Expression<In=true,Yield>? ';' updateExpr=Expression<In=true,Yield>?
+            )
+        ')'
+    ) statement=Statement<Yield>
+;
+
+ContinueStatement <Yield>: {ContinueStatement} 'continue' (label=[LabelledStatement|BindingIdentifier<Yield>])? Semi;
+BreakStatement <Yield>: {BreakStatement} 'break' (label=[LabelledStatement|BindingIdentifier<Yield>])? Semi;
+----
+
+Since $varDecl(s)$ are ``VariableStatement``s as described in <<_variable-statement>>, the declared variables can be type annotated.
+
+TIP: Using for-in is not recommended, instead ``pass:[_each]`` should be used.
+
+[discrete]
+==== Semantics [[iterations-statements-semantics]]
+
+There are no specific constraints defined for the condition, the
+ECMAScript operation `ToBoolean` cite:[ECMA11a(S9.2,p.43)] is used to convert any type to boolean.
+
+.For-In-Statement Constraints
+[req,id=IDE-129,version=1]
+--
+For a given $f$ the following conditions must hold:
+
+* The type of the expression must be conform to object: +
+$\tee f.expression \subtype \type{union{Object,string,ArgumentType}}$
+* Either a new loop variable must be declared or an rvalue must be provided as init expression: +
+$f.varDecl \neq null \lor (f.initExpr \neq null \land isRValue(f.initExpr))$
+* The type of the loop variable must be a string (or a super type of string, i.e. any):
++
+[math]
+++++
+\beginalign
+& (f.varDecl \neq null \land  \tee f.varDecl \subtype \type{string} ) \\
+\lor & (f.initExp \neq null \land  \tee \type{string} \subtype f.initExpr)
+\endalign
+++++
+--
+
+[.language-n4js]
+=== Return Statement
+
+[discrete]
+==== Syntax [[return-statement-syntax]]
+
+The returns statement is defined as in cite:[ECMA11a(S12.9,p.93)] with
+
+[source,xtext]
+----
+ReturnStatement <Yield>:
+    'return' (expression=Expression<In=true,Yield>)? Semi;
+----
+
+[discrete]
+==== Semantics [[return-statement-semantics]]
+
+.Return statement
+[req,id=IDE-130,version=1]
+--
+1.  Expected type of expression in a return statement must be a sub type of the return type of the enclosing function:
++
+[math]
+++++
+\infer{\tee returnStmt \expectType expression: T}{\tee returnStmt.containingFunction: FT & T=FT.returnType}
+++++
+Note that the expression may be evaluated to `void`.
+2.  If enclosing function is declared to return `void`, then either
+* no return statement must be defined
+* return statement has no expression
+* type of expression of return statement is `void`
+3.  If enclosing function is declared to to return a type different from `void`, then
+* all return statements must have a return expression
+* all control flows must either end with a return or throw statement
+4.  Returns statements must be enclosed in a function.
+A return statement, for example, must not be a top-level statement.
+
+--
+
+=== With Statement
+
+[discrete]
+==== Syntax [[with-statement-syntax]]
+
+The with statement is not allowed in N4JS, thus an error is issued.
+
+[source,xtext]
+----
+WithStatement <Yield>:
+    'with' '(' expression=Expression<In=true,Yield> ')'
+    statement=Statement<Yield>;
+----
+
+[discrete]
+==== Semantics [[with-statement-semantics]]
+
+N4JS is based on strict mode and the with statement is not allowed in
+strict mode, cf. cite:[ECMA11a(S12.10.1,p.94)].
+
+.With Statement
+[req,id=IDE-131,version=1]
+--
+With statements are not allowed in N4JS or strict mode.
+--
+
+=== Switch Statement
+
+[discrete]
+==== Syntax [[switch-statement-syntax]]
+
+Cf. cite:[ECMA11a(S12.11,p.94ff)]
+
+[source,xtext]
+----
+SwitchStatement <Yield>:
+    'switch' '(' expression=Expression<In=true,Yield> ')' '{'
+    (cases+=CaseClause<Yield>)*
+    ((cases+=DefaultClause<Yield>)
+    (cases+=CaseClause<Yield>)*)? '}'
+;
+
+CaseClause <Yield>: 'case' expression=Expression<In=true,Yield> ':' (statements+=Statement<Yield>)*;
+DefaultClause <Yield>: {DefaultClause} 'default' ':' (statements+=Statement<Yield>)*;
+----
+
+[discrete]
+==== Semantics [[switch-statement-semantics]]
+
+.Switch Constraints
+[req,id=IDE-132,version=1]
+--
+For a given switch statement $s$, the following constraints must hold:
+
+* For all cases $c \in s.cases$, $s.expr$===$c.expr$ must be valid according to the constraints defined in <<Equality Expression>>.
+--
+
+=== Throw, Try, and Catch Statements
+
+[discrete]
+==== Syntax [[throw-try-catch-syntax]]
+
+Cf. cite:[ECMA11a(S12.13/14,p.96ff)]
+
+[source,xtext]
+----
+ThrowStatement <Yield>:
+    'throw' expression=Expression<In=true,Yield> Semi;
+
+TryStatement <Yield>:
+    'try' block=Block<Yield>
+    ((catch=CatchBlock<Yield> finally=FinallyBlock<Yield>?) | finally=FinallyBlock<Yield>)
+;
+
+CatchBlock <Yield>: {CatchBlock} 'catch' '(' catchVariable=CatchVariable<Yield> ')' block=Block<Yield>;
+
+CatchVariable <Yield>:
+        =>bindingPattern=BindingPattern<Yield>
+    |   name=BindingIdentifier<Yield>
+;
+
+FinallyBlock <Yield>: {FinallyBlock} 'finally' block=Block<Yield>;
+----
+
+There must be not type annotation for the catch variable, as this would lead to the wrong assumption that a type can be specified.
+
+[discrete]
+==== Type Inference [[throw-try-catch-type-inference]]
+
+The type of the catch variable is always assumed to be `any`.
+
+[math]
+++++
+\infer{\tee catchBlock.catchVariable: \type{any}}{}
+++++
+
+
+=== Debugger Statement
+
+
+[discrete]
+==== Syntax [[debugger-statement-syntax]]
+
+Cf. cite:[ECMA11a(S12.15,p.97ff)])
+
+[source,xtext]
+----
+DebuggerStatement: {DebuggerStatement} 'debugger' Semi;
+----
+
+[discrete]
+==== Semantics [[debugger-statement--semantics]]
+
+na
+
+[.language-n4js]
+== ECMAScript 6 Statements
+
+N4JS export and import statements are similar to ES6 with some minor d ifferences which are elaborated on below.
+
+=== Let
+
+Cf. cite:[ECMA11a(13.2.1)], also http://www.2ality.com/2015/02/es6-scoping.html[Rauschmayer, 2ality: *Variables and scoping in ECMAScript 6*]
+
+=== Const
+
+Cf. cite:[ECMA15a(13.2.1)], also http://www.2ality.com/2015/02/es6-scoping.html[Rauschmayer, 2ality: *Variables and scoping in ECMAScript 6*]
+
+Additionally to the `var` statement, the `const` statement is supported.
+It allows for declaring variables which must be assigned to a value in the declaration and their value must not change.
+That is to say that constants are not allowed to be on the left-hand side of other assignments.
+
+[source,xtext]
+----
+ConstStatement returns VariableStatement: 'const' varDecl+=ConstDeclaration ( ',' varDecl+=ConstDeclaration )* Semi;
+
+ConstDeclaration returns VariableDeclaration: typeRef=TypeRef? name=IDENTIFIER const?='=' expression=AssignmentExpression;
+----
+
+[discrete]
+==== Semantics [[const-semantics]]
+
+A const variable statement is more or less a normal variable statement (see <<_variable-statement>>), except that all variables declared by that
+statement are not writable (cf. <<Req-IDE-121>>).
+This is similar to constant data fields (cf. <<_assignment-modifiers>>).
+
+.Writability of const variables
+[req,id=IDE-133,version=1]
+--
+All variable declarations of a const variable statement
+$constStmt$ are not writeable:
+$\forall vdecl \in constStmt.varDecl: \lnot vdecl.writable$
+--
+
+[[_for-of-statement]]
+=== `for ... of` statement
+
+ES6 introduced a new form of `for` statement: `for ... of` to iterate over the elements of an  `Iterable`, cf. <<_iterablen>>.
+
+[discrete]
+==== Syntax [[for-of-statement-syntax]]
+
+See <<_iteration-statements>>
+
+[discrete]
+==== Semantics [[for-of-statement-semantics]]
+
+.for ... of statement
+[req,id=IDE-134,version=1]
+--
+For a given $f$ the following conditions must hold:
+
+1.  The value provided after `of` in a `for ... of` statement must be a subtype of `Iterable<?>`.
+2.  Either a new loop variable must be declared or an rvalue must be provided as init expression: +
+$f.varDecl \neq null \lor (f.initExpr \neq null \land isRValue(f.initExpr))$
+3.  If a new variable $v$ is declared before `of` and it has a declared type $T$, the value provided after must be a subtype of `Iterable<?extendsT>`.
+If $v$ does not have a declared type, the type of $v$ is inferred to the type of the first type argument of the actual type of the value provided after `of`.
+4.  If a previously-declared variable is referenced before with a declared or inferred type of $T$, the value provided after `of` must be a subtype of `Iterable<?extendsT>`.
+
+NOTE: `Iterable` is structurally typed on definition-site so non-N4JS types can meet the above requirements by simply implementing the only method in interface `Iterable` (with a correct return type).
+
+NOTE: The first of the above constraints (the type required by the ’of’ part in a `for ... of` loop is `Iterable`) was changed during the definition of ECMAScript 6.
+This is implemented differently in separate implementations and even in different versions of the same implementation (for instance in different versions of V8).
+Older implementations require an `Iterator` or accept both `Iterator` an or `Iterable`.
+
+Requiring an `Iterable` and not accepting a plain `Iterator` seems to be the final decision (as of Dec. 2014).
+For reference, see abstract operations `GetIterator` in cite:[ECMA15a(S7.4.2)] and "CheckIterable" cite:[ECMA15a(S7.4.1)] and their
+application in "ForIn/OfExpressionEvaluation" cite:[ECMA15a(S13.6.4.8)] and `CheckIterable` and their application in `ForIn/OfExpressionEvaluation`.
+See also a related blog post footnote:[available at: http://www.2ality.com/2013/06/iterators-generators.html] that is kept up to date with changes to ECMAScript 6:
+
+[quote]
+_ECMAScript 6 has a new loop, for-of. That loop works with iterables. Before we can use it with createArrayIterator(), we need to turn the result into an iterable._
+
+An array or object destructuring pattern may be used left of the `of`.
+This is used to destructure the elements of the `Iterable` on the right-hand side (not the `Iterable` itself).
+For detais, see <<_array-and-object-destructuring>>.
+
+--
+
+=== Import Statement
+
+Cf. ES6 import cite:[ECMA15a(15.2.2)], see also https://babeljs.io/docs/usage/modules/
+
+[discrete]
+==== Syntax [[import-statement-syntax]]
+
+The grammar of import declarations is defined as follows:
+
+[source,xtext]
+----
+ImportDeclaration:
+    {ImportDeclaration}
+    ImportDeclarationImpl
+;
+
+fragment ImportDeclarationImpl*:
+    'import' (
+        ImportClause importFrom?='from'
+    )? module=[types::TModule|ModuleSpecifier] Semi
+;
+
+fragment ImportClause*:
+        importSpecifiers+=DefaultImportSpecifier (',' ImportSpecifiersExceptDefault)?
+    |   ImportSpecifiersExceptDefault
+;
+
+fragment ImportSpecifiersExceptDefault*:
+        importSpecifiers+=NamespaceImportSpecifier
+    |   '{' (importSpecifiers+=NamedImportSpecifier (',' importSpecifiers+=NamedImportSpecifier)* ','?)? '}'
+;
+
+NamedImportSpecifier:
+        importedElement=[types::TExportableElement|BindingIdentifier<Yield=false>]
+    |   importedElement=[types::TExportableElement|IdentifierName] 'as' alias=BindingIdentifier<Yield=false>
+;
+
+DefaultImportSpecifier:
+    importedElement=[types::TExportableElement|BindingIdentifier<Yield=false>]
+;
+
+NamespaceImportSpecifier: {NamespaceImportSpecifier} '*' 'as' alias=BindingIdentifier<false> (declaredDynamic?='+')?;
+
+ModuleSpecifier: STRING;
+----
+
+These are the properties of import declaration which can be specified by the user:
+
+
+`annotations` ::
+Arbitrary annotations, see <<Annotations>> and below for details.
+
+`importSpecifiers` ::
+The elements to be imported with their names.
+
+////
+%Properties set via annotations:
+%\version{postponed}{Not implemented as part of version 0.1, will be implemented if needed}
+%\begin{properties}
+%\item [$exclude$ \annotationDef{@Exclude}; compiler instruction to exclude the particular dependency from the generated define() call, even if the dependency analyzer would add it.
+%\item [$force$ \annotationDef{@Force}; compiler instruction to include the particular dependency from the generated define() call, even if the dependency analyzer would have removed it.
+%\end{properties}
+%note above (\annotationDef{@Exclude} and \annotationDef{@Force}) should be aligned with ES6 modules semantics
+////
+
+Also see compilation as described in <<Modules>>, for semantics see <<import-statement-semantics>>.
+
+.Import
+[example]
+--
+
+[source,n4js]
+----
+import A from "p/A"
+import {C,D,E} from "p/E"
+import * as F from "p/F"
+import {A as G} from "p/G"
+import {A as H, B as I} from "p/H"
+----
+--
+
+[discrete]
+==== Semantics [[import-statement-semantics]]
+
+Import statements are used to import identifiable elements from another module.
+Identifiable elements are
+
+* types (via their type declaration), in particular
+** classifiers (classes, interfaces)
+** functions
+* variables and constants. task:IDE-190[]
+
+The module to import from is identified by the string literal following keyword `from`.
+This string must be a valid
+
+* complete module specifier footnote:[For more details on module specifiers, see <<_qualified-names>>.]:
++
+[source,n4js]
+----
+    import {A} from "ProjectA/a/b/c/M"
+
+----
+* plain module specifier:
++
+[source,n4js]
+----
+    import {A} from "a/b/c/M"
+
+----
+* or project name only, assuming the project defines a main module in its manifest (using the `MainModule` manifest property, <<_properties-8>>):
++
+[source,n4js]
+----
+    import {A} from "ProjectA"
+
+----
+
+For choosing the element to import, there are the exact same options as in ECMAScript6:
+
+* named imports select one or more elements by name, optionally introducing a local alias:
++
+[source,n4js]
+----
+    import {C} from "M"
+    import {D as MyD} from "M"
+    import {E, F as MyF, G, H} from "M"
+
+----
+* namespace imports select all elements of the remote module for import and define a namespace name; the imported elements are then accessed via the namespace name:
++
+[source,n4js]
+----
+    import * as N from "M"
+    var c: N.C = new N.C();
+
+----
+* default imports select whatever element was exported by the remote module as the default (there can be at most one default export per module):
++
+[source,n4js]
+----
+    import C from "M"
+
+----
+
+.Imports
+[req,id=IDE-135,version=1]
+--
+The following constraints are defined on a (non-dynamic) import statement $i$:
+
+* The imported module needs to be accessible from the current project.
+* The imported declarations need to be accessible from the current module.
+
+For named imports, the following constraints must hold:
+
+* No declaration must be imported multiple times, even if aliases are used.
+* The names must be unique in the module. They must not conflict with each other or locally declared variables, types, or functions.
+* Declarations imported via named imports are accessible only via used name (or alias) and not via original name directly.
+
+For wildcard imports, the following constraints must hold:
+
+* Only one namespace import can be used per (target) module, even if different namespace name is used.
+* The namespace name must be unique in the module. They must not conflict with each other or locally declared variables, types, or functions.
+* Declarations imported via namespace import are accessible via namespace only and not with original name directly.
+
+For namespace imports, the following constraints must hold:
+
+* If the referenced module is a plain `js` file, a warning will be created to use the dynamic import instead.
+
+For default imports, the following constraints must hold: task:IDE-1744[]
+
+* The referenced module must have a default export.
+
+Cross-cutting constraints:
+
+* No declaration can be imported via named import and namespace import at the same time.
+
+--
+
+.Imports
+[example]
+====
+
+Imports cannot be duplicated:
+
+[source,n4js]
+----
+import * as A from 'A';
+import * as A from 'A';//error, duplicated import statement
+
+import B from 'B';
+import B from 'B';//error, duplicated import statement
+----
+
+Given element cannot be imported multiple times:
+
+[source,n4js]
+----
+import * as A1 from 'A';
+import * as A2 from 'A';//error, elements from A already imported in A1
+
+import B from 'B';
+import B as B1 from 'B';//error, B/B is already imported as B
+
+import C as C1 from 'C';
+import C from 'C';//error, C/C is already imported as C1
+
+import D as D1 from 'D';
+import D as D2 from 'D';//error, D/D is already imported as D1
+
+import * as NE from 'E';
+import E from 'E';//error, E/E is already imported as NE.E
+
+import F from 'F';
+import * as NF from 'F';//error, F/F is already imported as F
+----
+
+<<<
+
+Names used in imports must not not conflict with each other or local
+declarations:
+
+[source,n4js]
+----
+import * as A from 'A1';
+import * as A from 'A2';//A is already used as namespace for A1
+
+import B from 'B1';
+import B1 as B from 'B2';//B us already used as import B/B1
+
+import C1 as C from 'C1';
+import * as C from 'C2'; //C is already used as import C1/C1
+
+import * as D from 'D1';
+import D2 as D from 'D2';//D is already used as namespace for D1
+
+import E from 'E';
+var E: any; // conflict with named import E/E
+
+import * as F from 'F';
+var F: any; // conflict with namespace F
+----
+
+Using named imports, aliases and namespaces allows to refer to mulitple
+types of the same name such as  `A/A`, `B/A` and `C/A`:
+
+[source,n4js]
+----
+import A from 'A';// local name A referencess to A/A
+import A as B from 'B';//local name B referencess to B/A
+import * as C from 'C';//local name C.A referencess to C/A
+----
+
+<<<
+
+If a declaration has been imported with an alias or namespace, it is not
+accessible via its original name:
+
+[source,n4js]
+----
+import * as B from 'A1';
+import A2 as C from 'A2';
+
+var a1_bad: A1;//error, A1/A1 is not directly accessible with original name
+var a1_correct: B.A1;// A1/A1 is accessible via namespace B
+var a2_bad: A2;//error, A2/A2 is not directly accessible with original name
+var a2_correct: C;// A2/A2 is accessible via alias C
+----
+
+====
+
+==== Dynamic Imports
+
+N4JS extends the ES6 module import in order that modules without a `n4jsd` or `n4js` file (plain `js` modules) can be imported.
+This is done by adding `+` to the name of the named import.
+
+.Dynamic Import
+[req,id=IDE-136,version=1]
+--
+Let $i$ be an import
+statement $i$ with a dynamic namespace specifier. The
+following constraints must hold:
+
+1.  $i.module$ must not reference an `n4js` file.
+2.  If $i.module$ references an `n4jsd` file, a warning is
+to be created.
+3.  If the file referenced by $i.module$ is not found, an
+error is created just as in the static case.
+
+These constraints define the error level when using dynamic import: we receive no error for `js`, a warning for `n4jsd`, and an error for `n4js` files.
+The idea behind these distinct error levels is as follows: +
+If only a plain `js` file is available, using the dynamic import is the only way to access elements from the `js` module.
+This might be an unsafe way, but it allows the access and simplifies the first steps.
+An `n4jsd` file may then be made available either by the developer using the `js` module or by a third-party library.
+In this case, we do not want to break existing code.
+There is only a warning created in the case of an available `n4jsd` file and a `js` file still must be provided by the user.
+Having an `n4js` file is a completely different story; no `n4jsd` file is required, no `js` file is needed
+(since the transpiler creates one from the `n4js` file) and there is absolutely no reason to use the module dynamically.
+
+--
+
+
+==== Immutabilaty of Imports
+task:GH-119[]
+
+Imports create always immutable bindings, c.f.
+cite:[ECMA15a(8.1.1.5)]
+http://www.ecma-international.org/ecma-262/6.0/index.html#sec-createimportbinding
+
+
+.Immutable Import
+[req,id=IDE-137,version=1]
+--
+Let $i$ be a binding to an imported element.
+It is an error if
+
+* $i$ occurs on the left-hand side as the assignment-target of an assignment expression (this also includes any level in a destructuring pattern on the left-hand side),
+* $i$ as a direct argument of a postfix operator (`i++`/`i--`),
+* $i$ as a direct argument of a `delete` operator,
+* $i$ as a direct argument of the `increment` or `decrement` unary operator (`i++`/`i--`)
+
+--
+
+=== Export Statement
+task:IDE-1302[]
+
+Cf. ES6 import cite:[ECMA15a(15.2.3)]
+
+[discrete]
+==== Syntax [[export-statement-syntax]]
+
+Grammar of export declarations is defined as follows:
+
+[source,xtext]
+----
+ExportDeclaration:
+    {ExportDeclaration}
+    ExportDeclarationImpl
+;
+
+fragment ExportDeclarationImpl*:
+    'export' (
+        wildcardExport?='*' ExportFromClause Semi
+    |   ExportClause ->ExportFromClause? Semi
+    |   exportedElement=ExportableElement
+    |   defaultExport?='default' (->exportedElement=ExportableElement | defaultExportedExpression=AssignmentExpression<In=true,Yield=false> Semi)
+    )
+;
+
+fragment ExportFromClause*:
+    'from' reexportedFrom=[types::TModule|ModuleSpecifier]
+;
+
+fragment ExportClause*:
+    '{'
+        (namedExports+=ExportSpecifier (',' namedExports+=ExportSpecifier)* ','?)?
+    '}'
+;
+
+ExportSpecifier:
+    element=IdentifierRef<Yield=false> ('as' alias=IdentifierName)?
+;
+
+ExportableElement:
+      N4ClassDeclaration<Yield=false>
+    | N4InterfaceDeclaration<Yield=false>
+    | N4EnumDeclaration<Yield=false>
+    | ExportedFunctionDeclaration<Yield=false>
+    | ExportedVariableStatement
+;
+----
+
+These are the properties of export declaration, which can be specified by the user:
+
+`exportedElement` ::
+The element to be exported, can be a declaration or a variable/const statement.
+
+.Export
+[example]
+====
+
+[source,n4js]
+----
+export public class A{}
+export interface B{}
+export function foo() {}
+export var a;
+export const c="Hello";
+----
+
+====
+
+[discrete]
+==== Semantics [[export-statement-semantics]]
+
+With regard to type inference, export statements are not handled at all.
+Only the exported element is inferred and the `export` keyword is ignored.
+
+In order to use types defined in other compilation units, these types have to be explicitly imported with an import statement.
+
+Imported namespaces cannot be exported.
+
+Declared elements (types, variables, functions) are usually only visible outside the declaring module if the elements are exported and imported (by the using module, cf. <<_import-statement>>).
+
+Some special components (runtime environment and libraries, cf. <<_runtime-environment-and-runtime-libraries>>, may export elements globally.
+This is done by annotating the export (or the whole module) with `@Global`, see <<_global-definitions>> for details.
+
+By adding `default` after the keyword `export`, the identifiable element can be exported as ’the default’.
+This can then be imported from other modules via default imports (see <<_import-statement>>).

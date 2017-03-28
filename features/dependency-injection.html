@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>Dependency Injection in N4JS</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../res/styles/n4js-adoc.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -29,6 +30,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../scripts/nav-mobile.js"></script>
+
+<!-- ************* Prism.js Syntax Highlighter ******-->
+<link href="../styles/prism.min.css" rel="stylesheet"/>
+<script src="../scripts/prism.js"></script>
 
 <!-- ****************** Analytics ****************** -->
 <script>
@@ -67,7 +72,8 @@
   </li>
   <li><a href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -75,15 +81,15 @@
   <li><a href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
 </div>
 <button id="tocbutton">TOC</button>
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language &amp; IDE</p></div>
+<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language & IDE</p></div>
 <div class="mobile-banner">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
@@ -101,7 +107,8 @@
   </li>
   <li><a class="scroll" href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -109,8 +116,8 @@
   <li><a class="scroll" href="../faq/index.html">FAQ</a>
     <ul>
       <li><a  href="../faq/index.html">FAQ</a></li>
-      <li><a  href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a  href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -121,24 +128,23 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel0">
-<li><a href="#_dependency-injection-in-n4js">Dependency Injection in N4JS</a>
+<li><a href="#_dependency_injection_in_n4js">Dependency Injection in N4JS</a>
 <ul class="sectlevel1">
-<li><a href="#_application-object-graph">Application Object Graph</a></li>
-<li><a href="#_dependency-injection-di">Dependency Injection (DI)</a></li>
+<li><a href="#_application_object_graph">Application Object Graph</a></li>
+<li><a href="#_dependency_injection_di">Dependency Injection (DI)</a></li>
 <li><a href="#_example">Example</a></li>
-<li><a href="#_application-reconfigurability">Application Reconfigurability</a></li>
-<li><a href="#_advanced-features">Advanced features</a></li>
+<li><a href="#_application_reconfigurability">Application Reconfigurability</a></li>
+<li><a href="#_advanced_features">Advanced features</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<h1 id="_dependency-injection-in-n4js" class="sect0"><a class="link" href="#_dependency-injection-in-n4js">Dependency Injection in N4JS</a></h1>
+<h1 id="_dependency_injection_in_n4js" class="sect0"><a class="link" href="#_dependency_injection_in_n4js">Dependency Injection in N4JS</a></h1>
 <div class="openblock partintro">
 <div class="content">
 <div class="paragraph">
-<div class="title">Dependency Injection in N4JS</div>
 <p>Dependency injection (DI) is a concept that allows for configuring dependencies
 between classes at a central location. Instead of passing dependencies from class to class, N4JS' built-in
 DI support does this automatically.</p>
@@ -150,7 +156,7 @@ its testability. N4JS DI framework follows Java JSR-330/Google Guice, making its
 </div>
 </div>
 <div class="sect1">
-<h2 id="_application-object-graph"><a class="link" href="#_application-object-graph">Application Object Graph</a></h2>
+<h2 id="_application_object_graph"><a class="link" href="#_application_object_graph">Application Object Graph</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In object oriented languages, applications are composed from objects that interact with each other. Instances
@@ -178,7 +184,7 @@ of our application.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_dependency-injection-di"><a class="link" href="#_dependency-injection-di">Dependency Injection (DI)</a></h2>
+<h2 id="_dependency_injection_di"><a class="link" href="#_dependency_injection_di">Dependency Injection (DI)</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Dependency injection (DI) and DI frameworks aim to help with issues described before, specifically with the
@@ -215,7 +221,7 @@ emulate a real request to a weather server:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">export public class WeatherEngine {
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export public class WeatherEngine {
     data = [ {city: 'Berlin', temp: 5}, {city: 'Hamburg', temp: 15}, {city: 'Palo Alto', temp: 10} ];
 
     public temperature(city: string): Promise&amp;lt;number, ?&amp;gt; {
@@ -245,7 +251,7 @@ is used. The components are instead set up by initializing the fields directly.<
 <td class="tableblock halign-left valign-top"><div><div class="listingblock">
 <div class="title">WeatherApp.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { WeatherEngine } from 'WeatherEngine';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { WeatherEngine } from 'WeatherEngine';
 
 export class WeatherApp {
     private engine: WeatherEngine = new WeatherEngine();
@@ -270,7 +276,7 @@ export class Server {
 <td class="tableblock halign-left valign-top"><div><div class="listingblock">
 <div class="title">WeatherAppDI.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { WeatherEngine } from 'WeatherEngine';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { WeatherEngine } from 'WeatherEngine';
 
 export class WeatherApp {
     @Inject private engine: WeatherEngine;
@@ -297,7 +303,7 @@ export class Server {
 <td class="tableblock halign-left valign-top"><div><div class="listingblock">
 <div class="title">Starter.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Server } from 'WeatherApp'
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { Server } from 'WeatherApp'
 
 
 var server = new Server();
@@ -307,7 +313,7 @@ server.run();</code></pre>
 <td class="tableblock halign-left valign-top"><div><div class="listingblock">
 <div class="title">StarterDI.n4js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { Server } from 'WeatherAppDI';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { Server } from 'WeatherAppDI';
 import { N4Injector } from 'n4js/lang/N4Injector';
 
 var server = N4Injector.of(Server).create(Server);
@@ -331,7 +337,7 @@ the built-in class <code>N4Injector</code> is used to create the first instance.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_application-reconfigurability"><a class="link" href="#_application-reconfigurability">Application Reconfigurability</a></h2>
+<h2 id="_application_reconfigurability"><a class="link" href="#_application_reconfigurability">Application Reconfigurability</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>A very useful quality of DI is its flexibility. This is particularly beneficial during testing. Let&#8217;s
@@ -341,7 +347,7 @@ which immediately returns a value. Let&#8217;s have a look at the test module:</
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">import { WeatherApp } from 'WeatherAppDI';
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">import { WeatherApp } from 'WeatherAppDI';
 import { WeatherEngine } from 'WeatherEngine';
 import { Assert } from 'n4/mangel/assert/Assert';
 
@@ -394,7 +400,7 @@ class <code>WeatherApp</code> now gets the <code>WeatherEngineMock</code> inject
 </div>
 </div>
 <div class="sect1">
-<h2 id="_advanced-features"><a class="link" href="#_advanced-features">Advanced features</a></h2>
+<h2 id="_advanced_features"><a class="link" href="#_advanced_features">Advanced features</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Specific advantages and extended DI features are discussed in greater detail in the N4JS language
@@ -421,6 +427,7 @@ spec. Some of the most notable features are:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2017-03-14 10:23:54 CET
 </div>
 </div>
 <div class="social">
@@ -466,8 +473,5 @@ $('html, body').animate({
 return false;
 });
 </script>
-<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
-<script src="../scripts/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>

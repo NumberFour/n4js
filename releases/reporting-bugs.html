@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>Reporting Bugs</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../res/styles/n4js-adoc.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -29,6 +30,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../scripts/nav-mobile.js"></script>
+
+<!-- ************* Prism.js Syntax Highlighter ******-->
+<link href="../styles/prism.min.css" rel="stylesheet"/>
+<script src="../scripts/prism.js"></script>
 
 <!-- ****************** Analytics ****************** -->
 <script>
@@ -67,7 +72,8 @@
   </li>
   <li><a href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -75,15 +81,15 @@
   <li><a href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="../faq/index.html">FAQ</a></li>
-      <li><a href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
 </div>
 <button id="tocbutton">TOC</button>
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language &amp; IDE</p></div>
+<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language & IDE</p></div>
 <div class="mobile-banner">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
@@ -101,7 +107,8 @@
   </li>
   <li><a class="scroll" href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -109,8 +116,8 @@
   <li><a class="scroll" href="../faq/index.html">FAQ</a>
     <ul>
       <li><a  href="../faq/index.html">FAQ</a></li>
-      <li><a  href="../faq/comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a  href="../faq/comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="../faq/comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -120,11 +127,10 @@
 <div id="header">
 </div>
 <div id="content">
-<h1 id="_reporting-bugs" class="sect0"><a class="link" href="#_reporting-bugs">Reporting Bugs</a></h1>
+<h1 id="_reporting_bugs" class="sect0"><a class="link" href="#_reporting_bugs">Reporting Bugs</a></h1>
 <div class="openblock partintro">
 <div class="content">
 <div class="paragraph">
-<div class="title">Reporting Bugs</div>
 <p><strong>We embrace bug reports and feature requests!</strong></p>
 </div>
 <div class="paragraph">
@@ -140,7 +146,7 @@ IDE. It is described in detail in the coming section.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_write-bug-reports-with-xpect"><a class="link" href="#_write-bug-reports-with-xpect">Write Bug Reports with Xpect</a></h2>
+<h2 id="_write_bug_reports_with_xpect"><a class="link" href="#_write_bug_reports_with_xpect">Write Bug Reports with Xpect</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>With Xpect you can write concise bug reports and feature requests using N4JS and comments. What is a bug? A
@@ -205,7 +211,7 @@ un-)expected behavior, according to the following pattern:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>«expectation» at «location»</code></pre>
+<pre class="highlight"><code>«expectation» at «location»</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -234,7 +240,7 @@ several issues, multi-line comments are to be used:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">/* «remark» XPECT «type» ---
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">/* «remark» XPECT «type» ---
 "expectation1" at "location1"
 "expectation2" at "location2"
 ...
@@ -252,7 +258,7 @@ the known types along with an example snippet to illustrate the syntax.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>var i: int = 5.5;</code></pre>
+<pre class="highlight"><code>var i: int = 5.5;</code></pre>
 </div>
 </div>
 </div>
@@ -265,7 +271,7 @@ the known types along with an example snippet to illustrate the syntax.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>var i: int = 5.5;</code></pre>
+<pre class="highlight"><code>var i: int = 5.5;</code></pre>
 </div>
 </div>
 </div>
@@ -276,7 +282,7 @@ the known types along with an example snippet to illustrate the syntax.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>var a: A;
+<pre class="highlight"><code>var a: A;
 if (o instanceof A) {
   // I want type guards XPECT noerrors FIXME --&gt;
   a = o;
@@ -292,6 +298,7 @@ if (o instanceof A) {
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2017-03-14 10:23:54 CET
 </div>
 </div>
 <div class="social">
@@ -337,8 +344,5 @@ $('html, body').animate({
 return false;
 });
 </script>
-<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
-<script src="../scripts/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>

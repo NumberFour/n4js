@@ -1,0 +1,1449 @@
+
+= Grammars
+
+N4JS extends the ECMAScript 2015 language grammar and combines it with type expression.
+
+NOTE: These grammars are slightly simplified versions of the "real" Xtext grammars used in the implementation.
+These grammars are post-processed and combined with additional validators so not all constructs are necessarily available in N4JS.
+
+== Type Expressions Grammar
+
+[[lst:EBNFTypeExpression]]
+.EBNF Type Expression Grammar
+[source,xtext]
+----
+TypeRef:
+    TypeRefWithoutModifiers =>undefModifier=UndefModifierToken?
+    | undefModifier=UndefModifierToken;
+
+TypeRefWithoutModifiers:
+      ((ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'?)
+    | ConstructorTypeRef
+    | ClassifierTypeRef
+    | FunctionTypeExpression
+    | UnionTypeExpression
+    | IntersectionTypeExpression;
+
+TypeRefFunctionTypeExpression:
+      ParameterizedTypeRef
+    | ConstructorTypeRef
+    | ClassifierTypeRef
+    | UnionTypeExpression
+    | IntersectionTypeExpression
+    ;
+
+TypeRefForCast:
+      ParameterizedTypeRef
+    | ThisTypeRef
+    | ConstructorTypeRef
+    | ClassifierTypeRef
+    | FunctionTypeExpression;
+
+TypeRefInClassifierType:
+      ParameterizedTypeRefNominal
+    | ThisTypeRefNominal;
+
+
+ThisTypeRef:
+    ThisTypeRefNominal | ThisTypeRefStructural;
+
+ThisTypeRefNominal:
+    'this';
+
+ThisTypeRefStructural:
+    definedTypingStrategy=TypingStrategyUseSiteOperator
+    'this'
+    ('with' TStructMemberList)?;
+
+FunctionTypeExpression:
+    '{'
+    ('@' 'This' '(' declaredThisType=TypeRefFunctionTypeExpression ')')?
+    'function'
+    ('<' ownedTypeVars+=TypeVariable (',' ownedTypeVars+=TypeVariable)* '>')?
+    '(' TAnonymousFormalParameterList ')'
+    (':' returnTypeRef=TypeRef)?
+    '}';
+
+fragment TAnonymousFormalParameterList*:
+    (fpars+=TAnonymousFormalParameter (',' fpars+=TAnonymousFormalParameter)*)?
+;
+
+TAnonymousFormalParameter:
+    variadic?='...'? (=> name=TIdentifier ':')? typeRef=TypeRef
+;
+
+UnionTypeExpression:
+    'union' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';
+
+IntersectionTypeExpression:
+    'intersection' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';
+
+ParameterizedTypeRef:
+    ParameterizedTypeRefNominal | ParameterizedTypeRefStructural;
+
+ParameterizedTypeRefStructural:
+    definedTypingStrategy=TypingStrategyUseSiteOperator
+    declaredType=[Type|TypeReferenceName]
+    (=>'<' typeArgs+=TypeArgument (',' typeArgs+=TypeArgument)* '>')?
+    ('with' TStructMemberList)?;
+
+fragment TStructMemberList*:  '{' (astStructuralMembers+=TStructMember (';'|',')?)*  '}';
+
+TStructMember:
+      TStructGetter
+    | TStructSetter
+    | TStructMethod
+    | TStructField;
+
+TStructMethod:
+    =>
+    (('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
+        name=TypesIdentifier '('
+    ) TAnonymousFormalParameterList ')'
+    (':' returnTypeRef=TypeRef)?
+;
+
+TStructField:
+    name=TypesIdentifier (':' typeRef=TypeRef)?
+;
+
+TStructGetter:
+    => ('get'
+    name=TypesIdentifier)
+    '(' ')' (':' declaredTypeRef=TypeRef)?
+;
+
+TStructSetter:
+    => ('set'
+    name=TypesIdentifier)
+    '(' fpar=TAnonymousFormalParameter ')'
+;
+
+ParameterizedTypeRefNominal:
+    declaredType=[Type|TypeReferenceName]
+    (=> '<' typeArgs+=TypeArgument (',' typeArgs+=TypeArgument)* '>')?;
+
+TypingStrategyUseSiteOperator:
+    '~' ('~' | STRUCTMODSUFFIX)?;
+
+TypingStrategyDefSiteOperator:
+    '~';
+
+terminal STRUCTMODSUFFIX:
+    ('r' | 'i' | 'w') '~'
+;
+
+ConstructorTypeRef:
+    'constructor' '{' staticTypeRef=TypeRefInClassifierType '}';
+
+ClassifierTypeRef:
+    'type' '{' staticTypeRef=TypeRefInClassifierType '}';
+
+TypeReferenceName:
+    IDENTIFIER ('.' IDENTIFIER)*;
+
+TypeArgument:
+    Wildcard | TypeRef;
+
+Wildcard:
+    => ('?') (('extends' declaredUpperBound=TypeRef) | ('super'
+    declaredLowerBound=TypeRef))?;
+
+UndefModifierToken:
+    '?';
+
+TypeVariable:
+    name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
+    declaredUpperBounds+=ParameterizedTypeRef)*)?;
+
+TypesIdentifier:
+    IDENTIFIER
+    | 'get' | 'set' | 'abstract' | 'project'
+    | 'union' | 'intersection'
+    | 'as' | 'from' | 'type' | 'void' | 'null';
+
+TIdentifier:
+    TypesIdentifier
+    | 'implements' | 'interface'
+    | 'private' | 'protected' | 'public'
+    | 'static'
+;
+
+terminal IDENTIFIER:
+    IDENTIFIER_START IDENTIFIER_PART*;
+
+terminal INT:
+    DECIMAL_INTEGER_LITERAL_FRAGMENT;
+
+terminal ML_COMMENT:
+    ML_COMMENT_FRAGMENT;
+
+terminal SL_COMMENT:
+    '//' (!LINE_TERMINATOR_FRAGMENT)*;
+
+terminal EOL:
+    LINE_TERMINATOR_SEQUENCE_FRAGMENT;
+
+terminal WS:
+    WHITESPACE_FRAGMENT+;
+
+terminal fragment UNICODE_ESCAPE_FRAGMENT:
+    '\\' ('u' (
+        HEX_DIGIT (HEX_DIGIT (HEX_DIGIT HEX_DIGIT?)?)?
+      | '{' HEX_DIGIT* '}'?
+    )?)?;
+
+terminal fragment IDENTIFIER_START:
+      UNICODE_LETTER_FRAGMENT
+    | '$'
+    | '_'
+    | UNICODE_ESCAPE_FRAGMENT;
+
+terminal fragment IDENTIFIER_PART:
+      UNICODE_LETTER_FRAGMENT
+    | UNICODE_ESCAPE_FRAGMENT
+    | '$'
+    | UNICODE_COMBINING_MARK_FRAGMENT
+    | UNICODE_DIGIT_FRAGMENT
+    | UNICODE_CONNECTOR_PUNCTUATION_FRAGMENT
+    | ZWNJ
+    | ZWJ;
+
+terminal DOT_DOT:
+    '..'
+;
+----
+
+== N4JS Language Grammar
+
+[source,xtext]
+----
+Script: annotations+=ScriptAnnotation*
+    scriptElements+=ScriptElement*;
+
+ScriptElement:
+      AnnotatedScriptElement
+    | N4ClassDeclaration<Yield=false>
+    | N4InterfaceDeclaration<Yield=false>
+    | N4EnumDeclaration<Yield=false>
+    | ImportDeclaration
+    | ExportDeclaration
+    | RootStatement<Yield=false>
+;
+
+AnnotatedScriptElement:
+    AnnotationList (
+        {ExportDeclaration.annotationList=current} ExportDeclarationImpl
+    |   {ImportDeclaration.annotationList=current} ImportDeclarationImpl
+    |   {FunctionDeclaration.annotationList=current}
+        =>((declaredModifiers+=N4Modifier)* AsyncNoTrailingLineBreak
+            ->FunctionImpl<Yield=false,YieldIfGenerator=false,Expression=false>)
+    |   (
+            (
+                {N4ClassDeclaration.annotationList=current}
+                (declaredModifiers+=N4Modifier)*
+                'class' typingStrategy=TypingStrategyDefSiteOperator?
+                name=BindingIdentifier<Yield=false>
+                TypeVariables?
+                ClassExtendsClause<Yield=false>?
+            |   {N4InterfaceDeclaration.annotationList=current}
+                (declaredModifiers+=N4Modifier)*
+                'interface' typingStrategy=TypingStrategyDefSiteOperator? name=BindingIdentifier<Yield=false>
+                TypeVariables?
+                InterfaceImplementsList?
+            )
+            Members<Yield=false>
+        )
+    |   {N4EnumDeclaration.annotationList=current}
+        (declaredModifiers+=N4Modifier)*
+        'enum' name=BindingIdentifier<Yield=false>
+        '{'
+            literals+=N4EnumLiteral (',' literals+= N4EnumLiteral)*
+        '}'
+    )
+;
+
+fragment TypeVariables*:
+    '<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>'
+;
+
+ExportDeclaration:
+    ExportDeclarationImpl
+;
+
+fragment ExportDeclarationImpl*:
+    'export' (
+        wildcardExport?='*' ExportFromClause Semi
+    |   ExportClause ->ExportFromClause? Semi
+    |   exportedElement=ExportableElement
+    |   defaultExport?='default' (->exportedElement=ExportableElement | defaultExportedExpression=AssignmentExpression<In=true,Yield=false> Semi)
+    )
+;
+
+fragment ExportFromClause*:
+    'from' reexportedFrom=[types::TModule|ModuleSpecifier]
+;
+
+fragment ExportClause*:
+    '{'
+        (namedExports+=ExportSpecifier (',' namedExports+=ExportSpecifier)* ','?)?
+    '}'
+;
+
+ExportSpecifier:
+    element=IdentifierRef<Yield=false> ('as' alias=IdentifierName)?
+;
+
+ExportableElement:
+      AnnotatedExportableElement<Yield=false>
+    | N4ClassDeclaration<Yield=false>
+    | N4InterfaceDeclaration<Yield=false>
+    | N4EnumDeclaration<Yield=false>
+    | ExportedFunctionDeclaration<Yield=false>
+    | ExportedVariableStatement
+;
+
+AnnotatedExportableElement <Yield>:
+    AnnotationList (
+        {FunctionDeclaration.annotationList=current}
+        (declaredModifiers+=N4Modifier)* AsyncNoTrailingLineBreak
+        FunctionImpl<Yield, Yield, Expression=false>
+    |   {ExportedVariableStatement.annotationList=current}
+        (declaredModifiers+=N4Modifier)*
+        varStmtKeyword=VariableStatementKeyword
+        varDeclsOrBindings+=ExportedVariableDeclarationOrBinding<Yield> ( ',' varDeclsOrBindings+=ExportedVariableDeclarationOrBinding<Yield> )* Semi
+    |   (
+            (
+                {N4ClassDeclaration.annotationList=current}
+                (declaredModifiers+=N4Modifier)*
+                'class' typingStrategy=TypingStrategyDefSiteOperator?
+                name=BindingIdentifier<Yield>
+                TypeVariables?
+                ClassExtendsClause<Yield>?
+            |   {N4InterfaceDeclaration.annotationList=current}
+                (declaredModifiers+=N4Modifier)*
+                ('interface') typingStrategy=TypingStrategyDefSiteOperator? name=BindingIdentifier<Yield>
+                TypeVariables?
+                InterfaceImplementsList?
+            )
+            Members<Yield>
+        )
+    |   {N4EnumDeclaration.annotationList=current}
+        (declaredModifiers+=N4Modifier)*
+        'enum' name=BindingIdentifier<Yield>
+        '{'
+            literals+=N4EnumLiteral (',' literals+= N4EnumLiteral)*
+        '}'
+    )
+;
+
+ImportDeclaration:
+    ImportDeclarationImpl
+;
+
+fragment ImportDeclarationImpl*:
+    'import' (
+        ImportClause importFrom?='from'
+    )? module=[types::TModule|ModuleSpecifier] Semi
+;
+
+fragment ImportClause*:
+        importSpecifiers+=DefaultImportSpecifier (',' ImportSpecifiersExceptDefault)?
+    |   ImportSpecifiersExceptDefault
+;
+
+fragment ImportSpecifiersExceptDefault*:
+        importSpecifiers+=NamespaceImportSpecifier
+    |   '{' (importSpecifiers+=NamedImportSpecifier (',' importSpecifiers+=NamedImportSpecifier)* ','?)? '}'
+;
+
+NamedImportSpecifier:
+        importedElement=[types::TExportableElement|BindingIdentifier<Yield=false>]
+    |   importedElement=[types::TExportableElement|IdentifierName] 'as' alias=BindingIdentifier<Yield=false>
+;
+
+DefaultImportSpecifier:
+    importedElement=[types::TExportableElement|BindingIdentifier<Yield=false>]
+;
+
+NamespaceImportSpecifier: '*' 'as' alias=BindingIdentifier<false> (declaredDynamic?='+')?;
+
+ModuleSpecifier: STRING;
+
+FunctionDeclaration <Yield>:
+    => ((declaredModifiers+=N4Modifier)* AsyncNoTrailingLineBreak
+        -> FunctionImpl <Yield,Yield,Expression=false>
+    ) => Semi?
+;
+
+fragment AsyncNoTrailingLineBreak *: (declaredAsync?='async' NoLineTerminator)?;
+
+fragment FunctionImpl<Yield, YieldIfGenerator, Expression>*:
+    'function'
+    (
+        generator?='*' FunctionHeader<YieldIfGenerator,Generator=true> FunctionBody<Yield=true,Expression>
+    |   FunctionHeader<Yield,Generator=false> FunctionBody<Yield=false,Expression>
+    )
+;
+
+fragment FunctionHeader<Yield, Generator>*:
+    TypeVariables?
+    name=BindingIdentifier<Yield>?
+    StrictFormalParameters<Yield=Generator>
+    (-> ':' returnTypeRef=TypeRef)?
+;
+
+fragment FunctionBody <Yield, Expression>*:
+        <Expression> body=Block<Yield>
+    |   <!Expression> body=Block<Yield>?
+;
+
+ExportedFunctionDeclaration<Yield>:
+    FunctionDeclaration<Yield>
+;
+
+FunctionTypeExpression:
+    {types::FunctionTypeExpression}
+    '{'
+    ('@' 'This' '(' declaredThisType=TypeRefFunctionTypeExpression ')')?
+    'function'
+    ('<' ownedTypeVars+=TypeVariable (',' ownedTypeVars+=TypeVariable)* '>')?
+    '('
+    (fpars+=TAnonymousFormalParameter (',' fpars+=TAnonymousFormalParameter)*)?
+    ')'
+    (':' returnTypeRef=TypeRef)?
+    '}';
+
+AnnotatedFunctionDeclaration <Yield, Default>:
+    annotationList=AnnotationList
+    (declaredModifiers+=N4Modifier)* AsyncNoTrailingLineBreak
+    FunctionImpl<Yield,Yield,Expression=false>
+;
+
+
+FunctionExpression:
+         (FunctionImpl<Yield=false,YieldIfGenerator=true,Expression=true>
+         )
+;
+
+AsyncFunctionExpression:
+     =>(declaredAsync?='async' NoLineTerminator 'function')
+        FunctionHeader<Yield=false,Generator=false> FunctionBody<Yield=false,Expression=true>
+;
+
+ArrowExpression <In, Yield>:
+    => (
+            (
+                    '(' (fpars+=FormalParameter<Yield>
+                        (',' fpars+=FormalParameter<Yield>)*)?
+                    ')' (':' returnTypeRef=TypeRef)?
+                |   =>(declaredAsync?='async' NoLineTerminator '(')
+                    (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)?
+                    ')' (':' returnTypeRef=TypeRef)?
+                |   fpars+=BindingIdentifierAsFormalParameter<Yield>
+            )
+            '=>'
+        )
+        (-> hasBracesAroundBody?='{' body=BlockMinusBraces<Yield> '}'
+            | body=ExpressionDisguisedAsBlock<In>)
+;
+
+fragment StrictFormalParameters <Yield>*:
+    '(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')'
+;
+
+BindingIdentifierAsFormalParameter <Yield>: name=BindingIdentifier<Yield>;
+
+BlockMinusBraces <Yield>:   statements+=Statement<Yield>*;
+
+ExpressionDisguisedAsBlock <In>:
+    statements+=AssignmentExpressionStatement<In>
+;
+
+AssignmentExpressionStatement <In>: expression=AssignmentExpression<In,Yield=false>;
+
+AnnotatedExpression <Yield>:
+    ExpressionAnnotationList (
+        {N4ClassExpression.annotationList=current}
+        'class' name=BindingIdentifier<Yield>?
+        ClassExtendsClause<Yield>?
+        Members<Yield>
+    |   {FunctionExpression.annotationList=current} AsyncNoTrailingLineBreak
+        FunctionImpl<Yield=false,YieldIfGenerator=true,Expression=true>
+    )
+;
+
+TypeVariable:
+    name=IdentifierOrThis
+    (   'extends' declaredUpperBounds+=ParameterizedTypeRefNominal
+        ('&' declaredUpperBounds+=ParameterizedTypeRefNominal)*
+    )?
+;
+
+FormalParameter <Yield>:
+    BindingElementFragment<Yield>
+;
+
+fragment BindingElementFragment <Yield>*:
+    (=> bindingPattern=BindingPattern<Yield>
+    | annotations+=Annotation*
+        (
+            variadic?='...'? name=BindingIdentifier<Yield> ColonSepTypeRef?
+        )
+    )
+    ('=' initializer=AssignmentExpression<In=true, Yield>)?
+;
+
+fragment ColonSepTypeRef*:
+    ':' declaredTypeRef=TypeRef
+;
+
+Block <Yield>: => ('{') statements+=Statement<Yield>* '}';
+RootStatement <Yield>:
+    Block<Yield>
+    | FunctionDeclaration<Yield>
+    | VariableStatement<In=true,Yield>
+    | EmptyStatement
+    | LabelledStatement<Yield>
+    | ExpressionStatement<Yield>
+    | IfStatement<Yield>
+    | IterationStatement<Yield>
+    | ContinueStatement<Yield>
+    | BreakStatement<Yield>
+    | ReturnStatement<Yield>
+    | WithStatement<Yield>
+    | SwitchStatement<Yield>
+    | ThrowStatement<Yield>
+    | TryStatement<Yield>
+    | DebuggerStatement
+;
+
+Statement <Yield>:
+    AnnotatedFunctionDeclaration<Yield,Default=false>
+    | RootStatement<Yield>
+;
+
+enum VariableStatementKeyword:
+    var='var' | const='const' | let='let'
+;
+
+VariableStatement <In, Yield>:
+    =>(varStmtKeyword=VariableStatementKeyword
+    )
+    varDeclsOrBindings+=VariableDeclarationOrBinding<In,Yield,false>
+    (',' varDeclsOrBindings+=VariableDeclarationOrBinding<In,Yield,false>)* Semi
+;
+
+ExportedVariableStatement:
+    (declaredModifiers+=N4Modifier)*
+    varStmtKeyword=VariableStatementKeyword
+    varDeclsOrBindings+=ExportedVariableDeclarationOrBinding<Yield=false>
+    (',' varDeclsOrBindings+=ExportedVariableDeclarationOrBinding<Yield=false>)* Semi
+;
+
+VariableDeclarationOrBinding <In, Yield, OptionalInit>:
+        VariableBinding<In,Yield,OptionalInit>
+    |   VariableDeclaration<In,Yield,true>
+;
+
+VariableBinding <In, Yield, OptionalInit>:
+    => pattern=BindingPattern<Yield> (
+            <OptionalInit> ('=' expression=AssignmentExpression<In,Yield>)?
+        |   <!OptionalInit> '=' expression=AssignmentExpression<In,Yield>
+    )
+;
+
+VariableDeclaration <In, Yield, AllowType>:
+    VariableDeclarationImpl<In,Yield,AllowType>;
+
+fragment VariableDeclarationImpl <In, Yield, AllowType>*:
+    annotations+=Annotation*
+    (
+        <AllowType> =>(
+            name=BindingIdentifier<Yield> ColonSepTypeRef?
+        ) ('=' expression=AssignmentExpression<In,Yield>)?
+    |   <!AllowType> =>(
+        name=BindingIdentifier<Yield>
+        ) ('=' expression=AssignmentExpression<In,Yield>)?
+    )
+;
+
+ExportedVariableDeclarationOrBinding <Yield>:
+        ExportedVariableBinding<Yield>
+    |   ExportedVariableDeclaration<Yield>
+;
+
+ExportedVariableBinding <Yield>:
+    => pattern=BindingPattern<Yield> '=' expression=AssignmentExpression<In=true,Yield>
+;
+
+ExportedVariableDeclaration <Yield>:
+    VariableDeclarationImpl<In=true,Yield,AllowType=true>
+;
+EmptyStatement: ';';
+ExpressionStatement <Yield>: expression=Expression<In=true,Yield> Semi;
+
+IfStatement <Yield>: 'if' '(' expression=Expression<In=true,Yield> ')'
+    ifStmt=Statement<Yield> (=> 'else' elseStmt=Statement<Yield>)?;
+
+IterationStatement <Yield>:
+        DoStatement<Yield>
+    |   WhileStatement<Yield>
+    |   ForStatement<Yield>
+;
+
+DoStatement <Yield>: 'do' statement=Statement<Yield> 'while'
+    '(' expression=Expression<In=true,Yield> ')' => Semi?;
+WhileStatement <Yield>: 'while' '(' expression=Expression<In=true,Yield> ')'
+    statement=Statement<Yield>;
+
+ForStatement <Yield>:
+    'for' '('
+    (
+            =>(initExpr=LetIdentifierRef forIn?='in' expression=Expression<In=true,Yield> ')')
+        |   (   ->varStmtKeyword=VariableStatementKeyword
+                (
+                        =>(varDeclsOrBindings+=BindingIdentifierAsVariableDeclaration<In=false,Yield>
+                        (forIn?='in' | forOf?='of') ->expression=AssignmentExpression<In=true,Yield>?)
+                    |   varDeclsOrBindings+=VariableDeclarationOrBinding<In=false,Yield,OptionalInit=true>
+                        (
+                                (',' varDeclsOrBindings+=VariableDeclarationOrBinding<In=false,Yield,false>)* ';'
+                                expression=Expression<In=true,Yield>? ';' updateExpr=Expression<In=true,Yield>?
+                            |   forIn?='in' expression=Expression<In=true,Yield>?
+                            |   forOf?='of' expression=AssignmentExpression<In=true,Yield>?
+                        )
+                )
+            |   initExpr=Expression<In=false,Yield>
+                (
+                        ';' expression=Expression<In=true,Yield>? ';' updateExpr=Expression<In=true,Yield>?
+                    |   forIn?='in' expression=Expression<In=true,Yield>?
+                    |   forOf?='of' expression=AssignmentExpression<In=true,Yield>?
+                )
+            |   ';' expression=Expression<In=true,Yield>? ';' updateExpr=Expression<In=true,Yield>?
+            )
+        ')'
+    ) statement=Statement<Yield>
+;
+
+LetIdentifierRef:
+    id=[types::IdentifiableElement|LetAsIdentifier]
+;
+
+LetAsIdentifier: 'let';
+
+BindingIdentifierAsVariableDeclaration <In, Yield>:
+    name=BindingIdentifier<Yield>
+;
+
+ContinueStatement <Yield>: 'continue' (label=[LabelledStatement|BindingIdentifier<Yield>])? Semi;
+
+BreakStatement <Yield>: 'break' (label=[LabelledStatement|BindingIdentifier<Yield>])? Semi;
+
+ReturnStatement <Yield>: 'return' (expression=Expression<In=true,Yield>)? Semi;
+
+WithStatement <Yield>: 'with' '(' expression=Expression<In=true,Yield> ')' statement=Statement<Yield>;
+
+SwitchStatement <Yield>:
+    'switch' '(' expression=Expression<In=true,Yield> ')' '{'
+    (cases+=CaseClause<Yield>)*
+    ((cases+=DefaultClause<Yield>)
+    (cases+=CaseClause<Yield>)*)? '}'
+;
+
+CaseClause <Yield>: 'case' expression=Expression<In=true,Yield> ':' (statements+=Statement<Yield>)*;
+
+DefaultClause <Yield>: 'default' ':' (statements+=Statement<Yield>)*;
+
+LabelledStatement <Yield>: => (name=BindingIdentifier<Yield> ':') statement=Statement<Yield>;
+
+ThrowStatement <Yield>:
+    'throw' expression=Expression<In=true,Yield> Semi;
+
+TryStatement <Yield>:
+    'try' block=Block<Yield>
+    ((catch=CatchBlock<Yield> finally=FinallyBlock<Yield>?) | finally=FinallyBlock<Yield>)
+;
+
+CatchBlock <Yield>: 'catch' '(' catchVariable=CatchVariable<Yield> ')' block=Block<Yield>;
+
+CatchVariable <Yield>:
+        =>bindingPattern=BindingPattern<Yield>
+    |   =>(name=BindingIdentifier<Yield> -> ColonSepTypeRef)
+    |   name=BindingIdentifier<Yield>
+;
+
+FinallyBlock <Yield>: 'finally' block=Block<Yield>;
+
+DebuggerStatement:
+    'debugger' Semi;
+
+PrimaryExpression <Yield>:
+      ThisLiteral
+    | SuperLiteral
+    | IdentifierRef<Yield>
+    | ParameterizedCallExpression<Yield>
+    | Literal
+    | ArrayLiteral<Yield>
+    | ObjectLiteral<Yield>
+    | ParenExpression<Yield>
+    | AnnotatedExpression<Yield>
+    | FunctionExpression
+    | AsyncFunctionExpression
+    | N4ClassExpression<Yield>
+    | TemplateLiteral<Yield>
+;
+
+ParenExpression <Yield>: '(' expression=Expression<In=true,Yield> ')';
+
+IdentifierRef <Yield>:
+    id=[types::IdentifiableElement|BindingIdentifier<Yield>]
+;
+
+SuperLiteral: 'super';
+
+ThisLiteral: 'this';
+
+ArrayLiteral <Yield>:
+    '['
+        elements+=ArrayPadding* (
+            elements+=ArrayElement<Yield>
+            (',' elements+=ArrayPadding* elements+=ArrayElement<Yield>)*
+            (trailingComma?=',' elements+=ArrayPadding*)?
+        )?
+    ']'
+;
+
+ArrayPadding: ',';
+
+ArrayElement <Yield>: spread?='...'? expression=AssignmentExpression<In=true,Yield>;
+
+ObjectLiteral <Yield>: '{'
+        ( propertyAssignments+=PropertyAssignment<Yield>
+          (',' propertyAssignments+=PropertyAssignment<Yield>)* ','?
+        )?
+    '}'
+;
+
+PropertyAssignment <Yield>:
+      AnnotatedPropertyAssignment<Yield>
+    | PropertyNameValuePair<Yield>
+    | PropertyGetterDeclaration<Yield>
+    | PropertySetterDeclaration<Yield>
+    | PropertyMethodDeclaration<Yield>
+    | PropertyNameValuePairSingleName<Yield>
+;
+
+AnnotatedPropertyAssignment <Yield>:
+    PropertyAssignmentAnnotationList (
+    =>( {PropertyNameValuePair.annotationList=current} declaredTypeRef=TypeRef?
+            LiteralOrComputedPropertyName<Yield> ':'
+        ) expression=AssignmentExpression<In=true,Yield>
+    | =>({PropertyGetterDeclaration.annotationList=current}
+            GetterHeader<Yield>
+        ) body=Block<Yield=false>
+    | =>({PropertySetterDeclaration.annotationList=current}
+            'set' ->LiteralOrComputedPropertyName <Yield>
+        ) '(' fpar=FormalParameter<Yield> ')' body=Block<Yield=false>
+    | =>({PropertyMethodDeclaration.annotationList=current}
+            TypeVariables? returnTypeRef=TypeRef?
+            (generator?='*' LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody <Generator=true>
+                | LiteralOrComputedPropertyName<Yield> -> MethodParamsAndBody <Generator=false>
+            )
+        ) ';'?
+    | {PropertyNameValuePairSingleName.annotationList=current}
+        declaredTypeRef=TypeRef? identifierRef=IdentifierRef<Yield>
+        ( '=' expression=AssignmentExpression<In=true,Yield>)?)
+;
+
+PropertyMethodDeclaration <Yield>:
+    => (TypeVariables? returnTypeRef=TypeRef?
+            (
+                generator?='*'  LiteralOrComputedPropertyName<Yield>
+                    ->MethodParamsAndBody<Generator=true>
+                | LiteralOrComputedPropertyName<Yield> ->MethodParamsAndBody <Generator=false>
+            )
+        )
+    ';'?
+;
+
+PropertyNameValuePair <Yield>:
+    => (
+        declaredTypeRef=TypeRef? LiteralOrComputedPropertyName<Yield> ':'
+    )
+    expression=AssignmentExpression<In=true,Yield>
+;
+
+PropertyNameValuePairSingleName <Yield>:
+    declaredTypeRef=TypeRef?
+    identifierRef=IdentifierRef<Yield>
+    ('=' expression=AssignmentExpression<In=true,Yield>)?
+;
+
+PropertyGetterDeclaration <Yield>:
+    =>(
+        GetterHeader<Yield>
+    )
+    body=Block<Yield=false>
+;
+
+PropertySetterDeclaration <Yield>:
+    =>(
+        'set'
+        ->LiteralOrComputedPropertyName <Yield>
+    )
+    '(' fpar=FormalParameter<Yield> ')' body=Block<Yield=false>
+;
+
+ParameterizedCallExpression <Yield>:
+    TypeArguments
+    target=IdentifierRef<Yield>
+    ArgumentsWithParentheses<Yield>
+;
+
+LeftHandSideExpression <Yield>:
+    MemberExpression<Yield> (
+        {ParameterizedCallExpression.target=current} ArgumentsWithParentheses<Yield>
+        (
+              {ParameterizedCallExpression.target=current} ArgumentsWithParentheses<Yield>
+            | {IndexedAccessExpression.target=current} IndexedAccessExpressionTail<Yield>
+            | {ParameterizedPropertyAccessExpression.target=current}
+                ParameterizedPropertyAccessExpressionTail<Yield>
+            | ->({TaggedTemplateString.target=current} template=TemplateLiteral<Yield>)
+        )*
+    )?
+;
+
+fragment Arguments <Yield>*:
+      arguments+=AssignmentExpression<In=true,Yield>
+      (',' arguments+=AssignmentExpression<In=true,Yield>)*
+      (',' spread?='...' arguments+=AssignmentExpression<In=true,Yield>)?
+    | spread?='...' arguments+=AssignmentExpression<In=true,Yield>
+;
+
+fragment TypeArguments*:
+    '<' typeArgs+=TypeRef (',' typeArgs+=TypeRef)* '>'
+;
+
+fragment ArgumentsWithParentheses <Yield>*:
+    '(' Arguments<Yield>? ')'
+;
+
+MemberExpression <Yield>:
+    =>('new' '.') 'target'
+    | => ('new') callee=MemberExpression<Yield> (-> TypeArguments)?
+        (=> withArgs?='(' Arguments<Yield>? ')'
+            (
+                  {IndexedAccessExpression.target=current} IndexedAccessExpressionTail<Yield>
+                | {ParameterizedPropertyAccessExpression.target=current}
+                    ParameterizedPropertyAccessExpressionTail<Yield>
+                | {TaggedTemplateString.target=current} template=TemplateLiteral<Yield>
+            )*
+        )?
+    | PrimaryExpression<Yield> (
+          {IndexedAccessExpression.target=current} IndexedAccessExpressionTail<Yield>
+        | {ParameterizedPropertyAccessExpression.target=current}
+            ParameterizedPropertyAccessExpressionTail<Yield>
+        | {TaggedTemplateString.target=current} template=TemplateLiteral<Yield>
+        )*
+;
+
+fragment IndexedAccessExpressionTail <Yield>*:
+    '[' index=Expression<In=true,Yield> ']'
+;
+
+fragment ParameterizedPropertyAccessExpressionTail <Yield>*:
+    '.' TypeArguments? property=[types::IdentifiableElement|IdentifierName]
+;
+
+PostfixExpression <Yield>:
+    LeftHandSideExpression<Yield> (
+        =>({PostfixExpression.expression=current} op=PostfixOperator
+        )
+    )?
+;
+
+enum PostfixOperator: inc='++' | dec='--';
+
+CastExpression <Yield>: PostfixExpression<Yield>
+    (=>({CastExpression.expression=current} 'as') targetTypeRef=TypeRefForCast)?;
+
+UnaryExpression <Yield>:
+      CastExpression<Yield>
+    | (op=UnaryOperator expression=UnaryExpression<Yield>);
+
+enum UnaryOperator: delete | void | typeof | inc='++' | dec='--' | pos='+' | neg='-' | inv='~' | not='!';
+
+MultiplicativeExpression <Yield>: UnaryExpression<Yield>
+    (=>({MultiplicativeExpression.lhs=current} op=MultiplicativeOperator)
+        rhs=UnaryExpression<Yield>)*;
+
+enum MultiplicativeOperator: times='*' | div='/' | mod='%';
+
+AdditiveExpression <Yield>: MultiplicativeExpression<Yield>
+    (=>({AdditiveExpression.lhs=current} op=AdditiveOperator)
+        rhs=MultiplicativeExpression<Yield>)*;
+
+enum AdditiveOperator: add='+' | sub='-';
+
+ShiftExpression <Yield>: AdditiveExpression<Yield>
+    (=>({ShiftExpression.lhs=current} op=ShiftOperator rhs=AdditiveExpression<Yield>))*
+;
+
+ShiftOperator:
+      '>' '>' '>'?
+    | '<<'
+;
+
+RelationalExpression <In, Yield>: ShiftExpression<Yield>
+    =>({RelationalExpression.lhs=current} op=RelationalOperator<In>
+        ->rhs=ShiftExpression<Yield>)*;
+
+RelationalOperator <In>:
+    '<' | '>' | '<=' | '>=' | 'instanceof' | <In> 'in';
+
+EqualityExpression <In, Yield>: RelationalExpression<In,Yield>
+    (=>({EqualityExpression.lhs=current} op=EqualityOperator) rhs=RelationalExpression<In,Yield>)*;
+
+enum EqualityOperator: same='===' | nsame='!==' | eq='==' | neq='!=';
+
+BitwiseANDExpression <In, Yield>: EqualityExpression<In,Yield>
+    (=>({BinaryBitwiseExpression.lhs=current} op=BitwiseANDOperator) rhs=EqualityExpression<In,Yield>)*;
+
+BitwiseANDOperator: '&';
+
+BitwiseXORExpression <In, Yield>: BitwiseANDExpression<In,Yield>
+    (=>({BinaryBitwiseExpression.lhs=current} op=BitwiseXOROperator) rhs=BitwiseANDExpression<In,Yield>)*;
+
+BitwiseXOROperator: '^';
+
+BitwiseORExpression <In, Yield>: BitwiseXORExpression<In,Yield>
+    (=>({BinaryBitwiseExpression.lhs=current} op=BitwiseOROperator) rhs=BitwiseXORExpression<In,Yield>)*;
+
+BitwiseOROperator: '|';
+
+LogicalANDExpression <In, Yield>: BitwiseORExpression<In,Yield>
+    (=> ({BinaryLogicalExpression.lhs=current} op=LogicalANDOperator) rhs=BitwiseORExpression<In,Yield>)*;
+
+LogicalANDOperator: '&&';
+
+LogicalORExpression <In, Yield>: LogicalANDExpression<In,Yield>
+    (=>({BinaryLogicalExpression.lhs=current} op=LogicalOROperator) rhs=LogicalANDExpression<In,Yield>)*;
+
+LogicalOROperator: '||';
+
+ConditionalExpression <In, Yield>: LogicalORExpression<In,Yield>
+    (=> ({ConditionalExpression.expression=current} '?') trueExpression=AssignmentExpression<In=true,Yield>
+        ':' falseExpression=AssignmentExpression<In,Yield>)?;
+
+AssignmentExpression <In, Yield>:
+      AwaitExpression<In,Yield>
+    | PromisifyExpression<In,Yield>
+    | ArrowExpression<In,Yield>
+    | <Yield> YieldExpression<In>
+    | ConditionalExpression<In,Yield>
+        (=> ({AssignmentExpression.lhs=current} op=AssignmentOperator)
+            rhs=AssignmentExpression<In,Yield>)?
+;
+
+YieldExpression <In>:
+    'yield' => many?='*'? -> expression=AssignmentExpression<In,Yield=true>?
+;
+
+AssignmentOperator:
+      '=' | '*=' | '/=' | '%=' | '+=' | '-='
+    | '<<='
+    | '>' '>'? '>='
+    | '&=' | '^=' | '|='
+;
+
+AwaitExpression <In, Yield>:
+    =>('await') expression=AssignmentExpression<In,Yield>;
+
+PromisifyExpression <In, Yield>:
+    => ('@' 'Promisify') expression=AssignmentExpression<In,Yield>;
+
+Expression <In, Yield>:
+    AssignmentExpression<In,Yield> ({CommaExpression.exprs+=current}
+    ',' exprs+=AssignmentExpression<In,Yield>
+    (','    exprs+=AssignmentExpression<In,Yield>)*)?
+;
+
+TemplateLiteral <Yield>:
+    (
+          segments+=NoSubstitutionTemplate
+        | segments+=TemplateHead segments+=Expression<In=true,Yield>? TemplateExpressionEnd
+            (
+                segments+=TemplateMiddle segments+=Expression<In=true,Yield>?
+                TemplateExpressionEnd
+            )*
+            segments+=TemplateTail
+    )
+;
+
+TemplateExpressionEnd:
+    '}'
+;
+
+NoSubstitutionTemplate:
+    rawValue=NO_SUBSTITUTION_TEMPLATE_LITERAL
+;
+
+TemplateHead:
+    rawValue=TEMPLATE_HEAD
+;
+
+TemplateTail:
+    rawValue=TemplateTailLiteral;
+
+TemplateMiddle:
+    rawValue=TemplateMiddleLiteral;
+
+Literal:
+      NumericLiteral | BooleanLiteral | StringLiteral
+    | NullLiteral | RegularExpressionLiteral;
+NullLiteral: 'null';
+BooleanLiteral: (true?='true' | 'false');
+StringLiteral: value=STRING;
+NumericLiteral:
+      DoubleLiteral | IntLiteral | BinaryIntLiteral | OctalIntLiteral
+    | LegacyOctalIntLiteral | HexIntLiteral | ScientificIntLiteral;
+DoubleLiteral: value=DOUBLE;
+IntLiteral: value=INT;
+OctalIntLiteral: value=OCTAL_INT;
+LegacyOctalIntLiteral: value=LEGACY_OCTAL_INT;
+HexIntLiteral: value=HEX_INT;
+BinaryIntLiteral: value=BINARY_INT;
+ScientificIntLiteral: value=SCIENTIFIC_INT;
+RegularExpressionLiteral: value=REGEX_LITERAL;
+
+NumericLiteralAsString:
+    DOUBLE | INT | OCTAL_INT | HEX_INT | SCIENTIFIC_INT
+;
+
+IdentifierOrThis:
+    IDENTIFIER
+    | 'This'
+    | 'Promisify'
+    | 'target';
+
+AnnotationName:
+    IDENTIFIER
+    | 'This'
+    | 'target';
+
+BindingIdentifier <Yield>:
+    IDENTIFIER
+    | <!Yield> 'yield'
+    | N4Keyword
+;
+
+IdentifierName:
+    IDENTIFIER | ReservedWord | N4Keyword
+;
+
+ReservedWord:
+    'break' | 'case' | 'catch' | 'class' | 'const' | 'continue' | 'debugger' | 'default' | 'delete'
+    | 'do' | 'else' | 'export' | 'extends' | 'finally' | 'for' | 'function' | 'if' | 'import'
+    | 'in' | 'instanceof' | 'new' | 'return' | 'super' | 'switch' | 'this' | 'throw' | 'try'
+    | 'typeof' | 'var' | 'void' | 'while' | 'with' | 'yield'
+    | 'null'
+    | 'true' | 'false'
+    | 'enum';
+
+N4Keyword:
+    'get' | 'set'
+    | 'let'
+    | 'project'
+    | 'external' | 'abstract' | 'static'
+    | 'as' | 'from' | 'constructor' | 'of' | 'target'
+    | 'type' | 'union' | 'intersection'
+    | 'This' | 'Await' | 'Promisify'
+    | 'await'
+    | 'async'
+    | 'implements' | 'interface'
+    | 'private' | 'protected' | 'public'
+;
+
+SymbolLiteralComputedName <Yield>:
+    BindingIdentifier<Yield> ('.' IdentifierName)?
+;
+
+terminal DOUBLE:
+    '.' DECIMAL_DIGIT_FRAGMENT+ EXPONENT_PART?
+    | DECIMAL_INTEGER_LITERAL_FRAGMENT '.' DECIMAL_DIGIT_FRAGMENT* EXPONENT_PART?
+;
+
+terminal HEX_INT: '0' ('x' | 'X') INT_SUFFIX;
+
+terminal BINARY_INT: '0' ('b' | 'B') INT_SUFFIX;
+
+terminal OCTAL_INT: '0' ('o' | 'O') INT_SUFFIX;
+
+terminal LEGACY_OCTAL_INT: '0' DECIMAL_DIGIT_FRAGMENT INT_SUFFIX;
+
+terminal fragment INT_SUFFIX: IDENTIFIER_PART*;
+
+terminal SCIENTIFIC_INT:
+    DECIMAL_INTEGER_LITERAL_FRAGMENT EXPONENT_PART
+;
+
+terminal fragment EXPONENT_PART:
+      ('e' | 'E') SIGNED_INT
+    | IDENTIFIER
+;
+
+terminal fragment SIGNED_INT:
+    ('+' | '-') DECIMAL_DIGIT_FRAGMENT+ IDENTIFIER?
+;
+
+terminal STRING:
+      '"' DOUBLE_STRING_CHAR* '"'?
+    | "'" SINGLE_STRING_CHAR* "'"?
+;
+
+terminal fragment DOUBLE_STRING_CHAR:
+      !(LINE_TERMINATOR_FRAGMENT | '"' | '\\')
+    | '\\' (LINE_TERMINATOR_SEQUENCE_FRAGMENT | !LINE_TERMINATOR_FRAGMENT)?
+;
+
+terminal fragment SINGLE_STRING_CHAR:
+      !(LINE_TERMINATOR_FRAGMENT | "'" | '\\')
+    | '\\' (LINE_TERMINATOR_SEQUENCE_FRAGMENT | !LINE_TERMINATOR_FRAGMENT)?
+;
+
+terminal fragment BACKSLASH_SEQUENCE:
+    '\\' !(LINE_TERMINATOR_FRAGMENT)?
+;
+
+terminal fragment REGEX_CHAR:
+      !(LINE_TERMINATOR_FRAGMENT | '\\' | '/' | '[')
+    | BACKSLASH_SEQUENCE
+    | '[' REGEX_CHAR_OR_BRACKET* ']'?
+;
+
+terminal fragment REGEX_CHAR_OR_BRACKET:
+      !(LINE_TERMINATOR_FRAGMENT | '\\' | ']')
+    | BACKSLASH_SEQUENCE
+;
+
+REGEX_LITERAL:
+    ('/' | '/=') REGEX_TAIL?
+;
+
+terminal fragment ACTUAL_REGEX_TAIL:
+      REGEX_CHAR+ ('/' IDENTIFIER_PART*)?
+    | '/' IDENTIFIER_PART*
+;
+
+terminal fragment REGEX_START:
+    ('/' | '/=')
+;
+
+terminal REGEX_TAIL: // post processed
+    '//1'
+;
+terminal TEMPLATE_HEAD:
+    "`" TEMPLATE_LITERAL_CHAR* '$'+ '{'
+;
+
+terminal NO_SUBSTITUTION_TEMPLATE_LITERAL:
+    '`' TEMPLATE_LITERAL_CHAR* '$'* "`"?
+;
+
+terminal fragment ACTUAL_TEMPLATE_END:
+    TEMPLATE_LITERAL_CHAR* ('$'+ ('{' | '`'?) | '`'?)
+;
+
+terminal fragment TEMPLATE_LITERAL_CHAR:
+      !(LINE_TERMINATOR_FRAGMENT | '`' | '\\' | '$')
+    | '$'+ !('{' | '`' | '$')
+    | LINE_TERMINATOR_SEQUENCE_FRAGMENT
+    | '\\' (LINE_TERMINATOR_SEQUENCE_FRAGMENT | !LINE_TERMINATOR_FRAGMENT)?
+;
+
+TemplateTailLiteral:
+    TEMPLATE_END?
+;
+
+TemplateMiddleLiteral:
+    TEMPLATE_MIDDLE
+;
+
+terminal TEMPLATE_MIDDLE:
+    '//2' // will never be lexed
+;
+
+terminal TEMPLATE_END:
+    '//3' // will never be lexed
+;
+
+terminal fragment TEMPLATE_CONTINUATION:
+    '//4' // actually '}'
+;
+
+Semi: ';'; // automatic semicolon instertion, post-processed
+
+fragment NoLineTerminator*: NO_LINE_TERMINATOR?;
+
+terminal NO_LINE_TERMINATOR:
+    '//5' // post-processed, will never be lexed
+;
+Annotation:'@' AnnotationNoAtSign;
+ScriptAnnotation: '@@' AnnotationNoAtSign;
+
+AnnotationNoAtSign:
+    name=AnnotationName (=> '(' (args+=AnnotationArgument (',' args+=AnnotationArgument)*)? ')')?;
+
+AnnotationArgument:
+    LiteralAnnotationArgument | TypeRefAnnotationArgument
+;
+
+LiteralAnnotationArgument:
+    literal=Literal
+;
+
+TypeRefAnnotationArgument:
+    typeRef=TypeRef
+;
+
+AnnotationList:
+    =>('@' -> annotations+=AnnotationNoAtSign) annotations+=Annotation*
+;
+
+ExpressionAnnotationList:
+    annotations+=Annotation+
+;
+
+PropertyAssignmentAnnotationList:
+    annotations+=Annotation+
+;
+
+N4MemberAnnotationList:
+    {N4MemberAnnotationList} annotations+=Annotation+
+;
+
+TypeReferenceName:
+    'void' | 'This' | 'await' | 'Promisify' | 'target' | QualifiedTypeReferenceName
+;
+
+QualifiedTypeReferenceName:
+    IDENTIFIER ('.' IDENTIFIER)?
+;
+N4ClassDeclaration <Yield>:
+    =>(
+        {N4ClassDeclaration}
+        (declaredModifiers+=N4Modifier)*
+        'class' typingStrategy=TypingStrategyDefSiteOperator? name=BindingIdentifier<Yield>?
+    )
+    TypeVariables?
+    ClassExtendsClause<Yield>?
+    Members<Yield>
+;
+
+fragment Members <Yield>*:
+    '{'
+    ownedMembersRaw+=N4MemberDeclaration<Yield>*
+    '}'
+;
+
+fragment ClassExtendsClause <Yield>*:
+    'extends' (
+          =>superClassRef=ParameterizedTypeRefNominal ('implements' ClassImplementsList)?
+        | superClassExpression=LeftHandSideExpression<Yield>
+    )
+    | 'implements' ClassImplementsList
+;
+
+fragment ClassImplementsList*:
+    implementedInterfaceRefs+=ParameterizedTypeRefNominal
+    (',' implementedInterfaceRefs+=ParameterizedTypeRefNominal)*
+;
+
+N4ClassExpression <Yield>:
+    {N4ClassExpression}
+    'class' name=BindingIdentifier<Yield>?
+    ClassExtendsClause<Yield>?
+    Members<Yield>;
+N4InterfaceDeclaration <Yield>:
+    => (
+        {N4InterfaceDeclaration}
+        (declaredModifiers+=N4Modifier)*
+        'interface' typingStrategy=TypingStrategyDefSiteOperator? name=BindingIdentifier<Yield>?
+    )
+    TypeVariables?
+    InterfaceImplementsList?
+    Members<Yield>
+;
+
+fragment InterfaceImplementsList*:
+     'extends' superInterfaceRefs+=ParameterizedTypeRefNominal
+        (',' superInterfaceRefs+=ParameterizedTypeRefNominal)*
+;
+N4EnumDeclaration <Yield>:
+    =>(
+        {N4EnumDeclaration}
+        (declaredModifiers+=N4Modifier)*
+        'enum' name=BindingIdentifier<Yield>?
+    )
+    '{'
+        (literals+=N4EnumLiteral (',' literals+=N4EnumLiteral)*)?
+    '}'
+;
+N4EnumLiteral: name=IdentifierOrThis (':' value=STRING)?;
+
+enum N4Modifier: // validator applies further checks
+      private | project | protected | public
+    | external | abstract | static | const;
+
+N4MemberDeclaration <Yield>:
+    AnnotatedN4MemberDeclaration<Yield>
+    | N4GetterDeclaration<Yield>
+    | N4SetterDeclaration<Yield>
+    | N4MethodDeclaration<Yield>
+    | N4FieldDeclaration<Yield>
+    | N4CallableConstructorDeclaration<Yield>
+;
+
+AnnotatedN4MemberDeclaration <Yield> returns N4MemberDeclaration:
+    N4MemberAnnotationList (
+            => ({N4GetterDeclaration.annotationList=current}
+                (declaredModifiers+=N4Modifier)* GetterHeader<Yield>) (body=Block<Yield>)? ';'?
+        |   => ({N4SetterDeclaration.annotationList=current}
+                (declaredModifiers+=N4Modifier)* 'set' -> LiteralOrComputedPropertyName <Yield>)
+                '(' fpar=FormalParameter<Yield> ')' (body=Block<Yield>)? ';'?
+        |   => (
+                {N4MethodDeclaration.annotationList=current} (declaredModifiers+=N4Modifier)* TypeVariables?
+                (
+                        generator?='*' LiteralOrComputedPropertyName<Yield>
+                        ->MethodParamsReturnAndBody <Generator=true>
+                    |   AsyncNoTrailingLineBreak LiteralOrComputedPropertyName<Yield>
+                        ->MethodParamsReturnAndBody <Generator=false>
+                )
+                )';'?
+        |   {N4FieldDeclaration.annotationList=current} FieldDeclarationImpl<Yield>
+    )
+;
+
+fragment LiteralOrComputedPropertyName <Yield>*:
+    name=IdentifierName | name=STRING | name=NumericLiteralAsString
+    | '[' (=>((name=SymbolLiteralComputedName<Yield> | name=StringLiteralAsName) ']')
+        |   computeNameFrom=AssignmentExpression<In=true,Yield> ']')
+;
+
+fragment LiteralPropertyName <Yield>*:
+    name=IdentifierName | name=STRING | name=NumericLiteralAsString
+    | '[' (name=SymbolLiteralComputedName<Yield> | name=StringLiteralAsName) ']'
+;
+
+StringLiteralAsName:
+    STRING
+;
+
+fragment FieldDeclarationImpl <Yield>*:
+    (declaredModifiers+=N4Modifier)*
+    LiteralPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)? ';'
+;
+
+N4FieldDeclaration <Yield>:
+    {N4FieldDeclaration}
+    FieldDeclarationImpl<Yield>
+;
+
+N4MethodDeclaration <Yield>:
+    => ({N4MethodDeclaration} (declaredModifiers+=N4Modifier)* TypeVariables?
+        (
+                generator?='*' LiteralOrComputedPropertyName<Yield>
+                ->MethodParamsReturnAndBody <Generator=true>
+            |   AsyncNoTrailingLineBreak LiteralOrComputedPropertyName<Yield>
+                ->MethodParamsReturnAndBody <Generator=false>
+        )
+    ) ';'?
+;
+
+N4CallableConstructorDeclaration <Yield> returns N4MethodDeclaration:
+    MethodParamsReturnAndBody <Generator=false> ';'?
+;
+
+fragment MethodParamsAndBody <Generator>*:
+    StrictFormalParameters<Yield=Generator>
+    (body=Block<Yield=Generator>)?
+;
+
+fragment MethodParamsReturnAndBody <Generator>*:
+    StrictFormalParameters<Yield=Generator>
+    (':' returnTypeRef=TypeRef)?
+    (body=Block<Yield=Generator>)?
+;
+
+N4GetterDeclaration <Yield>:
+    => ({N4GetterDeclaration}
+    (declaredModifiers+=N4Modifier)*
+    GetterHeader<Yield>)
+    (body=Block<Yield>)? ';'?
+;
+
+fragment GetterHeader <Yield>*:
+    ('get' -> LiteralOrComputedPropertyName <Yield> '(' ')' ColonSepTypeRef?)
+;
+
+N4SetterDeclaration <Yield>:
+    =>({N4SetterDeclaration}
+        (declaredModifiers+=N4Modifier)*
+        'set'
+        ->LiteralOrComputedPropertyName <Yield>
+    )
+    '(' fpar=FormalParameter<Yield> ')' (body=Block<Yield>)? ';'?
+;
+
+BindingPattern <Yield>:
+    ObjectBindingPattern<Yield>
+    | ArrayBindingPattern<Yield>
+;
+
+ObjectBindingPattern <Yield>:
+    '{' (properties+=BindingProperty<Yield,AllowType=false>
+        (',' properties+=BindingProperty<Yield,AllowType=false>)*)? '}'
+;
+
+ArrayBindingPattern <Yield>:
+    '['
+        elements+=Elision* (
+            elements+=BindingRestElement<Yield>
+            (',' elements+=Elision* elements+=BindingRestElement<Yield>)*
+            (',' elements+=Elision*)?
+        )?
+    ']'
+;
+
+BindingProperty <Yield, AllowType>:
+      =>(LiteralBindingPropertyName<Yield> ':') value=BindingElement<Yield>
+    | value=SingleNameBinding<Yield,AllowType>
+;
+
+fragment LiteralBindingPropertyName <Yield>*:
+    declaredName=IdentifierName | declaredName=STRING | declaredName=NumericLiteralAsString
+    | '[' (declaredName=SymbolLiteralComputedName<Yield> | declaredName=STRING) ']'
+;
+
+SingleNameBinding <Yield, AllowType>:
+    varDecl=VariableDeclaration<In=true,Yield,AllowType>
+;
+
+BindingElement <Yield>:
+      =>(nestedPattern=BindingPattern<Yield>) ('=' expression=AssignmentExpression<In=true,Yield>)?
+    | varDecl=VariableDeclaration<In=true,Yield,AllowType=true>
+;
+
+BindingRestElement <Yield>:
+    rest?='...'?
+    (
+          =>(nestedPattern=BindingPattern<Yield>)
+            ('=' expression=AssignmentExpression<In=true,Yield>)?
+        | varDecl=VariableDeclaration<In=true,Yield,AllowType=true>
+    )
+;
+
+Elision:
+    ','
+;
+----

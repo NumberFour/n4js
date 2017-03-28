@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>FAQ</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../res/styles/n4js-adoc.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <!-- ************* Meta ************* -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -29,6 +30,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../scripts/nav-mobile.js"></script>
+
+<!-- ************* Prism.js Syntax Highlighter ******-->
+<link href="../styles/prism.min.css" rel="stylesheet"/>
+<script src="../scripts/prism.js"></script>
 
 <!-- ****************** Analytics ****************** -->
 <script>
@@ -67,7 +72,8 @@
   </li>
   <li><a href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -75,8 +81,8 @@
   <li><a href="../faq/index.html">FAQ</a>
     <ul>
       <li><a href="index.html">FAQ</a></li>
-      <li><a href="comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a href="comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a href="comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a href="comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -93,7 +99,7 @@
 </nav>
 </div>
 <!-- ****************** Mobile NavBar ****************** -->
-<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language &amp; IDE</p></div>
+<div class="box"><a id="n4js-mobile-logo" href="../index.html"></a><p>N4JS Language & IDE</p></div>
 <div class="mobile-navbar">
 <ul id="menu">
   <li><a class="scroll" href="../index.html#getting-started"></i>Download</a></li>
@@ -111,7 +117,8 @@
   </li>
   <li><a class="scroll" href="../userguides/index.html">Documentation</a>
     <ul>
-      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup &amp; HelloWorld!</a></li>
+      <li><a href="../spec/N4JSSpec.html">N4JS Language Specification</a></li>
+      <li><a  href="../userguides/n4js-ide-setup.html">IDE Setup & HelloWorld!</a></li>
       <li><a  href="../userguides/npm-export-guide.html">Export as npm</a></li>
       <li><a  href="../userguides/tutorial.html">N4JS Tutorial</a></li>
     </ul>
@@ -119,8 +126,8 @@
   <li><a class="scroll" href="index.html">FAQ</a>
     <ul>
       <li><a  href="index.html">FAQ</a></li>
-      <li><a  href="comparison-typescript.html">Typescript &amp; N4JS Comparison</a></li>
-      <li><a  href="comparison-java.html">Java &amp; N4JS Comparison</a></li>
+      <li><a  href="comparison-typescript.html">Typescript & N4JS Comparison</a></li>
+      <li><a  href="comparison-java.html">Java & N4JS Comparison</a></li>
     </ul>
   </li>
 </ul>
@@ -133,11 +140,11 @@
 <ul class="sectlevel0">
 <li><a href="#_faq">FAQ</a>
 <ul class="sectlevel1">
-<li><a href="#_why-did-you-create-n4js">Why Did You Create N4JS?</a></li>
-<li><a href="#_why-do-you-open-source-n4js">Why Do You Open-Source N4JS?</a></li>
-<li><a href="#_how-does-n4js-compare-to-javascript-ecmascript">How does N4JS compare to JavaScript/ECMAScript?</a></li>
-<li><a href="#_how-does-n4js-compare-to-java">How does N4JS compare to Java?</a></li>
-<li><a href="#_how-does-n4js-compare-to-typescript">How does N4JS compare to TypeScript?</a></li>
+<li><a href="#_why_did_you_create_n4js">Why Did You Create N4JS?</a></li>
+<li><a href="#_why_do_you_open_source_n4js">Why Do You Open-Source N4JS?</a></li>
+<li><a href="#_how_does_n4js_compare_to_javascript_ecmascript">How does N4JS compare to JavaScript/ECMAScript?</a></li>
+<li><a href="#_how_does_n4js_compare_to_java">How does N4JS compare to Java?</a></li>
+<li><a href="#_how_does_n4js_compare_to_typescript">How does N4JS compare to TypeScript?</a></li>
 </ul>
 </li>
 </ul>
@@ -146,10 +153,9 @@
 <div id="content">
 <h1 id="_faq" class="sect0"><a class="link" href="#_faq">FAQ</a></h1>
 <div class="sect1">
-<h2 id="_why-did-you-create-n4js"><a class="link" href="#_why-did-you-create-n4js">Why Did You Create N4JS?</a></h2>
+<h2 id="_why_did_you_create_n4js"><a class="link" href="#_why_did_you_create_n4js">Why Did You Create N4JS?</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<div class="title">FAQ</div>
 <p>N4JS is created by <a href="http://www.numberfour.eu">NumberFour AG</a>. Our goal is to create a single
 business platform on which apps can be installed and run. These apps are written in N4JS which is based
 on JavaScript/ECMAScript.</p>
@@ -162,7 +168,7 @@ a sound type system and that&#8217;s why we developed N4JS to provide these miss
 </div>
 </div>
 <div class="sect1">
-<h2 id="_why-do-you-open-source-n4js"><a class="link" href="#_why-do-you-open-source-n4js">Why Do You Open-Source N4JS?</a></h2>
+<h2 id="_why_do_you_open_source_n4js"><a class="link" href="#_why_do_you_open_source_n4js">Why Do You Open-Source N4JS?</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>We stand on the shoulders of open technology and it&#8217;s our turn to give back. We see the strength of N4JS
@@ -172,7 +178,7 @@ as open-source. We are excited for feedback and always open for contributions!</
 </div>
 </div>
 <div class="sect1">
-<h2 id="_how-does-n4js-compare-to-javascript-ecmascript"><a class="link" href="#_how-does-n4js-compare-to-javascript-ecmascript">How does N4JS compare to JavaScript/ECMAScript?</a></h2>
+<h2 id="_how_does_n4js_compare_to_javascript_ecmascript"><a class="link" href="#_how_does_n4js_compare_to_javascript_ecmascript">How does N4JS compare to JavaScript/ECMAScript?</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>N4JS is based on JavaScript/ECMAScript. Feature-wise it is a super set of ECMAScript: It supports all
@@ -185,7 +191,7 @@ won&#8217;t issue any errors but will probably lead to runtime errors.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_how-does-n4js-compare-to-java"><a class="link" href="#_how-does-n4js-compare-to-java">How does N4JS compare to Java?</a></h2>
+<h2 id="_how_does_n4js_compare_to_java"><a class="link" href="#_how_does_n4js_compare_to_java">How does N4JS compare to Java?</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>N4JS is an extension of ECMAScript making it is as different from Java as ECMAScript itself. N4JS does
@@ -200,7 +206,7 @@ extra page</a>.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_how-does-n4js-compare-to-typescript"><a class="link" href="#_how-does-n4js-compare-to-typescript">How does N4JS compare to TypeScript?</a></h2>
+<h2 id="_how_does_n4js_compare_to_typescript"><a class="link" href="#_how_does_n4js_compare_to_typescript">How does N4JS compare to TypeScript?</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>We created N4JS with the goal to enable writing large ECMAScript projects that are as maintainable as
@@ -224,6 +230,7 @@ between N4JS and TypeScript</a> see our comparison page.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2017-03-14 10:23:54 CET
 </div>
 </div>
 <div class="social">
@@ -269,8 +276,5 @@ $('html, body').animate({
 return false;
 });
 </script>
-<link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
-<script src="../scripts/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>
