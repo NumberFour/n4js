@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" viewBox="-1 5 560 603" width="560pt" height="603pt" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <metadata> Produced by OmniGraffle 7.3.1 
+    <dc:date>2016-09-07 09:57:23 +0000</dc:date>
+  </metadata>
+  <defs>
+    <font-face font-family="Helvetica" font-size="11" units-per-em="1000" underline-position="-75.68359" underline-thickness="49.316406" slope="0" x-height="532.22656" cap-height="719.7266" ascent="770.0195" descent="-229.98047" font-weight="bold">
+      <font-face-src>
+        <font-face-name name="Helvetica-Bold"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Helvetica" font-size="11" units-per-em="1000" underline-position="-75.68359" underline-thickness="49.316406" slope="0" x-height="522.9492" cap-height="717.28516" ascent="770.0195" descent="-229.98047" font-weight="500">
+      <font-face-src>
+        <font-face-name name="Helvetica"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Helvetica" font-size="11" units-per-em="1000" underline-position="-75.68359" underline-thickness="49.316406" slope="-1090.9091" x-height="522.9492" cap-height="717.28516" ascent="770.0195" descent="-229.98047" font-style="italic" font-weight="500">
+      <font-face-src>
+        <font-face-name name="Helvetica-Oblique"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="UMLInheritance_Marker" viewBox="-1 -8 14 16" markerWidth="14" markerHeight="16" color="black">
+      <g>
+        <path d="M 12 0 L 0 -7 L 0 7 Z" fill="none" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="UMLInheritance_Marker_2" viewBox="-1 -6 10 12" markerWidth="10" markerHeight="12" color="black">
+      <g>
+        <path d="M 7.2 0 L 0 -4.2 L 0 4.2 Z" fill="none" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="UMLInheritance_Marker_3" viewBox="-9 -6 10 12" markerWidth="10" markerHeight="12" color="black">
+      <g>
+        <path d="M -7.199999 0 L 0 4.1999993 L 0 -4.1999993 Z" fill="none" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <font-face font-family="Helvetica" font-size="12" units-per-em="1000" underline-position="-75.68359" underline-thickness="49.316406" slope="0" x-height="522.9492" cap-height="717.28516" ascent="770.0195" descent="-229.98047" font-weight="500">
+      <font-face-src>
+        <font-face-name name="Helvetica"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="StickArrow_Marker" viewBox="-9 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M -8 0 L 0 0 M 0 3 L -8 0 L 0 -3" fill="none" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <font-face font-family="Helvetica" font-size="9" units-per-em="1000" underline-position="-75.68359" underline-thickness="49.316406" slope="0" x-height="522.9492" cap-height="717.28516" ascent="770.0195" descent="-229.98047" font-weight="500">
+      <font-face-src>
+        <font-face-name name="Helvetica"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Helvetica" font-size="10" units-per-em="1000" underline-position="-75.68359" underline-thickness="49.316406" slope="0" x-height="522.9492" cap-height="717.28516" ascent="770.0195" descent="-229.98047" font-weight="500">
+      <font-face-src>
+        <font-face-name name="Helvetica"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
+    <title>Canvas 1</title>
+    <rect fill="white" width="559.2756" height="782.8614"/>
+    <g>
+      <title>Layer 1</title>
+      <rect x="59.74652" y="84" width="498" height="338" fill="#f7f7f7"/>
+      <rect x="59.74652" y="84" width="498" height="338" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <rect x="68" y="238" width="69.93835" height="22.750162" fill="#c4dcfa" fill-opacity=".51"/>
+      <rect x="68" y="238" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(73 242.87508)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="bold" x="12.854187" y="10" textLength="34.22998">Object</tspan>
+      </text>
+      <rect x="324.03735" y="278.6232" width="69.93835" height="22.750162" fill="#c4dcfa" fill-opacity=".51"/>
+      <rect x="324.03735" y="278.6232" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(329.03735 283.4983)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="bold" x="9.80072" y="10" textLength="40.336914">number</tspan>
+      </text>
+      <rect x="324.1076" y="223.32498" width="69.93835" height="22.750162" fill="#c4dcfa" fill-opacity=".51"/>
+      <rect x="324.1076" y="223.32498" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(329.1076 228.20006)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="bold" x="14.691101" y="10" textLength="30.556152">string</tspan>
+      </text>
+      <rect x="324.03737" y="250.9741" width="69.93835" height="22.750162" fill="#c4dcfa" fill-opacity=".51"/>
+      <rect x="324.03737" y="250.9741" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(329.03737 255.84918)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="bold" x="8.884949" y="10" textLength="42.168457">boolean</tspan>
+      </text>
+      <rect x="4.2519685" y="12.283417" width="69.93835" height="22.750162" fill="white"/>
+      <rect x="4.2519685" y="12.283417" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(9.251969 17.158498)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="19.879577" y="10" textLength="20.1792">void</tspan>
+      </text>
+      <rect x="274.03083" y="505.99997" width="69.93835" height="22.750162" fill="#c4dcfa" fill-opacity=".51"/>
+      <rect x="274.03083" y="505.99997" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(279.03083 510.87505)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-style="italic" font-weight="500" x="5.807312" y="10" textLength="29.970703">undefi</tspan>
+        <tspan font-family="Helvetica" font-size="11" font-style="italic" font-weight="500" x="35.778015" y="10" textLength="18.353027">ned</tspan>
+      </text>
+      <rect x="259.16667" y="563.362" width="69.93835" height="22.750162" fill="white"/>
+      <rect x="259.16667" y="563.362" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(264.16667 568.23706)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="21.41034" y="10" textLength="17.117676">this</tspan>
+      </text>
+      <rect x="422.12933" y="151.42246" width="97.46216" height="22.750162" fill="white"/>
+      <rect x="422.12933" y="151.42246" width="97.46216" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(427.12933 156.29754)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="bold" x=".6334257" y="10" textLength="86.19531">pathSelector&lt;T&gt;</tspan>
+      </text>
+      <rect x="449.65314" y="181.04071" width="69.93835" height="22.750162" fill="white"/>
+      <rect x="449.65314" y="181.04071" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(454.65314 185.9158)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="bold" x="8.874206" y="10" textLength="42.18994">i18nKey</tspan>
+      </text>
+      <rect x="191.87414" y="278.6232" width="69.93835" height="22.750162" fill="#c4dcfa" fill-opacity=".51"/>
+      <rect x="191.87414" y="278.6232" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(196.87414 283.4983)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="10.407654" y="10" textLength="39.123047">Number</tspan>
+      </text>
+      <rect x="191.87416" y="223.32498" width="69.93835" height="22.750162" fill="#c4dcfa" fill-opacity=".51"/>
+      <rect x="191.87416" y="223.32498" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(196.87416 228.20006)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="15.601501" y="10" textLength="28.73535">String</tspan>
+      </text>
+      <rect x="191.87415" y="250.9741" width="81.48389" height="22.750162" fill="#c4dcfa" fill-opacity=".51"/>
+      <rect x="191.87415" y="250.9741" width="81.48389" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(196.87415 255.84918)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="15.557376" y="10" textLength="40.36914">Boolean</tspan>
+      </text>
+      <rect x="0" y="584.6902" width="69.93835" height="22.750162" fill="white"/>
+      <rect x="0" y="584.6902" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(5 589.5653)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="16.511902" y="10" textLength="26.91455">union</tspan>
+      </text>
+      <rect x="83" y="584.681" width="69.93835" height="22.750162" fill="white"/>
+      <rect x="83" y="584.681" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(88 589.5561)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="1.8434445" y="10" textLength="56.251465">intersection</tspan>
+      </text>
+      <rect x="273.77735" y="455.1254" width="69.93835" height="22.750162" fill="#c4dcfa" fill-opacity=".51"/>
+      <rect x="273.77735" y="455.1254" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(278.77735 460.0005)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-style="italic" font-weight="500" x="21.407653" y="10" textLength="17.123047">null</tspan>
+      </text>
+      <rect x="192.12764" y="94.16484" width="69.93835" height="22.750162" fill="white"/>
+      <rect x="192.12764" y="94.16484" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(197.12764 99.03992)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="7.042663" y="10" textLength="45.85303">N4Object</tspan>
+      </text>
+      <path d="M 191.62764 105.53992 L 176.12764 105.53992 L 165 105.53992 L 165 136 L 165 249.37508 L 153.43835 249.37508 L 151.43835 249.37508" marker-end="url(#UMLInheritance_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 191.87415 262.34918 L 176.37415 262.34918 L 165.37415 262.34918 L 165.37415 249.37508 L 153.43835 249.37508 L 151.43835 249.37508" marker-end="url(#UMLInheritance_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 191.37416 240.3876 L 175.87416 240.3876 L 164.87416 240.3876 L 164.87416 249.37508 L 153.43835 249.37508 L 151.43835 249.37508" marker-end="url(#UMLInheritance_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 191.87414 289.9983 L 176.37414 289.9983 L 165.37414 289.9983 L 165.37414 249.37508 L 153.43835 249.37508 L 151.43835 249.37508" marker-end="url(#UMLInheritance_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 528.2915 162.79754 L 530.2915 162.79754 L 530.2915 234.70006 L 404.74596 234.70006 L 402.74596 234.70006" marker-end="url(#UMLInheritance_Marker_2)" marker-start="url(#UMLInheritance_Marker_3)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 528.2915 192.4158 L 530.2915 192.4158 L 530.2915 234.70006 L 404.74596 234.70006 L 402.74596 234.70006" marker-end="url(#UMLInheritance_Marker_2)" marker-start="url(#UMLInheritance_Marker_3)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 309 505.99997 L 309 490.49997 L 308.74652 493.3756 L 308.74652 491.3756" marker-end="url(#UMLInheritance_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <rect x="192.12763" y="330.35706" width="61.05716" height="15.316613" fill="#c4dcfa" fill-opacity=".51"/>
+      <rect x="192.12763" y="330.35706" width="61.05716" height="15.316613" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(197.12763 331.51537)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="13.910903" y="10" textLength="23.235352">Date</tspan>
+      </text>
+      <rect x="192.12762" y="352.48512" width="61.05716" height="15.316613" fill="#c4dcfa" fill-opacity=".51"/>
+      <rect x="192.12762" y="352.48512" width="61.05716" height="15.316613" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(197.12762 353.64343)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="5.961684" y="10" textLength="39.13379">RegExp</tspan>
+      </text>
+      <rect x="191.87415" y="308.229" width="61.05716" height="15.316613" fill="#c4dcfa" fill-opacity=".51"/>
+      <rect x="191.87415" y="308.229" width="61.05716" height="15.316613" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(196.87415 309.3873)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="13.301284" y="10" textLength="24.45459">Math</tspan>
+      </text>
+      <path d="M 192.12763 338.01537 L 176.62763 338.01537 L 164.62763 338.01537 L 164.62763 249.37508 L 153.43835 249.37508 L 151.43835 249.37508" marker-end="url(#UMLInheritance_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 191.87415 315.8873 L 176.37415 315.8873 L 165.37415 315.8873 L 165.37415 249.37508 L 153.43835 249.37508 L 151.43835 249.37508" marker-end="url(#UMLInheritance_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 192.12762 360.14343 L 176.62762 360.14343 L 164.62762 360.14343 L 164.62762 249.37508 L 153.43835 249.37508 L 151.43835 249.37508" marker-end="url(#UMLInheritance_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <rect x="191.87415" y="168.02675" width="69.93835" height="22.750162" fill="#c4dcfa" fill-opacity=".51"/>
+      <rect x="191.87415" y="168.02675" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(196.87415 172.90183)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="8.874206" y="10" textLength="42.18994">Function</tspan>
+      </text>
+      <rect x="191.87416" y="195.67586" width="69.93835" height="22.750162" fill="#c4dcfa" fill-opacity=".51"/>
+      <rect x="191.87416" y="195.67586" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(196.87416 200.55094)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="7.045349" y="10" textLength="45.847656">Array&lt;T&gt;</tspan>
+      </text>
+      <path d="M 191.87415 179.40183 L 176.37415 179.40183 L 165.37415 179.40183 L 165.37415 249.37508 L 153.43835 249.37508 L 151.43835 249.37508" marker-end="url(#UMLInheritance_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 191.37416 207.05094 L 175.87416 207.05094 L 164.87416 207.05094 L 164.87416 249.37508 L 153.43835 249.37508 L 151.43835 249.37508" marker-end="url(#UMLInheritance_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <rect x="192.12764" y="374.6132" width="61.05716" height="15.316613" fill="#c4dcfa" fill-opacity=".51"/>
+      <rect x="192.12764" y="374.6132" width="61.05716" height="15.316613" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(197.12764 375.7715)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="13.306655" y="10" textLength="24.443848">Error</tspan>
+      </text>
+      <rect x="191.87415" y="396.74125" width="61.05716" height="15.316613" fill="#c4dcfa" fill-opacity=".51"/>
+      <rect x="191.87415" y="396.74125" width="61.05716" height="15.316613" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(196.87415 397.89956)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="10.860122" y="10" textLength="29.336914">JSON</tspan>
+      </text>
+      <path d="M 191.87415 404.39956 L 176.37415 404.39956 L 165.37415 404.39956 L 165.37415 249.37508 L 153.43835 249.37508 L 151.43835 249.37508" marker-end="url(#UMLInheritance_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 192.12764 382.2715 L 176.62764 382.2715 L 164.62764 382.2715 L 164.62764 249.37508 L 153.43835 249.37508 L 151.43835 249.37508" marker-end="url(#UMLInheritance_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 558 537.6715 C 558 528.2848 555.43204 527.12344 536.6738 517.8338 L 536.47563 517.7377 C 517.6183 508.35095 517.4222 508.35095 498.06945 508.35095 C 472.30087 508.35095 355.79834 508.35095 355.79834 508.35095 L 355.79834 607.4404 L 558 607.4404 L 558 537.6715 Z" fill="white"/>
+      <path d="M 558 537.6715 C 558 528.2848 555.43204 527.12344 536.6738 517.8338 L 536.47563 517.7377 C 517.6183 508.35095 517.4222 508.35095 498.06945 508.35095 C 472.30087 508.35095 355.79834 508.35095 355.79834 508.35095 L 355.79834 607.4404 L 558 607.4404 L 558 537.6715 Z M 558 537.18796 C 558 528.2848 557.80184 528.2848 517.4222 528.2848 L 517.4222 528.2848 C 517.4222 508.44806 517.4222 508.35095 499.25435 508.35095" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(360.79834 513.35095)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="0" y="10" textLength="39.762207">Legend:</tspan>
+        <tspan font-family="Helvetica" font-size="11" font-weight="bold" x="0" y="36" textLength="25.066895">italic</tspan>
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="25.066895" y="36" textLength="149.80518">: types used by type inferencer</tspan>
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="174.2705" y="36" textLength="6.112305">, </tspan>
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="0" y="49" textLength="175.50049">cannot be used in type expressions </tspan>
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="0" y="62" textLength="34.842285">directly</tspan>
+        <tspan font-family="Helvetica" font-size="11" font-weight="bold" x="0" y="75" textLength="23.213867">bold</tspan>
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="23.213867" y="75" textLength="167.5083">: primitive types (non-object types)</tspan>
+        <tspan font-family="Helvetica" font-size="11" font-weight="bold" x="0" y="88" textLength="22.612305">blue</tspan>
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="22.612305" y="88" textLength="104.53223">: ECMAScript 5 types</tspan>
+      </text>
+      <path d="M 308.74652 455.1254 L 308.74652 439.6254 L 308.74652 437.5 L 308.74652 435.5" marker-end="url(#UMLInheritance_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <rect x="7105427e-21" y="552" width="69.93835" height="22.750162" fill="white"/>
+      <rect x="7105427e-21" y="552" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(5 556.8751)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="19.573425" y="10" textLength="20.791504">type</tspan>
+      </text>
+      <text transform="translate(-9934084e-15 532.66667)" fill="black">
+        <tspan font-family="Helvetica" font-size="12" font-weight="500" x=".45410156" y="11" textLength="7.330078">T</tspan>
+        <tspan font-family="Helvetica" font-size="12" font-weight="500" x="7.12793" y="11" textLength="199.41797">ype constructors (in type expression):</tspan>
+      </text>
+      <text transform="translate(259.16667 543.50037)" fill="black">
+        <tspan font-family="Helvetica" font-size="12" font-weight="500" x=".15332031" y="11" textLength="46.69336">Self type</tspan>
+      </text>
+      <rect x="274.03083" y="12.283417" width="69.93835" height="22.750162" fill="white"/>
+      <rect x="274.03083" y="12.283417" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(279.03083 17.158498)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="21.1015" y="10" textLength="17.735352">any</tspan>
+      </text>
+      <path d="M 308.74652 84 L 308.74652 68.5 L 309 50.53358 L 309 48.53358" marker-end="url(#UMLInheritance_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <line x1="272.21252" y1="234.70006" x2="324.1076" y2="234.70006" marker-start="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(264.04133 235.20006)" fill="black">
+        <tspan font-family="Helvetica" font-size="9" font-weight="500" x="5.2467155" y="9" textLength="45.035156">autoBoxing</tspan>
+      </text>
+      <line x1="283.25805" y1="262.34918" x2="324.03737" y2="262.34918" marker-start="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <line x1="271.71218" y1="289.91874" x2="324.03735" y2="289.4983" marker-start="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(284.5 261.84918)" fill="black">
+        <tspan font-family="Helvetica" font-size="9" font-weight="500" x=".48999023" y="9" textLength="26.02002">autoB.</tspan>
+      </text>
+      <text transform="translate(270.0462 290.2475)" fill="black">
+        <tspan font-family="Helvetica" font-size="9" font-weight="500" x=".4824219" y="9" textLength="45.035156">autoBoxing</tspan>
+      </text>
+      <path d="M 442.2523 457.93846 C 442.2523 454.5795 441.4776 454.16394 435.81865 450.83973 L 435.75887 450.80534 C 430.07 447.4464 430.01084 447.4464 424.17253 447.4464 C 416.3987 447.4464 381.2523 447.4464 381.2523 447.4464 L 381.2523 482.9046 L 442.2523 482.9046 L 442.2523 457.93846 Z" fill="white"/>
+      <path d="M 442.2523 457.93846 C 442.2523 454.5795 441.4776 454.16394 435.81865 450.83973 L 435.75887 450.80534 C 430.07 447.4464 430.01084 447.4464 424.17253 447.4464 C 416.3987 447.4464 381.2523 447.4464 381.2523 447.4464 L 381.2523 482.9046 L 442.2523 482.9046 L 442.2523 457.93846 Z M 442.2523 457.7654 C 442.2523 454.5795 442.19254 454.5795 430.01084 454.5795 L 430.01084 454.5795 C 430.01084 447.48113 430.01084 447.4464 424.53 447.4464" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(386.2523 453.1755)" fill="black">
+        <tspan font-family="Helvetica" font-size="10" font-weight="500" x="9.660156" y="10" textLength="34.458008">Bottom </tspan>
+        <tspan font-family="Helvetica" font-size="10" font-weight="500" x="14.657715" y="22" textLength="6.1083984">T</tspan>
+        <tspan font-family="Helvetica" font-size="10" font-weight="500" x="20.219238" y="22" textLength="16.123047">ype</tspan>
+      </text>
+      <path d="M 458.25116 16.421479 C 458.25116 13.062524 457.47646 12.646954 451.8175 9.322747 L 451.7577 9.288353 C 446.06885 5.9293976 446.0097 5.9293976 440.17137 5.9293976 C 432.39753 5.9293976 397.25116 5.9293976 397.25116 5.9293976 L 397.25116 41.3876 L 458.25116 41.3876 L 458.25116 16.421479 Z" fill="white"/>
+      <path d="M 458.25116 16.421479 C 458.25116 13.062524 457.47646 12.646954 451.8175 9.322747 L 451.7577 9.288353 C 446.06885 5.9293976 446.0097 5.9293976 440.17137 5.9293976 C 432.39753 5.9293976 397.25116 5.9293976 397.25116 5.9293976 L 397.25116 41.3876 L 458.25116 41.3876 L 458.25116 16.421479 Z M 458.25116 16.248443 C 458.25116 13.062524 458.1914 13.062524 446.0097 13.062524 L 446.0097 13.062524 C 446.0097 5.9641466 446.0097 5.9293976 440.52883 5.9293976" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(402.25116 17.658498)" fill="black">
+        <tspan font-family="Helvetica" font-size="10" font-weight="500" x="5.294922" y="10" textLength="6.1083984">T</tspan>
+        <tspan font-family="Helvetica" font-size="10" font-weight="500" x="10.294922" y="10" textLength="13.901367">op </tspan>
+        <tspan font-family="Helvetica" font-size="10" font-weight="500" x="24.020508" y="10" textLength="6.1083984">T</tspan>
+        <tspan font-family="Helvetica" font-size="10" font-weight="500" x="29.58203" y="10" textLength="16.123047">ype</tspan>
+      </text>
+      <line x1="396.75116" y1="23.658498" x2="344.4692" y2="23.658498" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" stroke-dasharray="4,4"/>
+      <line x1="388.33426" y1="483.20965" x2="343.9692" y2="517.37505" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" stroke-dasharray="4,4"/>
+      <rect x="83" y="552" width="69.93835" height="22.750162" fill="white"/>
+      <rect x="83" y="552" width="69.93835" height="22.750162" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(88 556.8751)" fill="black">
+        <tspan font-family="Helvetica" font-size="11" font-weight="500" x="2.7645872" y="10" textLength="54.40918">constructor</tspan>
+      </text>
+      <line x1="172.66667" y1="12.283417" x2="4.2519685" y2="87.33333" stroke="#b7b7b7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" stroke-dasharray="1,3"/>
+    </g>
+  </g>
+</svg>

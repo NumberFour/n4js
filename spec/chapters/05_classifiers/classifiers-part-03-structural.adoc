@@ -1,9 +1,5 @@
-
-
-= Structural Typing
-task:IDE-673[] task:IDE-680[] task:IDE-688[] task:IDE-691[]
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -12,6 +8,9 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
 ////
+
+= Structural Typing
+
 
 In general, N4JS uses nominal typing.
 This is to say that a duck is a duck only if it is declared to be a duck.
@@ -30,8 +29,8 @@ In this case, $T$ is, therefore, always a structural subtype of _pass:[~T]_.
 [.language-n4js]
 Sometimes it is convenient to refer only to the fields of a classifier, for example when the initial field values are to be provided in a variable passed to the constructor.
 In that case, the type can be modified with ``pass:[~~]`` (two tildes). This is only possible on use-site, i.e. on type references.
-Furthermore, only on the use-site, it is possible to consider only either readable or writable or fields by using the read-only ``pass:[r~]`` or write-only ``pass:[w~]`` structural field typing.
-For initialization blocks, it is even possible to use structural initializer field typing via the ``pass:[i~]`` operator.
+Furthermore, only on the use-site, it is possible to consider only either readable or writable or fields by using the read-only ``pass:[~r~]`` or write-only ``pass:[~w~]`` structural field typing.
+For initialization blocks, it is even possible to use structural initializer field typing via the ``pass:[~i~]`` operator.
 
 [.language-n4js]
 == Syntax
@@ -187,8 +186,8 @@ Multiple structural typing strategies can be nested when there are multiple use 
 In the example, the datafield `a.field` has the nested structural type `pass:[~r~ ~i~ A]` and thus the datafield `a.field.df` is readable.
 Nested structural types are evaluated on the fly when doing subtype checks.
 
-// todo{Not implemented yet. See GH-12, subtask 2}
-task:GH-12[]
+// todo{Not implemented yet. See GHOLD-12, subtask 2}
+
 
 [[ex:nested-structural-typing-strategies]]
 .Nested Structural Typing Strategies
@@ -590,7 +589,7 @@ h|Member of type __X__ | ``pass:[~~X]`` |``pass:[~r~X]`` |``pass:[~w~X]`` |``pas
 
 [.language-n4js]
 == Structural Read-only, Write-only and Initializer Field Typing
-task:IDE-1777[]
+
 
 Structural read-only, write-only and initializer field typings are extensions of structural field typing.
 Everything that is defined for the field structural typing must comply with these extension field typings.

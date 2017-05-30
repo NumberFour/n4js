@@ -1,8 +1,5 @@
-
-= Components
-:find:
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -11,6 +8,9 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
 ////
+
+= Components
+:find:
 
 [.language-n4js]
 == N4JS Platform Architecture
@@ -22,7 +22,7 @@ chapter.footnote:[Note that this diagram does not necessarily reflect the actual
 
 [[fig-cmpd_components_in_n4js]]
 .N4JS Component Overview
-image::{find}fig/cmpd_components_in_n4js.png[align="center"]
+image::{find}fig/cmpd_components_in_n4js.svg[align="center"]
 
 The N4JS platform distinguishes several types of components. The
 following components can only be created by internal developers:
@@ -47,7 +47,7 @@ Test Library::
 
 The following components can be created by external developers:
 
-
+[[Apps]]
 Apps::
   User-written N4JS applications running in a web browser (the reference browser is Chrome).
 Processors::
@@ -59,7 +59,7 @@ These components are described in detail later.
 // TODO where ^^
 
 A component is similar to a single project in the N4JS IDE.
-It is shipped as <<_numberfour-archives-nfar,NFAR>> archive and contains:
+It is shipped as <<n4js-archives-nfar,NFAR>> archive and contains:
 
 
 Manifest::
@@ -80,7 +80,7 @@ Components contain modules. <<fig-component_content>> describes what can be cont
 
 [[fig-component_content]]
 .Content of a Component
-image::{find}fig/cmpd_component_content.png[scaledwidth="70%",align="center"]
+image::{find}fig/cmpd_component_content.svg[scaledwidth="70%",align="center"]
 
 [.language-n4js]
 == Component Types
@@ -89,17 +89,6 @@ image::{find}fig/cmpd_component_content.png[scaledwidth="70%",align="center"]
 Different N4JS component types are described in this section.
 At compile time and runtime, dependent components have to be available.
 This is the responsibility of the user interface (<<AC,IDE>> or <<AC,CLI>>) and described in the <<AC,N4IDE>> specification.
-
-=== Apps
-
-Applications allow developers to bundle a project as an application and deploy it to an N4 environment.
-An application is visible to users of the N4 platform in the app store.
-Users can subscribe and use an application that is available in the app store.
-
-=== Processors
-
-Processors allow developers to bundle a project as a processor which can run asynchronously on an N4 environment.
-Users can deploy a processor to an N4 environment so that other developers can use its services.
 
 === Libraries
 
@@ -130,7 +119,7 @@ Other adaptations, such as enabling ECMSScript 6 object types in ECMAScript 5 en
 Instead of directly supporting these kind of 'hacks', other components specify which runtime environment and libraries they depend on by specifying unique runtime ids.
 Possible shims (in case of environments) or polyfils (in case of libraries) are transparently provided by the execution environment and the bootstrap code.
 
-task:IDE-1036[]
+
 
 === Tests
 Tests are special projects which contain tests for other projects.
@@ -157,11 +146,11 @@ The manifest file `manifest.n4mf` is stored at the root of the project (and expl
 For build and production purposes, other files such as `pom.xml` or `.project` files are automatically derived from the `manifest.n4mf`.
 These files are not to be added manually.
 
-task:IDE-1400[]
+
 
 [.language-n4js]
 == Component Manifest
-task:IDE-18[]
+
 
 === Syntax
 
@@ -424,6 +413,7 @@ The lengths of the major, minor and micro numbers is additionally limited to fou
   \Rightarrowdo[jr: qualifier]{Do we need support for distinction of build numbers and qualifier?}
 ////
 
+In general based on OSGi version and version ranges are described in chapters 3.2.5 resp. 3.2.6 (see http://www.osgi.org/download/r4v43/osgi.core-4.3.0.pdf[OSGi core 4.3.0] ).
 
 MainModule ::
 (optional) A plain module specifier defining the project’s 'main module'.
@@ -466,7 +456,7 @@ Output ::
 Path to output folder, compilers may use subfolders inside this folder.
 
 Libraries ::
-List of paths to libraries, that is, folders in which <<_numberfour-archives-nfar,NFARs>> are found.
+List of paths to libraries, that is, folders in which <<n4js-archives-nfar,NFARs>> are found.
 
 Resources ::
 List of paths to resources, that is, folders in which images, CSS etc. is found.
@@ -544,7 +534,7 @@ Paths Paths are constrained in the following way:
 4.  A path must not contain wild cards.
 5.  A path has to be relative to the project path.
 6.  A path has to point to folder.
-7.  The folder a defined path points to must exist in the project (but in case of non-existent folders of source fragments, only a warning is shown). task:IDEBUG-339[]
+7.  The folder a defined path points to must exist in the project (but in case of non-existent folders of source fragments, only a warning is shown).
 --
 
 
@@ -587,8 +577,8 @@ The following manifest shows the use of filters to disable validation and module
 ProjectId: Test
 ProjectType: lib
 ProjectVersion: 0.0.1-SNAPSHOT
-VendorId: eu.numberfour
-VendorName: "NumberFour AG"
+VendorId: eu.mycompany
+VendorName: "My Company AG"
 Output: "src-gen"
 Sources {
     source {
@@ -698,7 +688,7 @@ An N4JS Component `C` can be executed in an runtime environment `E`, written as 
 
 [.language-n4js]
 == Modules
-task:IDE-8[]
+
 
 All N4JS files are modules, sometimes also called compilation unit (CU).
 This is the overall structure of a module, based on cite:[ECMA15a(S14)].
@@ -725,7 +715,7 @@ ScriptElement:
 
 Grammar and semantics of import statement is described in <<_import-statement>>; of export statement described in <<_export-statement>>.
 
-task:IDE-179[]
+
 An import statement imports a variable declaration, function declaration, or N4 type declaration defined and exported by another module into the current
 module under the given alias (which is similar to the original name if no alias is defined).
 The name of the module is its project’s source folder’s relative path without any extension, see <<_qualified-names>> for details.
@@ -760,17 +750,13 @@ This is the union of _loadtimeDeps_ and _runtimeDeps_ which maintains the orderi
 
 Pseudo properties to be set via annotations are explained in <<_annotations>>.
 
-[.language-n4js]
-== NumberFour Archives (NFAR)
-task:IDE-19[] task:IDE-37[] task:IDE-46[]
 
+[[n4js-archives-nfar]]
+== N4JS Archives (NFAR)
 
-Compiled projects are packaged in a N4 bundle archive and use `nfar` as a file extension.
+Compiled projects are packaged in a bundle archive and use `nfar` as a file extension.
 A nfar file is a zip archive that contains all source files, compiled files and metadata of a project.
-It’s used to deploy projects to:
-
-* N4 environments via the N4 deployment web service
-* Maven artifact repositories via the standard Maven deploy
+It’s used to deploy projects to Maven artifact repositories via the standard Maven deploy.
 
 A nfar archive has the following structure:
 
@@ -784,62 +770,11 @@ A nfar archive has the following structure:
   contains the compiled JavaScript.
 `/model/`::
   contains the compiled type model.
-`manifest.pmi`::
+`manifest.n4mf`::
   the manifest file
 `bundle.json`::
   This is used to track the format/version of the contained data, so that we are able to see if two bundles are compatible with each other
-`package.json`::
-  This contains the _N4 deployment descriptor_ required by the N4 deployment webservice.
-  This file is only added to the nfar file when deploying it to a N4 environment!
-  That means that it’s not available in nfar files deployed to a Maven artifact repository.
 
-=== N4 Deployment Descriptor
-
-// todo[N4 Deployment Descriptor]{Why is it needed? Where is it generated? Does it has to be changed?
-
-The N4 deployment descriptor of a project `p` is a NFON formatted file with the following structure:
-
-//TODO add NFON syntax highlighting
-
-[source,n4js]
-----
-{
-  "@type":"n4.deployment.PackageDescription",
-  "kind":~$p.deploymentKind$~, // LIBRARY, APPLICATION or PROCESSOR
-  "name":~$p.name$~,
-  "singleton":~$p.type="LIBRARY"$~,
-  "version":~$p.version$~,
-  "displayName":"",
-  "buildComment":"",
-  "allJavaScriptFile":~$p.allJavaScriptFile$~,
-  "allMinJavaScriptFile":~$p.allMinJavaScriptFile$~,
-  "dependentPackages": [
-    // for (d in ~$p.dependencies$~)
-    {
-        "@type":"n4.deployment.DependencyInfo",
-        "name": ~$d.name$~,
-        "version": ~$d.version$~
-    }
-  ],
-  "properties": {
-    "@type":"n4.coreservices.graph.deployment.AppProperties",
-    "objectHandlers": [
-        // for (o in ~$p.objectHandlers$~)
-        {
-                "@type":"n4.coreservices.graph.deployment.ObjectHandler",
-                "type":~$o.type$~,
-                "viewId":~$o.viewId$~,
-                "viewType":~$o.viewType$~,
-                "perspectiveId":~$o.perspectiveId$~,
-                "onlyCreatedByApp":~$o.onlyCreatedByApp$~,
-                "actions":~$o.actions$~, // array of strings
-                "docFileProvider":~$o.docFileProvider$~,
-                "docMimeContentTypeMatch":~$o.docMimeContentTypeMatch$~
-        }
-    ]
-  }
-}
-----
 
 [.language-n4js]
 == Properties Files
@@ -850,7 +785,7 @@ Properties files have the file extension `properties` and describe how to locali
 They basically define keys <<_primitive-pathselector-and-i18nkey>> with their values.
 The key is used during runtime to retrieve text localized to the user’s locale.
 
-[[n4-deployment-descriptor-syntax]]
+[[property-file-syntax]]
 === Syntax
 
 The syntax of a resource file is defined as:
@@ -943,7 +878,7 @@ This is essential for normal execution and for test execution.
 
 [[diag_APITestsDI_Overview]]
 .Overview of API tests with DI
-image::{find}fig/diag_ApiTestsDI_Overview.png[]
+image::{find}fig/diag_ApiTestsDI_Overview.svg[]
 
 Static DI mechanisms in N4JS allow an API project to enforce Implementation projects to provide all necessary information.
 This allows clients to work seamlessly with various implementations without specific knowledge about them or without relying on extra tools for proper project wiring.
@@ -952,7 +887,7 @@ This allows clients to work seamlessly with various implementations without spec
 
 [[diag_ApiTestsDI_StaticDI]]
 .API tests with static DI
-image::{find}fig/diag_ApiTestsDI_StaticDI.png[]
+image::{find}fig/diag_ApiTestsDI_StaticDI.svg[]
 
 During Client execution, weather it is test execution or not, N4JS mechanisms will replace the API project with a proper Implementation project.
 During runtime DI mechanisms will take care of providing proper instances of implantation types.
@@ -961,5 +896,4 @@ During runtime DI mechanisms will take care of providing proper instances of imp
 
 [[diag_ApiTestsDI_Views]]
 .Types view and Instances view
-image::{find}fig/diag_ApiTestsDI_Views.png[scaledwidth="80%",align="center"]
-
+image::{find}fig/diag_ApiTestsDI_Views.svg[scaledwidth="80%",align="center"]

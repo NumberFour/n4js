@@ -1,8 +1,5 @@
-
-
-= Conversions and Reflection
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -11,6 +8,8 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
 ////
+
+= Conversions and Reflection
 
 [.language-n4js]
 == Autoboxing and Coercing
@@ -26,7 +25,7 @@ Conversion between primitives and object-representations of a datatype are not a
 Note that N4JS specific primitive types `pathselector` and `i18nkey` are handled similarly to `string`.
 
 === Coercing
-task:IDE-379[]
+
 
 In cite:[ECMA11a], coercing is defined by means of the abstract specification method `ToPrimitive` cite:[ECMA11a(S9.1)], also see cite:[ECMA11a(S9.10)]).
 Other conversions, such as `ToNumber`, are not directly supported but reflected in the typing rules of expressions.
@@ -87,7 +86,7 @@ That is, it is not possible to convert any `Object` to a primitive in general, b
 The applied conversions are described in <<_auto-conversion-of-class-instances>>
 
 === Autoboxing of Primitives
-task:IDE-835[]
+
 
 In cite:[ECMA11a], autoboxing is defined by `ToObject` cite:[ECMA11a(S9.9)].
 
@@ -110,7 +109,7 @@ console.log(s.prop); // <2>
 // todo[wk: restrict coercing]{\url{http://restrictmode.org/} describes some restrictions on operators with regards to coercing and common bugs, we should consider implementing some of these restrictions as well. Also see chapter type inference}
 
 === Autoboxing of Function Expressions and Declarations
-task:IDE-830[]
+
 
 
 Function expressions and declarations always define an object of type `Function`, thus coercing or Autoboxing is not required in case of functions:
@@ -124,7 +123,7 @@ Still, it is always possible to call members of `Function`, e.g., `function(){}.
 == Auto-Conversion of Objects
 
 === Auto-Conversion of Class Instances
-task:IDE-833[]
+
 
 All classes defined in N4JS modules implicitly subclass `N4Object`, which is a plain JavaScript Object type.
 The same auto-conversion rules defined for JavaScript `Object` therefore apply to `N4Object` instances as well.
@@ -191,7 +190,7 @@ They have a custom $toString$ method which returns the name of the enumeration v
 
 === Type Cast
 
-task:IDE-161[] task:IDE-928[] (IDEBUG-56): Casting to TypeVars
+  (IDEBUG-56): Casting to TypeVars
 
 
 Type casts are expressed with the cast expression (`as`), see <<_cast-as-expression>> for details.
@@ -293,7 +292,7 @@ NOTE: `any` is a supertype of all other types, thus it is always possible to cas
 === Type Check
 
 
-There are basically two ways of testing the type of a variable: `typeof` and `instanceof`. task:IDEBUG-293[]
+There are basically two ways of testing the type of a variable: `typeof` and `instanceof`.
 N4JS supports type comparison via the ECMAScript `instanceof` operator.
 The operator `instanceof` retains its standard ECMAScript behavior (e.g. checking whether a value is an instance of a constructor function), but has additional functionality when used with N4JS types.
 
@@ -302,7 +301,7 @@ When used with an N4JS class, `instanceof` also supports checking against an int
 `typeof` only returns a string with the name of the ECMAScript type, which is `Object` for all class instances.
 
 
-N4 specific `string` types, that is `pathSelector` and `i18nkey` cannot be tested during runtime.
+N4JS specific `string` types, that is `pathSelector` and `i18nkey` cannot be tested during runtime.
 These types, therefore, must not be used in `instanceof` expressions.
 The same is true for string-based enums and arrays which cannot be tested during runtime, thus string-based enum and array types are not permitted on the right-hand side of `instancesof` constructs.
 For all types for which the evaluation result of `instanceof` could be computed at compile time, the check is unnecessary and thus it is refused by the compiler.
@@ -341,7 +340,7 @@ var x = new Sub();
 
 [.language-n4js]
 == Reflection meta-information
-task:IDE-155[] task:IDE-561[] task:IDE-137[] task:IDE-980[]
+
 
 All N4JS classes, interfaces and enumerations provide meta-information
 that is used by the runtime and standard library.
@@ -371,7 +370,6 @@ True if the type is an N4Class.
 `get isInterface` ::
 True if the type is an N4Interface.
 
-This meta-information is currently not available to non-N4 developers.
 
 === Reflection for Classes
 
@@ -383,7 +381,7 @@ getter `n4class`. Since it is static getter, it is actually an instance getter o
 --
 
 This example demonstrates how these reflective features are accessed:
-//% see /eu.numberfour.ide.n4js.transpiler.es5.tests/testdata/spec_chap_06_04/Ex57_Reflection_with_N4Class.n4js.xt
+//% see /org.eclipse.n4js.transpiler.es5.tests/testdata/spec_chap_06_04/Ex57_Reflection_with_N4Class.n4js.xt
 
 [source,n4js]
 ----
@@ -452,7 +450,7 @@ would issue an error as cannot be resolved.
 --
 
 The type has a method to retrieve the meta-information from instances (i.e. or enumeration literals using )
-without using the constructor. task:IDEBUG-195[]
+without using the constructor.
 
 [source,n4js]
 ----
@@ -477,7 +475,7 @@ console.log(N4EnumType.of(e).fqn);
 --
 
 === Reflection for Interfaces
-task:IDE-980[]
+
 
 
 The meta-information of an interface `X` is available via getter `n4class` defined in the `type{X}`.

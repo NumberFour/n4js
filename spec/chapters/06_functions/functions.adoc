@@ -1,7 +1,5 @@
-
-= Functions
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -11,6 +9,8 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
+= Functions
+
 Functions, be they function declarations, expressions or even methods, are internally modeled by means of a function type.
 In this chapter, the general function type is described along with its semantics and type constraints.
 Function definitions and expressions are then introduced in terms of statements and expressions.
@@ -18,7 +18,7 @@ Method definitions and special usages are described in <<Methods>>.
 
 [.language-n4js]
 == Function Type
-task:IDE-12[]
+
 
 A function type is modeled as `Object` (see cite:[ECMA11a(S13,p.98)] in ECMAScript.
 
@@ -131,7 +131,7 @@ $\spc r.expr\neq null \land \infType{r.expr.typeRef} <: \infType{F.typeRef}$
 === Type Inference [[function-type-inference]]
 
 // TODO - definition title needs comma like so: ".Function Type Conformance, Non-Parameterized"
-// comma currently breaks FOP PDF build, see https://github.numberfour.eu/NumberFour/asciispec/issues/53
+// comma currently breaks FOP PDF build, see https://github.com/NumberFour/asciispec/issues/9
 
 [[function_type_conformance_non_parameterized]]
 .Function Type Conformance Non-Parameterized
@@ -165,11 +165,11 @@ else ($k>n$):
 
 [[cdVarianceFunctionChart]]
 .Function Variance Chart
-image::{find}fig/cdVarianceFunctionChart.png[scaledwidth="60%"]
+image::{find}fig/cdVarianceFunctionChart.svg[scaledwidth="60%"]
 
 `{function()}` $<:$ `{function(A)}` $<:$ `{function(A, A)}` might be surprising for Java programmers. However, in JavaScript it is
 possible to call a function with any number of arguments independently
-from how many formal parameters the function defines. task:IDE-433[]
+from how many formal parameters the function defines.
 
 If a function does not define a return type, `any` is assumed if at least one
 of the (indirectly) contained return statements contains an expression.
@@ -412,7 +412,7 @@ $lower(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( upper(P_1),\d
 --
 
 === Autoboxing of Function Type
-task:IDE-830[]
+
 
 Function types, compared to other types like String, come only in on flavour: the Function object representation.
 There is no primitive function type.
@@ -458,7 +458,7 @@ m.toString(); // returns: function sayS(){ return this.s; }
 ----
 
 === Arguments Object
-task:IDE-662[]
+
 
 //TODO missing notation below
 A special arguments object is defined within the body of a function.
@@ -538,7 +538,7 @@ Since N4JS is based on cite:[ECMA15a], the syntax contains constructs not availa
 The newer constructs defined only in cite:[ECMA15a] and proposals already implemented in N4JS are described in <<ECMAScript 2015 Function Definition>> and <<ECMAScript Proposals Function Definition>>.
 
 NOTE: In contrast to plain JavaScript, function declarations can be used in blocks in N4JS.
-This is only true, however, for N4JS files, not for plain JS files. task:IDE-1043[]
+This is only true, however, for N4JS files, not for plain JS files.
 
 
 .Syntax Function Declaration and Expression
@@ -594,7 +594,7 @@ function f(p: string): number { return p.length }
 
 --
 ==== Semantics
-task:IDE-224[]
+
 
 A function defined in a class’s method (or method modifier) builder is a method, see <<Methods>> for details and additional constraints.
 The metatype of a function definition is function type (<<_function-type>>), as a function declaration is only a different syntax for creating a `Function` object.
@@ -683,7 +683,7 @@ Modifiers of formal parameters such as default or rest are neither evaluated nor
 
 
 ==== Optional Parameters [[Type_Modifiers_Optional]]
-task:IDE-145[]
+
 An optional formal parameter can be omitted when calling a function/method.
 An omitted parameter has the value `undefined`.
 In case the omitted parameter is variadic, the value is an empty array.
@@ -718,7 +718,7 @@ Consequently, initializers of default parameters in abstract methods are obsolet
 
 
 ==== Variadic [[Type_Modifiers_Variadic]]
-task:IDE-145[] task:IDE-146[]
+
 
 Variadic parameters are also called _rest parameters_.
 Marking a parameter as variadic indicates that method accepts a variable number of parameters.
@@ -745,7 +745,7 @@ To make this work at runtime, the compiler will generate code that constructs th
 .Variadic at Runtime
 [req,id=IDE-17,version=1]
 --
-task:IDEBUG-106[]
+
 At runtime, a variadic parameter is never set to undefined.
 Instead, the array may be empty.
 This must be true even if preceding parameters are optional and no arguments are passed at runtime.
@@ -757,7 +757,7 @@ For more constraints on using the variadic modifier, see <<_function-object-type
 
 
 === Generator Functions
-task:IDE-1347[]
+
 
 Generators come together with the `yield` expression and can play three roles:
 the role of an iterator (data producer), of an observer (data consumer), and a combined role which is called coroutines.
@@ -907,7 +907,7 @@ For more information, please refer to https://esdiscuss.org/topic/generator-arro
 
 
 === Arrow Function Expression
-task:IDE-252[]
+
 
 This is an ECMAScript 6 expression (see cite:[ECMA15a(S14.2)]) for simplifying the definition of anonymous function expressions, a.k.a. lambdas or closures.
 The ECMAScript Specification calls this a function definition even though they may only appear in the context of expressions.
@@ -983,7 +983,7 @@ In N4JS, a top-level arrow function can’t include usages of `arguments` in its
 
 
 === Asynchronous Functions
-task:IDE-1175[] task:IDE-1593[]
+
 
 To improve language-level support for asynchronous code, there exists an ECMAScript proposal footnote:[see http://tc39.github.io/ecmascript-asyncawait/] based on Promises which are provided by ES6 as built-in types.
 N4JS implements this proposal.
@@ -1101,7 +1101,7 @@ Note how method `loadAddress()` above can be implemented without any explicit re
 In the above example we handle the errors of the nested asynchronous calls to `getDataBase()` and `loadEntry()` for demonstration purposes only;
 if we are not interested in the errors we could simply remove the try/catch block and any errors would be forwarded to the caller of `loadAddress()`.
 
-Invoking an async function commonly adopts one of two forms: task:IDEBUG-620[]
+Invoking an async function commonly adopts one of two forms:
 
 * `var p: Promise<successType,?> = asyncFn()`
 * `await asyncFn()`
@@ -1163,7 +1163,7 @@ function snafu(i1: I<int>, i2: I<Promise<int,?>>) {
 
 
 ==== Asynchronous Arrow Functions
-task:IDE-1494[]
+
 
 An `await` expression is allowed in the body of an async arrow function but not
 in the body of a non-async arrow function. The semantics here are
@@ -1192,7 +1192,7 @@ If a generic type parameter is not used as a formal parameter type or
 the return type, a warning is generated.
 
 === Promisifiable Functions
-task:IDE-2018[]
+
 
 
 In many existing libraries, which have been developed in pre-ES6-promise-API times, callback methods are used for asynchronous behavior.

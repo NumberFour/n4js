@@ -1,10 +1,5 @@
-
-.Revision History
-[discrete]
-= Revision History
-
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -14,17 +9,19 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
-[.language-n4js]
-[cols="^1e,^1,^1s,<4"]
-|===
-|Date |Tasks |Author |Description
+.Revision History
+[discrete]
+= Revision History
 
-|2013-03-21 m| – |v.Pilgrim |initial commit
-|2016-03-13 m| – |v.Pilgrim |public release, version 0.3 (alpha)
-|2016-05-31 | task:IDE-2226[] |mor |support for definition-site variance,
-cf. <<sec:definition-site-variance>>
-|2016-07-18 | task:GH-107[] |mor |rename manifest property `artifactId` to `projectId`; remove `projectName`
-|2016-09-09 | task:IDE-2314[] |mor |add `@CovariantConstructor`, cf. <<_covariant-constructors>>, plus related
-adjustments
-|2016-11-9 | task:IDE-2402[] |bsmith |convert from `LaTeX` to AsciiDoc
+[.language-n4js]
+[cols="^1e,^1s,<4"]
+|===
+|Date 		 |Author		|Description
+
+|2013-03-21  |v.Pilgrim 	|initial commit
+|2016-03-13  |v.Pilgrim 	|public release, version 0.3 (alpha)
+|2016-05-31  |mor 			|support for definition-site variance, cf. <<sec:definition-site-variance>>
+|2016-07-18  |mor 			|rename manifest property `artifactId` to `projectId`; remove `projectName`
+|2016-09-09  |mor 			|add `@CovariantConstructor`, cf. <<_covariant-constructors>>, plus related adjustments
+|2016-11-9 	 |bsmith		|convert from `LaTeX` to AsciiDoc
 |===

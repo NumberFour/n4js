@@ -1,8 +1,5 @@
-
-= N4JS Specific Classifiers
-
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -11,6 +8,9 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
 ////
+
+= N4JS Specific Classifiers
+
 
 N4JS provides three new metatypes: class, interface, and enums.
 In this section we describe classes and interfaces.
@@ -36,7 +36,7 @@ Arbitrary annotations, see <<Annotations>> for details.
 N4JS type access modifier: `public`, or `project`;  `public` can be combined with `@Internal`; if
 *export* is `true` the default is else the default is `private`.
 
-task:IDE-84[]
+
 
 `name` ::
 The simple name of a classifier. If the classifier is defined by an anonymous class expression, an artificial but unique name is created.
@@ -61,7 +61,7 @@ See <<_structural-typing>> for details.
 Boolean property set to true if the `export` modifier is set.
 If value is true, the classifier may be accessible outside the project.
 
-task:IDE-84[]
+
 
 `final` ::
 Boolean property which is set to final if annotation `@Final` is set.
@@ -72,7 +72,7 @@ Boolean property set to true if annotation `@Deprecated` is set.
 +
 NOTE: Version 0.4, not implemented in Version 0.3
 
-task:IDE-138[]
+
 
 *We additionally define the following pseudo properties:*
 
@@ -257,7 +257,7 @@ The type of supertypes and implemented interfaces is always the nominal type, ev
 
 This section deals with the (more or less) type-independent constraints on classes.
 
-Class expressions are not fully supported at the moment. task:IDE-171[]
+Class expressions are not fully supported at the moment.
 //todo[class expressions]{check class expressions}
 
 .Transitive closure of members
@@ -352,7 +352,7 @@ Usually, there is no reason to explicitly derive a class from `Object`.
 //TODO missing notation above ^
 
 === Final Modifier
-task:IDE-147[]
+
 
 Extensibility refers to whether a given classifier can be subtyped.
 Accessibility is a prerequisite for extensibility.
@@ -382,21 +382,21 @@ Other classes are called _concrete_ classes.
 [req,id=IDE-45,version=1]
 --
 
-1.  A class `C` must be declared abstract if it owns or inherits one or more abstract members and neither C nor any interfaces implemented by C implements these members. task:IDE-553[]
+1.  A class `C` must be declared abstract if it owns or inherits one or more abstract members and neither C nor any interfaces implemented by C implements these members.
 //% $\exists m \in C.members: m.abstract \Rightarrow C.abstract$ \task*{IDE-553}
 A concrete class has to, therefore, implement all abstract members of its superclasses’ implemented interfaces.
-Note that a class may implement fields with field accessors and vice versa. task:IDE-553[]
-2.  An abstract class may not be instantiated. task:IDE-148[]
+Note that a class may implement fields with field accessors and vice versa.
+2.  An abstract class may not be instantiated.
 3.  An abstract class cannot be set to final (with annotation `@Final`).
 --
 
 .Abstract Member
 [req,id=IDE-46,version=1]
 --
-1.  A member declared as abstract must not have a method body (in contrary a method not declared as abstract have to have a method body). task:IDE-553[]
-2.  Only methods, getters and setters can be declared as abstract (fields cannot be abstract). task:IDE-553[]
+1.  A member declared as abstract must not have a method body (in contrary a method not declared as abstract have to have a method body).
+2.  Only methods, getters and setters can be declared as abstract (fields cannot be abstract).
 3.  It is not possible to inherit from an abstract class which contains abstract members which are not visible in the subclass.
-4.  An abstract member cannot be set to final (with annotation @Final). task:IDE-553[]
+4.  An abstract member cannot be set to final (with annotation @Final).
 // NOTE jvp/mor: decided to disallow abstract static members, because of problems (static members always accessible)
 5.  Static members may not be declared abstract.
 ////
@@ -409,7 +409,7 @@ override other instance members \task*{IDE-553}
 
 === Non-Instantiable Classes
 
-To make a class non-instantiable outside a defining compilation unit, i.e. disallow creation of instances for this class, simply declare the constructor as private. task:IDE-149[]
+To make a class non-instantiable outside a defining compilation unit, i.e. disallow creation of instances for this class, simply declare the constructor as private.
 This can be used for singletons.
 
 === Superclass
@@ -436,12 +436,12 @@ The member-specific access control is not changed.
 
 [.language-n4js]
 == Interfaces
-task:IDE-12[] task:IDE-169[] task:IDE-328[] task:IDE-1236[]
+
 
 === Definition of Interfaces
 
 ==== Syntax [[interfaces-syntax]]
-task:IDE-8[]
+
 
 .Syntax N4 Interface Declaration
 [source,xtext]
@@ -602,7 +602,7 @@ For default methods in interfaces, see <<_default-methods-in-interfaces>>.
 
 [.language-n4js]
 == Generic Classifiers
-task:IDE-38[] task:IDE-39[]
+
 
 Classifiers can be declared generic by defining a type parameter via `type-param`.
 

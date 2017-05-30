@@ -21,7 +21,7 @@ script { display: none !important; }
 html { /* 1 */ -ms-text-size-adjust: 100%; /* 2 */ -webkit-text-size-adjust: 100%; /* 2 */ background-color: #D5DFEA; }
 
 /** Remove default margin. */
-body { margin: 0; background-color: #D5DFEA; font-family: ITC Officina Sans W01, sans-serif; font-weight: 400} /* add margin-right 0 here for mobile*/
+body { margin: 0; background-color: #D5DFEA; font-family:sans-serif; font-weight: 400} /* add margin-right 0 here for mobile*/
 
 /* ========================================================================== Links ========================================================================== */
 /** Remove the gray background color from active links in IE 10. */
@@ -141,7 +141,7 @@ meta.foundation-mq-large { font-family: "only screen and (min-width:1440px)"; wi
 
 html, body {  background-color:#527AA3; }
 
-body {  background: white; color: #222222;   padding: ; margin: 0; font-family: ITC Officina Sans W01, sans-serif, Helvetica, Arial, sans-serif; font-weight: 400; font-style: normal; position: relative; cursor: auto; padding-left: 2rem; padding-right: 2rem;}
+body {  background: white; color: #222222;   padding: ; margin: 0; font-family:sans-serif, Helvetica, Arial, sans-serif; font-weight: 400; font-style: normal; position: relative; cursor: auto; padding-left: 2rem; padding-right: 2rem;}
 
 
 a:hover { cursor: pointer; }
@@ -215,13 +215,13 @@ a img { border: none; }
 
 
 /* Default paragraph styles */
-p { font-family: ITC Officina Sans W01, sans-serif; font-weight: 400; font-size: 1.2rem; line-height: 1.4; padding-bottom: 0.5em;    }
+p { font-family:sans-serif; font-weight: 400; font-size: 1.2rem; line-height: 1.4; padding-bottom: 0.5em;    }
 p aside { font-size: 0.575em; line-height: 1.35; font-style: italic; }
 div.p, { width: 100% }
 
 
 /* Default header styles */
-h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { font-family: ITC Officina Serif W01, Georgia, Verdana, "Helvetica", Helvetica, Arial, sans-serif; font-weight: normal; font-style: normal; color: #244d82; text-rendering: optimizeLegibility; margin-bottom: 0em; line-height: 1.2125em; margin-top:; 2rem;  }
+h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { font-family:  Georgia, Verdana, "Helvetica", Helvetica, Arial, sans-serif; font-weight: normal; font-style: normal; color: #244d82; text-rendering: optimizeLegibility; margin-bottom: 0em; line-height: 1.2125em; margin-top:; 2rem;  }
 h1 small, h2 small, h3 small, #toctitle small, .sidebarblock > .content > .title small, h4 small, h5 small, h6 small { font-size: 60%; color: #6999d6; line-height: 0; }
 
 h1 { font-size: 2.125em; max-width:66.66%;}
@@ -248,7 +248,7 @@ small { font-size: 60%; line-height: inherit; }
 code { font-family: Fira Mono, Consolas, "Liberation Mono", Courier, monospace;  }
 
 /* Lists */
-ul, ol, dl {  list-style-position: outside; font-family: ITC Officina Sans W01, sans-serif; padding-left: 0rem; list-style-type: none}
+ul, ol, dl {  list-style-position: outside; font-family:sans-serif; padding-left: 0rem; list-style-type: none}
 
 ul, ol { margin-left: 0em;  }
 ul.no-bullet, ol.no-bullet { margin-left: 1.5em;  margin-bottom: 0;}
@@ -526,7 +526,7 @@ div#features-nav li:before {
 
 
 #footer {  background-color: rgb(15,26,54); padding: 1.25em; padding-bottom: 0rem; margin-right: -2rem; margin-left: -2rem; margin-top: 2rem; color: white}
-div.social  { background-color: rgb(15,26,54); padding: 1.25em; padding-top: 0rem; margin-right: -2rem; margin-left: -2rem; text-align: left;/* -webkit-flex-basis: 100%; -ms-flex-preferred-size: 100%; flex-basis: 100%; */  }
+div.social  { background-color: rgb(15,26,54); padding: 1.25em; padding-top: 0rem; margin-right: -2rem; margin-left: -2rem; text-align: left;padding-bottom: 50px;/* -webkit-flex-basis: 100%; -ms-flex-preferred-size: 100%; flex-basis: 100%; */  }
 div.social > ul li {color: white; line-height: 1.44; font-size: 1.2em; font-weight: 800; font-style: bold position: relative; list-style: none; list-style-type: none; display: inline; text-decoration: none; }
 div.social > ul a:visited { color: #244D82; }
 div.social > ul a:hover { color: #F7D425; } 
@@ -553,7 +553,7 @@ div.social > ul a:hover { color: #F7D425; }
 #content h1 > a.anchor, h2 > a.anchor, h3 > a.anchor, #toctitle > a.anchor, .sidebarblock > .content > .title > a.anchor, h4 > a.anchor, h5 > a.anchor, h6 > a.anchor { position: absolute; z-index: 1001; width: 1.5ex; margin-left: -1.5ex; display: block; text-decoration: none !important; visibility: hidden; text-align: center; font-weight: 400; max-width: 1050px; }
 #content h1 > a.anchor:before, h2 > a.anchor:before, h3 > a.anchor:before, #toctitle > a.anchor:before, .sidebarblock > .content > .title > a.anchor:before, h4 > a.anchor:before, h5 > a.anchor:before, h6 > a.anchor:before { content: "\2771"; font-size: 0.85em; display: block; padding-top: 0.1em; vertical-align: bas }
 #content h1:hover > a.anchor, #content h1 > a.anchor:hover, h2:hover > a.anchor, h2 > a.anchor:hover, h3:hover > a.anchor, #toctitle:hover > a.anchor, .sidebarblock > .content > .title:hover > a.anchor, h3 > a.anchor:hover, #toctitle > a.anchor:hover, .sidebarblock > .content > .title > a.anchor:hover, h4:hover > a.anchor, h4 > a.anchor:hover, h5:hover > a.anchor, h5 > a.anchor:hover, h6:hover > a.anchor, h6 > a.anchor:hover { visibility: visible; }
-#content h1 > a.link, h2 > a.link, h3 > a.link, #toctitle > a.link, .sidebarblock > .content > .title > a.link, h4 > a.link, h5 > a.link, h6 > a.link { color: #244d82; text-decoration: none; font-family: ITC Officina Serif W01, sans-serif}
+#content h1 > a.link, h2 > a.link, h3 > a.link, #toctitle > a.link, .sidebarblock > .content > .title > a.link, h4 > a.link, h5 > a.link, h6 > a.link { color: #244d82; text-decoration: none; font-family:  sans-serif}
 #content h1 > a.link:hover, h2 > a.link:hover, h3 > a.link:hover, #toctitle > a.link:hover, .sidebarblock > .content > .title > a.link:hover, h4 > a.link:hover, h5 > a.link:hover, h6 > a.link:hover { color: #1e416e; }
 
 .audioblock, .imageblock, .literalblock, .listingblock, .stemblock, .videoblock { margin-bottom: 1.25em; }
@@ -569,7 +569,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-si
 .admonitionblock > table { border-collapse: separate; border: 0; background: none; max-width: 80%;}
 .admonitionblock > table td.icon { text-align: center; width: 80px; }
 .admonitionblock > table td.icon img { max-width: none; }
-.admonitionblock > table td.icon .title { font-weight: bold; font-family: ITC Officina Serif W01, sans-serif, Georgia, Verdana, "Helvetica", Helvetica, Arial, sans-serif; text-transform: uppercase; }
+.admonitionblock > table td.icon .title { font-weight: bold; font-family:  sans-serif, Georgia, Verdana, "Helvetica", Helvetica, Arial, sans-serif; text-transform: uppercase; }
 .admonitionblock > table td.content { padding-left: 1.125em; padding-right: 1.25em; border-left: 1px solid #dddddd; color: #417dcb; }
 .admonitionblock > table td.content > :last-child > :last-child { margin-bottom: 0; }
 
@@ -642,7 +642,7 @@ table.pyhltable .linenodiv { background: none !important; padding-right: 0 !impo
 .quoteblock .quoteblock blockquote:before { display: none; }
 
 .verseblock { margin: 0 1em 1.25em 1em; }
-.verseblock pre { font-family: ITC Officina Serif W01, sans-serif, "Open Sans", "DejaVu Sans", sans; font-size: 1.15rem; color: #6999d6; font-weight: 300; text-rendering: optimizeLegibility; }
+.verseblock pre { font-family:  sans-serif, "Open Sans", "DejaVu Sans", sans; font-size: 1.15rem; color: #6999d6; font-weight: 300; text-rendering: optimizeLegibility; }
 .verseblock pre strong { font-weight: 400; }
 .verseblock .attribution { margin-top: 1.25rem; margin-left: 0.5ex; text-align: right;}
 
@@ -871,7 +871,7 @@ span.icon > .fa { cursor: default; }
 .admonitionblock td.icon .icon-caution:before { content: "\f06d"; color: #bf3400; }
 .admonitionblock td.icon .icon-important:before { content: "\f06a"; color: #bf0000; }
 
-.conum[data-value] { display: inline-block; color: #fff !important; background-color: #222222; -webkit-border-radius: 100px; border-radius: 100px; text-align: center; font-size: 0.75em; width: 1.67em; height: 1.67em; line-height: 1.67em; font-family: ITC Officina Sans W01, sans-serif, "Open Sans", "DejaVu Sans", sans-serif; font-style: normal; font-weight: bold; }
+.conum[data-value] { display: inline-block; color: #fff !important; background-color: #222222; -webkit-border-radius: 100px; border-radius: 100px; text-align: center; font-size: 0.75em; width: 1.67em; height: 1.67em; line-height: 1.67em; font-family:sans-serif, "Open Sans", "DejaVu Sans", sans-serif; font-style: normal; font-weight: bold; }
 .conum[data-value] * { color: #fff !important; }
 .conum[data-value] + b { display: none; }
 .conum[data-value]:after { content: attr(data-value); }
@@ -1167,7 +1167,7 @@ body.home li.home, body.tech li.tech {font-weight:bold; }
 
 #menubar ul ul a{
     color: rgb(50,50,50);
-    font-family: ITC Officina Serif W01, sans-serif, Verdana, 'Lucida Grande';
+    font-family:  sans-serif, Verdana, 'Lucida Grande';
     font-size: 17px;
     background-color: #FFFFFF; /* rgb(15,26,54); top menu color */
     padding: 5px 8px 7px 16px;

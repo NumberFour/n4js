@@ -1,7 +1,5 @@
-
-= JSObjects
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -10,6 +8,8 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
 ////
+
+= JSObjects
 
 The built-in ECMAScript Objects
 cite:[ECMA11a(S15,p.102)] are supported and their properties are annotated with types as described in this chapter. The semantics of these properties do not change. The short description is copied from cite:[ECMA11a] repeated here for convenience.

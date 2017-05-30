@@ -1,8 +1,5 @@
-
-= Extended Fetaures
-:find:
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -11,6 +8,9 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
 ////
+
+= Extended Fetaures
+:find:
 
 [.language-n4js]
 == Array and Object Destructuring
@@ -99,7 +99,7 @@ Array and object destructuring pattern can appear in many different places:
 * In a `for..in` or `for..of` loop on the left side of the `in`/`of` (see <<_for-of-statement>>).
 +
 NOTE: It can also be used in plain statements, but then we actually have one of the above two use cases.
-* With lists of formal parameters or function arguments (NOT SUPPORTED YET) task:IDE-1609[].
+* With lists of formal parameters or function arguments (not supported yet).
 
 For further details on array and object destructuring please refer to the ECMAScript 6 specification - cite:[ECMA15a].
 
@@ -181,7 +181,7 @@ At runtime, injectors are instances of `N4Injector`.
 
 The following constraints must hold for a class $C$ marked as DIC:
 
-1.  A subclass $S$ of $C$ is a DIC as well and it must be marked with `GenerateInjector` task:IDE-1563[].
+1.  A subclass $S$ of $C$ is a DIC as well and it must be marked with `GenerateInjector`.
 2.  If a parent <<DIComponent Relations,DIC>> $P$ is specified via `WithParent`, then $P$ must be a DIC as well.
 3.  The injector associated to a DIC is of type `N4Injector`. It can be retrieved via `N4Injector.of(DIC)` in which `DIC` is the `DIC`.
 4.  Injectors associated to DIC a are DI-singletons (cf. <<Singleton Scope>>).
@@ -191,7 +191,7 @@ Two calls to `N4Injector.of(DIC)` are different (as different DIC are assumed).
 .Injection Phase
 [req,id=IDE-139,version=1]
 --
-task:IDE-1497[]
+
 We call the (transitive) creation and setting of values by an injector $I$ caused by the creation of an root object $R$ the __injection phase__.
 If an instance $C$ is newly created by the injector $I$ (regardless of the injection point being used), the injection is transitively applied on $C$.
 The following constraints have to hold:
@@ -207,11 +207,11 @@ a new root object similar as above (using `create` method).
 ..  If a provider has been injected (i.e. an instance of `{N4Provider}`), then its `get()` method can be used to create a root object causing a new injection phase to take place.
 .  If $C.ctor$ is marked as injection point, all its arguments are set by the injector.
 This is also true for an inherited constructor marked as an injection point.
-See <<Req-IDE-143>> task:IDE-1264[]. For all arguments the injection phase constraints have to hold as well.
+See <<Req-IDE-143>> . For all arguments the injection phase constraints have to hold as well.
 . All fields of $C$, including _inherited_ once, marked as injection points are set by the injector.
 For all fields the injection phase constraints have to hold as well.
 
-task:IDE-1264[] task:IDEBUG-441[]
+
 
 The injector may use a provider method (of a binder) to create nested instances.
 
@@ -274,7 +274,7 @@ A complex Child-Parent relation between components is depicted in <<fig-complex-
 
 [[fig-complex-dicomponents-relations]]
 .Complex DIComponents Relations
-image::{find}fig/diagDICParentChild.png[scaledwidth="50%",align=center]
+image::{find}fig/diagDICParentChild.svg[scaledwidth="50%",align=center]
 
 --
 
@@ -350,7 +350,7 @@ annotation or `@Provides` annotation).
 
 A _binding_ is called _implicit_ if it is not declared.
 An implicit binding can only be used if the $key$ is a class and derived from the type at the injection point, i.e. the type of the field or parameter to be injected.
-In that case, the $target$ equals the $key$. task:IDEBUG-484[]
+In that case, the $target$ equals the $key$.
 
 A provider method $M$ (in the binder) defines a binding
 
@@ -399,9 +399,9 @@ For a given binding $b=(key, target)$, the following constraints must hold: foot
 3.  If $b$ is implicit, then $key$ must be a class.
 If $key$ references a type $T$, then $target=T$ – even if $key$ is a use-site structural type.
 4.  $key$ and $target*$ can be nominal, structural or field-structural types, either definition-site or use-site.
-task:IDE-1496[] task:IDEBUG-418[] task:IDEBUG-498[] The injector and binder needs to take the different structural reference into account at runtime!
+   The injector and binder needs to take the different structural reference into account at runtime!
 5.  $target* \subtype key$ must hold
-6.  If during injection phase no binding for a given key is found, an `DIUnsatisfiedBindingError` is thrown. task:IDEBUG-461[]
+6.  If during injection phase no binding for a given key is found, an `DIUnsatisfiedBindingError` is thrown.
 
 --
 
@@ -413,7 +413,7 @@ $b_2=(key_2, key_1)$, an effective binding
 $b=(key_2, target_1)$ is derived (replacing
 $b_1$).
 
-N4JS <<acronyms,DI>> mechanisms don’t allow for injection of primitives or built-in types.
+N4JS <<Acronyms,DI>> mechanisms don’t allow for injection of primitives or built-in types.
 Only user-defined N4Types can be used. In cases where a user needs to inject a primitive or a built-in type, the developer must wrap it into its own
 class footnote:[Cf. a blog post about micro types - http://www.markhneedham.com/blog/2009/03/10/oo-micro-types/, and tiny types - http://darrenhobbs.com/2007/04/11/tiny-types/ ].
 This is to say that none of the following metatypes can be bound: primitive types, enumerations, functions, object types, union- or intersection types. It is possible to (implicitly) bind to built-in classes.
@@ -449,7 +449,7 @@ The injector will inject the
 following fields:
 
 1.  All directly contained fields annotated with `@Inject`.
-2.  All inherited fields annotated with `@Inject`. task:IDEBUG-400[]
+2.  All inherited fields annotated with `@Inject`.
 3.  The injected fields will be created by the injector and their fields will be injected as well.
 --
 
@@ -492,7 +492,7 @@ console.log(dic.a.xInB.y);     // --> Y
 --
 
 ==== Constructor Injection
-task:IDE-1262[]
+
 
 Parameters of the constructor can also be injected, in which case this is usually referred to as __Constructor Inejction__.
 This is similar to _Method Injection_ and while constructor injection is supported in N4JS, method injection is not (see remarks below).
@@ -513,7 +513,7 @@ If a class $C$ has a constructor marked as injection point, the
 following applies:
 
 1.  If $C$ is subclassed by $S$, and if $S$ has no explicit constructor, then $S$ inherits the constructor from $C$ and it will be an injection point handled by the injector during injection phase.
-task:IDEBUG-447[] task:IDEBUG-458[]
+
 2.  If $S$ provides its own injector, $C.ctor$ is no longer recognized by the injector during the injection phase.
 There will be a warning generated in $S.ctor$ to mark it as injection point as well in order to prevent inconsistent injection behavior.
 Still, $C.ctor$ must be called in $S.ctor$ similarly to other overridden constructors.
@@ -537,7 +537,7 @@ In a way, constructor injection is a special case of the method itself.
 ////
 
 ===== Provider
-task:IDE-1261[]
+
 
 _Provider_ is essentially a _factory_ for a given type.
 By injecting an `N4Provider` into any injection point, one can acquire new instances of a given type provided by the injected provider.
@@ -587,7 +587,7 @@ The creation depends on the scope of the type.
 Aside from the scopes, note that it is also possible to implement custom scopes and life cycle management via `N4JSProvider` and `Binder@Provides` methods.
 
 ==== Injection Cylces
-task:IDE-1608[]
+
 
 .Injection Cycle
 [def]
@@ -616,7 +616,7 @@ class B { @Inject a: A; }
 |
 [[fig-field-cycle]]
 .Field Cycle
-image::{find}fig/injectionGraph_cycleField.png[scaledwidth="40%",align="center"]
+image::{find}fig/injectionGraph_cycleField.svg[scaledwidth="40%",align="center"]
 
 |
 [source,n4js]
@@ -628,7 +628,7 @@ class D { @Inject c: C; }
 |
 [[fig-ctor-field]]
 .Ctor Field Cycle
-image::{find}fig/injectionGraph_cycleCtorField.png[scaledwidth="40%",align="center"]
+image::{find}fig/injectionGraph_cycleCtorField.svg[scaledwidth="40%",align="center"]
 
 |
 [source,n4js]
@@ -640,7 +640,7 @@ class F { @Inject constructor(e: E) {} }
 |
 [[fig-ctor-cycle]]
 .Ctor Cycle
-image::{find}fig/injectionGraph_cycleCtor.png[scaledwidth="40%",align="center"]
+image::{find}fig/injectionGraph_cycleCtor.svg[scaledwidth="40%",align="center"]
 
 |===
 The injector needs to detect these cycles and resolve them.
@@ -659,7 +659,7 @@ Cycles stemming from field injection are resolved by halting the creation of new
 The previously-created instance is then reused.
 This makes injecting the instance of a (transitive) container less complicated and without the need to pass the container instance down the entire chain.
 The following pseudo code describes the algorithm to create new instances which are injected into a newly created object:
-task:IDE-1608[]
+
 
 [source,n4js]
 ----
@@ -696,12 +696,12 @@ In the algorithm, however, the instances may not be completely initialized.
 
 
 ==== Default Scope
-task:IDE-1471[]
+
 
 The default scope always creates a new instance.
 
 ==== Singleton Scope
-task:IDE-1260[]
+
 
 The singleton scope (per injector) creates one instance (of the type with `@Singleton` scope) per injector, which is then shared between clients.
 
@@ -868,7 +868,7 @@ b2.a != b2.a1
 ----
 
 === Validation of callsites targeting N4Injector methods
-task:IDE-1671[]
+
 
 Terminology for this section:
 
@@ -1142,7 +1142,7 @@ In order to enable tests for private methods, test projects may define which pro
 .Test API methods and types
 [req,id=IDE-151,version=1]
 --
-task:IDE-1468[]
+
 In some cases, types or methods are only provided for testing purposes.
 In order to improve usability, e.g. content assist, these types and methods can be annotated with `@TestAPI`.
 There are no constraints defined for that annotation at the moment.
@@ -1151,7 +1151,7 @@ There are no constraints defined for that annotation at the moment.
 
 [.language-n4js]
 == Polyfill Definitions
-task:IDE-1142[]
+
 
 In plain JavaScript, so called _polyfill_ (or sometimes called __shim__) libraries are provided in order to modify existing classes which are only prototypes in plain JavaScript.
 In N4JS, this can be defined for declarations via the annotation `@Polyfill` or `@StaticPolyfill`.
@@ -1266,14 +1266,14 @@ For a runtime-polyfill class $P$ annotated with `@Polyfill`, that is $P.staticpo
 .Applying Polyfills
 [req,id=IDE-154,version=1]
 --
-task:IDE-1207[]
+
 A polyfill is automatically applied if a runtime library or environment required by the current project provides it. In this case, the following constraints must hold:
 
 1.  No member must be filled by more than one polyfill.
 --
 
 === Static Polyfill Definitions
-task:IDE-1735[]
+
 
 Static polyfilling is a compile time feature to enrich the definition and usually also the implementation of generated code in N4JS. It is related to runtime polyfilling described in <<_runtime-polyfill-definitions>> in a sense that both fillings enrich the types they address. Despite this, static polyfilling and runtime polyfilling differ in the way they are handled.
 

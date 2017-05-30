@@ -1,8 +1,5 @@
-
-= Expressions
-:find:
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -12,10 +9,11 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
-[.language-n4js]
---
-For all expressions, we define the following pseudo properties:
+= Expressions
+:find:
 
+
+For all expressions, we define the following pseudo properties:
 
 `containingExpression` ::
 The parent expression, in which an expression is contained, may be null.
@@ -35,7 +33,7 @@ In case of instance methods of a class `T`, this usually is the classifier `T`; 
 
 `container` ::
 The direct owner of the expression.
---
+z
 ////
 \todo[JvP,LB]{How to best model that the inferred type must always be "conform" to a declared type if present?}
 \todo[JvP,LB]{Autoconversion: See chapter conversions}
@@ -46,7 +44,7 @@ It is worth noting that the grammar snippets already use newer constructs in som
 
 [.language-n4js]
 == ECMAScript 5 Expressions
-task:IDE-232[]
+
 
 N4JS supports the same expressions as ECMAScript.
 The semantics are described in cite:[ECMA11a(S11)].
@@ -59,7 +57,7 @@ E.g., `pass:[++]` and `pass:[+=]` are deduced to `pass:[+]` (and simple assignme
 
 
 === The this Literal
-task:IDE-229[] task:IDE-505[]
+
 
 This section describes the `this` literal and the semantics of the `@This` annotation, the type `this` is described in <<_this-type>>.
 
@@ -85,7 +83,7 @@ See also <<Req-IDE-69>>.
 --
 
 
-Note: <<Req-IDE-173>> also applies for this literals inside arrow expressions in initializers. task:GH-348[]
+Note: <<Req-IDE-173>> also applies for this literals inside arrow expressions in initializers.
 
 The use of `this` is illustrated with some examples as it can often be confusing.
 Type inference heuristics and explanations are provided in the next section.
@@ -100,7 +98,7 @@ If there is no receiver it is bound to the global object, however, we often do n
 ////
 % This example only works in Browsers. Or in node-repl console. When loaded from a file (aka as a module)
 % node assigns a local environment.
-% Nevertheless see /eu.numberfour.ide.n4js.transpiler.es5.tests/testdata/spec_chap_07_01_01/Ex58_this_keyword.n4js.xt
+% Nevertheless see /org.eclipse.n4js.transpiler.es5.tests/testdata/spec_chap_07_01_01/Ex58_this_keyword.n4js.xt
 ////
 
 [source,n4js]
@@ -191,7 +189,7 @@ NOTE: In N4JS classes, `this` is always bound to the instance when used in field
 
 [discrete]
 ==== Type Inference
-task:IDE-244[]
+
 
 [.language-n4js]
 --
@@ -208,7 +206,7 @@ Unfortunately it is often unknown what the global object will be at run time (e.
 
 Actually, `this` is bound to the newly created object if a function is called with the `new` operator.
 If a function is known to be invoked with an explicit $thisArg$ (`apply()` etc.), the `@This` annotation can be used to explicitly set the this type.
-This annotation has precedence over otherwise inferred bindings. task:IDE-1010[]
+This annotation has precedence over otherwise inferred bindings.
 
 --
 
@@ -228,13 +226,13 @@ $\infer{\tee \lstnfbnf{"this"}: \tsNom T}{f.hasAnnotation(\lstnfbnf{"@This"}) \s
 If the this keyword is used in some _static_ method of a classifier `T` or in a _static_ field initializer, the prototype type (or constructor) of the classifier is used, that is `type[T]`.
 In both cases, the target is determined by using the expressions’s pseudo property `probableThisTarget`.
 If the this keyword is used in a function expression assigned to an property of an object literal, the type of the object literal is used.
-Note that usually this is the `this` type in instance methods, and the `this` type in static methods. task:IDE-785[]
+Note that usually this is the `this` type in instance methods, and the `this` type in static methods.
 +
 [math]
 ++++
 \infer{\tee \lstnfbnf{"this"}: \tsNom T}{T=\lstnfbnf{"this"}.probableThisTarget \spc T\neq\NULL} \\
 ++++
-. task:IDE-185[] In all other cases: Non-strict mode:
+.  In all other cases: Non-strict mode:
 +
 [math]
 ++++
@@ -267,7 +265,7 @@ Therefore, it is not allowed to use a @This (..) annotation on any getter or set
 .Valid Target and Argument for @This Annotation
 [req,id=IDE-91,version=1]
 --
-task:IDE-802[]
+
 
 1.  The `@This` annotation is only allowed on declared functions, function expressions (including arrow functions), methods, and field accessors, i.e. getters and setters, except static members of interfaces.
 2.  The type declared by way of `@This(..)` an annotation of a method or field accessor must be a subtype of the member’s containing classifier.
@@ -277,7 +275,7 @@ task:IDE-802[]
 .Single @This Annotation
 [req,id=IDE-92,version=1]
 --
-task:IDE-802[]
+
 It is not allowed to use more then one `@This(..)` annotation on an element.
 --
 
@@ -402,7 +400,7 @@ The nested function must then be annotated accordingly.
 
 When calling this function, the type of this is checked against the declared this type, which would cause an error in the first case.
 
-The use of the `@This` annotation is not allowed on methods. task:IDE-2313[]
+The use of the `@This` annotation is not allowed on methods.
 
 TIP: Using constructor functions is not recommended and an error or warning will be created.
 This is only useful for adapting third-party library code.
@@ -448,7 +446,7 @@ Properties of object literals or members of a class are referenced via $Property
 
 [[fig:scopes]]
 .Scopes
-image::{find}fig/scopes.png[scaledwidth="40%",align="center"]
+image::{find}fig/scopes.svg[scaledwidth="40%",align="center"]
 
 An identifier may be bound to a variable (global or local variable, parameter, variable defined in a function’s closure), or to a property of an object.
 The latter case is known as property access as further described in <<_property-accessors>>.
@@ -464,12 +462,13 @@ $\spc \hspace{2em}\land \nexists\ \type{AssignmentExpression}\ ae \in i.containe
 $\spc \hspace{3em} ae.left = i $
 $\spc \hspace{4em}\lor (\mu(ae.left)=\type{PropertyAccessExpression} \land ae.left.property=i): $
 $\spc \Rightarrow D.readable $
-
 --
+//*
+
 
 [discrete]
 ==== Type Inference
-task:IDE-244[]
+
 
 
 An identifier reference $i$ is bound to an identifiable element $i.id$, which is expressed with the function $bind(i, i.id)$.
@@ -553,7 +552,7 @@ h|Literal  h| Value h| Type h| Value h| Type
 
 The literals `0x100000000` and `0100000000000` produce a syntax error in Java.
 
-Until IDE-1881 task:IDE-1881[] is complete, all built-in operations always return a `number` even if all operands are of type `int`.
+Until IDE-1881  is complete, all built-in operations always return a `number` even if all operands are of type `int`.
 For the time being, we therefore interpret `-1` as a negative integer literal (inferred to `int`), but `-(1)` as the negation of a positive integer literal (inferred to `number`).
 
 --
@@ -590,7 +589,7 @@ ArrayElement <Yield> returns ArrayElement: {ArrayElement} spread?='...'? express
 [discrete]
 ==== Type Inference
 
-task:IDE-244[] task:IDE-342[]
+
 
 In general, an array literal is inferred as `Array<T>` (similar to the type of `new Array()`).
 The interesting question is the binding of the type variable $T$.
@@ -778,25 +777,22 @@ The equation $isAccessor = \lnot isData$ is always true.
 --
 For a given object literal $ol$ the following constraints must hold (cf. cite:[ECMA11a(p.66)]:
 
-* the name of each property is given as an identifier, a string literal, a numeric literal, or as a computed property name with
-** a string literal, e.g. `['myProp']`,
-** a built-in symbol, for example as in `[Symbol.iterator]`, or
-** a literal of a `@StringBased` enum.
-* Object literal may not have two PropertyNameValuePairs with the same name in strict mode (cf. 4.a):
+* the name of each property is given as an identifier, a string literal, a numeric literal, or as a computed property name with a compile-time expression (see <<compile-time-expressions>>). In particular, string literals, e.g. `['myProp']`, built-in symbols, e.g. `[Symbol.iterator]`, and literals of `@StringBased` enums are all valid computed property names.
+* Object literal may not have two PropertyNameValuePairs with the same name in strict mode (cf. 4.a cite:[ECMA11a(p.66)]):
 +
 [%hardbreaks]
 $mode=\lenum{strict} \rightarrow \spc \forall pa \in ol.propertyAssignments, pa.isData:$
 $\spc \nexists pa' \in ol.propertyAssignments:$
 $\spc pa'.isAccessor \land pa'.name = pa.name$
 
-* Object literal may not have PropertyNameValuePair and ``PropertyGetterDeclaration``/``PropertySetterDeclaration`` with the same name (cf. 4.b/c):
+* Object literal may not have PropertyNameValuePair and ``PropertyGetterDeclaration``/``PropertySetterDeclaration`` with the same name (cf. 4.b/c cite:[ECMA11a(p.66)]):
 +
 [%hardbreaks]
 $\forall \spc pa \in ol.propertyAssignments, pa.isData : $
 $\nexists \spc pgsd \in ol.propertyAssignments : $
 $\mu(pgsd) \neq\type{PropertyNameValuePair} \land pgsd.name = pa.name$
 
-* Object literal may not have multiple `PropertyGetterDeclaration` or `PropertySetterDeclaration` with the same name (cf. 4.d):
+* Object literal may not have multiple `PropertyGetterDeclaration` or `PropertySetterDeclaration` with the same name (cf. 4.d cite:[ECMA11a(p.66)]):
 +
 [%hardbreaks]
 $\forall \spc pg \in ol.propertyAssignments, pg.isAccessor:$
@@ -824,7 +820,7 @@ $\spc \mu(pa.name)=\type{N4JSIdentifier}$
 
 
 ==== Scoping and linking
-task:IDE-173[]
+
 
 .Scoping and linking
 [example]
@@ -855,7 +851,7 @@ In the expression of property name value pairs, however, `this` is not be bound 
 
 [discrete]
 ==== Type Inference [[type-inference-3]]
-task:IDE-244[] task:IDE-343[] task:IDE-691[]
+
 
 An object literal implicitly extends `pass:[~Object]`, therefore, object literal types use structural typing.
 For details see <<_structural-typing>>.
@@ -885,7 +881,7 @@ ParenExpression <Yield>: '(' expression=Expression<In=true,Yield> ')';
 
 [discrete]
 ==== Type Inference [[Grouping-Operator-type-inference]]
-task:IDE-244[] task:IDE-345[]
+
 
 The type of the grouping operator simply is the type of its nested expression.
 The type if a parenthesized expression $pe$ is inferred as follows:
@@ -948,6 +944,38 @@ fragment ParameterizedPropertyAccessExpressionTail <Yield>*:
 
 Note that in cite:[ECMA11a], the `index access` is called `__bracket notation__`.
 
+
+[discrete]
+==== Direct Property Access [[property-access-direct]]
+
+We define a special case of property access as follows:
+
+.Direct Property Access
+[def]
+--
+A property access expression is called _direct_, iff
+
+* its target is an identifier reference to a class, interface, enum, or the built-in object `Symbol`, and
+* its property name denotes an _owned_ member of the target classifier (not an inherited, consumed, or polyfilled member) or a literal if the target is an enum.
+--
+
+As a consequence, a direct property access can only refer to static members.
+
+The first requirement of the above definition rules out property access expressions that do not directly point to their target classifier or enum, as shown in the following example:
+
+[source,n4js]
+----
+class C {
+  const field = 'hello';
+}
+C.field;  // direct property access to 'field'
+let ctor = C;
+ctor.field;  // *not* a direct property access to 'field'
+----
+
+Direct property access is the only form of property access allowed in compile-time expressions, cf. <<compile-time-expressions>>.
+
+
 ==== Properties [[properties-1]]
 We define the following properties:
 
@@ -976,7 +1004,7 @@ This is either the $property$ converted to a simple name or the index converted 
 
 [discrete]
 ==== Semantics [[property-acessors-semantics]]
-task:IDE-12[]
+
 
 The parameterization is part of the property access in case of generic methods.
 For generic functions, a parameterized function call is introduced (cf. <<_function-calls>>).
@@ -986,7 +1014,7 @@ The constraints are basically similar.
 [req,id=IDE-97,version=1]
 --
 
-1.  If dot notation is used in N4JS mode, the referenced property must exist unless receiver is a dynamic type: task:IDE-422[]
+1.  If dot notation is used in N4JS mode, the referenced property must exist unless receiver is a dynamic type:
 +
 [math]
 ++++
@@ -1009,52 +1037,16 @@ then the receiver must be a subtype of the declared `@This` type.
 .Index Access
 [req,id=IDE-98,version=1]
 --
-task:IDE-656[] task:IDE-1734[]
-
-1.  A limited form of computed-name indexed-access is allowed in N4JS mode.
-In case the receiver is of dynamic type, the index can be any expression task:GH-238[].
-Otherwise, the indexed-access is limited in that the index must be a string literal.
-Feasible targets of such accesses are the same as for dot-access.
-+
-This notation is useful when interoperating with libraries that define members whose names contain special characters (for example, a field name starting with commercial-at).
-2.  Additionally, an indexed-access expression is allowed when targeting one of the types
-+
-or subtypes, for `Object` (not including subtypes of `Object` and not for `pass:[~Object]` and `pass:[~~Object]` ), and for dynamic types.
-It is not allowed to access members of enums in particular.
-That is to say, for an indexed-access expression $iae$, the following constraint must hold:
-+
-[math]
-++++
-\beginalign
-\spc\tee ia.target \subtype T, T \in \types{Array, ArgumentType, string, String, Iterable} \\
-\spc\lor\\
-\spc\tee ia.target = \type{Object}
-\endalign
-++++
-+
-3. In N4JS mode, if the receiver is an array and is not dynamic, in case of index access the index expression must be a number:
-+
-[%hardbreaks]
-$\spc mode=\lenum{n4js} \land pae.target.type=\type{Array} \land pae.isIndexAccess $
-$\spc \Rightarrow \tee pae.index \subtype[number]$
-4.  In N4JS mode, if the receiver is a subtype of types or and is not dynamic, in case of index access the index expression must be a number:  task:IDE-837[]
-+
-[%hardbreaks]
-$\spc mode=\lenum{n4js} $
-$\spc \hspace{3em} \land (\tee pae.target\subtype {string} \lor \tee pae.target \subtype {String}) $
-$\spc \hspace{3em} \land pae.isIndexAccess $
-$\spc \Rightarrow \tee pae.index \subtype{number} $
-5.  In N4JS mode, if the receiver is an iterable and is not dynamic, in case of index access the index expression must be a property access expression to the built-in symbol `Symbol.iterator`:
-+
-[%hardbreaks]
-$\spc mode=\lenum{n4js} \land pae.target.type=\type{Iterable} \land pae.isIndexAccess $
-$\spc \Rightarrow $
-$\spc \hspace{3em} \mu(pae.index)=\type{IndexedAccessExpression} $
-$\spc \hspace{3em} \land pae.index.isDotAccess $
-$\spc \hspace{3em} \land pae.index.target = \type{Symbol} $
-$\spc \hspace{3em} \land pae.index.property = "iterator" $
 
 
+An index access expression is valid iff one of the following cases applies:
+
+1. the receiver is of a dynamic type. In this case, the index may be any expression (need not be a compile-time expression).
+2. the receiver is an immediate instance of `Object`, i.e. it is a subtype of `Object` and its super types but **not** of any other type including `pass:[~Object]` and `pass:[~~Object]`.
+3. the receiver is of type Array, ArgumentType, string, or String (including their subtypes) **and** the index is an expression of type `number`.
+4. the index expression is a compile-time expression
+** *and* the receiver type defines a member with a name equal to the string representation of the index expression's compile-time value +
+** *and* the receiver is not an enum.
 --
 
 Although index access is very limited, it is still possible to use immediate instances of `Object` in terms of a map (but this applies only to index access, not the dot notation):
@@ -1093,13 +1085,13 @@ Also see constraints on read (<<Req-IDE-93>>) and write (<<Req-IDE-121>>) access
 [discrete]
 ==== Type Inference [[type-inference-5]]
 
-task:IDE-244[] task:IDE-182[] task:IDE-183[]
+
 
 Cf. cite:[ECMA11a(S11.2.1,p.67ff)]
 
 We define the following type inferencing rules for property accessors:
 
-* The type of an indexed-access expression _p_ is inferred as follows task:IDE-342[]:
+* The type of an indexed-access expression _p_ is inferred as follows:
 +
 [math]
 ++++
@@ -1129,7 +1121,7 @@ We define the following type inferencing rules for property accessors:
 
 
 === New Expression
-task:IDE-192[] task:IDE-204[]
+
 
 cf. cite:[ECMA11a(S11.2.2,p.68)]
 
@@ -1203,7 +1195,7 @@ The following examples demonstrates the usage of abstract classes and constructo
 
 [source,n4js]
 ----
-/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+/* XPECT_SETUP org.eclipse.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
 abstract class A {}
 class B extends A {}
@@ -1254,7 +1246,7 @@ will issue an error.
 See <<_functions>> for details.
 
 === Function Calls
-task:IDE-186[] task:IDE-851[]
+
 
 In N4JS, a function call cite:[ECMA11a(S11.2.3)] is similar to a method call.
 Additionally to the ECMAScript’s CallExpression, a ParameterizedCallExpression is introduced to allow type arguments passed to plain functions.
@@ -1262,7 +1254,7 @@ Additionally to the ECMAScript’s CallExpression, a ParameterizedCallExpression
 
 [discrete]
 ==== Syntax
-task:IDE-177[] [[function-calls-syntax]]
+ [[function-calls-syntax]]
 
 Similar to cite:[ECMA11a(S11.2.3,p.68ff)], a function call is defined as follows:
 
@@ -1322,7 +1314,7 @@ See <<_function-object-type>>.
 
 [discrete]
 ==== Type Inference [[type-inference-7]]
-task:IDE-244[]
+
 
 A call expression $expr$ is bound to a method (<<Methods>>) or function declaration (which may be part of a function definition
 (<<_function-declaration>> or specified via a function type <<_function-type>>) $F$ (via evaluation of `MemberExpression`.
@@ -1333,7 +1325,7 @@ The type of the call is inferred from the function declaration or type $F$ as fo
 \infer{\tee expr: T}{bind(expr.target, F) \spc F.returnType: T}
 ++++
 
-task:IDE-205[]
+
 
 A generic method invocation may be parameterized as well.
 This is rarely required as the function argument types are usually inferred from the given arguments.
@@ -1399,11 +1391,11 @@ are defined similarly to their prefix variants (unary expressions), see <<Unary 
 [req,id=IDE-103,version=1]
 --
 
-task:IDE-345[]
+
 For a given postfix expression $u$ $u$ with $u.op \in \{++,--\}$ and $u.expression.type: T$, the following constraints must hold:
 
 * In N4JS mode, the type $T$ of the expression must be a number.
-* If $u.expression = PropertyAccess \; pa(p) \land pa.isDotAccess \rightarrow $ both $get$ _p_ and $set$ _p_ must be defined. task:IDE-737[]
+* If $u.expression = PropertyAccess \; pa(p) \land pa.isDotAccess \rightarrow $ both $get$ _p_ and $set$ _p_ must be defined.
 --
 
 === Unary Expression
@@ -1441,13 +1433,13 @@ For a given unary expression $u$ with $u.op=\lstnfjs{delete}$, the following con
 [req,id=IDE-105,version=1]
 --
 There are no specific constraints defined for with $u.op=\lstnfjs{void}$
-task:IDE-345[]
+
 --
 
 .Typeof Operator Constraints
 [req,id=IDE-106,version=1]
 --
-There are no specific constraints defined for unary expression $u$ with $u.op=\lstnfjs{typeof}$. task:IDE-345[]
+There are no specific constraints defined for unary expression $u$ with $u.op=\lstnfjs{typeof}$.
 --
 
 
@@ -1456,21 +1448,21 @@ There are no specific constraints defined for unary expression $u$ with $u.op=\l
 --
 For a given unary expression $u$ $u$ with $u.op \in \{++,--\}$ and $u.expression.type: T$, the following constraints must hold:
 
-* If mode is N4JS, task:IDE-345[] the type $T$ of the expression must be a number
+* If mode is N4JS,  the type $T$ of the expression must be a number
 +
 [math]
 ++++
 \infer{\tee \type{UnaryExpression} \expectType \type{Expression}: \type{number}}{}
 ++++
 
-* If $u.expression = PropertyAccess \; pa(p)  \land  pa.isDotAccess$ $\rightarrow$ both $get$ _p_ and $set$ _p_ must be defined. task:IDE-768[]
+* If $u.expression = PropertyAccess \; pa(p)  \land  pa.isDotAccess$ $\rightarrow$ both $get$ _p_ and $set$ _p_ must be defined.
 
 --
 
 .Unary Plus/Minus/Bitwise Not Operator Constraints
 [req,id=IDE-108,version=1]
 --
-For a given unary expression $u$ $u$ with $u.op \in \{+,-,\sim\}$ and $u.expression.type: T$, the following constraints must hold: task:IDE-345[]
+For a given unary expression $u$ $u$ with $u.op \in \{+,-,\sim\}$ and $u.expression.type: T$, the following constraints must hold:
 
 * In N4JS mode, the type T of the expression must be a number:
 
@@ -1501,7 +1493,7 @@ There are no specific constraints defined for with $u.op=\lstnfjs{!}$.
 [discrete]
 ==== Type Inference [[type-inference-8]]
 
-The following operators have fixed types independent of their operand types: task:IDE-244[] task:IDE-345[]
+The following operators have fixed types independent of their operand types:
 
 [%hardbreaks]
 $ \spc \infer{\tee \lstnfbnf{'delete'}\ expression: \type{boolean}}{}  $
@@ -1509,6 +1501,8 @@ $ \spc \infer{\tee \lstnfbnf{'void'}\ expression: \type{undefined}}{} $
 $ \spc \infer{\tee \lstnfbnf{'typeof'}\ expression: \type{string}}{} $
 $ \spc \infer{\tee \lstnfbnf{('++'|'--'|'+'|'-'|'~')}\ expression: \type{number}}{} $
 $ \spc \infer{\tee \lstnfbnf{'!'}\ expression: \type{boolean}}{} $
+
+//~
 
 === Multiplicative Expression
 
@@ -1531,7 +1525,7 @@ enum MultiplicativeOperator: times='*' | div='/' | mod='%';
 .Multiplicative Expression Constraints
 [req,id=IDE-110,version=1]
 --
-For a given multiplicative expression the following constraints must hold in N4JS mode task:IDE-345[]:
+For a given multiplicative expression the following constraints must hold in N4JS mode :
 
 * The types of the operands must be subtypes of number:
 +
@@ -1544,7 +1538,7 @@ For a given multiplicative expression the following constraints must hold in N4J
 
 [discrete]
 ==== Type Inference
-task:IDE-244[] task:IDE-345[] [[type-inference-9]]
+  [[type-inference-9]]
 
 The inferred type of a multiplicative expression always is number:
 
@@ -1573,7 +1567,7 @@ enum AdditiveOperator: add='+' | sub='-';
 .Additive Expression Constraints
 [req,id=IDE-111,version=1]
 --
-task:IDE-345[]
+
 For a given additive expression the following constraints must hold in N4JS mode:
 
 * The types of the operands must be subtypes of number if the operator is not ’+’, otherwise, any type could be used:
@@ -1585,7 +1579,7 @@ For a given additive expression the following constraints must hold in N4JS mode
 --
 
 ==== Type Inference [[type-inference-10]]
-task:IDE-244[] task:IDE-345[]
+
 
 [.language-n4js]
 The type of an additive expression is usually inferred to `number`.
@@ -1638,7 +1632,7 @@ false+1;        // number 1
 [discrete]
 ==== Syntax [[bitwise-shift-expression-syntax]]
 
-task:IDE-288[] Cf. cite:[ECMA11a(p.76f)]
+ Cf. cite:[ECMA11a(p.76f)]
 
 [source,xtext]
 ----
@@ -1658,7 +1652,7 @@ ShiftOperator returns ShiftOperator:
 .Bitwise Shift Expression Constraints
 [req,id=IDE-112,version=1]
 --
-For a given bitwise shift expression $e$ the following constraints must hold in N4JS mode: task:IDE-345[] task:IDE-771[]
+For a given bitwise shift expression $e$ the following constraints must hold in N4JS mode:
 * The types of the operands must be both number.
 
 [math]
@@ -1670,7 +1664,7 @@ For a given bitwise shift expression $e$ the following constraints must hold in 
 
 [discrete]
 ==== Type Inference [[type-inference-11]]
-task:IDE-244[] task:IDE-345[]
+
 
 The type returned by a bitwise shift expression is always `boolean`:
 
@@ -1708,7 +1702,7 @@ RelationalOperatorNoIn returns RelationalOperator:
 .Greater/Less (Equals) Operator Constraints
 [req,id=IDE-113,version=1]
 --
-task:IDE-345[]
+
 
 For a given relational expression $e$ with $e.op \in \{ <, >, <=, >= \}$ in N4JS mode,
 the following constraints must hold:
@@ -1727,7 +1721,7 @@ $\spc\infer{\tee  lhs\ ('<'|'<='|'>'|'>=')  rhs\  \expectType\ rhs: T}{ \tee lhs
 .Instanceof Operator Constraints
 [req,id=IDE-114,version=1]
 --
-For a given relational expression $e$ with task:IDE-345[] $e.op = \lstnfjs{instanceof}$, the following constraints must hold:
+For a given relational expression $e$ with  $e.op = \lstnfjs{instanceof}$, the following constraints must hold:
 
 * The right operand of the instanceof operator must be a `Function` footnote:[Only [language-n4js]`Function` implements the ECMAScript specification property [language-n4js]`hasInstance`. Thus instanceof expressions are rewritten by the compiler for other types. Note that a reference to a class returns the constructor type, which actually is a function itself.]
 
@@ -1739,7 +1733,7 @@ In other words,
 ++++
 
 is contained in the the first type rule, an object type reference footnote:[Includes interfaces, since an interface type reference is a subtype of object type reference: $\type{type}\{\type{Interface}\} <: \type{type}\{\type{Object}\}$]
-or an enum type reference. task:IDE-681[] task:IDEBUG-631[] task:IDE-652[]
+or an enum type reference.
 
 [math]
 ++++
@@ -1757,7 +1751,7 @@ Use-site structural typing is also not possible since `pass:[~]` would be interp
 .Operator Constraints
 [req,id=IDE-115,version=1]
 --
-task:IDE-345[]
+
 For a given relational expression $e$ with $e.op = \lstnfjs{in}$, the following constraints must hold:
 
 1.  The right operand of the in operator must be an `Object`:
@@ -1776,7 +1770,7 @@ For a given relational expression $e$ with $e.op = \lstnfjs{in}$, the following 
 --
 
 A special feature of N4JS is support for interface type references in combination with the `instance of` operator.
-The compiler rewrites the code to make this work. task:IDE-561[]
+The compiler rewrites the code to make this work.
 
 .`instanceof` with Interface
 [example]
@@ -1784,7 +1778,7 @@ The compiler rewrites the code to make this work. task:IDE-561[]
 The following example demonstrates the use of the operator with an interface.
 This is, of course, not working in pure ECMAScript.
 
-//% see /eu.numberfour.ide.n4js.transpiler.es5.tests/testdata/spec_chap_07_01_16/Ex72_instanceof_with_interfaces.n4js.xt
+//% see /org.eclipse.n4js.transpiler.es5.tests/testdata/spec_chap_07_01_16/Ex72_instanceof_with_interfaces.n4js.xt
 
 [source,n4js]
 ----
@@ -1817,7 +1811,7 @@ B is instance of I
 
 [discrete]
 ==== Type Inference [[type-inference-12]]
-task:IDE-244[] task:IDE-345[]
+
 
 The type of a relational expression always is `boolean`;
 
@@ -1851,14 +1845,14 @@ enum EqualityOperator: same='===' | nsame='!==' | eq='==' | neq='!=';
 
 [discrete]
 ==== Semantics [[equality-expression-semantics]]
-task:IDE-345[]
+
 
 There are no hard constraints defined for equality expressions.
 
 In N4JSmode, a warning is created if for a given expression $lhs \lstnfbnf{('==='|'!==')} rhs$, neither $\tee lhs.upper <: rhs.upper$ nor $\tee rhs.upper <: lhs.upper$
 and no interface or composed type is involved as the result is constant in these cases.
 
-task:IDE-773[] task:IDEBUG-260[]
+
 
 Note that a warning is only created if the upper bounds do not match the described constraints.
 This is necessary for wildcards. For example in
@@ -1879,7 +1873,7 @@ This is why the upper bounds are to be used.
 [discrete]
 ==== Type Inference [[type-inference-13]]
 
-task:IDE-244[] task:IDE-345[]
+
 
 In N4JSmode, using the non-strict equality operators `'=='|'!='` is only allowed for internal developers.
 External developers have to use the strict equality operators `'==='|'!=='`.
@@ -1924,7 +1918,7 @@ BitwiseORExpressionNoIn returns Expression: BitwiseXORExpressionNoIn
 .Bitwise Bitwise Expression Constraints
 [req,id=IDE-116,version=1]
 --
-For a given bitwise bitwise expression $e$ the following constraints must hold in N4JS mode: task:IDE-345[]
+For a given bitwise bitwise expression $e$ the following constraints must hold in N4JS mode:
 
 * The types of the operands must be both number.
 
@@ -1935,7 +1929,7 @@ For a given bitwise bitwise expression $e$ the following constraints must hold i
 
 --
 
-task:IDE-244[] task:IDE-345[]
+
 
 [discrete]
 ==== Type Inference [[type-inference-14]]
@@ -1976,13 +1970,13 @@ LogicalORExpressionNoIn returns Expression: LogicalANDExpressionNoIn
 --
 For a given binary logical expression $e$ with $e.lhs.type: L$ and $e.rhs.type: R$ the following constraints must hold:
 
-* In N4JS mode $L$ must not be `undefined` or `null`. task:IDE-775[]
+* In N4JS mode $L$ must not be `undefined` or `null`.
 
 --
 
 [discrete]
 ==== Type Inference [[type-inference-15]]
-task:IDE-244[]
+
 
 The evaluation relies on ECMAScript’s abstract operation `ToBoolean` cite:[ECMA11a(p.43)].
 A short-circuit evaluation strategy is used so that depending on the types of the operands, different result types may be inferred.
@@ -2013,7 +2007,7 @@ ConditionalExpressionNoIn returns Expression: LogicalORExpressionNoIn
 
 [discrete]
 ==== Semantics [[conditional-expression-semantics]]
-task:IDE-776[]
+
 
 .Conditional Expression Constraints
 [req,id=IDE-118,version=1]
@@ -2039,7 +2033,7 @@ The ECMAScript operation `ToBoolean` cite:[ECMA11a(S9.2,p.43)] is used to conver
 
 [discrete]
 ==== Type Inference [[type-inference-16]]
-task:IDE-348[]
+
 
 // TODO missing notation below
 
@@ -2105,7 +2099,7 @@ AssignmentOperator:
 
 [discrete]
 ==== Semantics [[assignment-expression-semantics]]
-task:IDE-349[]
+
 
 .Simple Assignment
 [req,id=IDE-119,version=1]
@@ -2179,7 +2173,7 @@ See <<_array-and-object-destructuring>> for details.
 
 [discrete]
 ==== Type Inference [[type-inference-17]]
-task:IDE-244[] task:IDE-349[]
+
 
 Similarly to cite:[ECMA11a(S11.1,p.84ff)], we define type inference for simple assignment (`=`) and compound assignment (`op=`) individually.
 
@@ -2220,7 +2214,7 @@ CommaExpression <In, Yield>:
 
 [discrete]
 ==== Semantics [[comma-expression-semantics]]
-task:IDE-778[]
+
 
 All expressions will be evaluated even though only the value of the last expression will be the result.
 
@@ -2240,7 +2234,7 @@ b =  12, 34, true ; // error, b=12 is invalid
 
 [discrete]
 ==== Type Inference [[type-inference-18]]
-task:IDE-244[]
+
 
 Cf. cite:[ECMA11a(S11.14,p.85)]
 
@@ -2294,7 +2288,7 @@ class B extends A {
 
 [discrete]
 ==== Semantics [[super-keyword-semantics]]
-task:IDE-645[]
+
 
 `super` can be used to access the supertype’s constructor, methods, getters and setters.
 The supertype is defined lexically, which is different from how `this` works.footnote:[See cite:[ECMA15a], Chapter 12.3.5 "The Super Keyword"; note the use of `HomeObject` instead of `thisValue`; also see this blog - http://www.2ality.com/2011/11/super-references.html.]
@@ -2330,14 +2324,9 @@ exprStmt = cexpr.container \land \mu(cexpr.container) = \type{ExpressionStatemen
 ++++
 3.  The containing statement $stmtExpr$ must be directly contained in a constructor body:
 +
-[math]
-++++
-\beginalign
-\spc\mu(exprStmt.containingFunction)=\type{Constructor}) \\
-\spc\land exprStmt.container = exprStmt.containingFunction.body
-\endalign
-++++
-4.  There must be no access to and not return statement before the containing statement $exprStmt$. task:IDEBUG-147[]
+$\mu(exprStmt.containingFunction)=\type{Constructor})$
+$\spc\land exprStmt.container = exprStmt.containingFunction.body$
+4.  There must be no access to and not return statement before the containing statement $exprStmt$.
 +
 Let $si$ be the index of $exprStmt$ in the constructor body:
 +
@@ -2355,7 +2344,7 @@ Then, the following constraint must hold: footnote:[$e \in^* c$ is the transitiv
 ++++
 
 Further constraints with regard to super constructor calls are described in <<_constructor-and-classifier-type>>.
-task:IDE-1753[]
+
 
 --
 
@@ -2375,14 +2364,11 @@ If the super literal $s$ is used to access a member of the super class, all of t
 \endalign
 ++++
 2.  The super literal is used in a method or field accessor of a class:
-task:IDEBUG-386[]
+
 $\mu(s..containingClass) = \type{Class}$
 3.  The super literal must not be used in a nested function expression:
 +
-[math]
-++++
-\mu(s.containingFunction=s.containingMethodOrFieldAccessor
-++++
+$\mu(s.containingFunction)=s.containingMethodOrFieldAccessor$
 4.  If the return type of the method access via super is this, the actually bound this type will be the type of the calling class (and not of the class defining the method).
 +
 [math]
@@ -2477,7 +2463,7 @@ See <<Classes>>.
 The inferred type of a class expression simply is the class type as described in <<_constructor-and-classifier-type>>.
 
 === Cast (As) Expression
-task:IDE-161[]
+
 
 [discrete]
 ==== Syntax [[cast-as-expression-syntax]]
@@ -2512,3 +2498,58 @@ Type casts are simply removed during compilation so there will be no exceptions 
 
 An error is issued if the cast is either unnecessary or cannot succeed.
 See further details in <<_type-cast>>.
+
+
+
+[.language-n4js]
+== Compile-Time Expressions [[compile-time-expressions]]
+
+A compile-time expression is an expression that can be fully evaluated at compile time. Not all expressions introduced
+in the previous sections qualify as compile-time expressions. Some forms of expressions always qualify (e.g. a string
+literal is always a compile-time expression), some never (e.g. call expressions), and for some expressions the operands
+must be of a certain value. The latter applies, for example, to divison: `5 / 0` is a valid ECMAScript expression (evaluating
+to `NaN`) but is not a compile-time expression. So it's the actual compile-time value of the divisor that makes the difference,
+here. In any case, if an expression has operands, it is a compile-time expression only if all operands are compile-time expressions.
+
+The value a compile-time expression evaluates to at compile-time is called _compile-time value_. So, an expression has a compile-time
+value if and only if it is a compile-time expression.
+
+
+.Compile-Time Expression
+[def]
+--
+The following expressions are called compile-time expressions:
+
+* `undefined` (but not `NaN` or `Infinity`).
+* the `null` literal.
+* all boolean, numeric, and string literals.
+* template string literals, iff all embedded expressions are compile-time expressions.
+* a parenthesis expression, iff its nested expression is a compile-time expression.
+* unary expressions in case of the following operators:
+** `!` iff the operand is a compile-time expression and evaluates to a boolean value.
+** `+` iff the operand is a compile-time expression and evaluates to a numeric value.
+** `-` iff the operand is a compile-time expression and evaluates to a numeric value.
+** `void`.
+* binary expressions in case of the following operators:
+** `+` iff both operands are compile-time expressions and
+*** both evaluate to numeric values, or
+*** at least one evaluates to a string value.
+** `-`, `*` iff both operands are compile-time expressions and evaluate to numeric values.
+** `/`, `%` iff both operands are compile-time expressions and evaluate to numeric values and the right-hand operand is non-zero (i.e. division by zero is disallowed in compile-time expression, because `NaN` is not a supported compile-time value).
+** `&&`, `||` iff both operands are compile-time expressions and evaluate to boolean values.
+* a tertiary conditional expression, iff the first operand is a compile-time expression evaluating to a boolean value B and
+** in case B is true, the second operand is a compile-time expression.
+** in case B is false, the third operand is a compile-time expression.
+* an identifier reference to a const variable, iff its initializer expression is a compile-time expression.
+* a property access expression, iff it is direct (see <<property-access-direct>>) and refers to
+*** a built-in symbol, e.g. `Symbol.iterator`,
+*** a literal of a `@StringBased` enum, or
+*** a const field with a compile-time initializer expression.
+
+In all other cases, the expression is not a compile-time expression.
+--
+
+Every expression in the code may be a compile-time expression, but in most places this has no particular
+effect and is simply ignored. They are of significance only in computed property names, in index access
+expressions, as initializers of const variables and fields (as stated above) and when nested as an operand
+inside an expression at these locations.

@@ -1,7 +1,5 @@
-
-= Grammar
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -11,10 +9,12 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
+= Grammar
+
 [.language-n4js]
 == Lexical Conventions
 
-task:IDE-7[]
+
 
 As a super language on top of ECMAScript, the same lexical conventions are supported as described in cite:[ECMA11a(S7)] within strict mode.
 Some further constraints are defined, however, restricting certain constructs. These constraints are described in the following.
@@ -49,8 +49,8 @@ StringLiteralComputedName: STRING ;
 
 As can be seen, a computed-name must be either
 
-* task:IDE-1220[] a symbol reference, e.g., `Symbol.iterator`
-* task:IDE-1734[] a string literal, i.e., a compile time known constant.
+*  a symbol reference, e.g., `Symbol.iterator`
+*  a string literal, i.e., a compile time known constant.
 This notation is useful when interoperating with libraries that define members whose names contain special characters (e.g., a field name starting with commercial-at)
 
 In N4JS, identifiers are further constrained in order to avoid ambiguities and to make code more readable.
@@ -134,7 +134,7 @@ Cf. cite:[ECMA11a(S11.1.1,p.63)]
 === Regular Expression Literals
 
 Cf. cite:[ECMA11a(S7.8.5)]
-task:IDE-95[]
+
 
 
 === Automatic Semicolon Insertion
@@ -142,11 +142,11 @@ task:IDE-95[]
 
 Cf. cite:[ECMA11a(S7.9)]
 
-<<Acronyms,ASI>> is supported by the parser, however warnings are issued. task:IDE-95[]
+<<Acronyms,ASI>> is supported by the parser, however warnings are issued.
 
 === JSDoc
 
-task:IDE-56[] task:IDE-57[]
+
 
 JSDoc are comments similar to JavaDoc in Java for documenting types, functions and members.
 There is no semantic information expressed in JSDoc, that is, the behavior of a program must not change if all the JSDoc is removed.
@@ -180,4 +180,3 @@ short for `single-line value`. This is a description which ends at the end of a 
 It is usually used in combination with other tags, e.g., to further describe a parameter of a method.
 
 //\Rightarrowdo[jvp: JSDoc documentation tags]{JSDoc documentation tags, such as see, link etc. Mozair suggested inheritDoc}
-

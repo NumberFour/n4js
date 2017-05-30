@@ -1,8 +1,5 @@
-
-:find:
-= Names
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -11,6 +8,9 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
 ////
+
+:find:
+= Names
 
 _Visibility_ defines the scope in which a declaration is visible, that is in which context references can be bound to the declaration.
 _Access control_ defines the extent to which types and members are accessible beyond their immediate context.
@@ -21,7 +21,7 @@ Access control is a prerequisite for extensibility which is further explained in
 
 [.language-n4js]
 == Access Control
-task:IDE-84[] task:IDE-556[]
+
 
 Types from one project may or may not be made accessible to another project.
 Likewise, members from a given type may or may not be made accessible to members existing outside that type.
@@ -45,7 +45,7 @@ Extensibility is defined by the `@Final` annotation respectively.
 
 [.language-n4js]
 == Accessibility of Types, Top-Level Variables and Function Declarations
-task:IDE-84[] task:IDE-556[] task:IDE-707[]
+
 
 We define types (classes, interfaces, enums) whereby each type has members (fields and methods, depending on the kind of type).
 When we define a type, we need to define whether it is visible only for the specifying module, project or whether that type should be accessible from outside of that project.
@@ -176,7 +176,7 @@ d.acceptC( d.takeC() )
 --
 
 === Accessibility of Members
-task:IDE-84[] task:IDE-556[] task:IDE-707[]
+
 
 Accessibility at the member level is only applicable when the type itself is accessible.
 If you cannot access the type, you cannot access any of its members.
@@ -490,7 +490,7 @@ For some element types, errors or warnings are issued in order to prevent proble
 .Forbidden Identifier Names in N4JS
 [req,id=IDE-5,version=1]
 --
-task:IDEBUG-207[]
+
 
 In N4JS mode, errors are generated in the following cases:
 
@@ -515,7 +515,7 @@ In N4JS mode, warnings are generated in the following cases:
 .  The name of a member (of a non external type)
 ..  equals the name of a base type footnote:[[.language-n4js]`string, boolean, number, any, null`] but the type of the variable is different from that type
 ..  is not static nor const but starts with an upper case letter
-.  The name of a non-external n4 types (class, interface, enum) starts with a lower case letter
+.  The name of a non-external N4 types (class, interface, enum) starts with a lower case letter
 .  The name of a variable (incl. formal parameter or catch variable and fields)
 ..  equals an N4JS keyword
 ..  equals the name of a base type but the type of the variable is different from that type

@@ -1,8 +1,5 @@
-
-= PlainJS
-:find:
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -11,6 +8,9 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
 ////
+
+= PlainJS
+:find:
 
 Since N4JS is a super set of JavaScript, is it both possible to use plain JavaScript in N4JS and vice versa.
 There may be some obstacles due to concepts introduced by N4JS to make code more maintainable and robust:
@@ -24,7 +24,7 @@ To overcome these problems, N4JS provides a couple of techniques summarized in t
 
 [.language-n4js]
 == Type Inference and Validation for Plain JS
-task:IDEBUG-45[]
+
 
 In plain JavaScript mode:
 
@@ -40,7 +40,7 @@ Note that this essentially disables all validation particularly since methods su
 
 [.language-n4js]
 == External Declarations
-task:IDE-572[] task:IDE-1236[]
+
 
 N4JS supports declaring external classes as a means to declare classes whose implementation is not N4JS so they can be used from N4JS.
 Together with structural typing, this allows N4JS to seamlessly integrate frameworks and libraries which have not been implemented in N4JS but in plain ECMAScript or another language.
@@ -93,12 +93,12 @@ That is, by default external classes are derived from `Object`.
 --
 1.  The static and instance methods, getters and setters of an external class must not have a method body.
 2.  The static and instance fields of an external class must not have an initializer.
-3.  The constructor of an external class without the annotation `@N4JS` must not be declared private. task:IDEBUG-431[]
+3.  The constructor of an external class without the annotation `@N4JS` must not be declared private.
 4.  Methods in interfaces with default implementation which cannot be expressed in the definition file must be annotated with `@ProvidesDefaultImplementation`.
-This is only allowed in interfaces annotated with `@N4JS`. task:IDE-1403[]
+This is only allowed in interfaces annotated with `@N4JS`.
 5.  Fields in interfaces or classes with initializers which cannot be expressed in the definition file, must be annotated with `@ProvidesInitializer`.
 This is only allowed in classes or interfaces annotated with `@N4JS`.
-task:IDE-1509[]
+
 
 This means that in external classes, all members except constructors may be declared private even if the class is not annotated with `@N4JS`. In interfaces, however, private members are disallowed anyway,
 cf. <<Req-IDE-48>>.
@@ -139,7 +139,7 @@ External declarations can be instantiated if the following three requirements ar
 * The external class must be linked to an implementation module (see below <<_implementation-of-external-declarations>>).
 
 === Implementation of External Declarations
-task:IDEBUG-242[]
+
 
 All external declarations must be associated with an external implementation module in one way or another.
 Any time the external declaration is imported, the compiler generates code that imports the corresponding implementation module at runtime.
@@ -164,7 +164,7 @@ For that reason, it is possible to disable validation of implementations complet
 .Implementation of External Declarations
 [req,id=IDE-169,version=1]
 --
-task:IDE-1099[]
+
 For a given external declaration $D$ but not for
 API-definitions footnote:[<<_api-and-implementation-components>>], the
 following constraints must hold:
@@ -185,7 +185,7 @@ will be related to modules of the same name in the external folders. This is sho
 
 [[fig-external-class-naming]]
 .External Class Implementation, Naming Convention
-image::{find}fig/externalClassImplementation_naming.png[scaledwidth="60%",align="center"]
+image::{find}fig/externalClassImplementation_naming.svg[scaledwidth="60%",align="center"]
 
 ====
 
@@ -263,7 +263,7 @@ export external public class Circle implements Scalable {
 
 [.language-n4js]
 == Global Definitions
-task:IDE-1036[]
+
 
 Existing JavaScript libraries and built-in objects provided by certain JavaScript environments often globally define variables.
 Although it is not recommended to use global definitions, this cannot always be avoided.
@@ -275,7 +275,7 @@ globally defined.footnote:[Global basically means that the module defines no nam
 We introduce a new pseudo property $global$ on all declared elements accordingly:
 
 `@Global` ::
-Boolean flag set to true if annotation `@Global` is set in containing module. The flag indicates that the exported element is globally available and must not be imported. task:IDE-1036[]
+Boolean flag set to true if annotation `@Global` is set in containing module. The flag indicates that the exported element is globally available and must not be imported.
 
 Since definition of global elements is not supported by N4JS directly, this can be only used in external definitions.
 A declaration with $global$ can be used without explicit import statement. It is not possible to import these declarations.
@@ -301,7 +301,7 @@ $\Rightarrow D.containingProject.type=\lenum{runtimeEnvironment}$
 
 [.language-n4js]
 == Runtime Definitions
-task:IDE-1036[]
+
 
 Some elements are predefined by the JavaScript runtime such as DOM elements by the browser or built-in ECMAScript or non-standard objects.
 These elements can be defined by means of external definitions; however, no actual implementation can be provided as these elements are actually provided by the runtime itself.
@@ -326,19 +326,19 @@ Since built-in types are usually defined globally, the annotation `@ProvidedByRu
 .Provided By Runtime
 [req,id=IDE-171,version=1]
 --
-task:IDE-1036[]
+
 
 For a declaration $D$ with $D.providedByRuntime=\TRUE$, the following constraints must hold:
 
 1.  The declaration must either be an export declaration itself or an exportable declaration.
 2.  The declaration must be contained in a definition module.
 3.  The declaration must be (indirectly) contained in a component of type $\lenum{runtimeEnvironment}$ or $\lenum{runtimeLibrary}$.
-4.  There must be no implementation file with the same name as the definition module if annotation is defined for a whole module. task:IDE-1084[]
+4.  There must be no implementation file with the same name as the definition module if annotation is defined for a whole module.
 --
 
 [.language-n4js]
 == Applying Polyfills
-task:IDE-1142[]
+
 
 (Runtime) Libraries often do not provide completely new types but modify existing types.
 The ECMA-402 Internationalization Standard cite:[ECMA12a], for example, changes methods of the built-in class `Date` to be timezone-aware.

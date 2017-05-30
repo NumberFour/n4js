@@ -1,7 +1,5 @@
-
-= JSX
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -11,11 +9,13 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
+= JSX
+
 [.language-jsx]
 == JSX Support
 N4JS scripts with file extension "n4jsx" support the special https://facebook.github.io/jsx/[JSX syntax]. Files ending with "jsx" are considered as plain Javascript.
 
-task:IDE-2411[]
+
 
 .React Component
 [req,id=IDE-241101,version=1]
@@ -38,7 +38,7 @@ In both cases, the name must be capitalized (i.e., start with an upper case lett
 
 Component must be written capitalized (i.e. first letter upper case), html (or other xml elements) must be written lower case.
 
-task:IDE-2411[]
+
 
 .JSX Basic Syntax
 [req,id=IDE-241102,version=1]
@@ -106,7 +106,7 @@ Remarks on differences between the syntax defined in <<Req-IDE-241102>> and http
 * The different types of JSXElementName are defined by means of JSXElementNameExpression which is a simple expression, reusing the existing rules IdentifierRef and ParameterizedPropertyAccessExpression to model JSXIdentifer and JSXMemberExpression respectively
 * JSXPropertyAttribute models the JSX non-spread JSXAttribute definition; again existing rules (IdentifierName, StringLiteral) are used to model JSX specific ones (JSXAttributeName, JSXDoubleStringCharacters, JSXSingleStringCharacters)
 
-task:IDE-2414[]
+
 
 .JSX Syntax With Free Text
 [req,id=IDE-241401,version=1]

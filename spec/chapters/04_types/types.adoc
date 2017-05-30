@@ -1,8 +1,5 @@
-
-= Types
-:find:
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -11,6 +8,9 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
 ////
+
+= Types
+:find:
 
 [.language-n4js]
 == Overview
@@ -87,7 +87,7 @@ In N4JS, $Top=any$, the bottom type $Bot=undefined$.
 
 [[fig-cd-predefined-type-hierarchy]]
 .Predefined Types Hierarchy
-image::{find}fig/cdPredefinedTypesHierarchy.png[scaledwidth=80%,align="center"]
+image::{find}fig/cdPredefinedTypesHierarchy.svg[scaledwidth=80%,align="center"]
 
 For every primitive type there is a corresponding built-in type as defined in cite:[ECMA11a], e.g. `string` and `String`.
 There is no inheritance supported for primitive types and built-in types – these types are final.
@@ -395,7 +395,7 @@ Upper bound of the concrete type being bound to this type variable, i.e. a super
 1.  Enum is not a valid metatype in $declaredUpperBounds$.
 2.  Wildcards are not valid in $declaredUpperBounds$.
 3.  Primitives are not valid in $declaredUpperBounds$.
-4.  Type variables are valid in $declaredUpperBounds$. task:IDEBUG-830[]
+4.  Type variables are valid in $declaredUpperBounds$.
 --
 
 A type variable can be used in any type expression contained in the generic class, generic interface, or generic function / method definition.
@@ -729,7 +729,7 @@ The figure <<cdVarianceChart>> shows the subtype relations of parameterized type
 
 [[cdVarianceChart]]
 .Cheat Sheet: Subtype Relation of Parameterized Types
-image::{find}fig/cdVarianceChart.png[align="center"]
+image::{find}fig/cdVarianceChart.svg[align="center"]
 
 
 .Subtyping between different generic types
@@ -819,7 +819,7 @@ G<? super A>    -> lowerBound = A, upperBound = any
 G<?>            -> lowerBound = null, upperBound = any
 ----
 
-This leads to the following expected subtype relations: task:IDEBUG-260[]
+This leads to the following expected subtype relations:
 
 [source,xtext]
 ----
@@ -859,7 +859,7 @@ interface I2<T extends J> {
 [.language-n4js]
 == Primitive ECMAScript Types
 
-task:IDE-40[]
+
 N4JS provides the same basic types as ECMAScript cite:[ECMA11a(p.28)].
 
 NOTE: In ECMAScript, basic types come in two flavors: as primitive types cite:[ECMA11a(S8Types,p.28)] and as Objects cite:[ECMA11a(S15,p.102)].
@@ -881,7 +881,7 @@ Please note that primitive types are values (= no objects) so they have no prope
 
 
 === Undefined Type
-task:IDE-495[]
+
 
 As a built-in type, the type `undefined` cannot be declared explicitly by the user by means of a type expression.
 Note in ECMAScript there are three distinct use cases of `undefined`:
@@ -1093,7 +1093,7 @@ is an axiom and true for all types.
 
 If a variable is explicitly declared as type `any`, the inferred type of that variable will always be `any`.
 
-task:IDE-106[]
+
 
 ===== Default Type of Variables
 
@@ -1175,7 +1175,7 @@ However no error messages once a variable or expression has been inferred to `un
 
 === Primitive Pathselector and I18nKey
 
-task:IDE-55[] task:IDE-379[]
+
 
 N4JS introduces three new types which are subtypes of string.
 These types are, in fact, translated to strings and do not add any new functionality.
@@ -1185,7 +1185,7 @@ They are solely defined for enabling additional validation.
 
 * `pathSelector<T>` is a generic type for specifying path selector expressions. PathSelectors are used to specify a path to a property in a (JSON-like) model tree.
 * The type variable `T` defines the context type (or type of the root of the tree) in which the selector is to be validated.
-A path selector is defined as a string literal that has to conform to the path selector grammar cite:[PathSelector].
+A path selector is defined as a string literal that has to conform to the path selector grammar.
 The context type is then used to perform a semantic
 // TODO: The path selector grammar along with base classes using these selectors are not part of the public version yet. Path selectors are not yet validated at compile time.
 * `i18nKey` is a string which refers to an internationalization key.
@@ -1215,7 +1215,7 @@ For example, ``"some.path."+segment+".prop"`` cannot be evaluated at compile tim
 [.language-n4js]
 == Built-in ECMAScript Object Types
 
-task:IDE-40[]
+
 N4JS supports all built-in ECMAScript objects cite:[ECMA11a(S15)], interpreted as classes.
 Some of these object types are object versions of primitive types.
 The object types have the same name as their corresponding primitive type, but start with an upper case letter.
@@ -1294,13 +1294,13 @@ Object type version of `number`. It is highly recommend to use the primitive ver
 Note that is is not possible to assign a primitive typed value to an object typed variable.
 
 === Global Object Type
-task:IDE-245[]
+
 
 This is the globally accessible namespace which contains element such as undefined, and in case of browsers, window. Depending on the runtime environment,
 the global object may has different properties defined by means of dynamic polyfills.
 
 === Symbol
-task:IDE-1220[]
+
 
 The symbol constructor function of ECMAScript 2015. Support for symbols
 is kept to a minimum in N4JS:
@@ -1319,7 +1319,7 @@ loop with as little support for symbols as possible.
 Also see <<_asynchronous-functions>> for asynchronous functions.
 
 === Iterator Interface
-task:IDE-1220[]
+
 
 A structurally typed interface for _iterators_ as defined by theECMAScript 6 iterator protocol.
 
@@ -1339,12 +1339,12 @@ export public interface ~IteratorEntry<T> {
 ----
 
 [.todo]
-Interface IteratorEntry was introduced mainly to work around IDEBUG-273; after solving this bug, this interface could be removed and replaced with a corresponding
-structural type reference as return type of method next() task:IDEBUG-273[]
+Interface `IteratorEntry` was introduced mainly as a workaround; this interface could be removed and replaced with a corresponding
+structural type reference as return type of method `next()`
 
 
 === Iterable Interface
-task:IDE-1220[]
+
 
 
 A structurally typed interface for objects that can be iterated over, i.e. _iterables_ as defined by the ECMAScript 6 iterator protocol.
@@ -1366,7 +1366,7 @@ You can use the ordinary syntax for computed property names in ECMAScript 6 for 
 N4JS additionally provides some built-in classes which are always available with the need to explicitly import them.
 
 === N4Object
-task:IDE-547[]
+
 
 Although `N4Object` is a built-in type, it is not the default supertype.
 It is a subtype of `Object`.
@@ -1407,7 +1407,7 @@ The general type modifiers $nullable$, $nonnull$ and $dynamic$ can be used for v
 Optional and variadic modifiers can only be applied for formal parameters.
 
 === Dynamic
-task:IDE-144[]
+
 
 The dynamic type modifier marks a type as being dynamic.
 A dynamic type behaves like a normal JavaScript object, so you can read/write any property and call any method on it.
@@ -1426,7 +1426,7 @@ Using the `delete` operator on a subtype of `N4Object` is not allowed.
 
 
 === Optional Return Types
-task:IDE-1076[] task:IDE-2405[]
+
 
 Only formal parameters and return types can be marked as optional.
 
@@ -1490,7 +1490,7 @@ Still the function `i()` shows in general how variables of intersection types ca
 The following sections define these _union_ and _intersection types_ in detail.
 
 === Union Type
-task:IDE-142[] task:IDE-385[] task:IDE-383[]
+
 
 
 Union type reflect the dynamic nature of JavaScript. Union types can be used almost everywhere (e.g., in variable declarations or in formal method parameters).
@@ -1730,7 +1730,7 @@ So, for $A \meet U$, usually $U$ cannot be the meet.
 .Upper and Lower Bound of a Union Type
 [req,id=IDE-24,version=1]
 --
-task:IDEBUG-260[]
+
 
 The upper and lower bound of a union type $U$ is a union type $U'$ containing the upper and lower bound of the elements of $U$:
 
@@ -1789,7 +1789,7 @@ contain class or interface types which are a subtype of another class or interfa
 
 
 === Intersection Type
-task:IDE-142[] task:IDE-385[] task:IDE-383[]
+
 
 Intersection type reflects the dynamic nature of JavaScript, similar to union type.
 As in Java, intersection type is used to define the type boundaries of type variables in type parameter definitions.
@@ -1834,7 +1834,7 @@ I.typeRefs \neq \emptyset
 ++++
 //`
 +
-For the time being, only a warning is produced when more than one class is contained in the intersection type task:IDE-2302[].
+For the time being, only a warning is produced when more than one class is contained in the intersection type .
 3. Non-optional elements:
 
 [math]
@@ -1952,7 +1952,7 @@ $\infer{\intersection{T_1,\dots,T_n} \meet \intersection{S_1,\dots,S_m}}{\inters
 [req,id=IDE-31,version=1]
 --
 
-task:IDEBUG-260[]
+
 
 The upper and lower bound of an intersection type $I$ is a union type $I'$ containing the upper and lower bound of the elements of $I$:
 
@@ -2286,7 +2286,7 @@ ClassifierTypeRef returns ClassifierTypeRef: 'type' '{' typeArg = [TypeRef] '}';
 ----
 
 === Semantics
-task:IDE-786[]
+
 
 // TODO math in this section causing out of bounds exceptions
 
@@ -2331,7 +2331,7 @@ $\lstnfjs{constructor} \{\lstnfjs{T}\} \subtype \type{Object} $
 $\lstnfjs{type} \{\lstnfjs{T}\} \subtype \type{Object} $
 .  If the type argument of the constructor is not a declared type (i.e., a wildcard or a type variable with bounds), the constructor cannot be used in a new expression.
 Thus, the constructor function signature becomes irrelevant for subtype checking.
-In that case, the following rules apply: task:GH-221[]
+In that case, the following rules apply:
 +
 [math]
 ++++
@@ -2347,7 +2347,7 @@ The figure <<cdConstructorClassifierType>> shows the subtype relations defined b
 
 [[cdConstructorClassifierType]]
 .Classifier and Constructor Type Subtype Relations
-image::{find}fig/cdConstructorClassifierType.png[scaledwidth=60%,align="center"]
+image::{find}fig/cdConstructorClassifierType.svg[scaledwidth=60%,align="center"]
 
 Consequences:
 
@@ -2455,7 +2455,7 @@ If we had defined `A` as `class A extends Object {}` in the listing above, then 
 
 [[fig-constructors-and-prototypes]]
 .Constructors and prototypes for two classes A and B in ECMAScript 2015 (not N4JS!)
-image::{find}fig/ctorsProtosInES6.png[align="center"]
+image::{find}fig/ctorsProtosInES6.svg[align="center"]
 
 Base classes in the above sense are not available in N4JS.
 If an N4JS class does not provide an `extends` clause, it will implicitly inherit from built-in class `N4Object`,
@@ -2463,7 +2463,7 @@ if it provides an `extends` clause stating `Object` as its super type, then it c
 
 [.language-n4js]
 == This Type
-task:IDE-377[] task:IDE-785[] task:IDEBUG-228[]
+
 
 The `this` keyword may represent either a `this` literal (cf. <<ex:this-keyword-and-type-in-instance-and-static-context>>) or may refer to the `this` type.
 In this section, we describe the latter case.
@@ -2549,7 +2549,7 @@ Structural typing and additional members in structural referenced types is descr
 .This Type
 [req,id=IDE-37,version=1]
 --
-task:IDE-538[]
+
 
 * `this` used in the context of a class is actually inferred to an existential type `? extends A` inside the class itself.
 * the `this` type may only be used
@@ -2586,7 +2586,7 @@ In contrast, the actual typeof the keyword `this` is only available at runtime, 
 * The value of the $this$ type is, in fact, not influenced by any `@This` annotations.
 Instead of using $this$ in these cases, the type expressions in the `@This` annotations can be used.
 * The $this$ type is always bound to the instance-type regardless of the context it occurs in (non-static or static).
-To refer to the this-classifier (static type) the construct `type{this}` is used. task:IDE-785[]
+To refer to the this-classifier (static type) the construct `type{this}` is used.
 
 <<<
 
@@ -2608,7 +2608,7 @@ class A {
 --
 
 The use of $this$ type is limited to situations where it cannot be referred in mixed co- and contra-variant ways.
-In the following example the problem is sketched up. footnote:[The phenomenon is described in IDEBUG-263 task:IDEBUG-263[]]
+In the following example the problem is sketched up. footnote:[The phenomenon is described in IDEBUG-263 ]
 
 .Problems with this type and type arguments
 [example]
@@ -2638,7 +2638,7 @@ a2.store.value( a ) // RUNTIME ERROR, the types are all correct, but remember b.
 
 [.language-n4js]
 == Enums
-task:IDE-327[] task:IDE-980[]
+
 
 
 Enums are an ordered set of literals.
@@ -2680,7 +2680,7 @@ console.log(us.toString()); // --> 840
 ----
 
 ==== Syntax [[enums-syntax]]
-task:IDE-8[] task:IDE-327[]
+
 
 [source,xtext]
 ----
@@ -2843,7 +2843,7 @@ var c: Color = colors.get();
 
 === String-Based Enums
 
-task:IDE-1221[]
+
 
 In current web standards cite:[W3C:Steen:14:XL], definitions of enumerations are often given in webIDL syntax.
 While the webIDL-definition assembles a set of unique string literals as a named enum-entity, the language binding to ECMAScript refers to the usage of the members of these enumerations only.

@@ -1,7 +1,5 @@
-
-= JSDoc
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -10,6 +8,8 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
 ////
+
+= JSDoc
 
 [.language-n4js]
 In N4JS, comments starting with two asterisks (in ``pass:[/** .. */]``) are interpreted as
@@ -57,7 +57,7 @@ Return description, not validated at the moment.
 The following tags are supposed to be used only in tests.
 
 ==== @testee [[jsdoc_tag__testee]]
-task:IDE-1469[]
+
 
 Link to type (maybe a function) or member tested by the test.
 
@@ -69,7 +69,7 @@ Link to type (maybe a function) or member tested by the test.
 ..  classes in test projects or folders, cf. <<jsdoc_tag__testeeFromType>>.
 .  Tag requires a single argument, which is a fully qualified name to a type, including the module specifier.
 The format is as follows: ``pass:[moduleSpecifier '.' typeName ( ('.'|'#') memberName)?]``
-.  Tag is _not_ repeatable, that is a single test method (or class) can refer to only one testee. task:IDEBUG-635[]
+.  Tag is _not_ repeatable, that is a single test method (or class) can refer to only one testee.
 .  Tag precedes the `reqid` tag, i.e., if a `@testee` is specified, the `reqid` will be ignored.
 
 --
@@ -92,7 +92,7 @@ element are added to that using dot as a separator. For example:
 --
 
 ==== @testeeFromType [[jsdoc_tag__testeeFromType]]
-task:SL-41[]
+
 
 Instead of directly linking a test method to a testee, the testee is to
 be derived from the linked testee of the test class. This is useful if a
@@ -134,7 +134,7 @@ since it is easily possible that too many constraints are generated.
 
 
 ==== @testeeType and @testeeMember [[_testeeType_and__testeeMember]]
-task:SL-41[]
+
 
 Specifying the testee at the test method directly should be sufficient
 for most cases. The `@testeeFromType` tag already provides support for some cases in which a base test class is reused by subtypes. This case usually only works if
@@ -261,7 +261,7 @@ the requirement with given id.
 
 [.language-n4js]
 == N4JSDoc for API and Implementation Projects
-task:IDE-1509[]
+
 
 The following tags are supposed to be used in API and implementation
 projects.

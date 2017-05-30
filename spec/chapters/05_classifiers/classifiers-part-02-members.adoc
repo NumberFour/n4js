@@ -1,9 +1,5 @@
-
-= Members
-task:IDE-12[] task:IDE-381[]
-
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -12,6 +8,10 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
 ////
+
+
+= Members
+
 
 A member is either a method (which may be a special constructor function), a data field, or a getter or a setter.
 The latter two implicitly define an accessor field.
@@ -42,8 +42,6 @@ Arbitrary annotations, see <<Annotations>> for details.
 N4JS member access modifier: `private`, `project`, `potected`, or `public`; the latter two can be combined with `@Internal`; default is `project` for classes and private interfaces.
 For a non-private interface defaults to the interface’s visibility.
 
-task:IDE-84[]
-
 `name` ::
 The simple name of the member, that is an identifier name (cf. <<_valid-names>>).
 
@@ -53,11 +51,8 @@ Boolean property to distinguish instance from classifier members, see <<_static-
 
 The following pseudo properties are defined via annotations:
 
-
 `deprecated` ::
 Boolean property set to true if annotation `@Deprecated` is set. footnote:[ version 0.4  - not implemented in version 0.3]
-
-task:IDE-138[]
 
 And we additionally define the following pseudo properties:
 
@@ -100,19 +95,14 @@ The following pseudo property is set to make fields compatible with properties o
 `configurable` ::
 Boolean flag reflecting the property descriptor $configurable$, this is always set to false for members.
 
-=== Semantics
+== Semantics
 
 The members of a given classifier `C` must be named such that the following constraints are met:
-
-task:IDE-550[] task:IDE-551[]
 
 .Member Names
 [req,id=IDE-52,version=1]
 --
-. The name of a member is given as an identifier, a string literal, a numeric literal, or as a computed property name with
-.. a string literal, e.g. `['myProp']`,
-.. a built-in symbol, for example as in `[Symbol.iterator]`, or
-.. a literal of a `@StringBased` enum.
+. The name of a member is given as an identifier, a string literal, a numeric literal, or as a computed property name with a compile-time expression (see <<compile-time-expressions>>). In particular, string literals, e.g. `['myProp']`, built-in symbols, e.g. `[Symbol.iterator]`, and literals of `@StringBased` enums are all valid computed property names.
 .  No two members may have the same name, except one is static and the
 other is non-static:
 +
@@ -134,7 +124,7 @@ The dollar character `\$` is not allowed for user-defined member identifiers as 
 
 [.language-n4js]
 == Methods
-task:IDE-8[] task:IDE-12[]
+
 
 Methods are simply JavaScript functions.
 They are defined similarly to methods as proposed in cite:[ECMA15a(S13.5)] except for the type information and some modifiers.
@@ -297,7 +287,7 @@ var v: {function():void} = new C().m;
 This is because assigning or re-assigning a method breaks encapsulation. Methods are the <<Acronyms>> of a class, their implementation is internal to the class.
 .  When assigning a method to a variable, a warning is issued since this would lead to an detached this reference inside the method when it is called without explicitly providing the receiver. No warning is issued only if it is guaranteed that no problems will occur:
 ..  The method’s body can be determined at compile time (i.e., it has been declared `@Final`) and it lacks usages of `this` or `super`. This is true for instance and static methods.
-..  The method is the constructor. task:GH-224[]
+..  The method is the constructor.
 
 --
 
@@ -387,7 +377,7 @@ Calling this new method with receiver type `C` (as done in the last line) will c
 Eventually, this would lead to a runtime error as well.
 
 === Final Methods
-task:IDE-157[]
+
 
 By default, methods can be overridden.
 To prevent a method from being overridden, it must be annotated with `@Final`.
@@ -440,7 +430,7 @@ See <<_implementation-of-members>> about how the default implementation may be m
 
 [.language-n4js]
 === Generic Methods
-task:IDE-38[] task:IDE-39[]
+
 
 Methods of generic classes can, of course, refer to the type variables defined by type parameters of the generic class.
 These type variables are used similarly to predefined or declared types.
@@ -479,7 +469,7 @@ In order to declare an interface to provide a default implementation in a defini
 
 When a method in an interface is provided with a default implementation, it may even be declared `@Final`, see <<_final-methods>>.
 
-//todo{it is currently unclear whether default methods are allowed in structural interfaces; see task IDE-1666 for details} task:IDE-1666[]
+//todo{it is currently unclear whether default methods are allowed in structural interfaces; see task IDE-1666 for details}
 
 === Asynchronous Methods
 
@@ -490,7 +480,7 @@ See <<Asynchronous Functions>> and <<Asynchronous Arrow Functions>> for details.
 
 [.language-n4js]
 == Constructors
-task:IDE-159[]
+
 
 A constructor is a special function defined on a class which returns an instance of that class.
 The constructor looks like a normal method with name "constructor".
@@ -559,7 +549,7 @@ described in <<_the-super-keyword>>.
 
 
 === Structural This Type in Constructor and Spec Parameter
-task:IDE-651[]
+
 
 The use of a structural this reference as a formal parameter type is possible only in constructors.
 This parameter can be annotated with `@Spec` which causes the compiler to generate initialization code.
@@ -584,7 +574,7 @@ It contains all public fields of the type.
 * Subclasses may override the constructor and introduce additional parameters.
 They have to call the super constructor explicitly, however, providing a parameter with at least all required attributes of the superclass.
 Usually the type `this` is replaced with the actual subclass, but in the case of a `super()` call the `this` type of structural formal parameters is replaced with the `this` type of the superclass,
-hence only required fields of the superclass must be present. task:IDEBUG-262[]
+hence only required fields of the superclass must be present.
 
 As with other structural references, it is possible to add the structural reference with additional structural members, which can be used to initialize private fields which
 become not automatically part of the structural field type. For example:
@@ -604,7 +594,7 @@ class A{
 Defining additional members may become a problem if a subclass defines  public fields with the same name, as the `pass:[~~this]` type will contain these fields in the subclass.
 This is marked as an error in the subclass.
 
-task:IDEBUG-81[]
+
 
 .Names of additional members of structural this type in constructor
 [req,id=IDE-58,version=1]
@@ -669,7 +659,7 @@ class A {
 2.  Only a single formal parameter of a constructor may be annotated with `@Spec`.
 3.  If a formal parameter is annotated with `@Spec`, the parameter’s type must be `pass:[~this]` or `pass:[~i~this]` (i.e. use-site structurally typed `this`).
 4.  Fields provided by the parameter, but not defined in the structural field type, are _not_ used to set fields.
-5.  Non-`public` fields explicitly added to the specparameter are copied as well. task:IDEBUG-134[]
+5.  Non-`public` fields explicitly added to the specparameter are copied as well.
 6.  Even if the `@Spec` annotation is used, the super constructor must be calledaccordingly.
 7.  The type of an additional member which match owned non-public fieldmust be subtype of the field’s type:
 +
@@ -930,7 +920,7 @@ because that constructor now appears on the other side of the subtype test durin
 
 [.language-n4js]
 == Data Fields
-task:IDE-381[]
+
 
 A data field is a simple property of a class.
 There must be no getter or setter defined with the same name as the data field.
@@ -945,14 +935,16 @@ Data fields in N4JS are similar to these implicit fields in ECMAScript 6 except 
 ----
 N4FieldDeclaration <Yield>:
     {N4FieldDeclaration}
-    annotations+=Annotation*
     FieldDeclarationImpl<Yield>
 ;
 
 fragment FieldDeclarationImpl <Yield>*:
-    accessModifier=N4JSMemberAccessModifier?
-    (static?=’static’ | const?=’const’)?
-    LiteralPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)? ';'
+    (declaredModifiers+=N4Modifier)* BogusTypeRefFragment?
+    declaredName=LiteralOrComputedPropertyName<Yield>
+    (declaredOptional?='?')?
+    ColonSepTypeRef?
+    ('=' expression=Expression<In=true,Yield>)?
+    Semi
 ;
 ----
 
@@ -960,6 +952,9 @@ fragment FieldDeclarationImpl <Yield>*:
 
 Fields have the following properties which can be explicitly defined:
 
+
+`declaredOptional` ::
+Tells whether the accessor was declared optional.
 
 `typeRef` ::
 Type of the field; default value is $Any$.
@@ -974,7 +969,7 @@ Boolean flag set to true if field is a static field.
 Boolean flag set to true if field cannot be changed. Note that const fields are automatically static.
 Const fields need an initializer. Also see <<_assignment-modifiers>>.
 
-task:IDE-946[]
+
 
 NOTE: $const$ is _not_ the (reversed) value of the property descriptor $writable$ as the latter is checked at runtime while const may or may not be checked at runtime.
 
@@ -1052,7 +1047,7 @@ type parameters which are provided by the reference:
 ++++
 
 === Assignment Modifiers
-task:IDE-946[]
+
 
 Assignment of data fields can be modified by the assignment modifiers `const` (similar to constant variable declarations, see <<Const>>) and `@Final`.
 
@@ -1087,7 +1082,7 @@ A final field may, however, be set in the constructor.
 See <<Req-IDE-68>> for details.
 .  A final data field must be either initialized by an initializer expression or in the constructor.
 If the field is initialized in the constructor, this may be done either explicitly or via a spec-style constructor.
-task:IDEBUG-575[]
+
 +
 [math]
 ++++
@@ -1105,37 +1100,37 @@ task:IDEBUG-575[]
 
 
 === Field Accessors (Getter/Setter)
-task:IDE-160[] task:IDE-381[]
+
 
 Instead of a simple data field, a field can be defined by means of the getter and setter accessor methods.
 These accessor methods are similar to the accuser methods in object literals:
 
 ==== Syntax [[field-acessors-syntax]]
-task:IDE-8[]
+
 
 [source,xtext]
 ----
 N4GetterDeclaration <Yield>:
     => ({N4GetterDeclaration}
-    annotations+=Annotation*
-    accessModifier=N4JSMemberAccessModifier?
-    (abstract?='abstract' | static?='static')?
+    (declaredModifiers+=N4Modifier)*
     GetterHeader<Yield>)
     (body=Block<Yield>)? ';'?
 ;
 
 fragment GetterHeader <Yield>*:
-    ('get' -> LiteralOrComputedPropertyName <Yield> '(' ')' ColonSepTypeRef?)
+    BogusTypeRefFragment? 'get' -> declaredName=LiteralOrComputedPropertyName<Yield>
+    (declaredOptional?='?')?
+    '(' ')'
+    ColonSepTypeRef?
 ;
 
 N4SetterDeclaration <Yield>:
     =>({N4SetterDeclaration}
-        annotations+=Annotation*
-        accessModifier=N4JSMemberAccessModifier?
-        (abstract?='abstract' | static?='static')?
+        (declaredModifiers+=N4Modifier)*
         'set'
-        ->LiteralOrComputedPropertyName <Yield>
+        ->declaredName=LiteralOrComputedPropertyName <Yield>
     )
+    (declaredOptional?='?')?
     '(' fpar=FormalParameter<Yield> ')' (body=Block<Yield>)? ';'?
 ;
 ----
@@ -1147,7 +1142,7 @@ Notes with regard to syntax: Although ECMAScript 6 does not define fields in cla
 --
 
 The getter and setter implementations usually reference data fields internally.
-These are to be declared explicitly (although ECMAScript allows creating fields on the fly on their first usage (see task IDE-422 task:IDE-422[])).
+These are to be declared explicitly (although ECMAScript allows creating fields on the fly on their first usage).
 The following example demonstrates a typical usage of getter and setter in combination with a data field.
 The getter lazily initializes the field on demand.
 The setter performs some notification.
@@ -1182,14 +1177,17 @@ class C {
 
 ==== Properties [[field-acessors-properties]]
 
-Derived values for field accessors:
+Properties for field accessors:
 
+`declaredOptional` ::
+Tells whether the accessor was declared optional.
 
 `readable` ::
-True for getters and false for setters.
+Derived value: true for getters and false for setters.
 
 `writable` ::
-False for getters and true for setters.
+Derived value: false for getters and true for setters.
+
 
 ==== Semantics [[field-accessors-semantics]]
 
@@ -1219,9 +1217,232 @@ the type of the setter’s parameter (the types can be completely unrelated).foo
 Getters and setters – like functions – define a variable execution environment and therefore provide access to the actual passed-in parameters through the implicit `arguments`
 variable inside of their bodies (c.f. <<_arguments-object>>).
 
+
+
+=== Optional Fields
+
+Data fields and field accessors of a classifier C can be declared optional, meaning that a structural subtype of C
+need not provide this field, but if it does, the field must be of correct type. However, to ensure overall type safety,
+the scope of application of this optionality is limited to a small number of specific use cases, as described in the
+following.
+
+
+==== Syntax
+
+To denote a data field or accessor as optional, a question mark is placed right after the name:
+
+.Syntax of optional fields
+[source,n4js]
+----
+class C {
+    public field?: string;
+
+    public get getter?(): number {
+        return 42;
+    }
+    public set setter?(value: number) {}
+}
+----
+
+The detailed grammar is given in the sections for data fields, cf. <<data-fields-syntax>>,
+and field accessors, cf. <<field-acessors-syntax>>.
+
+
+==== Semantics
+
+It is important to note that the optionality of a field is, by default and in most cases, ignored and
+has an effect only in certain special cases.
+
+The effect of a field being optional is defined by the following requirement.
+
+.Optional Fields
+[req,id=IDE-240500,version=1]
+--
+
+By default, a data field, getter, or setter that is declared optional is handled in the
+exact same way as if no optionality were involved (i.e. by default, optionality is ignored).
+
+Optionality has an effect only in case of structural subtype checks $L <: R$ in which
+the left-hand side is one of the following:
+
+. an object literal.
+. a new expression.
+. an instance of a final class, i.e. the type of the value on left-hand side must be nominal and refer to a final class.
+. a reference to a const variable if its initializer expression is one of the following:
+.. an object literal.
+.. a new expression.
+.. an instance of a final class (as explained above).
+
+and then
+
+* in cases 1 and 4a an optional data field, getter, or setter of $R$ need not be present in $L$.
+* in cases 2, 3, 4b, and 4c an optional getter of $R$ need not be present in $L$ and an optional field of $R$ requires only a setter in $L$.
+
+If, according to these rules, a data field / getter / setter of $R$ need not be present in
+$L$ but a member with the same name and access is actually present in $L$, that member in $L$
+must be a data field / getter / setter of the same type / a subtype / a super type, respectively.
+In other words, if a not actually required member is present in the subtype, ordinary rules
+for member compatibility apply as if no optionality were involved (cf. general subtyping rules
+for structural types).
+
+--
+
+In other words, in object literals (cases 1 and 4a) neither optional getters, optional setters,
+nor optional data fields are required. However, in case of new expressions and instances of
+final classes (cases 2, 3, 4b, 4c) only optional getters are not required in a subtype;
+optional setters are required as normal (i.e. optionality ignored) and optional data fields
+require at least a setter.
+
+The following table summarizes the most common cases and shows how this relates to the different
+forms of structural typing.
+
+[[tab:optionalFields]]
+.Optional Fields
+[cols="3,^1,^1,^1,^1,^1,^1,3"]
+|===
+h|                           5+^| &#916;                                | Case <| Comment
+h|                              | `~` | `~~` | `\~w~` | `\~r~` | `\~i~` |       |
+h|                           3+^| may have setter  2+^| never has setter|       |
+h| `let x: &#916;C = {};`       |  ✓  |  ✓   |    ✓   |    ✓   |    ✓   |   1   | nothing mandatory
+h| `let x: &#916;C = new D0();` |     |      |        |    ✓   |    ✓   |   2   | setters mandatory
+h| `let x: &#916;C = new DG();` |     |      |        |    ✓   |    ✓   |   2   | setters mandatory
+h| `let x: &#916;C = new DS();` |  ✓  |  ✓   |    ✓   |    ✓   |    ✓   |   2   | setters mandatory
+h| `let x: &#916;C = fooD0();`  |     |      |        |        |        |  none | D0 not final
+h| `let x: &#916;C = fooSF0();` |     |      |        |        |        |  none | fooSF0() not nominal
+h| `let x: &#916;C = fooF0();`  |     |      |        |    ✓   |    ✓   |   3   | setters mandatory
+|===
+
+In the table, a "✓" means that the particular example is valid; in all other cases an error would
+be shown in N4JS source code. Here are the classes and functions used in the above table:
+
+.Classes and functions used in table
+[source,n4js]
+----
+class C {
+    public field?: string;
+}
+
+class D0 {}
+
+class DG {
+    public get field(): string { return "hello"; }
+}
+
+class DS {
+    public set field(value: string) {}
+}
+
+@Final class F0 {}
+
+function fooD0(): D0   { return new D0(); }
+function fooSF0(): ~F0 { return new F0(); }
+function fooF0(): F0   { return new F0(); }
+----
+
+It follows from the above definitions in Requirements <<Req-IDE-240500>> that cases 4a and 4b are not
+transitive across a chain of several `const` variables, whereas case 4c is transitive. For example:
+
+.Transitivity of the use cases of optional fields
+[source,n4js]
+----
+class C {
+	public get getter?(): string {return null;}
+}
+class D {}
+@Final class F {}
+
+let c: ~C;
+
+
+// no transitivity via several const variables in use case "object literal":
+
+const ol1 = {};
+const ol2 = ol1;
+
+// XPECT errors --> "~Object is not a structural subtype of ~C: missing getter getter." at "ol2"
+c = ol2;
+
+
+// no transitivity via several const variables in use case "new expression":
+
+const new1 = new D();
+const new2 = new1;
+
+// XPECT errors --> "D is not a structural subtype of ~C: missing getter getter." at "new2"
+c = new2;
+
+
+// BUT: we do have transitivity via several const variables in use case "final nominal type":
+
+const finalNominal1 = new F();
+const finalNominal2 = finalNominal1;
+
+// XPECT noerrors -->
+c = finalNominal1;
+// XPECT noerrors --> "transitivity applies in this case"
+c = finalNominal2;
+----
+
+
+==== Background
+
+The following example illustrates why optionality of fields has to be restricted
+to the few special cases defined above (i.e. object literals, new expressions, etc.).
+
+.Problem 1 of optional fields
+[source,n4js]
+----
+class C {
+	public field?: string = "hello";
+}
+
+class D {}
+class DD extends D {
+	public field: number = 42;
+}
+
+let c: ~C;
+let d: D;
+
+d = new DD();
+
+c = d;  // without the restrictive semantics of optional fields, this assignment would be allowed (but shows compile-time error in N4JS)
+
+console.log(c.field); // prints 42 even though the type is string
+c.field.charAt(0); // exception at runtime: c.field.charAt is not a function
+----
+
+In the last line of the above example, `c.field` is actually `42` but the type systems claims it is of type `string` and
+thus allows accessing member `charAt` of type `string` which is undefined at runtime the actual value `42`.
+
+The next example shows why cases 2 and 3 (i.e. new expressions and instances of final classes) have to be handled in
+a more restrictive manner than case 1 (i.e. object literals).
+
+.Problem 2 of optional fields
+[source,n4js]
+----
+class C {
+	public field?: string;
+}
+
+class D {}
+
+let c: ~C;
+
+c = new D(); // error: new expression but D is missing setter
+
+c.field = "hello";
+----
+
+In the previous code, if `c = new D()` were allowed, we would add a new property `field` to the instance of class
+`D` in the last line, which N4JS aims to avoid in general, unless unsafe language features such as dynamic types
+are being employed.
+
+
+
 [.language-n4js]
 == Static Members
-task:IDE-151[] task:IDE-505[]
+
 
 Static data fields, field accessors and methods are quite similar to instance members, however they are not members of instances of the type but the type itself.
 They are defined similarly to instance members except that they are specified with the modifier `static`.
@@ -1259,7 +1480,7 @@ via:
 2.  The class declaration instance of a subtype, i.e. the classifier or constructor type, i.e. `D.m`, if `D` is a subclass of `C`.
 3.  `v.m`, if `v` is a variable of type `C` (i.e. classifier type as defined in <<_constructor-and-classifier-type>>) or a subtype thereof.
 4. `this.m` inside the body of any static method declared in `C` or any sub-class of `C`.
-5.  Via a type variable `T` which upper bound is a subclassof `C` e.g., `function <T extends C> f(){T.m}` task:GH-222[]
+5.  Via a type variable `T` which upper bound is a subclassof `C` e.g., `function <T extends C> f(){T.m}`
 
 --
 
@@ -1276,7 +1497,7 @@ This is true in particular for type variables defined by a generic classifier.
 [req,id=IDE-68,version=1]
 --
 
-task:IDE-1071[] task:IDEBUG-442[]
+
 For static data fields and static setter `f` the following constraint must hold:
 
 * For every assign expression $assignExpr$ with $f.static \land assignExpr.left = T.f \Rightarrow T=f.owner$.
@@ -1356,7 +1577,7 @@ public class C {
 --
 
 === Generic static methods
-task:IDE-151[] task:IDE-38[] task:IDE-39[]
+
 
 It is not possible to refer to type variables of a generic class, as these type variables are never bound to any concrete types.
 A static method can, however, be declared generic.
@@ -1372,7 +1593,7 @@ static. A few restrictions apply:
 [req,id=IDE-69,version=1]
 --
 
-1.  Static members of interfaces may only be accessed directly via the containing interface’s type name task:IDEBUG-386[]
+1.  Static members of interfaces may only be accessed directly via the containing interface’s type name
 (this means, of the four ways of accessing static members of classes defined in <<Req-IDE-66>> above, only the first one applies to static members of interfaces).
 2.  The `this` literal may not be used in static methods or field accessors of interfaces and it may not be used in the initializer expression of static fields of interfaces. See <<Req-IDE-173>>.
 3.  The `super` literal may not be used in static methods or field accessors of interfaces (in fact, it may not be used in interfaces at all, cf. <<Req-IDE-123>>).
@@ -1472,9 +1693,9 @@ $\spc \land M'.acc> \lenum{private} $
 
 [.language-n4js]
 === Overriding of Members
-task:IDE-12[] task:IDE-158[]
 
-In general, the N4 platform supports overriding members by redefining them in sub-classes.
+
+In general, the N4JS platform supports overriding members by redefining them in sub-classes.
 This definition allows for overriding of static methods, but it does not apply to constructors because $C.ctor \notin C.ownedMethods$.
 
 .Overriding Members
@@ -1509,7 +1730,7 @@ The same is true for other combination of accessors and fields.
 * Overriding a field usually makes only sense if the visibility of the field is to be increased.
 
 === Implementation of Members
-task:IDE-12[] task:IDE-158[] task:IDE-700[] task:IDE-1236[]
+
 
 .Interface and Class Member Sets
 [def]
@@ -1643,7 +1864,7 @@ Such a method $M'$ is said to _resolve_ the conflict between the implemented (an
 5.  Since abstracts methods may become part of the implementor methods, the implementor must either define these methods or it must be declared abstract itself.
 Since interfaces are abstract by default, responsibility for implementing abstract methods is passed on to any implementor of interfaces.
 6.  If two implemented interfaces provide (non-abstract) members with the same name, they are not automatically consumed by the implementor even if the types would be similar.
-In these cases, the implementor has to redefine the members in order to be aware of possible semantic differences. task:IDE-752[]
+In these cases, the implementor has to redefine the members in order to be aware of possible semantic differences.
 
 There is currently no separate annotation to indicate that methods are implemented or overridden in order to solve conflicts.
 We always use the `@Override` annotation.
@@ -1732,7 +1953,7 @@ console.log(
 
 
 
-// TODO task:IDE-1236[] {review example in bundle}
+// TODO  {review example in bundle}
 
 We expect the following output (for each field):
 
@@ -1743,4 +1964,3 @@ Consequently, the initializer of `s` in `C` is used.
 * `d.v = "I2"` : `v` is overridden in `I2`, so is the field initializer. This is why `d.v` must be assigned to `I2` and not `I0`.
 
 --
-

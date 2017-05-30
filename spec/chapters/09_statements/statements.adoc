@@ -1,7 +1,5 @@
-
-= Statements
 ////
-Copyright (c) 2017 NumberFour AG.
+Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -10,6 +8,8 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
 ////
+
+= Statements
 
 For all statements, we define the following pseudo properties:
 
@@ -189,7 +189,7 @@ The type of a variable declaration is either the declared type or the inferred t
 ++++
 
 
-// \todo{known limitation: if the initializer expression is an ObjectLiteral or FunctionExpression, the variable type will be inferred to \lstnfjs{any}.task:IDE-865[]
+// \todo{known limitation: if the initializer expression is an ObjectLiteral or FunctionExpression, the variable type will be inferred to \lstnfjs{any}.
 
 [.language-n4js]
 === If Statement
@@ -629,7 +629,7 @@ Identifiable elements are
 * types (via their type declaration), in particular
 ** classifiers (classes, interfaces)
 ** functions
-* variables and constants. task:IDE-190[]
+* variables and constants.
 
 The module to import from is identified by the string literal following keyword `from`.
 This string must be a valid
@@ -707,7 +707,7 @@ For namespace imports, the following constraints must hold:
 
 * If the referenced module is a plain `js` file, a warning will be created to use the dynamic import instead.
 
-For default imports, the following constraints must hold: task:IDE-1744[]
+For default imports, the following constraints must hold:
 
 * The referenced module must have a default export.
 
@@ -841,7 +841,7 @@ Having an `n4js` file is a completely different story; no `n4jsd` file is requir
 
 
 ==== Immutabilaty of Imports
-task:GH-119[]
+
 
 Imports create always immutable bindings, c.f.
 cite:[ECMA15a(8.1.1.5)]
@@ -862,7 +862,7 @@ It is an error if
 --
 
 === Export Statement
-task:IDE-1302[]
+
 
 Cf. ES6 import cite:[ECMA15a(15.2.3)]
 
